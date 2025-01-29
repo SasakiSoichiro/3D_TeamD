@@ -114,7 +114,7 @@ void Inititem(void)
 //=================
 //	I—¹ˆ—
 //=================
-void Uinititem(void)
+void Uninititem(void)
 {
 	StopSound();
 

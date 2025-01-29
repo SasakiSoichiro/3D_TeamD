@@ -28,7 +28,7 @@ typedef struct
 }ITEM;
 
 void Inititem(void);
-void Uinititem(void);
+void Uninititem(void);
 void Updateitem(void);
 void Drawitem(void);
 ITEM* Getitem(void);

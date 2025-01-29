@@ -19,7 +19,7 @@ void InitTitle3D(void)
 	InitCamera();
 	InitTitle();
 	InitMeshfield();
-	InitLighr();
+	InitLight();
 }
 
 //タイトルの終了処理

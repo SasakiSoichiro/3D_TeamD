@@ -408,13 +408,13 @@ void Uninit(void)
 	UninitTitle3D();
 
 	//	チュートリアル
-	UinitTutrial();
+	UninitTutrial();
 
 	//	ゲームの終了
-	UinitGame();
+	UninitGame();
 
 	//	リザルト
-	UinitResult();
+	UninitResult();
 
 	//	フェード
 	UninitFade();
@@ -572,15 +572,15 @@ void SetMode(MODE mode)
 		break;
 
 	case MODE_TUTRIAL:
-		UinitTutrial();		//	チュートリアル	
+		UninitTutrial();		//	チュートリアル	
 		break;
 
 	case MODE_GAME:
-		UinitGame();		//	ゲーム
+		UninitGame();		//	ゲーム
 		break;
 
 	case MODE_RESULT:
-		UinitResult();		//	リザルト
+		UninitResult();		//	リザルト
 		break;
 
 	case MODE_RANKING:

@@ -17,7 +17,7 @@ typedef struct
 }Result;
 
 void InitResult(void);
-void UinitResult(void);
+void UninitResult(void);
 void UpdateResult(void);
 void DrawResult(void);
 

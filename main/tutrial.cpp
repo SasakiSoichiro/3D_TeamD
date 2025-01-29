@@ -64,7 +64,7 @@ void InitTutrial(void)
 
 }
 
-void UinitTutrial(void)
+void UninitTutrial(void)
 {
 	if (g_apTextureTutrial != NULL)
 	{

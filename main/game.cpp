@@ -118,7 +118,7 @@ void InitGame(void)
 //---------------
 //	終了処理
 //---------------
-void UinitGame(void)
+void UninitGame(void)
 {
 	//　音楽を止める
 	StopSound();
@@ -145,7 +145,7 @@ void UinitGame(void)
 	UninitEnemy();
 
 	//　アイテム
-	Uinititem();
+	Uninititem();
 
 	//　タイム
 	UninitTime();

@@ -81,7 +81,7 @@ void InitResult(void)
 //---------------
 //	I—¹ˆ—
 //---------------
-void UinitResult(void)
+void UninitResult(void)
 {
 	if (g_apTextureResult != NULL)
 	{

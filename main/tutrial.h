@@ -5,7 +5,7 @@
 #include "main.h"
 
 void InitTutrial(void);
-void UinitTutrial(void);
+void UninitTutrial(void);
 void UpdateTutrial(void);
 void DrawTutrial(void);
 
