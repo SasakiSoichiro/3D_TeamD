@@ -14,7 +14,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 // グローバル変数宣言
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
-LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffBillboard = NULL;				//頂点バッファへのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffBillboard = NULL;					//頂点バッファへのポインタ
 LPDIRECT3DTEXTURE9 g_pTextureBillboard[BILLBOARDTYPE_MAX] = {};		//テクスチャへのポインタ
 Billboard g_Billboard[MAX_BILLBOARD];
 bool bExchange;
@@ -23,9 +23,9 @@ bool bExchange;
 //====================================================
 void InitBillboard()
 {
-	LPDIRECT3DDEVICE9 pDevice;								//デバイスへのポインタ
+	LPDIRECT3DDEVICE9 pDevice;			//デバイスへのポインタ
 
-	pDevice = GetDevice();									//デバイスの取得
+	pDevice = GetDevice();				//デバイスの取得
 
 	//テクスチャの読み込み
 	for (int nCnt = 0; nCnt < BILLBOARDTYPE_MAX; nCnt++)
@@ -49,12 +49,14 @@ void InitBillboard()
 
 	for (int nCnt = 0; nCnt < MAX_BILLBOARD; nCnt++)
 	{
+		//各変数の初期化
 		g_Billboard[nCnt].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Billboard[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Billboard[nCnt].bTest = false;
 		g_Billboard[nCnt].bDisplay = false;
 		g_Billboard[nCnt].bUse = false;
 		bExchange = false;
+
 		//頂点情報の設定
 		pVtx[0].pos = D3DXVECTOR3(-15.0f, 35.0f, 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(15.0f, 35.0f, 0.0f);
@@ -116,6 +118,7 @@ void UpdateBillboard()
 	Player* pPlayer = GetPlayer();
 	ITEM* pItem = Getitem();
 	bool isbill = IsBill();
+
 	for (int count = 0; count < MAX_ITEM; count++, pItem++)
 	{
 		if (pItem->bUse == true)
@@ -126,7 +129,7 @@ void UpdateBillboard()
 			//アイテムの半径の算出用変数
 			float fIRadPos = 28.0f;
 
-			//プレやーの位置を取得
+			//プレイヤーの位置を取得
 			D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
 
 			//アイテムのプレイヤーの距離の差
@@ -233,7 +236,6 @@ void DrawBillboard()
 			//頂点バッファをデバイスのデータストリームに設定
 			pDevice->SetStreamSource(0, g_pVtxBuffBillboard, 0, sizeof(VERTEX_3D));
 
-
 			if(bExchange == false)
 			{ 
 				//テクスチャの設定
@@ -249,6 +251,7 @@ void DrawBillboard()
 				//テクスチャの設定
 				pDevice->SetTexture(0, g_pTextureBillboard[g_Billboard[nCnt].nType]);
 			}
+
 			//頂点フォーマット
 			pDevice->SetFVF(FVF_VERTEX_3D);
 
@@ -257,6 +260,7 @@ void DrawBillboard()
 
 		}
 	}
+
 	//ライトを有効にする
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
@@ -267,9 +271,9 @@ void DrawBillboard()
 void SetBillboard(D3DXVECTOR3 pos, D3DXVECTOR3 dir, TYPE nType, D3DXVECTOR3 size)
 {
 	VERTEX_3D* pVtx = NULL;
-	LPDIRECT3DDEVICE9 pDevice;								//デバイスへのポインタ
+	LPDIRECT3DDEVICE9 pDevice;							//デバイスへのポインタ
 
-	pDevice = GetDevice();									//デバイスの取得
+	pDevice = GetDevice();								//デバイスの取得
 
 		//頂点バッファをロック
 	g_pVtxBuffBillboard->Lock(0, 0, (void**)&pVtx, 0);
@@ -278,8 +282,8 @@ void SetBillboard(D3DXVECTOR3 pos, D3DXVECTOR3 dir, TYPE nType, D3DXVECTOR3 size
 	{
 		if (g_Billboard[nCnt].bUse == false)
 		{
-			g_Billboard[nCnt].pos = pos;			//	位置
-			g_Billboard[nCnt].nType = nType;		//	種類
+			g_Billboard[nCnt].pos = pos;				//	位置
+			g_Billboard[nCnt].nType = nType;			//	種類
 			//if (nType == BILLBOARDTYPE_1)
 			//{
 			//	g_Billboard[nCnt].bUse = false;			//	使用しているとき

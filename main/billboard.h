@@ -33,6 +33,7 @@ static const char* ITEM_TEXTURE[BILLBOARDTYPE_MAX] =
 	"data\\texture\\maru.png",
 
 };
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 //アイテムの構造体
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -57,4 +58,5 @@ void UninitBillboard();
 void UpdateBillboard();
 void DrawBillboard();
 void SetBillboard(D3DXVECTOR3 pos, D3DXVECTOR3 dir, TYPE nType, D3DXVECTOR3 size);
+
 #endif
