@@ -442,7 +442,7 @@ void SetTime(int ntime)
 	int nData = 100;//3桁
 	int nData1 = 10;//2桁
 
-	g_ntime += ntime;
+	g_ntime = ntime;
 
 	//頂点情報へのポインタ
 	VERTEX_2D* pVtx;
