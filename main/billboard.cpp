@@ -113,6 +113,7 @@ void UninitBillboard()
 //====================================================
 void UpdateBillboard()
 {
+	Player* pPlayer = GetPlayer();
 	ITEM* pItem = Getitem();
 	bool isbill = IsBill();
 	for (int count = 0; count < MAX_ITEM; count++, pItem++)
