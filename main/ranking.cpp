@@ -288,13 +288,12 @@ void InitRanking(void)
 	g_pVtxBuffBKG->Unlock();
 
 	//ランキングリセット
-	ResetRanking(FILE_TXT_TIME);
+	ResetRanking(FILE_TXT_NS);
+
+	ResetRanking(FILE_TXT_MIN);
 
 	//タイマーの秒
-	SetRanking(GetNs());
-
-	//タイマーの分
-	SetRanking(GetMin());
+	SetRanking(GetNs(),GetMin());
 }
 //----------------------------
 //ランキングの終了処理
@@ -536,7 +535,7 @@ void ResetRanking(const char* DateScore)
 	int nCnt = 0;
 	int foge = NULL;
 	//ランキングスコア情報の初期設定
-	FILE* pFile = fopen(FILE_TXT_TIME, "r");
+	FILE* pFile = fopen(FILE_TXT_NS, "r");
 
 	if (pFile == NULL)
 	{
@@ -554,25 +553,44 @@ void ResetRanking(const char* DateScore)
 		fclose(pFile);
 	}
 
+	//ランキングスコア情報の初期設定
+	pFile = fopen(FILE_TXT_MIN, "r");
+
+	if (pFile == NULL)
+	{
+
+	}
+	else
+	{
+
+		//読み込む
+		for (nCnt = 0; nCnt < MAX_RANK; nCnt++)
+		{
+			foge = fscanf(pFile, "%d\n", &g_aRankTime[nCnt].nMin);
+		}
+
+		fclose(pFile);
+	}
+
 }
 //----------------------------
 //ランキングの設定
 //----------------------------
-void SetRanking(int nTime)
+void SetRanking(int ntime,int nmin)
 {
 	int nCntRank;
 	int nSelect;
 	int nTemp;
-	int aPosTexU[2] = {};//格桁の数字を格納(秒)
-	int aPosTexu[2] = {};//格桁の数字を格納(分)
+	int aPosTexU[MAX_RANKNS_NUM] = {};//格桁の数字を格納(秒)
+	int aPosTexu[MAX_RANKMIN_NUM] = {};//格桁の数字を格納(分)
 	int nData1,nData2,nData3,nData4;
 	int nCnt;
 
 	//---ランキングタイマーの並び替え
 	//-----指定タイマーがランクインしたら g_nRankUpdate を更新
-	if (nTime >= g_aRankTime[MAX_RANK - 1].nTime)//ソート処理
+	if (ntime >= g_aRankTime[MAX_RANK - 1].nTime)//ソート処理
 	{
-		g_aRankTime[MAX_RANK - 1].nTime = nTime;
+		g_aRankTime[MAX_RANK - 1].nTime = ntime;
 
 		for (nCntRank = 0; nCntRank < MAX_RANK - 1; nCntRank++)
 		{
@@ -589,7 +607,33 @@ void SetRanking(int nTime)
 		//順位をぶち込む
 		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 		{
-			if (g_aRankTime[nCntRank].nTime == nTime)
+			if (g_aRankTime[nCntRank].nTime == ntime)
+			{
+				g_nRankUpdate = g_aRankTime[nCntRank].nRank - 1;
+			}
+		}
+	}
+
+	if (nmin >= g_aRankTime[MAX_RANK - 1].nMin)//ソート処理
+	{
+		g_aRankTime[MAX_RANK - 1].nMin = nmin;
+
+		for (nCntRank = 0; nCntRank < MAX_RANK - 1; nCntRank++)
+		{
+			for (nSelect = nCntRank + 1; nSelect < MAX_RANK; nSelect++)
+			{
+				if (g_aRankTime[nCntRank].nMin <= g_aRankTime[nSelect].nMin)
+				{
+					nTemp = g_aRankTime[nCntRank].nMin;
+					g_aRankTime[nCntRank].nMin = g_aRankTime[nSelect].nMin;
+					g_aRankTime[nSelect].nMin = nTemp;
+				}
+			}
+		}
+		//順位をぶち込む
+		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
+		{
+			if (g_aRankTime[nCntRank].nMin == nmin)
 			{
 				g_nRankUpdate = g_aRankTime[nCntRank].nRank - 1;
 			}
@@ -611,21 +655,14 @@ void SetRanking(int nTime)
 		//桁ごとに分割する(秒)
 		for (nCnt = 0; nCnt < MAX_RANKNS_NUM; nCnt++)
 		{
-			if (nCnt == 0)
-			{
-			    aPosTexU[0] = g_aRankTime[nCntRank].nTime / nData1;
-			}
-			else
-			{
-				aPosTexU[nCnt] = (g_aRankTime[nCntRank].nTime % nData1 / nData2);
-				nData1 /= 10;
-				nData2 /= 10;
-			}
+			aPosTexU[nCnt] = (g_aRankTime[nCntRank].nTime % nData1 / nData2);
+			nData1 = nData1 / 10;
+			nData2 = nData2 / 10;
 
 			//-----テクスチャ座標の設定
-			pVtx[0].tex = D3DXVECTOR2(0.1f * aPosTexU[nCnt], 0.0f);
+			pVtx[0].tex = D3DXVECTOR2(0.0f + (0.1f * aPosTexU[nCnt]), 0.0f);
 			pVtx[1].tex = D3DXVECTOR2(0.1f + (0.1f * aPosTexU[nCnt]), 0.0f);
-			pVtx[2].tex = D3DXVECTOR2(0.1f * aPosTexU[nCnt], 1.0f);
+			pVtx[2].tex = D3DXVECTOR2(0.0f + (0.1f * aPosTexU[nCnt]), 1.0f);
 			pVtx[3].tex = D3DXVECTOR2(0.1f + (0.1f * aPosTexU[nCnt]), 1.0f);
 
 			pVtx += 4;
@@ -647,16 +684,9 @@ void SetRanking(int nTime)
 		//桁ごとに分割する(分)
 		for (nCnt = 0; nCnt < MAX_RANKMIN_NUM; nCnt++)
 		{
-			if (nCnt == 0)
-			{
-				aPosTexu[0] = g_aRankTime[nCntRank].nTime / nData3;
-			}
-			else
-			{
-				aPosTexu[nCnt] = (g_aRankTime[nCntRank].nTime % nData3 / nData4);
-				nData3 /= 10;
-				nData4 /= 10;
-			}
+			aPosTexu[nCnt] = (g_aRankTime[nCntRank].nMin % nData3 / nData4);
+			nData3 /= 10;
+			nData4 /= 10;
 
 			//-----テクスチャ座標の設定
 			pVtx[0].tex = D3DXVECTOR2(0.1f * aPosTexu[nCnt], 0.0f);
@@ -673,7 +703,7 @@ void SetRanking(int nTime)
 
 	//順位を書き込む
 	//ランキングタイマー情報の初期設定
-	FILE* pFile = fopen(FILE_TXT_TIME, "w");
+	FILE* pFile = fopen(FILE_TXT_NS, "w");
 
 	if (pFile == NULL)
 	{
@@ -690,4 +720,24 @@ void SetRanking(int nTime)
 
 		fclose(pFile);
 	}
+
+	//ランキングタイマー情報の初期設定
+	pFile = fopen(FILE_TXT_MIN, "w");
+
+	if (pFile == NULL)
+	{
+
+	}
+	else
+	{
+
+		//書き込む
+		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
+		{
+			fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nMin);
+		}
+
+		fclose(pFile);
+	}
+
 }

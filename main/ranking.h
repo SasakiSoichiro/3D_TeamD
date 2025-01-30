@@ -13,7 +13,9 @@
 #define MAX_RANK_WIDTH (50)				//ランクUIの幅
 #define MAX_RANK_TIME_ANIM_TIME (30)	//点滅アニメーションの時間
 
-#define FILE_TXT_TIME "date\\ranking\\ranking.txt"	//スコアのCSVデータファイル
+#define FILE_TXT_NS "data\\ranking\\ranking.txt"	//秒のCSVデータファイル
+
+#define FILE_TXT_MIN "data\\ranking\\ranking1.txt"	//分のCSVデータファイル
 
 //プロトタイプ宣言
 void InitRanking(void);
@@ -21,6 +23,6 @@ void UninitRanking(void);
 void UpdateRanking(void);
 void DrawRanking(void);
 void ResetRanking(const char* DateScore);
-void SetRanking(int nTime);
+void SetRanking(int ntime,int min);
 
 #endif // !_RANKING_H_
