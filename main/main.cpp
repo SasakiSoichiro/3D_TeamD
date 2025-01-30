@@ -405,25 +405,10 @@ void Uninit(void)
 
 	//	まうす
 	UninitMausu();
-	
-	//	タイトル終了
-	UninitTitle3D();
-
-	//	チュートリアル
-	UninitTutrial();
-
-	//	ゲームの終了
-	UninitGame();
-
-	//	リザルト
-	UninitResult();
 
 	//	フェード
 	UninitFade();
-
-	//	ランキング
-	UninitRanking();
-
+	
 	// デバック表示用フォントの破棄
 	if (g_pFont != NULL)
 	{
