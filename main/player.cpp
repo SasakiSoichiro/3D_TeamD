@@ -11,6 +11,7 @@
 #include "block.h"
 #include "meshwall.h"
 #include "gimmick.h"
+#include "fade.h"
 
 //ƒOƒ[ƒoƒ‹•Ï”éŒ¾
 Player g_player;
@@ -708,5 +709,18 @@ void ReadScriptPlayer(int nType)
 	{
 		LoadMotion[nType].aModel[nCnt].posFirst = LoadMotion[nType].aModel[nCnt].pos;
 		LoadMotion[nType].aModel[nCnt].rotFirst = LoadMotion[nType].aModel[nCnt].rot;
+	}
+}
+void HitPlayer(int nDamege)
+{
+	g_player.nLife -= nDamege;
+
+	if (g_player.nLife >= 0)
+	{
+		g_player.pState = PLAYERSTATE_DAMAGE;
+	}
+	else
+	{
+		SetFade(MODE_RESULT);
 	}
 }

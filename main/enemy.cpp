@@ -160,7 +160,7 @@ void UpdateEnemy(void)
 			//“–‚½‚è”»’è
 			if (fDistance <= fRadius && pPlayer->pState == PLAYERSTATE_NORMAL)
 			{
-				pPlayer->nLife -= 3;
+				HitPlayer(1);
 			}
 
 
