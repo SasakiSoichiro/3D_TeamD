@@ -9,7 +9,7 @@
 #include "main.h"
 #include "player.h"
 #define BLOCK_TEXTURE (128) //ブロックのテクスチャの最大数
-#define NUM_BLOCK (100)		//ブロックの最大数
+#define NUM_BLOCK (200)		//ブロックの最大数
 
 typedef enum
 {
