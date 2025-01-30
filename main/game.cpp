@@ -92,7 +92,7 @@ void InitGame(void)
 	Setitem(D3DXVECTOR3(50.0f, 1.0f, 0.0f), ITEMTYPE_ONE);
 
 	//　薙刀
-	Setitem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), ITEMTYPE_FOUR);
+	//Setitem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), ITEMTYPE_FOUR);
 
 	//　ビルボード
 	SetBillboard(D3DXVECTOR3(-100.0f, 50.0f, -200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_0,D3DXVECTOR3(15.0f,35.0f,0.0f));
@@ -103,7 +103,7 @@ void InitGame(void)
 	SetBillboard(D3DXVECTOR3(-1800.0f, 50.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_4, D3DXVECTOR3(1.0f, 1.0f, 0.0f));
 
 	//　敵
-	SetEnemy(D3DXVECTOR3(800.0f, 0.0f, 0.0f),0);
+	SetEnemy(D3DXVECTOR3(-1750.0f, 0.0f, 0.0f),0);
 
 	//　ドア
 	SetGimmick(D3DXVECTOR3(-1800.0f, 0.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
@@ -226,14 +226,14 @@ void UpdateGame(void)
 			//ビルボード
 			UpdateBillboard();
 
+			//ギミック
+			UpdateGimmick();
+
 			//アイテム
 			Updateitem();
 
 			//タイム
 			UpdateTime();
-
-			//ギミック
-			UpdateGimmick();
 
 #ifdef _DEBUG// デバッグ
 

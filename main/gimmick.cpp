@@ -201,16 +201,21 @@ void UpdateGimmick(void)
 				//ビルボードを表示する
 				isBill = true;
 
-				if (GetKeyboardPress(DIK_F) == true)
+				if (pItem->bKey_Top == true)
 				{
-					g_hold.bPush = true;
-					g_hold.bNoPush = false;
-					g_hold.NoTouch = 0;
-				}
-				else if (KeybordRelease(DIK_F) == true)
-				{
-					g_hold.bNoPush = true;
-					g_hold.bPush = false;
+
+					if (GetKeyboardPress(DIK_F) == true)
+					{
+
+						g_hold.bPush = true;
+						g_hold.bNoPush = false;
+						g_hold.NoTouch = 0;
+					}
+					else if (KeybordRelease(DIK_F) == true)
+					{
+						g_hold.bNoPush = true;
+						g_hold.bPush = false;
+					}
 				}
 			}
 			//プレイヤーが範囲の外に出たら
