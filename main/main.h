@@ -88,4 +88,7 @@ void DrawCameraPosV(void);
 void DrawCameraRot(void);
 void DrawDebugKey(void);
 void DrawEnemyPos(void);
+void DrawHoldTime(void);
+void DrawNoTouchTime(void);
+void DrawTotalTime(void);
 #endif

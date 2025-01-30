@@ -15,7 +15,7 @@ typedef struct
 	D3DXVECTOR3 rot;				//向き
 	D3DXVECTOR3 move;				//移動
 	D3DXVECTOR3 size;				//サイズ
-	D3DXVECTOR3 vtxMin, vtxMax;	//頂点の最小最大
+	D3DXVECTOR3 vtxMin, vtxMax;		//頂点の最小最大
 	D3DXMATRIX mtxWorld;			//マトリックス
 	LPD3DXMESH pMesh;
 	LPD3DXBUFFER pBuffMat;
@@ -25,6 +25,17 @@ typedef struct
 	//bool bGoal;
 	bool bMove;
 }GIMMICK;
+
+typedef struct
+{
+	int nHoldCount;
+	int NoTouch;
+	int HolTime;
+	int count;
+	bool bClear;
+	bool bPush;
+	bool bNoPush;
+}HOLD;
 
 //プロトタイプ宣言
 void InitGimmick(void);
@@ -36,5 +47,7 @@ void SetGimmick(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 GIMMICK* GetGimmick(void);
 bool IsGoal();
 bool IsBill();
+void IsHold(void);
+HOLD* GetHold(void);
 
 #endif

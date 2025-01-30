@@ -18,6 +18,8 @@
 #include "item.h"
 #include "enemy.h"
 #include "sound.h"
+#include "gimmick.h"
+
 //=====================
 //	グローバル宣言
 //=====================
@@ -549,6 +551,15 @@ void Draw(void)
 			//エネミー座標の描画処理
 			DrawEnemyPos();
 
+			//	長押し時間
+			DrawHoldTime();
+
+			//	離してる時間
+			DrawNoTouchTime();
+			
+			//	合計時間
+			DrawTotalTime();
+
 #endif // DEBUG
 
 			//	終了
@@ -681,7 +692,7 @@ void DrawDebugKey(void)
 
 	for (int count = 0; count < MAX_ITEM; count++, pITEM++)
 	{
-		RECT rect = { 0,90 + count * 15,SCREEN_WIDTH,SCREEN_HEIGHT };
+		RECT rect = { 0,105 + count * 15,SCREEN_WIDTH,SCREEN_HEIGHT };
 		char aStr[MAX_ITEM][256];
 
 		sprintf(&aStr[count][0], "アイテム%d : %d \n", count + 1,pITEM->bHave);
@@ -695,9 +706,48 @@ void DrawDebugKey(void)
 //================================
 void DrawEnemyPos(void)
 {
-	RECT rect = { 0,120,SCREEN_WIDTH,SCREEN_HEIGHT };
+	RECT rect = { 0,90,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 	Enemy* pCamera = GetEnemy();
 	sprintf(&aStr[0], "カメラ注視点座標　X:%.2f　Y:%.2f  Z:%.2f\n", pCamera->pos.x, pCamera->pos.y, pCamera->pos.z);
 	g_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(0, 0, 0, 255));
+}
+
+//================================
+//	ホールド時間
+//================================
+void DrawHoldTime(void)
+{
+	HOLD* pHold = GetHold();
+
+	RECT rect = { 0,210,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+	sprintf(&aStr[0], "長押し時間 : %d 秒\n",pHold->nHoldCount);
+	g_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(0, 0, 0, 255));
+
+}
+
+//================================
+//	離してる時間
+//================================
+void DrawNoTouchTime(void)
+{
+	HOLD* pHold = GetHold();
+
+	RECT rect = { 0,225,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+	sprintf(&aStr[0], "離してる時間 : %d 秒\n", pHold->NoTouch);
+	g_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(0, 0, 0, 255));
+
+}
+
+void DrawTotalTime(void)
+{
+	HOLD* pHold = GetHold();
+
+	RECT rect = { 0,240,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+	sprintf(&aStr[0], "現在の長押し時間 : %d 秒\n", pHold->HolTime);
+	g_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(0, 0, 0, 255));
+
 }
