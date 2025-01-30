@@ -11,7 +11,7 @@
 #include "player.h"
 
 //マクロ定義
-#define NUM_EDIT (64)
+#define NUM_EDIT (200)
 #define EDITTEXTURE (128)	//テクスチャの最大数
 #define EDIT_MOVE (2.0f)
 #define TEXTFILE "data\\STAGE\\stage.txt"
