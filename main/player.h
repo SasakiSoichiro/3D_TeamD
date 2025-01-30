@@ -55,5 +55,6 @@ void SetMatrix(void);
 void SetMotion(int nType);
 Player* GetPlayer(void);
 void ReadScriptPlayer(int nType);
+void HitPlayer(int nDamege);
 
 #endif
