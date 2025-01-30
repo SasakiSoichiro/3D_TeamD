@@ -39,8 +39,6 @@ SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 	{"data/SE/geton.wav", 0},				// SE2
 	{"data/SE/KeyOpen.wav", 0},				// SE3
 	{"data/SE/Key.wav", 0},					// SE4
-
-
 };
 
 //=============================================================================

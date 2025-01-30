@@ -12,6 +12,7 @@
 #include "meshwall.h"
 #include "gimmick.h"
 #include "fade.h"
+#include "sound.h"
 
 //グローバル変数宣言
 Player g_player;
@@ -63,6 +64,9 @@ void InitPlayer(void)
 }
 void UninitPlayer(void)
 {
+	//音楽(SE)を止める
+	StopSound();
+
 	for (int nCntType = 0; nCntType < 2; nCntType++)
 	{
 		for (int nCntModel = 0; nCntModel < LoadMotion[nCntType].nNumModel; nCntModel++)
