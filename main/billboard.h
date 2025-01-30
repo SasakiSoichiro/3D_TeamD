@@ -13,7 +13,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 //マクロ定義
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
-#define MAX_BILLBOARD (11)
+#define MAX_BILLBOARD (15)
 
 //アイテムの種類
 typedef enum
@@ -50,6 +50,7 @@ typedef struct
 	bool bDisplay;
 	bool bTest;
 	bool bUse;				//使用しているかどうか
+	D3DXVECTOR3 size;
 }Billboard;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
