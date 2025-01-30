@@ -518,32 +518,32 @@ void Draw(void)
 			DrawFade();
 
 #ifdef _DEBUG
-			//	FPSの表示
-			DrawFPS();
+			////	FPSの表示
+			//DrawFPS();
 
-			//カメラ注視点の描画処理
-			DrawCameraPosR();
+			////カメラ注視点の描画処理
+			//DrawCameraPosR();
 
-			//カメラ視点の描画処理
-			DrawCameraPosV();
+			////カメラ視点の描画処理
+			//DrawCameraPosV();
 
-			//カメラ向きの描画処理
-			DrawCameraRot();
+			////カメラ向きの描画処理
+			//DrawCameraRot();
 
-			//鍵を持っているかのデバッグ表示処理
-			DrawDebugKey();
+			////鍵を持っているかのデバッグ表示処理
+			//DrawDebugKey();
 
-			//エネミー座標の描画処理
-			DrawEnemyPos();
+			////エネミー座標の描画処理
+			//DrawEnemyPos();
 
-			//	長押し時間
-			DrawHoldTime();
+			////	長押し時間
+			//DrawHoldTime();
 
-			//	離してる時間
-			DrawNoTouchTime();
-			
-			//	合計時間
-			DrawTotalTime();
+			////	離してる時間
+			//DrawNoTouchTime();
+			//
+			////	合計時間
+			//DrawTotalTime();
 
 #endif // DEBUG
 
