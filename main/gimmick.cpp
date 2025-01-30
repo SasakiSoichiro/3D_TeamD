@@ -205,6 +205,7 @@ void UpdateGimmick(void)
 				{
 					g_hold.bPush = true;
 					g_hold.bNoPush = false;
+					g_hold.NoTouch = 0;
 				}
 				else if (KeybordRelease(DIK_F) == true)
 				{
@@ -387,11 +388,15 @@ void IsHold()
 	{
 		g_hold.nHoldCount++;
 	}
+	else if (g_hold.bPush == false)
+	{
+		g_hold.nHoldCount = g_hold.HolTime;
+	}
 	
 	if (g_hold.bNoPush == true)
 	{
 		g_hold.count++;
-		if (g_hold.count >= 5)
+		if (g_hold.count >= 10)
 		{
 			g_hold.count = 0;
 			g_hold.NoTouch++;
@@ -399,6 +404,11 @@ void IsHold()
 	}
 
 	g_hold.HolTime = g_hold.nHoldCount - g_hold.NoTouch;
+
+	if (g_hold.HolTime <= 0)
+	{
+		g_hold.HolTime = 0;
+	}
 
 	if (g_hold.HolTime >= 200)
 	{
