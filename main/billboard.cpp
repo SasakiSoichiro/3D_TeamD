@@ -116,6 +116,8 @@ void UpdateBillboard()
 	Player* pPlayer = GetPlayer();
 	ITEM* pItem = Getitem();
 	bool isbill = IsBill();
+	GIMMICK* pGimick = GetGimmick();
+
 	for (int count = 0; count < MAX_ITEM; count++, pItem++)
 	{
 		if (pItem->bUse == true)

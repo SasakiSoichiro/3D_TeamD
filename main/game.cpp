@@ -105,10 +105,7 @@ void InitGame(void)
 	SetEnemy(D3DXVECTOR3(800.0f, 0.0f, 0.0f),0);
 
 	//　ドア
-	SetGimmick(D3DXVECTOR3(-1835.0f, 0.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-
-
-	
+	SetGimmick(D3DXVECTOR3(-1800.0f, 0.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	//　初期化処理
 	g_bEdit = false;
