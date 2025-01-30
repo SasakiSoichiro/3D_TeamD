@@ -14,6 +14,7 @@
 //グローバル変数宣言
 LPDIRECT3DTEXTURE9 g_apTextureDoor[MAX_DOOR] = {};//テクスチャへのポインタ
 GIMMICK g_Door[MAX_DOOR];
+HOLD g_hold;
 bool isGoal;
 bool isBill;
 
@@ -23,6 +24,13 @@ bool isBill;
 void InitGimmick(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	g_hold.nHoldCount = 0;
+	g_hold.NoTouch = 0;
+	g_hold.HolTime = 0;
+	g_hold.count = 0;
+	g_hold.bPush = false;
+	g_hold.bClear = false;
+	g_hold.bNoPush = false;
 
 	// 構造体変数の初期化
 	for(int nCnt = 0;nCnt < MAX_DOOR;nCnt++)
@@ -164,6 +172,7 @@ void UpdateGimmick(void)
 	Player* pPlayer = GetPlayer();
 	Enemy* pEnemy = GetEnemy();
 	ITEM* pItem = Getitem();
+
 	for (int nCnt = 0; nCnt < MAX_DOOR; nCnt++)
 	{
 		if (g_Door[nCnt].bUse == true)
@@ -189,15 +198,19 @@ void UpdateGimmick(void)
 			//プレイヤーが範囲に入ったら
 			if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 			{
-						//ビルボードを表示する
-						isBill = true;
+				//ビルボードを表示する
+				isBill = true;
 
-				if (KeybordTrigger(DIK_F) == true)
+				if (GetKeyboardPress(DIK_F) == true)
 				{
-					//Fキーを押したらゴールにする
-					isGoal = true;
+					g_hold.bPush = true;
+					g_hold.bNoPush = false;
 				}
-				
+				else if (KeybordRelease(DIK_F) == true)
+				{
+					g_hold.bNoPush = true;
+					g_hold.bPush = false;
+				}
 			}
 			//プレイヤーが範囲の外に出たら
 			else if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) >= (fRadX * fRadX))
@@ -208,6 +221,7 @@ void UpdateGimmick(void)
 		}
 	}
 	
+	IsHold();
 }
 //================================
 //描画処理
@@ -366,4 +380,32 @@ bool IsGoal()
 bool IsBill()
 {
 	return isBill;
+}
+void IsHold()
+{
+	if (g_hold.bPush == true)
+	{
+		g_hold.nHoldCount++;
+	}
+	
+	if (g_hold.bNoPush == true)
+	{
+		g_hold.count++;
+		if (g_hold.count >= 5)
+		{
+			g_hold.count = 0;
+			g_hold.NoTouch++;
+		}
+	}
+
+	g_hold.HolTime = g_hold.nHoldCount - g_hold.NoTouch;
+
+	if (g_hold.HolTime >= 200)
+	{
+		isGoal = true;
+	}
+}
+HOLD* GetHold(void)
+{
+	return &g_hold;
 }

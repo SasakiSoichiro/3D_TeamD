@@ -261,6 +261,7 @@ void UpdateGame(void)
 		}
 
 	}
+
 	if (isGoal == true)
 	{//ƒS[ƒ‹‚ªtrue
 		g_gameState = GAMESTATE_END;// ƒQ[ƒ€‚ğI—¹‚³‚¹‚é
