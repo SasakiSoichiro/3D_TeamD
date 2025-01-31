@@ -21,9 +21,11 @@ void InitResult(void)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
 
-	Player* pPlayer = GetPlayer();
 
-	if (pPlayer->nLife > 0 || GetNs > 0)
+	Player* pPlayer = GetPlayer();
+	int nTime = GetMin();
+
+	if (pPlayer->nLife > 0)
 	{
 		//テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,

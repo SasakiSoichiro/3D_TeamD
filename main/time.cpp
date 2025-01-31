@@ -8,6 +8,7 @@
 #include"fade.h"
 #include"game.h"
 #include"result.h"
+#include"player.h"
 
 //=============================================================================
 //グローバル宣言
@@ -259,6 +260,7 @@ void UninitTime(void)
 void UpdateTime(void)
 {
 	g_ns++;
+	Player* pPlayer = GetPlayer();
 
 	//1秒経過
 	if (g_ns >= 60)
@@ -274,6 +276,7 @@ void UpdateTime(void)
 		if (g_min <= 0)
 		{//0分0秒になったらゲーム処理
 
+			pPlayer->nLife = 0;
 			//モード設定
 			SetGameState(GAMESTATE_END);// ゲームを終了させる
 
