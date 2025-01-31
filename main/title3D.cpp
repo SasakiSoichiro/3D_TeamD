@@ -43,6 +43,7 @@ void UpdateTitle3D()
 //ƒ^ƒCƒgƒ‹‚Ì•`‰æˆ—
 void DrawTitle3D()
 {
+	//SetCamera(0);
 	DrawMeshfield();
 	DrawTitle();
 }

@@ -18,6 +18,7 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffBillboard = NULL;					//頂点バッファへのポイン
 LPDIRECT3DTEXTURE9 g_pTextureBillboard[BILLBOARDTYPE_MAX] = {};		//テクスチャへのポインタ
 Billboard g_Billboard[MAX_BILLBOARD];
 bool bExchange;
+bool bNext;
 //====================================================
 //アイテムの初期化処理
 //====================================================
@@ -56,6 +57,7 @@ void InitBillboard()
 		g_Billboard[nCnt].bDisplay = false;
 		g_Billboard[nCnt].bUse = false;
 		bExchange = false;
+		bNext = false;
 
 		//頂点情報の設定
 		pVtx[0].pos = D3DXVECTOR3(-15.0f, 35.0f, 0.0f);
@@ -129,35 +131,39 @@ void UpdateBillboard()
 	
 	for (int count = 0; count < MAX_ITEM; count++, pItem++)
 	{
-		if (pItem->bUse == true)
+		for (int nCnt = 0; nCnt < MAX_BILLBOARD; nCnt++)
 		{
-			//プレイヤーの半径の算出用変数
-			float fPRadPos = 28.0f;
-
-			//アイテムの半径の算出用変数
-			float fIRadPos = 28.0f;
-
-			//プレイヤーの位置を取得
-			D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
-
-			//アイテムのプレイヤーの距離の差
-			D3DXVECTOR3 diff = PlayerPos - pItem->pos;
-
-			//範囲計算
-			float fDisX = PlayerPos.x - pItem->pos.x;
-			float fDisY = PlayerPos.y - pItem->pos.y;
-			float fDisZ = PlayerPos.z - pItem->pos.z;
-
-			//二つの半径を求める
-			float fRadX = fPRadPos + fIRadPos;
-
-			for (int nCnt = 0; nCnt < MAX_BILLBOARD; nCnt++)
+		
+			if (pItem->bUse == true)
 			{
+
+				//プレイヤーの半径の算出用変数
+				float fPRadPos = 28.0f;
+
+				//アイテムの半径の算出用変数
+				float fIRadPos = 28.0f;
+
+				//プレイヤーの位置を取得
+				D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
+
+				//アイテムのプレイヤーの距離の差
+				D3DXVECTOR3 diff = PlayerPos - pItem->pos;
+
+				//範囲計算
+				float fDisX = PlayerPos.x - pItem->pos.x;
+				float fDisY = PlayerPos.y - pItem->pos.y;
+				float fDisZ = PlayerPos.z - pItem->pos.z;
+
+				//二つの半径を求める
+				float fRadX = fPRadPos + fIRadPos;
+
 				//プレイヤーがアイテムの範囲に入ったら
 				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 				{
+
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_1)
 					{
+
 						g_Billboard[nCnt].bUse = true;
 						g_Billboard[nCnt].bDisplay = true;
 						g_Billboard[nCnt].pos.x = pItem->pos.x;
@@ -174,37 +180,28 @@ void UpdateBillboard()
 				{
 					g_Billboard[nCnt].bDisplay = false;
 				}
+			}
 
-				if (pItem->bKey_Top == true)
+			if (pItem->bKey_Top == true)
+			{
+
+				if (isbill == true)
 				{
 
-					if (isbill == true)
+					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
 					{
+						bExchange = true;
 
-						if (g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
-						{
-							bExchange = true;
-
-							g_Billboard[nCnt].bUse = true;
-							g_Billboard[nCnt].bDisplay = true;
-						}
-					}
-					else if (isbill == false)
-					{
-
-						g_Billboard[nCnt].bUse = false;
-						g_Billboard[nCnt].bDisplay = false;
+						g_Billboard[nCnt].bUse = true;
+						g_Billboard[nCnt].bDisplay = true;
 					}
 				}
-			}
-		}
-	}
+				else if (isbill == false)
+				{
 
-	for (int nCount = 0; nCount < MAX_BILLBOARD; nCount++)
-	{
-		if (pItem->bKey_Top == true)
-		{
-			
+					g_Billboard[nCnt].bUse = false;
+					g_Billboard[nCnt].bDisplay = false;
+				}
 				//プレイヤーの半径の算出用変数
 				float fPRadPos = 28.0f;
 				//アイテムの半径の算出用変数
@@ -222,41 +219,50 @@ void UpdateBillboard()
 				//プレイヤーがアイテムの範囲に入ったら
 				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 				{
-					g_Billboard[nCount].bUse = true;
-					g_Billboard[nCount].bDisplay = true;
-					g_Billboard[nCount].pos.x = pGimick->pos.x + 10.0f;
-					g_Billboard[nCount].pos.y = pGimick->pos.y + 10.0f;
-					g_Billboard[nCount].pos.z = pGimick->pos.z;
-					if (GetKeyboardPress(DIK_F) == true)
-					{//Fを押されたとき
-						a += 0.1f;
-					}
-					else
+					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_4)
 					{
-						a -= 0.01f;
+
+						g_Billboard[nCnt].bUse = true;
+						g_Billboard[nCnt].bDisplay = true;
+						bNext = true;
+						g_Billboard[nCnt].pos.x = pGimick->pos.x + 10.0f;
+						g_Billboard[nCnt].pos.y = pGimick->pos.y + 10.0f;
+						g_Billboard[nCnt].pos.z = pGimick->pos.z;
+
+						if (GetKeyboardPress(DIK_F) == true)
+						{//Fを押されたとき
+							a += 0.1f;
+						}
+						else
+						{
+							a -= 0.01f;
+						}
+						if (a >= 30.0f)
+						{
+							a = 10.0f;
+						}
+						else if (a < 0)
+						{
+							a = 0.0f;
+						}
+
+						pVtx[0].pos = D3DXVECTOR3(-g_Billboard[nCnt].size.x, g_Billboard[nCnt].size.y, g_Billboard[nCnt].size.z);
+						pVtx[1].pos = D3DXVECTOR3(g_Billboard[nCnt].size.x * a, g_Billboard[nCnt].size.y, g_Billboard[nCnt].size.z);
+						pVtx[2].pos = D3DXVECTOR3(-g_Billboard[nCnt].size.x, -g_Billboard[nCnt].size.y, g_Billboard[nCnt].size.z);
+						pVtx[3].pos = D3DXVECTOR3(g_Billboard[nCnt].size.x * a, -g_Billboard[nCnt].size.y, g_Billboard[nCnt].size.z);
 					}
-					if (a >= 30.0f)
-					{
-						a = 10.0f;
-					}
-					else if (a < 0)
-					{
-						a = 0.0f;
-					}
-					pVtx[0].pos = D3DXVECTOR3(-g_Billboard[nCount].size.x, g_Billboard[nCount].size.y, g_Billboard[nCount].size.z);
-					pVtx[1].pos = D3DXVECTOR3(g_Billboard[nCount].size.x * a, g_Billboard[nCount].size.y, g_Billboard[nCount].size.z);
-					pVtx[2].pos = D3DXVECTOR3(-g_Billboard[nCount].size.x, -g_Billboard[nCount].size.y, g_Billboard[nCount].size.z);
-					pVtx[3].pos = D3DXVECTOR3(g_Billboard[nCount].size.x * a, -g_Billboard[nCount].size.y, g_Billboard[nCount].size.z);
 				}
 				else if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) > (fRadX * fRadX))
 				{
-					g_Billboard[nCount].bDisplay = false;
+					g_Billboard[nCnt].bDisplay = false;
 				}
 
-			
-			pVtx += 4;
+				pVtx += 4;
+			}
 		}
 	}
+
+		
 
 	//頂点バッファのアンロック
 	g_pVtxBuffBillboard->Unlock();
@@ -312,7 +318,12 @@ void DrawBillboard()
 				//テクスチャの設定
 				pDevice->SetTexture(0, g_pTextureBillboard[3]);
 			}
-			else if(bExchange == false)
+			if (bNext == true)
+			{
+				//テクスチャの設定
+				pDevice->SetTexture(0, g_pTextureBillboard[4]);
+			}
+			else
 			{
 				//テクスチャの設定
 				pDevice->SetTexture(0, g_pTextureBillboard[g_Billboard[nCnt].nType]);
