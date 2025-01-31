@@ -170,6 +170,7 @@
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title3D.cpp" />
     <ClCompile Include="tutrial.cpp" />
+    <ClCompile Include="ui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="title.h" />
     <ClInclude Include="title3D.h" />
     <ClInclude Include="tutrial.h" />
+    <ClInclude Include="ui.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
