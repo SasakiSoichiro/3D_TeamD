@@ -18,10 +18,10 @@ typedef struct
 	bool bUse;
 }UI;
 
-void InitUI(void);
-void UinitUI(void);
-void UpdateUI(void);
-void DrawUI(void);
-void SetUI(void);
+void InitGonzaresu(void);
+void UinitGonzaresu(void);
+void UpdateGonzaresu(void);
+void DrawGonzaresu(void);
+void SetGonzaresu(void);
 
 #endif // !_UI_H_
