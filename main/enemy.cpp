@@ -121,8 +121,8 @@ void UpdateEnemy(void)
 				g_Enemy[nCntEnemy].rot.y = atan2f(g_Enemy[nCntEnemy].pos.x - pPlayer->pos.x, g_Enemy[nCntEnemy].pos.z - pPlayer->pos.z);
 				fAnglemove = atan2f(pPlayer->pos.x - g_Enemy[nCntEnemy].pos.x, pPlayer->pos.z - g_Enemy[nCntEnemy].pos.z);
 
-				g_Enemy[nCntEnemy].move.x = sinf(fAnglemove) * 0.5f;
-				g_Enemy[nCntEnemy].move.z = cosf(fAnglemove) * 0.5f;
+				g_Enemy[nCntEnemy].move.x = sinf(fAnglemove) * 1.25f;
+				g_Enemy[nCntEnemy].move.z = cosf(fAnglemove) * 1.25f;
 
 				break;
 
@@ -140,13 +140,16 @@ void UpdateEnemy(void)
 				break;
 			}
 
+			//現在の位置を保存
 			g_Enemy[nCntEnemy].posOld = g_Enemy[nCntEnemy].pos;
 
 			//重力加算
 			g_Enemy[nCntEnemy].move.y -= GRAVI;
 
+			//位置を更新
 			g_Enemy[nCntEnemy].pos.x += g_Enemy[nCntEnemy].move.x;// * pSlow->fDivi;
 			g_Enemy[nCntEnemy].pos.z += g_Enemy[nCntEnemy].move.z;// * pSlow->fDivi;
+
 			//SetPositionGaugeLife(g_Enemy[nCntEnemy].nIdxLife, D3DXVECTOR3(g_Enemy[nCntEnemy].pos.x, g_Enemy[nCntEnemy].pos.y + 40.0f, g_Enemy[nCntEnemy].pos.z));
 
 

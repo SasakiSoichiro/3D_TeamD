@@ -223,11 +223,11 @@ void UpdateGame(void)
 			//敵
 			UpdateEnemy();
 
-			//ビルボード
-			UpdateBillboard();
-
 			//ギミック
 			UpdateGimmick();
+
+			//ビルボード
+			UpdateBillboard();
 
 			//アイテム
 			Updateitem();
