@@ -20,6 +20,8 @@ Billboard g_Billboard[MAX_BILLBOARD];
 static float a = 0.0f;
 bool bExchange;
 bool bNext;
+bool bChange;
+
 //====================================================
 //アイテムの初期化処理
 //====================================================
@@ -59,6 +61,7 @@ void InitBillboard()
 		g_Billboard[nCnt].bUse = false;
 		bExchange = false;
 		bNext = false;
+		bChange = false;
 
 		//頂点情報の設定
 		pVtx[0].pos = D3DXVECTOR3(-15.0f, 35.0f, 0.0f);
@@ -191,14 +194,13 @@ void UpdateBillboard()
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
 					{
 						bExchange = true;
-
 						g_Billboard[nCnt].bUse = true;
 						g_Billboard[nCnt].bDisplay = true;
 					}
 				}
 				else if (isbill == false)
 				{
-
+					bChange = true;
 					g_Billboard[nCnt].bUse = false;
 					g_Billboard[nCnt].bDisplay = false;
 				}
@@ -259,6 +261,18 @@ void UpdateBillboard()
 
 				pVtx += 4;
 			}
+			else if (pItem->bKey_Top == false)
+			{
+				if (isbill == true)
+				{
+					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_2)
+					{
+						bExchange = false;
+						g_Billboard[nCnt].bUse = true;
+						g_Billboard[nCnt].bDisplay = true;
+					}
+				}
+			}
 		}
 	}
 
@@ -313,15 +327,20 @@ void DrawBillboard()
 			//頂点バッファをデバイスのデータストリームに設定
 			pDevice->SetStreamSource(0, g_pVtxBuffBillboard, 0, sizeof(VERTEX_3D));
 
-			if (bExchange == true)
+			if (bExchange == true && bNext == false)
 			{
 				//テクスチャの設定
 				pDevice->SetTexture(0, g_pTextureBillboard[3]);
 			}
-			if (bNext == true)
+			if (bNext == true && bExchange == false)
 			{
 				//テクスチャの設定
 				pDevice->SetTexture(0, g_pTextureBillboard[4]);
+			}
+			if (bChange == true)
+			{
+				//テクスチャの設定
+				pDevice->SetTexture(0, g_pTextureBillboard[2]);
 			}
 			else
 			{
