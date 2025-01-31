@@ -29,7 +29,7 @@
     <ClCompile Include="slow.cpp" />
     <ClCompile Include="edit.cpp" />
     <ClCompile Include="gimmick.cpp" />
-    <ClCompile Include="ui.cpp" />
+    <ClCompile Include="gonnzaresu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -60,6 +60,6 @@
     <ClInclude Include="slow.h" />
     <ClInclude Include="edit.h" />
     <ClInclude Include="gimmick.h" />
-    <ClInclude Include="ui.h" />
+    <ClInclude Include="gonnzaresu.h" />
   </ItemGroup>
 </Project>
