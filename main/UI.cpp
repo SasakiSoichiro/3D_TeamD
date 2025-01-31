@@ -5,7 +5,7 @@
 //
 //====================================================
 
-#include "ui.h"
+#include "UI.h"
 
 //マクロ定義
 #define MAX_TIMEWIDTH (150)
@@ -23,15 +23,15 @@ void InitEyeUI()
 {
 	VERTEX_2D* pVtx{};
 
-	LPDIRECT3DDEVICE9 pDevice;									//デバイスへのポインタ
+	LPDIRECT3DDEVICE9 pDevice;					//デバイスへのポインタ
 
-	pDevice = GetDevice();										//デバイスの取得
+	pDevice = GetDevice();						//デバイスの取得
 
-	D3DXVECTOR3 pos = D3DXVECTOR3(60.0f, 30.0f, 0.0f);
+	D3DXVECTOR3 pos = D3DXVECTOR3(1150.0f, 550.0f, 0.0f);
 
 		//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\TimeUI.png",
+		"data\\texture\\Eye.png",
 		&g_UiTexture);
 
 	//頂点バッファの生成
@@ -116,7 +116,7 @@ void UpdateEyeUI()
 //====================================================
 void DrawEyeUI()
 {
-	LPDIRECT3DDEVICE9 pDevice;									//デバイスへのポインタ
+	LPDIRECT3DDEVICE9 pDevice;					//デバイスへのポインタ
 
 	//デバイスの取得
 	pDevice = GetDevice();
