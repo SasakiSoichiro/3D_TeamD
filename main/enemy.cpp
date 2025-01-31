@@ -121,8 +121,8 @@ void UpdateEnemy(void)
 				g_Enemy[nCntEnemy].rot.y = atan2f(g_Enemy[nCntEnemy].pos.x - pPlayer->pos.x, g_Enemy[nCntEnemy].pos.z - pPlayer->pos.z);
 				fAnglemove = atan2f(pPlayer->pos.x - g_Enemy[nCntEnemy].pos.x, pPlayer->pos.z - g_Enemy[nCntEnemy].pos.z);
 
-				g_Enemy[nCntEnemy].move.x = sinf(fAnglemove) * 0.5f;
-				g_Enemy[nCntEnemy].move.z = cosf(fAnglemove) * 0.5f;
+				g_Enemy[nCntEnemy].move.x = sinf(fAnglemove) * 2.0f;
+				g_Enemy[nCntEnemy].move.z = cosf(fAnglemove) * 2.0f;
 
 				break;
 
@@ -160,7 +160,7 @@ void UpdateEnemy(void)
 			//“–‚½‚è”»’è
 			if (fDistance <= fRadius && pPlayer->pState == PLAYERSTATE_NORMAL)
 			{
-				HitPlayer(1);
+				HitPlayer(3);
 			}
 
 
