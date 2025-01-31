@@ -9,6 +9,7 @@
 #include "game.h"
 #include "stdio.h"
 #include "time.h"
+#include "player.h"
 
 //ランキングスコアの構造体
 typedef struct
@@ -123,7 +124,7 @@ void InitRanking(void)
 	//ランキングの情報の初期化
 	for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 	{//ランキングの順位分回す
-		g_aRankTime[nCntRank].pos = D3DXVECTOR3(650.0f, 150.0f + MAX_RANKTIME_HEIGHT * nCntRank, 0.0f);
+		g_aRankTime[nCntRank].pos = D3DXVECTOR3(750.0f, 150.0f + MAX_RANKTIME_HEIGHT * nCntRank, 0.0f);
 		g_aRankTime[nCntRank].nTime = 0;
 		g_aRankTime[nCntRank].nRank = nCntRank + 1;
 
@@ -178,7 +179,7 @@ void InitRanking(void)
 	//ランキングの情報の初期化
 	for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 	{//ランキングの順位分回す
-		g_aRankTime[nCntRank].pos = D3DXVECTOR3(460.0f, 150.0f + MAX_RANKTIME_HEIGHT * nCntRank, 0.0f);
+		g_aRankTime[nCntRank].pos = D3DXVECTOR3(550.0f, 150.0f + MAX_RANKTIME_HEIGHT * nCntRank, 0.0f);
 		g_aRankTime[nCntRank].nMin = 0;
 		g_aRankTime[nCntRank].nRank = nCntRank + 1;
 
@@ -233,18 +234,21 @@ void InitRanking(void)
 	//ランキングの情報の初期化
 	for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 	{
-		g_aRankTime[nCntRank].pos = D3DXVECTOR3(400.0f - MAX_RANK_WIDTH, 150.0f + MAX_RANKTIME_HEIGHT * nCntRank, 0.0f);
+		g_aRankTime[nCntRank].pos = D3DXVECTOR3(500.0f - MAX_RANK_WIDTH, 150.0f + MAX_RANKTIME_HEIGHT * nCntRank, 0.0f);
 
 		//頂点座標の設定
 		pVtx[0].pos.x = g_aRankTime[nCntRank].pos.x - MAX_RANK_WIDTH / 2;
 		pVtx[0].pos.y = g_aRankTime[nCntRank].pos.y - MAX_RANKTIME_HEIGHT / 2;
 		pVtx[0].pos.z = 0.0f;
+
 		pVtx[1].pos.x = g_aRankTime[nCntRank].pos.x + MAX_RANK_WIDTH / 2;
 		pVtx[1].pos.y = g_aRankTime[nCntRank].pos.y - MAX_RANKTIME_HEIGHT / 2;
 		pVtx[1].pos.z = 0.0f;
+
 		pVtx[2].pos.x = g_aRankTime[nCntRank].pos.x - MAX_RANK_WIDTH / 2;
 		pVtx[2].pos.y = g_aRankTime[nCntRank].pos.y + MAX_RANKTIME_HEIGHT / 2;
 		pVtx[2].pos.z = 0.0f;
+
 		pVtx[3].pos.x = g_aRankTime[nCntRank].pos.x + MAX_RANK_WIDTH / 2;
 		pVtx[3].pos.y = g_aRankTime[nCntRank].pos.y + MAX_RANKTIME_HEIGHT / 2;
 		pVtx[3].pos.z = 0.0f;
@@ -310,7 +314,7 @@ void InitRanking(void)
 	//ランキングの情報の初期化
 	for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 	{//ランキングの順位分回す
-		g_aRankTime[nCntRank].pos = D3DXVECTOR3(630.0f - MAX_RANK_WIDTH, 150.0f + MAX_RANKTIME_HEIGHT * nCntRank, 0.0f);
+		g_aRankTime[nCntRank].pos = D3DXVECTOR3(730.0f - MAX_RANK_WIDTH, 150.0f + MAX_RANKTIME_HEIGHT * nCntRank, 0.0f);
 
 		//頂点座標の設定
 		pVtx[0].pos.x = g_aRankTime[nCntRank].pos.x - MAX_RANK_WIDTH / 2;
@@ -716,6 +720,7 @@ void SetRanking(int ntime,int nmin)
 	int aPosTexu[MAX_RANKMIN_NUM] = {};//格桁の数字を格納(分)
 	int nData1,nData2,nData3,nData4;
 	int nCnt;
+	Player* pPlayer = GetPlayer();	//　プレイヤー情報取得
 
 	//---ランキングタイマーの並び替え
 	//-----指定タイマーがランクインしたら g_nRankUpdate を更新
@@ -832,43 +837,52 @@ void SetRanking(int ntime,int nmin)
 	//頂点バッファをアンロックする
 	g_pVtxBuffRankMin->Unlock();
 
-	//順位を書き込む
-	//ランキングタイマー情報の初期設定
-	FILE* pFile = fopen(FILE_TXT_NS, "w");
+	if (pPlayer->nLife <= 0)
+	{//プレイヤーが死んだとき
 
-	if (pFile == NULL)
-	{
-
-	}
-	else
-	{
-
-		//書き込む
-		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
-		{
-			fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nTime);
-		}
-
-		fclose(pFile);
-	}
-
-	//ランキングタイマー情報の初期設定
-	pFile = fopen(FILE_TXT_MIN, "w");
-
-	if (pFile == NULL)
-	{
+		//モード設定
+		SetGameState(GAMESTATE_END);// ゲームを終了させる
 
 	}
 	else
 	{
+		//順位を書き込む
+		//ランキングタイマー情報の初期設定
+		FILE* pFile = fopen(FILE_TXT_NS, "w");
 
-		//書き込む
-		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
+		if (pFile == NULL)
 		{
-			fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nMin);
+
+		}
+		else
+		{
+
+			//書き込む
+			for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
+			{
+				fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nTime);
+			}
+
+			fclose(pFile);
 		}
 
-		fclose(pFile);
-	}
+		//ランキングタイマー情報の初期設定
+		pFile = fopen(FILE_TXT_MIN, "w");
 
+		if (pFile == NULL)
+		{
+
+		}
+		else
+		{
+
+			//書き込む
+			for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
+			{
+				fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nMin);
+			}
+
+			fclose(pFile);
+		}
+	}
 }
