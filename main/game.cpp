@@ -24,6 +24,7 @@
 #include "sound.h"
 #include "gimmick.h"
 #include "UI.h"
+#include "gonnzaresu.h"
 
 // ゲームの状態
 GAMESTATE g_gameState = GAMESTATE_NONE;	// 初期化
@@ -85,6 +86,8 @@ void InitGame(void)
 	//　ポーズ
 	InitPause();
 
+	//	ゴンザレス
+	InitGonzaresu();
 
 	//　各オブジェクトの設定処理
 	LoadEdit();
@@ -174,6 +177,9 @@ void UninitGame(void)
 
 	//　目のUI
 	UninitEyeUI();
+
+	//	ゴンザレス
+	UinitGonzaresu();
 }
 
 //---------------
@@ -252,6 +258,10 @@ void UpdateGame(void)
 
 			//目のUI
 			UpdateEyeUI();
+
+			//	ゴンザレス
+			UpdateGonzaresu();
+
 
 #ifdef _DEBUG// デバッグ
 
@@ -341,11 +351,15 @@ void DrawGame(void)
 	//　ギミック
 	DrawGimmick();
 
+	//	ゴンザレス
+	DrawGonzaresu();
+
 	//　タイム
 	DrawTime();
 
 	//　目のUI
 	DrawEyeUI();
+
 
 	if (g_bPause == true)
 	{//　g_Pauseがtrue

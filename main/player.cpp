@@ -13,6 +13,7 @@
 #include "gimmick.h"
 #include "fade.h"
 #include "sound.h"
+#include "gonnzaresu.h"
 
 //ƒOƒ[ƒoƒ‹•Ï”éŒ¾
 Player g_player;
@@ -722,6 +723,7 @@ void HitPlayer(int nDamege)
 	if (g_player.nLife >= 0)
 	{
 		g_player.pState = PLAYERSTATE_DAMAGE;
+		SetGonzaresu(90);
 	}
 	else
 	{
