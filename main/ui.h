@@ -13,10 +13,10 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 //プロトタイプ宣言
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
-void InitUI();
-void UninitUI();
-void UpdateUI();
-void DrawUI();
+void InitEyeUI();
+void UninitEyeUI();
+void UpdateEyeUI();
+void DrawEyeUI();
 //void SetUI();
 //bool GetMinUI();
 
