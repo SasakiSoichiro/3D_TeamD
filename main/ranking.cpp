@@ -361,8 +361,20 @@ void InitRanking(void)
 
 	ResetRanking(FILE_TXT_MIN);
 
-	//タイマーの秒
-	SetRanking(GetNs(),GetMin());
+	Player* pPlayer = GetPlayer();	//　プレイヤー情報取得
+
+	if (pPlayer->nLife <= 0)
+	{//プレイヤーが死んだとき
+
+		//モード設定
+		SetGameState(GAMESTATE_END);// ゲームを終了させる
+
+	}
+	else
+	{
+		//タイマーの秒
+		SetRanking(GetNs(), GetMin());
+	}
 }
 //----------------------------
 //ランキングの終了処理
@@ -669,6 +681,7 @@ void ResetRanking(const char* DateScore)
 {
 	int nCnt = 0;
 	int foge = NULL;
+
 	//ランキングスコア情報の初期設定
 	FILE* pFile = fopen(FILE_TXT_NS, "r");
 
@@ -720,7 +733,6 @@ void SetRanking(int ntime,int nmin)
 	int aPosTexu[MAX_RANKMIN_NUM] = {};//格桁の数字を格納(分)
 	int nData1,nData2,nData3,nData4;
 	int nCnt;
-	Player* pPlayer = GetPlayer();	//　プレイヤー情報取得
 
 	//---ランキングタイマーの並び替え
 	//-----指定タイマーがランクインしたら g_nRankUpdate を更新
@@ -837,52 +849,42 @@ void SetRanking(int ntime,int nmin)
 	//頂点バッファをアンロックする
 	g_pVtxBuffRankMin->Unlock();
 
-	if (pPlayer->nLife <= 0)
-	{//プレイヤーが死んだとき
+	//順位を書き込む
+	//ランキングタイマー情報の初期設定
+	FILE* pFile = fopen(FILE_TXT_NS, "w");
 
-		//モード設定
-		SetGameState(GAMESTATE_END);// ゲームを終了させる
+	if (pFile == NULL)
+	{
 
 	}
 	else
 	{
-		//順位を書き込む
-		//ランキングタイマー情報の初期設定
-		FILE* pFile = fopen(FILE_TXT_NS, "w");
 
-		if (pFile == NULL)
+		//書き込む
+		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 		{
-
-		}
-		else
-		{
-
-			//書き込む
-			for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
-			{
-				fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nTime);
-			}
-
-			fclose(pFile);
+			fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nTime);
 		}
 
-		//ランキングタイマー情報の初期設定
-		pFile = fopen(FILE_TXT_MIN, "w");
+		fclose(pFile);
+	}
 
-		if (pFile == NULL)
+	//ランキングタイマー情報の初期設定
+	pFile = fopen(FILE_TXT_MIN, "w");
+
+	if (pFile == NULL)
+	{
+
+	}
+	else
+	{
+
+		//書き込む
+		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 		{
-
+			fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nMin);
 		}
-		else
-		{
 
-			//書き込む
-			for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
-			{
-				fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nMin);
-			}
-
-			fclose(pFile);
-		}
+		fclose(pFile);
 	}
 }
