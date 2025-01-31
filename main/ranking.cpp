@@ -362,6 +362,8 @@ void InitRanking(void)
 
 	Player* pPlayer = GetPlayer();	//　プレイヤー情報取得
 
+	
+
 	//プレイヤーが死んだとき
 	if (pPlayer->nLife <= 0)
 	{

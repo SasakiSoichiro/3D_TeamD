@@ -274,7 +274,9 @@ void UpdateTime(void)
 		if (g_min <= 0)
 		{//0•ª0•b‚É‚È‚Á‚½‚çƒQ[ƒ€ˆ—
 
-			SetFade(MODE_RESULT);
+			//ƒ‚[ƒhÝ’è
+			SetGameState(GAMESTATE_END);// ƒQ[ƒ€‚ðI—¹‚³‚¹‚é
+
 		}
 		else
 		{//‚»‚êˆÈŠO
