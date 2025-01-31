@@ -27,11 +27,11 @@ void InitEyeUI()
 
 	pDevice = GetDevice();										//デバイスの取得
 
-	D3DXVECTOR3 pos = D3DXVECTOR3(60.0f, 30.0f, 0.0f);
+	D3DXVECTOR3 pos = D3DXVECTOR3(1150.0f, 550.0f, 0.0f);
 
 		//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\TimeUI.png",
+		"data\\texture\\Eye.png",
 		&g_UiTexture);
 
 	//頂点バッファの生成
