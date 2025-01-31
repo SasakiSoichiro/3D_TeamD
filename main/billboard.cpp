@@ -17,6 +17,7 @@
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffBillboard = NULL;					//頂点バッファへのポインタ
 LPDIRECT3DTEXTURE9 g_pTextureBillboard[BILLBOARDTYPE_MAX] = {};		//テクスチャへのポインタ
 Billboard g_Billboard[MAX_BILLBOARD];
+static float a = 0.0f;
 bool bExchange;
 bool bNext;
 //====================================================
@@ -127,7 +128,6 @@ void UpdateBillboard()
 	bool isbill = IsBill();
 	GIMMICK* pGimick = GetGimmick();
 	HOLD* pHold = GetHold();
-	static float a = 0.0f;
 	
 	for (int count = 0; count < MAX_ITEM; count++, pItem++)
 	{
