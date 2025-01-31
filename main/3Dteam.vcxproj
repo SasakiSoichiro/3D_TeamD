@@ -203,7 +203,7 @@
     <ClInclude Include="title3D.h" />
     <ClInclude Include="tutrial.h" />
     <ClInclude Include="gonnzaresu.h" />
-    <ClInclude Include="ui.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
