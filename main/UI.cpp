@@ -27,7 +27,7 @@ void InitEyeUI()
 
 	pDevice = GetDevice();						//デバイスの取得
 
-	D3DXVECTOR3 pos = D3DXVECTOR3(1150.0f, 550.0f, 0.0f);
+	D3DXVECTOR3 pos = D3DXVECTOR3(650.0f, 350.0f, 0.0f);
 
 		//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
