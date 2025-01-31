@@ -13,7 +13,7 @@ UI g_ui[MAX_GONNZARESU] = {};
 //====================
 //	初期化処理
 //====================
-void InitUI(void)
+void InitGonzaresu(void)
 {
 
 }
@@ -21,7 +21,7 @@ void InitUI(void)
 //====================
 //	終了処理
 //====================
-void UinitUI(void)
+void UinitGonzaresu(void)
 {
 
 }
@@ -29,7 +29,7 @@ void UinitUI(void)
 //====================
 //	更新処理
 //====================
-void UpdateUI(void)
+void UpdateGonzaresu(void)
 {
 
 }
@@ -37,7 +37,7 @@ void UpdateUI(void)
 //====================
 //	描画処理
 //====================
-void DrawUI(void)
+void DrawGonzaresu(void)
 {
 
 }
@@ -45,7 +45,7 @@ void DrawUI(void)
 //=====================
 //	配置処理
 //=====================
-void SetUI(void)
+void SetGonzaresu(void)
 {
 
 }
