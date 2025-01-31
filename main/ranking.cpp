@@ -38,7 +38,6 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffRankColon = NULL;		//頂点バッファへのポインタ(
 RankTime g_aRankTime[MAX_RANK] = {};					//ランキングタイマー(5位分)表示
 int g_nRankUpdate = -1;									//更新ランクNo.
 int g_nTimerRanking;									//ランキング画面表示タイマー
-int nData = 1;
 
 //----------------------------
 //ランキングの初期化処理
@@ -363,8 +362,9 @@ void InitRanking(void)
 
 	Player* pPlayer = GetPlayer();	//　プレイヤー情報取得
 
+	//プレイヤーが死んだとき
 	if (pPlayer->nLife <= 0)
-	{//プレイヤーが死んだとき
+	{
 
 		//モード設定
 		SetGameState(GAMESTATE_END);// ゲームを終了させる
@@ -372,8 +372,10 @@ void InitRanking(void)
 	}
 	else
 	{
-		//タイマーの秒
+
+		//タイマーの秒・分
 		SetRanking(GetNs(), GetMin());
+
 	}
 }
 //----------------------------
@@ -861,7 +863,7 @@ void SetRanking(int ntime,int nmin)
 	{
 
 		//書き込む
-		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
+		for (int nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 		{
 			fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nTime);
 		}
@@ -880,11 +882,12 @@ void SetRanking(int ntime,int nmin)
 	{
 
 		//書き込む
-		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
+		for (int nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 		{
 			fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nMin);
 		}
 
 		fclose(pFile);
 	}
+
 }
