@@ -302,6 +302,10 @@ void UpdateMotion(void)
 
 	}
 
+	if (pPlayer->motion.aMotionInfo[pPlayer->motion.motionType].bLoop == false && pPlayer->motion.nKey >= pPlayer->motion.nNumKey - 1)
+	{
+		pPlayer->motion.motionType = MOTIONTYPE_NEUTRAL;
+	}
 
 	if (pPlayer->motion.aMotionInfo[pPlayer->motion.motionType].bLoop == false)
 	{

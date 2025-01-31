@@ -120,8 +120,8 @@ void InitGame(void)
 	//　ドア
 	SetGimmick(D3DXVECTOR3(-1800.0f, 0.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
-	//　目のUI
-	InitEyeUI();
+	////　目のUI
+	//InitEyeUI();
 
 	//　初期化処理
 	g_bEdit = false;
@@ -175,8 +175,8 @@ void UninitGame(void)
 	//　ギミック
 	UninitGimmick();
 
-	//　目のUI
-	UninitEyeUI();
+	////　目のUI
+	//UninitEyeUI();
 
 	//	ゴンザレス
 	UinitGonzaresu();
@@ -256,8 +256,8 @@ void UpdateGame(void)
 			//アイテム
 			Updateitem();
 
-			//目のUI
-			UpdateEyeUI();
+			////目のUI
+			//UpdateEyeUI();
 
 			//	ゴンザレス
 			UpdateGonzaresu();
@@ -357,8 +357,8 @@ void DrawGame(void)
 	//　タイム
 	DrawTime();
 
-	//　目のUI
-	DrawEyeUI();
+	////　目のUI
+	//DrawEyeUI();
 
 
 	if (g_bPause == true)

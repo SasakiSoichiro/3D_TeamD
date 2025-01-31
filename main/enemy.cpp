@@ -163,6 +163,7 @@ void UpdateEnemy(void)
 			//“–‚½‚è”»’è
 			if (fDistance <= fRadius && pPlayer->pState == PLAYERSTATE_NORMAL)
 			{
+				g_Enemy[nCntEnemy].motionType = EMOTIONTYPE_MOVE;
 				HitPlayer(1);
 			}
 
@@ -203,7 +204,6 @@ void UpdateEnemy(void)
 		}
 
 		g_Enemy[nCntEnemy].motionType = EMOTIONTYPE_MOVE;
-
 
 		g_Enemy[nCntEnemy].nNumKey = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].nNumKey;
 
