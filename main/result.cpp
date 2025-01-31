@@ -23,7 +23,7 @@ void InitResult(void)
 
 	Player* pPlayer = GetPlayer();
 
-	if (pPlayer->nLife > 0 )
+	if (pPlayer->nLife > 0 || GetNs > 0)
 	{
 		//テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,
