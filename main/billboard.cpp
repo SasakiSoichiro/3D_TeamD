@@ -194,6 +194,7 @@ void UpdateBillboard()
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
 					{
 						bExchange = true;
+						bChange = false;
 						g_Billboard[nCnt].bUse = true;
 						g_Billboard[nCnt].bDisplay = true;
 					}
@@ -226,6 +227,7 @@ void UpdateBillboard()
 
 						g_Billboard[nCnt].bUse = true;
 						g_Billboard[nCnt].bDisplay = true;
+						bChange = false;
 						bNext = true;
 						g_Billboard[nCnt].pos.x = pGimick->pos.x + 10.0f;
 						g_Billboard[nCnt].pos.y = pGimick->pos.y + 10.0f;
