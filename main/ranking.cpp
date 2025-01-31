@@ -38,7 +38,6 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffRankColon = NULL;		//頂点バッファへのポインタ(
 RankTime g_aRankTime[MAX_RANK] = {};					//ランキングタイマー(5位分)表示
 int g_nRankUpdate = -1;									//更新ランクNo.
 int g_nTimerRanking;									//ランキング画面表示タイマー
-int nData = 1;
 
 //----------------------------
 //ランキングの初期化処理
@@ -363,17 +362,21 @@ void InitRanking(void)
 
 	Player* pPlayer = GetPlayer();	//　プレイヤー情報取得
 
+	//プレイヤーが死んだとき
 	if (pPlayer->nLife <= 0)
-	{//プレイヤーが死んだとき
+	{
 
 		//モード設定
 		SetGameState(GAMESTATE_END);// ゲームを終了させる
-
+		//タイマーの秒・分
+		SetRanking(GetNs(), GetMin());
 	}
 	else
 	{
-		//タイマーの秒
+
+		//タイマーの秒・分
 		SetRanking(GetNs(), GetMin());
+
 	}
 }
 //----------------------------
@@ -726,6 +729,7 @@ void ResetRanking(const char* DateScore)
 //----------------------------
 void SetRanking(int ntime,int nmin)
 {
+	Player* pPlayer = GetPlayer();
 	int nCntRank;
 	int nSelect;
 	int nTemp;
@@ -736,58 +740,60 @@ void SetRanking(int ntime,int nmin)
 
 	//---ランキングタイマーの並び替え
 	//-----指定タイマーがランクインしたら g_nRankUpdate を更新
-	if (ntime >= g_aRankTime[MAX_RANK - 1].nTime)//ソート処理
+	if (pPlayer->nLife > 0)
 	{
-		g_aRankTime[MAX_RANK - 1].nTime = ntime;
-
-		for (nCntRank = 0; nCntRank < MAX_RANK - 1; nCntRank++)
+		if (ntime >= g_aRankTime[MAX_RANK - 1].nTime)//ソート処理
 		{
-			for (nSelect = nCntRank + 1; nSelect < MAX_RANK; nSelect++)
+			g_aRankTime[MAX_RANK - 1].nTime = ntime;
+
+			for (nCntRank = 0; nCntRank < MAX_RANK - 1; nCntRank++)
 			{
-				if (g_aRankTime[nCntRank].nTime <= g_aRankTime[nSelect].nTime)
+				for (nSelect = nCntRank + 1; nSelect < MAX_RANK; nSelect++)
 				{
-					nTemp = g_aRankTime[nCntRank].nTime;
-					g_aRankTime[nCntRank].nTime = g_aRankTime[nSelect].nTime;
-					g_aRankTime[nSelect].nTime = nTemp;
+					if (g_aRankTime[nCntRank].nTime <= g_aRankTime[nSelect].nTime)
+					{
+						nTemp = g_aRankTime[nCntRank].nTime;
+						g_aRankTime[nCntRank].nTime = g_aRankTime[nSelect].nTime;
+						g_aRankTime[nSelect].nTime = nTemp;
+					}
+				}
+			}
+			//順位をぶち込む
+			for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
+			{
+				if (g_aRankTime[nCntRank].nTime == ntime)
+				{
+					g_nRankUpdate = g_aRankTime[nCntRank].nRank - 1;
 				}
 			}
 		}
-		//順位をぶち込む
-		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
-		{
-			if (g_aRankTime[nCntRank].nTime == ntime)
-			{
-				g_nRankUpdate = g_aRankTime[nCntRank].nRank - 1;
-			}
-		}
-	}
 
-	if (nmin >= g_aRankTime[MAX_RANK - 1].nMin)//ソート処理
-	{
-		g_aRankTime[MAX_RANK - 1].nMin = nmin;
-
-		for (nCntRank = 0; nCntRank < MAX_RANK - 1; nCntRank++)
+		if (nmin >= g_aRankTime[MAX_RANK - 1].nMin)//ソート処理
 		{
-			for (nSelect = nCntRank + 1; nSelect < MAX_RANK; nSelect++)
+			g_aRankTime[MAX_RANK - 1].nMin = nmin;
+
+			for (nCntRank = 0; nCntRank < MAX_RANK - 1; nCntRank++)
 			{
-				if (g_aRankTime[nCntRank].nMin <= g_aRankTime[nSelect].nMin)
+				for (nSelect = nCntRank + 1; nSelect < MAX_RANK; nSelect++)
 				{
-					nTemp = g_aRankTime[nCntRank].nMin;
-					g_aRankTime[nCntRank].nMin = g_aRankTime[nSelect].nMin;
-					g_aRankTime[nSelect].nMin = nTemp;
+					if (g_aRankTime[nCntRank].nMin <= g_aRankTime[nSelect].nMin)
+					{
+						nTemp = g_aRankTime[nCntRank].nMin;
+						g_aRankTime[nCntRank].nMin = g_aRankTime[nSelect].nMin;
+						g_aRankTime[nSelect].nMin = nTemp;
+					}
+				}
+			}
+			//順位をぶち込む
+			for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
+			{
+				if (g_aRankTime[nCntRank].nMin == nmin)
+				{
+					g_nRankUpdate = g_aRankTime[nCntRank].nRank - 1;
 				}
 			}
 		}
-		//順位をぶち込む
-		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
-		{
-			if (g_aRankTime[nCntRank].nMin == nmin)
-			{
-				g_nRankUpdate = g_aRankTime[nCntRank].nRank - 1;
-			}
-		}
 	}
-
 	//頂点情報へのポインタ
 	VERTEX_2D* pVtx;
 
@@ -861,7 +867,7 @@ void SetRanking(int ntime,int nmin)
 	{
 
 		//書き込む
-		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
+		for (int nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 		{
 			fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nTime);
 		}
@@ -880,11 +886,12 @@ void SetRanking(int ntime,int nmin)
 	{
 
 		//書き込む
-		for (nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
+		for (int nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 		{
 			fprintf(pFile, "%d\n", g_aRankTime[nCntRank].nMin);
 		}
 
 		fclose(pFile);
 	}
+
 }

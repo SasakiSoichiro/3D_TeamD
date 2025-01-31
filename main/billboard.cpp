@@ -136,10 +136,9 @@ void UpdateBillboard()
 	{
 		for (int nCnt = 0; nCnt < MAX_BILLBOARD; nCnt++)
 		{
-		
+
 			if (pItem->bUse == true)
 			{
-
 				//プレイヤーの半径の算出用変数
 				float fPRadPos = 28.0f;
 
@@ -201,7 +200,6 @@ void UpdateBillboard()
 				}
 				else if (isbill == false)
 				{
-					bChange = true;
 					g_Billboard[nCnt].bUse = false;
 					g_Billboard[nCnt].bDisplay = false;
 				}
@@ -224,10 +222,9 @@ void UpdateBillboard()
 				{
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_4)
 					{
-
+						bChange = false;
 						g_Billboard[nCnt].bUse = true;
 						g_Billboard[nCnt].bDisplay = true;
-						bChange = false;
 						bNext = true;
 						g_Billboard[nCnt].pos.x = pGimick->pos.x + 10.0f;
 						g_Billboard[nCnt].pos.y = pGimick->pos.y + 10.0f;
@@ -263,15 +260,30 @@ void UpdateBillboard()
 
 				pVtx += 4;
 			}
-			else if (pItem->bKey_Top == false)
+			//if (pItem->bKey_Top == false)
+			//{
+			if (pItem->bUse == true)
 			{
 				if (isbill == true)
 				{
+
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_2)
 					{
+						bChange = true;
 						bExchange = false;
 						g_Billboard[nCnt].bUse = true;
 						g_Billboard[nCnt].bDisplay = true;
+					}
+				}
+				if (isbill == false)
+				{
+
+					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_2)
+					{
+						bChange = false;
+						bExchange = true;
+						g_Billboard[nCnt].bUse = false;
+						g_Billboard[nCnt].bDisplay = false;
 					}
 				}
 			}
