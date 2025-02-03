@@ -194,17 +194,14 @@ void UpdateJoypad(void)
 //===================
 bool GetJoypadPress(JOYKEY key, int player)
 {
-	return (g_joyKeyState[player].Gamepad.wButtons & (0x01 << key)) ? true : false;
+	return (g_joyKeyState[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
 //===================
 // ƒgƒŠƒK[î•ñ‚ðŽæ“¾
 //===================
 bool JoyPadTrigger(JOYKEY key, int player)
 {
-	return (g_joyKeyStateTrigger[0].Gamepad.wButtons & (0x01 << key)) ? true : false;
-
 	return (g_joyKeyStateTrigger[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
-
 }
 
 XINPUT_STATE* GetState(void)

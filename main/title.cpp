@@ -169,7 +169,7 @@ void UpdateTitle(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffTitle->Unlock();
 
-	if (KeybordTrigger(DIK_W) == true || OnMouseDown(MOUSE_L) == true)//W
+	if (KeybordTrigger(DIK_W) == true || OnMouseDown(MOUSE_L) == true || JoyPadTrigger(JOYKEY_UP, PLAYER_1) == true)//W
 	{//Wキーが押された
 		nSelect2--;
 	}
@@ -178,25 +178,25 @@ void UpdateTitle(void)
 		nSelect2++;
 	}
 	
-	//ゲームパッド1P
-	if (JoyPadTrigger(JOYKEY_DOWN, XInputGetState(1, pState)) == true)
-	{
-		nSelect2--;
-	}
-	else if (JoyPadTrigger(JOYKEY_UP, XInputGetState(1, pState)) == true)
-	{
-		nSelect2++;
-	}
+	////ゲームパッド1P
+	//if (JoyPadTrigger(JOYKEY_DOWN, XInputGetState(1, pState)) == true)
+	//{
+	//	nSelect2++;
+	//}
+	//else if (JoyPadTrigger(JOYKEY_UP, XInputGetState(1, pState)) == true)
+	//{
+	//	nSelect2--;
+	//}
 
-	//ゲームパッド2P
-	if (JoyPadTrigger(JOYKEY_DOWN, XInputGetState(0, pState)) == true)
-	{
-		nSelect2--;
-	}
-	else if (JoyPadTrigger(JOYKEY_UP, XInputGetState(0, pState)) == true)
-	{
-		nSelect2++;
-	}
+	////ゲームパッド2P
+	//if (JoyPadTrigger(JOYKEY_DOWN, XInputGetState(0, pState)) == true)
+	//{
+	//	nSelect2++;
+	//}
+	//else if (JoyPadTrigger(JOYKEY_UP, XInputGetState(0, pState)) == true)
+	//{
+	//	nSelect2--;
+	//}
 
 	//範囲を超えないようにする
 	if (nSelect2 < MODE_TUTRIAL)
