@@ -265,7 +265,7 @@ void UpdateGame(void)
 
 #ifdef _DEBUG// デバッグ
 
-			if (KeybordTrigger(DIK_O) == true || JoyPadTrigger(JOYKEY_A) == true)
+			if (KeybordTrigger(DIK_O) == true || JoyPadTrigger(JOYKEY_A,PLAYER_1) == true)
 			{// OまたはAボタン
 
 				//リザルトに移る

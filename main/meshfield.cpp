@@ -1,4 +1,5 @@
 #include "meshfield.h"
+#include "meshwall.h"
 
 //グローバル変数宣言
 LPDIRECT3DTEXTURE9 g_pTextureMeshField = NULL;//テクスチャへのポインタ

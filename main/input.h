@@ -36,6 +36,13 @@ typedef enum
 	MOUSE_MAX
 }MouseButton;
 
+typedef enum
+{
+	PLAYER_1 = 0,
+	PLAYER_2,
+	PLAYER_MAX
+}PLAYER;
+
 //==================
 //プロトタイプ
 //==================
@@ -52,10 +59,11 @@ bool KeybordRepeat(int nKey);
 HRESULT InitJoypad(void);
 void UninitJoypad(void);
 void UpdateJoypad(void);
-bool GetJoypadPress(JOYKEY key);
-bool JoyPadTrigger(JOYKEY key);
-bool GetJoyStick(void);
+bool GetJoypadPress(JOYKEY key, int player);
+bool JoyPadTrigger(JOYKEY key, int player);
+bool GetJoyStick(int player);
 XINPUT_STATE* GetJoyStickAngle(void);
+XINPUT_STATE* GetState(void);
 
 //	マウス
 HRESULT InitMausu(HINSTANCE hInstance, HWND hWnd);

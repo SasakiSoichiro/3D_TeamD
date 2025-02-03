@@ -85,7 +85,7 @@ void UpdateTutrial(void)
 	{//ƒGƒ“ƒ^[‚ª‰Ÿ‚³‚ê‚½‚ç
 		SetFade(MODE_GAME);
 	}
-	else if (GetJoypadPress(JOYKEY_START) == true)
+	else if (GetJoypadPress(JOYKEY_START,PLAYER_2) == true)
 	{
 		SetFade(MODE_GAME);
 	}

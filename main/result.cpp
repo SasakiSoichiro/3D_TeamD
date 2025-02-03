@@ -107,7 +107,7 @@ void UpdateResult(void)
 	{//ƒGƒ“ƒ^[‚ª‰Ÿ‚³‚ê‚½‚ç
 		SetFade(MODE_RANKING);
 	}
-	else if (GetJoypadPress(JOYKEY_START) == true)
+	else if (GetJoypadPress(JOYKEY_START,PLAYER_1) == true)
 	{
 		SetFade(MODE_RANKING);
 	}

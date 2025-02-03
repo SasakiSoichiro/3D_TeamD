@@ -146,6 +146,8 @@ void UpdateTitle(void)
 	XINPUT_STATE* pStick;
 	pStick = GetJoyStickAngle();
 
+	XINPUT_STATE* pState = GetState();
+
 	UpdateCamera();
 
 	//スティック状態の取得
@@ -167,14 +169,26 @@ void UpdateTitle(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffTitle->Unlock();
 
-	if (KeybordTrigger(DIK_W) == true || OnMouseDown(MOUSE_L) == true || JoyPadTrigger(JOYKEY_UP) == true)//W
+	if (KeybordTrigger(DIK_W) == true || OnMouseDown(MOUSE_L) == true)//W
 	{//Wキーが押された
 		nSelect2--;
 	}
-	else if (KeybordTrigger(DIK_S) == true || OnMouseDown(MOUSE_R) == true || JoyPadTrigger(JOYKEY_DOWN) == true)//S
-	{//Sキーが押された
-		nSelect2++;
-	}
+	//else if (KeybordTrigger(DIK_S) == true || OnMouseDown(MOUSE_R) == true || JoyPadTrigger(JOYKEY_DOWN,PLAYER_1) == true)//S
+	//{//Sキーが押された
+	//	nSelect2++;
+	//}
+	
+	//for (int nCnt = 0; nCnt < PLAYER_MAX; nCnt++, pState++)
+	//{
+		if (JoyPadTrigger(JOYKEY_UP, XInputGetState(0, pState)) == true)
+		{
+			nSelect2--;
+		}
+		else if (JoyPadTrigger(JOYKEY_DOWN, XInputGetState(1, pState)) == true)
+		{
+			nSelect2--;
+		}
+	//}
 
 	//範囲を超えないようにする
 	if (nSelect2 < MODE_TUTRIAL)
@@ -201,7 +215,7 @@ void UpdateTitle(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffTitle->Unlock();
 
-	if (KeybordTrigger(DIK_RETURN) == true || JoyPadTrigger(JOYKEY_A) == true || OnMouseDown(MOUSE_H) == true || JoyPadTrigger(JOYKEY_START) == true)
+	if (KeybordTrigger(DIK_RETURN) == true || JoyPadTrigger(JOYKEY_A,PLAYER_2) == true || OnMouseDown(MOUSE_H) == true || JoyPadTrigger(JOYKEY_START,PLAYER_2) == true)
 	{//決定キーが押された
 
 		// 音楽を鳴らす

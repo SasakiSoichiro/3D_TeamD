@@ -17,9 +17,9 @@
 //================================================
 // グローバル
 //================================================
-XINPUT_STATE g_joyKeyState;					//ジョイパッドのプレス情報
-XINPUT_STATE g_OldKeyState;
-XINPUT_STATE g_joyKeyStateTrigger;
+XINPUT_STATE g_joyKeyState[PLAYER_MAX] = {}; 					//ジョイパッドのプレス情報
+XINPUT_STATE g_OldKeyState[PLAYER_MAX] = {};
+XINPUT_STATE g_joyKeyStateTrigger[PLAYER_MAX] = {};
 LPDIRECTINPUT8 g_pInput = NULL;				//DeirectInputへのポインタ
 LPDIRECTINPUTDEVICE8 g_pDevKeyboard = NULL;	//入力デバイスへのポインタ
 LPDIRECTINPUT8 g_pInputMause = NULL;				//DeirectInputへのポインタ
@@ -147,9 +147,12 @@ bool KeybordRepeat(int nKey)
 //===================
 HRESULT InitJoypad(void)
 {
-	//メモリのクリア
-	memset(&g_joyKeyState, 0, sizeof(XINPUT_STATE));
-
+	for (int count = 0; count < PLAYER_MAX; count++)
+	{
+		//メモリのクリア
+		memset(&g_joyKeyState[count], 0, sizeof(XINPUT_STATE));
+	}
+	
 	//xinputのステートの設定(有効にする
 	XInputEnable(true);
 
@@ -168,72 +171,80 @@ void UninitJoypad(void)
 //===================
 void UpdateJoypad(void)
 {
-	XINPUT_STATE joyKeyState;		//	入力情報
+	XINPUT_STATE joyKeyState[MAX_PAD];		//	入力情報
 
-	g_OldKeyState = g_joyKeyState;		//	キーボードプレス情報を保存
-
-	//	ジョイパッドの状態を取得
-	if (XInputGetState(0, &joyKeyState) == ERROR_SUCCESS)
+	for (int p = 0; p < PLAYER_MAX; p++)
 	{
-		WORD Button = joyKeyState.Gamepad.wButtons;
-		WORD OldButton = g_joyKeyState.Gamepad.wButtons;
+		g_OldKeyState[p] = g_joyKeyState[p];		//	キーボードプレス情報を保存
 
-		g_joyKeyStateTrigger.Gamepad.wButtons = Button & ~OldButton;
+		//	ジョイパッドの状態を取得
+		if (XInputGetState(0, &joyKeyState[p]) == ERROR_SUCCESS)
+		{
+			WORD Button = joyKeyState[p].Gamepad.wButtons;
+			WORD OldButton = g_joyKeyState[p].Gamepad.wButtons;
 
-		g_joyKeyState = joyKeyState;		//	ジョイパッドのプレス情報を保存
+			g_joyKeyStateTrigger[p].Gamepad.wButtons = Button & ~OldButton;
+
+			g_joyKeyState[p] = joyKeyState[p];		//	ジョイパッドのプレス情報を保存
+		}
 	}
 }
 //===================
 // プレス情報を取得
 //===================
-bool GetJoypadPress(JOYKEY key)
+bool GetJoypadPress(JOYKEY key, int player)
 {
-	return (g_joyKeyState.Gamepad.wButtons & (0x01 << key)) ? true : false;
+	return (g_joyKeyState[player].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
 //===================
 // トリガー情報を取得
 //===================
-bool JoyPadTrigger(JOYKEY key)
+bool JoyPadTrigger(JOYKEY key, int player)
 {
-	return (g_joyKeyStateTrigger.Gamepad.wButtons & (0x01 << key)) ? true : false;
+	return (g_joyKeyStateTrigger[0].Gamepad.wButtons & (0x01 << key)) ? true : false;
+
+	return (g_joyKeyStateTrigger[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
+
+}
+
+XINPUT_STATE* GetState(void)
+{
+	return &g_joyKeyStateTrigger[0];
 }
 //===========================
 //
 //	スティックそうさ
 //
 //===========================
-bool GetJoyStick(void)
+bool GetJoyStick(int player)
 {
-	bool joykey = false;
+	bool joykey[PLAYER_MAX] = { false };
 
 	//左スティック
-	if (g_joyKeyState.Gamepad.sThumbLX >= 100 ||
-		g_joyKeyState.Gamepad.sThumbLX <= -100 ||
-		g_joyKeyState.Gamepad.sThumbLY >= 100 ||
-		g_joyKeyState.Gamepad.sThumbLY <= -100
-		)
+	if (g_joyKeyState[player].Gamepad.sThumbLX >= 100 ||
+		g_joyKeyState[player].Gamepad.sThumbLX <= -100 ||
+		g_joyKeyState[player].Gamepad.sThumbLY >= 100 ||
+		g_joyKeyState[player].Gamepad.sThumbLY <= -100)
 	{
-		joykey = true;
+		joykey[player] = true;
 	}
 	//右スティック
-	else if (g_joyKeyState.Gamepad.sThumbRX >= 100 ||
-		g_joyKeyState.Gamepad.sThumbRX <= -100 ||
-		g_joyKeyState.Gamepad.sThumbRY >= 100 ||
-		g_joyKeyState.Gamepad.sThumbRY <= -100
-		)
+	else if (g_joyKeyState[player].Gamepad.sThumbRX >= 100 ||
+		g_joyKeyState[player].Gamepad.sThumbRX <= -100 ||
+		g_joyKeyState[player].Gamepad.sThumbRY >= 100 ||
+		g_joyKeyState[player].Gamepad.sThumbRY <= -100)
 	{
-		joykey = true;
+		joykey[player] = true;
 	}
 
-
-	return joykey;
+	return joykey[player];
 }
 //==========================
 //	スティックの情報取得
 //===========================
 XINPUT_STATE* GetJoyStickAngle(void)
 {
-	return &g_joyKeyState;
+	return &g_joyKeyState[0];
 }
 
 //====================================
