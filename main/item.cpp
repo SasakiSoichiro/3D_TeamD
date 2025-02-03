@@ -308,11 +308,3 @@ void Setitem(D3DXVECTOR3 pos, ITEMTYPE type)
 		break;
 	}
 }
-
-//===================
-//	“–‚½‚è”»’èˆ—
-//===================
-void Collisionitem(D3DXVECTOR3 pos, ITEMTYPE type)
-{
-
-}

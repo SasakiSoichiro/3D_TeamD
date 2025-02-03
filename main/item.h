@@ -33,6 +33,5 @@ void Updateitem(void);
 void Drawitem(void);
 ITEM* Getitem(void);
 void Setitem(D3DXVECTOR3 pos, ITEMTYPE type);
-void Collisionitem(D3DXVECTOR3 pos, ITEMTYPE type);
 
 #endif // !_ITEM_H_
