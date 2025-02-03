@@ -18,21 +18,23 @@
 //アイテムの種類
 typedef enum
 {
-	BILLBOARDTYPE_0,
-	BILLBOARDTYPE_1,
-	BILLBOARDTYPE_2,
-	BILLBOARDTYPE_3,
-	BILLBOARDTYPE_4,
-	BILLBOARDTYPE_MAX
+	BILLBOARDTYPE_0,	//木
+	BILLBOARDTYPE_1,	//拾う
+	BILLBOARDTYPE_2,	//鍵を持っていない(0/2)
+	BILLBOARDTYPE_3,	//鍵を持っているが1つのみ(1/2)
+	BILLBOARDTYPE_4,	//脱出可能
+	BILLBOARDTYPE_5,	//脱出する溜めゲージ
+	BILLBOARDTYPE_MAX	
 }TYPE;
 
 static const char* ITEM_TEXTURE[BILLBOARDTYPE_MAX] =
 {
-	"data\\texture\\Wood.png",
-	"data\\texture\\itembilbord.jpg",
-	"data\\texture\\batu.png",
-	"data\\texture\\maru.png",
-	"data\\texture\\hold.jpg",
+	"data\\texture\\Wood.png",			//木の画像
+	"data\\texture\\itembilbord.jpg",	//拾う画像
+	"data\\texture\\no2.png",			//鍵を持っていない(0/2)
+	"data\\texture\\no1.png",			//鍵を持っているが1つのみ(1/2)
+	"data\\texture\\ok.png",			//脱出可能
+	"data\\texture\\hold.jpg",			//脱出の溜めゲージ
 
 };
 

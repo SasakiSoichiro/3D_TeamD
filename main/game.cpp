@@ -106,13 +106,13 @@ void InitGame(void)
 	SetBillboard(D3DXVECTOR3(-100.0f, 50.0f, -100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_1, D3DXVECTOR3(2.0f, 2.0f, 0.0f));
 
 	//	ビルボード(×)
-	SetBillboard(D3DXVECTOR3(-1780.0f, 25.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_2, D3DXVECTOR3(4.0f, 4.0f, 0.0f));
-
-	//	ビルボード(〇)
 	SetBillboard(D3DXVECTOR3(-1780.0f, 25.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_3, D3DXVECTOR3(4.0f, 4.0f, 0.0f));
 
+	//	ビルボード(〇)
+	SetBillboard(D3DXVECTOR3(-1780.0f, 25.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_4, D3DXVECTOR3(4.0f, 4.0f, 0.0f));
+
 	//	ビルボード(解除)
-	SetBillboard(D3DXVECTOR3(-1750.0f, 25.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_4, D3DXVECTOR3(1.0f, 1.0f, 0.0f));
+	SetBillboard(D3DXVECTOR3(-1750.0f, 25.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_5, D3DXVECTOR3(1.0f, 1.0f, 0.0f));
 
 	//　敵
 	SetEnemy(D3DXVECTOR3(-1750.0f, 0.0f, 0.0f),0);
@@ -345,14 +345,14 @@ void DrawGame(void)
 	//　敵
 	DrawEnemy();
 
-	//　ビルボード
-	DrawBillboard();
-
 	//　ギミック
 	DrawGimmick();
 
 	//	ゴンザレス
 	DrawGonzaresu();
+
+	//　ビルボード
+	DrawBillboard();
 
 	//　タイム
 	DrawTime();
