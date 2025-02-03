@@ -190,7 +190,7 @@ void UpdateBillboard()
 				if (isbill == true)
 				{
 
-					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
+					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_4)
 					{
 						bExchange = true;
 						bChange = false;
@@ -220,7 +220,7 @@ void UpdateBillboard()
 				//プレイヤーがアイテムの範囲に入ったら
 				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 				{
-					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_4)
+					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_5)
 					{
 						bChange = false;
 						g_Billboard[nCnt].bUse = true;
@@ -267,7 +267,7 @@ void UpdateBillboard()
 				if (isbill == true)
 				{
 
-					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_2)
+					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
 					{
 						bChange = true;
 						bExchange = false;
@@ -278,7 +278,7 @@ void UpdateBillboard()
 				if (isbill == false)
 				{
 
-					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_2)
+					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
 					{
 						bChange = false;
 						bExchange = true;
