@@ -66,7 +66,7 @@ void InitRanking(void)
 
 	//テクスチャの読み込み(背景)
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\rankingu.png",
+		"data\\texture\\Gonzaresu.png",
 		&g_pTextureBKG);
 
 	//テクスチャの読み込み(:)
