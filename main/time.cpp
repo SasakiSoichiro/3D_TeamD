@@ -283,7 +283,7 @@ void UpdateTime(void)
 		}
 		else
 		{//‚»‚êˆÈŠO
-			SubNs(-5);
+			SubNs(-59);
 
 			SubMin(1);
 		}
