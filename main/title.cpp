@@ -178,12 +178,22 @@ void UpdateTitle(void)
 	//	nSelect2++;
 	//}
 	
+	int Pad1;
+	bool player1 = false;
+
+	Pad1 = GetJoypadInputState(DX_INPUT_PAD1);
+
+	if ( Pad1 & DX_INPUT_PAD1)
+	{
+		player1 = true;
+	}
+
 	//ゲームパッド1P
-	if (JoyPadTrigger(JOYKEY_DOWN, XInputGetState(0, pState)) == true)
+	if (JoyPadTrigger(JOYKEY_DOWN,Pad1) && player1 == true)
 	{
 		nSelect2++;
 	}
-	else if (JoyPadTrigger(JOYKEY_UP, XInputGetState(0, pState)) == true)
+	else if (JoyPadTrigger(JOYKEY_UP, Pad1) && player1 == true)
 	{
 		nSelect2--;
 	}
