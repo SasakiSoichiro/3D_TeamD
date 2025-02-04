@@ -207,14 +207,15 @@ bool JoyPadTrigger(JOYKEY key, int player)
 	return (g_joyKeyStateTrigger[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
 
-XINPUT_STATE* GetState(void)
-{
-	return &g_joyKeyStateTrigger[0];
-}
+//XINPUT_STATE* GetState(void)
+//{
+//	return &g_joyKeyStateTrigger[0];
+//}
 
+//ジョイパッドの入力情報取得
 int GetJoypadInputState(int InputType)
 {
-
+	return S_OK;
 }
 //===========================
 //

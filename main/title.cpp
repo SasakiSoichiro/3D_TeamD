@@ -146,7 +146,12 @@ void UpdateTitle(void)
 	XINPUT_STATE* pStick;
 	pStick = GetJoyStickAngle();
 
-	XINPUT_STATE* pState = GetState();
+	int Pad1, Pad2 = 0;
+	Pad1 = GetJoypadInputState(DX_INPUT_PAD1);
+
+	Pad2 = GetJoypadInputState(DX_INPUT_PAD2);
+
+	//XINPUT_STATE* pState = GetState();
 
 	UpdateCamera();
 
@@ -179,21 +184,21 @@ void UpdateTitle(void)
 	//}
 	
 	//ゲームパッド1P
-	if (JoyPadTrigger(JOYKEY_DOWN, XInputGetState(0, pState)) == true)
+	if (Pad1 & JOYKEY_DOWN)
 	{
 		nSelect2++;
 	}
-	else if (JoyPadTrigger(JOYKEY_UP, XInputGetState(0, pState)) == true)
+	else if (Pad1 & JOYKEY_UP)
 	{
 		nSelect2--;
 	}
 
 	//ゲームパッド2P
-	if (JoyPadTrigger(JOYKEY_DOWN, XInputGetState(1, pState)) == true)
+	if (Pad2 & JOYKEY_DOWN)
 	{
 		nSelect2++;
 	}
-	else if (JoyPadTrigger(JOYKEY_UP, XInputGetState(1, pState)) == true)
+	else if (Pad2 & JOYKEY_UP)
 	{
 		nSelect2--;
 	}
