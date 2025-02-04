@@ -91,4 +91,5 @@ void DrawEnemyPos(void);
 void DrawHoldTime(void);
 void DrawNoTouchTime(void);
 void DrawTotalTime(void);
+void DrawDebugPlayer(void);
 #endif

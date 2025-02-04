@@ -212,10 +212,10 @@ XINPUT_STATE* GetState(void)
 	return &g_joyKeyStateTrigger[0];
 }
 
-int GetJoypadInputState(int InputType)
-{
-
-}
+//int GetJoypadInputState(int InputType)
+//{
+//
+//}
 //===========================
 //
 //	スティックそうさ

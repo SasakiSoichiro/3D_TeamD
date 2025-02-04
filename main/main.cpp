@@ -24,7 +24,7 @@
 //	グローバル宣言
 //=====================
 LPDIRECT3D9 g_pD3D = NULL;					//	Direct3Dへのポインタ
-LPDIRECT3DDEVICE9 g_pD3DDeviec = NULL;		//	
+LPDIRECT3DDEVICE9 g_pD3DDevice = NULL;		//	Direct3Dデバイスへのポインタ	
 MODE g_mode = MODE_TITLE;					//	現在のモード
 bool g_isFullscreen = false;				//	ウィンドウを切り替えるためのフラグ
 RECT g_windowRect;							//	ウィンドウを切り替えるための変数
@@ -36,7 +36,7 @@ int g_nCntFPS = 0;							//	FPSカウント
 //========================
 LPDIRECT3DDEVICE9 GetDevice(void)
 {
-	return g_pD3DDeviec;
+	return g_pD3DDevice;
 }
 
 //=========================
@@ -317,14 +317,14 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		hWnd,
 		D3DCREATE_HARDWARE_VERTEXPROCESSING,
 		&d3dpp,
-		&g_pD3DDeviec)))
+		&g_pD3DDevice)))
 	{
 		if (FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT,
 			D3DDEVTYPE_REF,
 			hWnd,
 			D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 			&d3dpp,
-			&g_pD3DDeviec)))
+			&g_pD3DDevice)))
 
 		{
 			return E_FAIL;
@@ -334,31 +334,31 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//===========================
 	//	レンダーステートの設定
 	//===========================
-	g_pD3DDeviec->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	g_pD3DDeviec->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	g_pD3DDeviec->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	g_pD3DDeviec->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	//=========================
 	//	サンプラーステート
 	//=========================
-	g_pD3DDeviec->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-	g_pD3DDeviec->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-	g_pD3DDeviec->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
-	g_pD3DDeviec->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+	g_pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	g_pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	g_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
+	g_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
 
 	//=====================================
 	//	テクスチャステージステートの設定
 	//=====================================
-	g_pD3DDeviec->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
-	g_pD3DDeviec->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-	g_pD3DDeviec->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
+	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
 
 
 	//================================
 	//	デバック表示用フォントの生成
 	//================================
-	D3DXCreateFont(g_pD3DDeviec, 18, 0, 0, 0,
+	D3DXCreateFont(g_pD3DDevice, 18, 0, 0, 0,
 		FALSE, SHIFTJIS_CHARSET,
 		OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH,
 		"Terminal", &g_pFont);
@@ -417,10 +417,10 @@ void Uninit(void)
 	}
 
 	//	デバイスの破棄
-	if (g_pD3DDeviec != NULL)
+	if (g_pD3DDevice != NULL)
 	{
-		g_pD3DDeviec->Release();
-		g_pD3DDeviec = NULL;
+		g_pD3DDevice->Release();
+		g_pD3DDevice = NULL;
 	}
 
 	//	なんかの破棄
@@ -483,10 +483,10 @@ void Draw(void)
 		pDevice->SetViewport(&pCamera->viewport);
 
 		//	画面クリア
-		g_pD3DDeviec->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(0, 0, 0, 255), 1.0f, 0);
+		g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(0, 0, 0, 255), 1.0f, 0);
 
 		//	描画開始
-		if (SUCCEEDED(g_pD3DDeviec->BeginScene()))
+		if (SUCCEEDED(g_pD3DDevice->BeginScene()))
 		{
 			//カメラを設定する
 			SetCamera(n);
@@ -518,42 +518,42 @@ void Draw(void)
 			DrawFade();
 
 #ifdef _DEBUG
-			////	FPSの表示
-			//DrawFPS();
+			//	FPSの表示
+			DrawFPS();
 
-			////カメラ注視点の描画処理
-			//DrawCameraPosR();
+			//カメラ注視点の描画処理
+			DrawCameraPosR();
 
-			////カメラ視点の描画処理
-			//DrawCameraPosV();
+			//カメラ視点の描画処理
+			DrawCameraPosV();
 
-			////カメラ向きの描画処理
-			//DrawCameraRot();
+			//カメラ向きの描画処理
+			DrawCameraRot();
 
-			////鍵を持っているかのデバッグ表示処理
-			//DrawDebugKey();
+			//鍵を持っているかのデバッグ表示処理
+			DrawDebugKey();
 
-			////エネミー座標の描画処理
-			//DrawEnemyPos();
+			//エネミー座標の描画処理
+			DrawEnemyPos();
 
-			////	長押し時間
-			//DrawHoldTime();
+			//	長押し時間
+			DrawHoldTime();
 
-			////	離してる時間
-			//DrawNoTouchTime();
-			//
-			////	合計時間
-			//DrawTotalTime();
+			//	離してる時間
+			DrawNoTouchTime();
+			
+			//	合計時間
+			DrawTotalTime();
 
 #endif // DEBUG
 
 			//	終了
-			g_pD3DDeviec->EndScene();
+			g_pD3DDevice->EndScene();
 		}
 	}
 
 	//入れ替え
-	g_pD3DDeviec->Present(NULL, NULL, NULL, NULL);
+	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
 	
 }
 
@@ -735,4 +735,13 @@ void DrawTotalTime(void)
 	sprintf(&aStr[0], "現在の長押し時間 : %d 秒\n", pHold->HolTime);
 	g_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(0, 0, 0, 255));
 
+}
+void DrawDebugPlayer(void)
+{
+	Player* pPlayer = GetPlayer();
+
+	RECT rect = { 0,240,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+	sprintf(&aStr[0], "Player : %\n", pPlayer->HolTime);
+	g_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(0, 0, 0, 255));
 }

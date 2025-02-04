@@ -92,8 +92,12 @@ void InitGame(void)
 	//　各オブジェクトの設定処理
 	LoadEdit();
 	
+	
+
 	//　鍵の上部
 	Setitem(D3DXVECTOR3(50.0f, 1.0f, 0.0f), ITEMTYPE_ONE);
+
+
 
 	//　薙刀
 	//Setitem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), ITEMTYPE_FOUR);
