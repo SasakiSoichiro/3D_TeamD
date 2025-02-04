@@ -43,6 +43,16 @@ typedef enum
 	PLAYER_MAX
 }PLAYER;
 
+typedef enum
+{
+	DX_INPUT_KEY_PAD1 = 0, // キー入力とパッド１
+	DX_INPUT_PAD1, //パッド１
+	DX_INPUT_PAD2, //パッド２
+	DX_INPUT_KEY, //キー入力
+	DX_INPUT_MAX
+}InputType;
+
+
 //==================
 //プロトタイプ
 //==================
@@ -64,6 +74,7 @@ bool JoyPadTrigger(JOYKEY key, int player);
 bool GetJoyStick(int player);
 XINPUT_STATE* GetJoyStickAngle(void);
 XINPUT_STATE* GetState(void);
+int GetJoypadInputState(int InputType);
 
 //	マウス
 HRESULT InitMausu(HINSTANCE hInstance, HWND hWnd);

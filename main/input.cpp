@@ -6,6 +6,7 @@
 //================================================
 
 #include "input.h"
+#include "player.h"
 
 //================================================
 // マクロ
@@ -187,6 +188,7 @@ void UpdateJoypad(void)
 
 			g_joyKeyState[p] = joyKeyState[p];		//	ジョイパッドのプレス情報を保存
 		}
+
 	}
 }
 //===================
@@ -194,6 +196,7 @@ void UpdateJoypad(void)
 //===================
 bool GetJoypadPress(JOYKEY key, int player)
 {
+
 	return (g_joyKeyState[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
 //===================
@@ -207,6 +210,11 @@ bool JoyPadTrigger(JOYKEY key, int player)
 XINPUT_STATE* GetState(void)
 {
 	return &g_joyKeyStateTrigger[0];
+}
+
+int GetJoypadInputState(int InputType)
+{
+
 }
 //===========================
 //
