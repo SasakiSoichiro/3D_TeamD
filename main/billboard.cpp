@@ -17,7 +17,7 @@
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffBillboard = NULL;					//頂点バッファへのポインタ
 LPDIRECT3DTEXTURE9 g_pTextureBillboard[BILLBOARDTYPE_MAX] = {};		//テクスチャへのポインタ
 Billboard g_Billboard[MAX_BILLBOARD];
-static float a = 0.0f;
+static float a;
 bool bExchange;
 bool bNext;
 bool bChange;
@@ -62,6 +62,7 @@ void InitBillboard()
 		bExchange = false;
 		bNext = false;
 		bChange = false;
+		a = 0.0f;
 
 		//頂点情報の設定
 		pVtx[0].pos = D3DXVECTOR3(-15.0f, 35.0f, 0.0f);
