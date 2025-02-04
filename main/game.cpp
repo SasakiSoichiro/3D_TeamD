@@ -92,8 +92,43 @@ void InitGame(void)
 	//　各オブジェクトの設定処理
 	LoadEdit();
 	
-	//　鍵の上部
-	Setitem(D3DXVECTOR3(50.0f, 1.0f, 0.0f), ITEMTYPE_ONE);
+	int a = rand() % 6 + 1;
+
+	if (a == 1)
+	{
+		//　鍵の上部
+		Setitem(D3DXVECTOR3(1413.6f, 1.5f, -491.2f), ITEMTYPE_ONE);
+	}
+	
+	if (a == 2)
+	{
+		//　鍵の上部
+		Setitem(D3DXVECTOR3(527.0f, 1.5f, -341.2f), ITEMTYPE_ONE);
+	}
+
+	if (a == 3)
+	{
+		//　鍵の上部
+		Setitem(D3DXVECTOR3(878.7f, 1.5f, 651.4f), ITEMTYPE_ONE);
+	}
+
+	if (a == 4)
+	{
+		//　鍵の上部
+		Setitem(D3DXVECTOR3(165.0f, 1.5f, 591.2f), ITEMTYPE_ONE);
+	}
+
+	if (a == 5)
+	{
+		//　鍵の上部
+		Setitem(D3DXVECTOR3(-278.3f, 1.5f, 563.1f), ITEMTYPE_ONE);
+	}
+
+	if (a == 6)
+	{
+		//　鍵の上部
+		Setitem(D3DXVECTOR3(-1169.5f, 1.5f, 421.5f), ITEMTYPE_ONE);
+	}
 
 	//　薙刀
 	//Setitem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), ITEMTYPE_FOUR);
