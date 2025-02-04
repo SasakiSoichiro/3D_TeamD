@@ -545,6 +545,8 @@ void Draw(void)
 			//	‡ŒvŽžŠÔ
 			DrawTotalTime();
 
+			DrawDebugPlayer();
+
 #endif // DEBUG
 
 			//	I—¹
@@ -740,8 +742,8 @@ void DrawDebugPlayer(void)
 {
 	Player* pPlayer = GetPlayer();
 
-	RECT rect = { 0,240,SCREEN_WIDTH,SCREEN_HEIGHT };
+	RECT rect = { 0,255,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
-	sprintf(&aStr[0], "Player : %\n", pPlayer->HolTime);
-	g_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(0, 0, 0, 255));
+	sprintf(&aStr[0], "Player->Pos.x = %.1f : Player->Pos.y = %.1f : Player->Pos.z = %.1f\n", pPlayer->pos.x,pPlayer->pos.y,pPlayer->pos.z);
+	g_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));
 }
