@@ -163,6 +163,7 @@ void UpdateBillboard()
 				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 				{
 
+					//拾うビルボードが使われてるとき
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_1)
 					{
 
@@ -172,24 +173,29 @@ void UpdateBillboard()
 						g_Billboard[nCnt].pos.y = pItem->pos.y + 10.0f;
 						g_Billboard[nCnt].pos.z = pItem->pos.z;
 
+						//Fを押されたとき
 						if (KeybordTrigger(DIK_F) == true)
-						{//Fを押されたとき
+						{
 							g_Billboard[nCnt].bUse = false;
 						}
 					}
 				}
+
+				//プレイヤーがアイテムの範囲外にいったら
 				else if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) > (fRadX * fRadX))
 				{
 					g_Billboard[nCnt].bDisplay = false;
 				}
 			}
-
+			//鍵を持った時
 			if (pItem->bKey_Top == true)
 			{
 
+				//脱出ドアの範囲に入ったとき
 				if (isbill == true)
 				{
 
+					//脱出可能ビルボードを使われてるとき
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_4)
 					{
 						bExchange = true;
@@ -198,34 +204,45 @@ void UpdateBillboard()
 						g_Billboard[nCnt].bDisplay = true;
 					}
 				}
+
+				//脱出ドアの範囲外にいったら
 				else if (isbill == false)
 				{
 					g_Billboard[nCnt].bUse = false;
 					g_Billboard[nCnt].bDisplay = false;
 				}
+
 				//プレイヤーの半径の算出用変数
 				float fPRadPos = 28.0f;
+
 				//アイテムの半径の算出用変数
 				float fIRadPos = 28.0f;
+
 				//プレイヤーの位置を取得
 				D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
+
 				//アイテムのプレイヤーの距離の差
 				D3DXVECTOR3 diff = PlayerPos - pGimick->pos;
+
 				//範囲計算
 				float fDisX = PlayerPos.x - pGimick->pos.x;
 				float fDisY = PlayerPos.y - pGimick->pos.y;
 				float fDisZ = PlayerPos.z - pGimick->pos.z;
+
 				//二つの半径を求める
 				float fRadX = fPRadPos + fIRadPos;
+
 				//プレイヤーがアイテムの範囲に入ったら
 				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 				{
+
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_5)
 					{
 						bChange = false;
 						g_Billboard[nCnt].bUse = true;
 						g_Billboard[nCnt].bDisplay = true;
 						bNext = true;
+
 						g_Billboard[nCnt].pos.x = pGimick->pos.x + 10.0f;
 						g_Billboard[nCnt].pos.y = pGimick->pos.y + 10.0f;
 						g_Billboard[nCnt].pos.z = pGimick->pos.z;
@@ -253,6 +270,7 @@ void UpdateBillboard()
 						pVtx[3].pos = D3DXVECTOR3(g_Billboard[nCnt].size.x * a, -g_Billboard[nCnt].size.y, g_Billboard[nCnt].size.z);
 					}
 				}
+				//プレイヤーがアイテムの範囲外にいったら
 				else if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) > (fRadX * fRadX))
 				{
 					g_Billboard[nCnt].bDisplay = false;
@@ -260,30 +278,34 @@ void UpdateBillboard()
 
 				pVtx += 4;
 			}
-			//if (pItem->bKey_Top == false)
-			//{
+			
+			//アイテムが使われてるとき
 			if (pItem->bUse == true)
 			{
+				//脱出ドアの範囲に入ったとき
 				if (isbill == true)
 				{
-
+					//鍵を持っているが1つのみ(1/2)ビルボードが使われてるとき
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
 					{
-						bChange = true;
-						bExchange = false;
-						g_Billboard[nCnt].bUse = true;
-						g_Billboard[nCnt].bDisplay = true;
+						bChange = true;							//鍵を持っていない(0 / 2)ときをtrueにする
+						bExchange = false;						//脱出可能をfalseにする
+						g_Billboard[nCnt].bUse = true;			//使用する
+						g_Billboard[nCnt].bDisplay = true;		//見えるようにする
 					}
 				}
+
+				//脱出ドアの範囲の外にいったとき
 				if (isbill == false)
 				{
 
+					//鍵を持っているが1つのみ(1/2)ビルボードが使われてるとき
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
 					{
-						bChange = false;
-						bExchange = true;
-						g_Billboard[nCnt].bUse = false;
-						g_Billboard[nCnt].bDisplay = false;
+						bChange = false;						//鍵を持っていない(0 / 2)ときをelseにする
+						bExchange = true;						//脱出可能をtrueにする
+						g_Billboard[nCnt].bUse = false;			//使用する
+						g_Billboard[nCnt].bDisplay = false;		//見えるようにする
 					}
 				}
 			}
@@ -341,21 +363,28 @@ void DrawBillboard()
 			//頂点バッファをデバイスのデータストリームに設定
 			pDevice->SetStreamSource(0, g_pVtxBuffBillboard, 0, sizeof(VERTEX_3D));
 
+			//脱出可能の条件文
 			if (bExchange == true && bNext == false)
 			{
 				//テクスチャの設定
 				pDevice->SetTexture(0, g_pTextureBillboard[3]);
 			}
+
+			//溜めゲージの条件文
 			if (bNext == true && bExchange == false)
 			{
 				//テクスチャの設定
 				pDevice->SetTexture(0, g_pTextureBillboard[4]);
 			}
+
+			//鍵を持っていない(0 / 2)ときの条件文
 			if (bChange == true)
 			{
 				//テクスチャの設定
 				pDevice->SetTexture(0, g_pTextureBillboard[2]);
 			}
+
+			//全部の条件文以外
 			else
 			{
 				//テクスチャの設定
