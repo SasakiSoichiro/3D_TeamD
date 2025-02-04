@@ -146,7 +146,7 @@ void UpdateTitle(void)
 	XINPUT_STATE* pStick;
 	pStick = GetJoyStickAngle();
 
-	int Pad1, Pad2 = 0;
+	int Pad1, Pad2;
 	Pad1 = GetJoypadInputState(DX_INPUT_PAD1);
 
 	Pad2 = GetJoypadInputState(DX_INPUT_PAD2);
