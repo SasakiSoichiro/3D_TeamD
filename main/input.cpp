@@ -60,7 +60,7 @@ HRESULT InitKeyboard(HINSTANCE hInstance, HWND hWnd)
 		return E_FAIL;
 	}
 
-	//	キーボードへのアクセス剣を獲得
+	//	キーボードへのアクセス権を獲得
 	g_pDevKeyboard->Acquire();
 
 	return S_OK;
@@ -207,16 +207,17 @@ bool JoyPadTrigger(JOYKEY key, int player)
 	return (g_joyKeyStateTrigger[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
 
-//XINPUT_STATE* GetState(void)
-//{
-//	return &g_joyKeyStateTrigger[0];
-//}
+XINPUT_STATE* GetState(void)
+{
+	return &g_joyKeyStateTrigger[0];
+}
 
 //ジョイパッドの入力情報取得
 int GetJoypadInputState(int InputType)
 {
 	return S_OK;
 }
+
 //===========================
 //
 //	スティックそうさ

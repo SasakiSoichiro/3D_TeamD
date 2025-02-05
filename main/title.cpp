@@ -110,6 +110,7 @@ void InitTitle(void)
 
 	//アンロック
 	g_pVtxBuffTitle->Unlock();
+
 }
 
 //---------------
@@ -151,7 +152,7 @@ void UpdateTitle(void)
 
 	Pad2 = GetJoypadInputState(DX_INPUT_PAD2);
 
-	//XINPUT_STATE* pState = GetState();
+	XINPUT_STATE* pState = GetState();
 
 	UpdateCamera();
 
@@ -174,34 +175,34 @@ void UpdateTitle(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffTitle->Unlock();
 
-	//if (KeybordTrigger(DIK_W) == true || OnMouseDown(MOUSE_L) == true || JoyPadTrigger(JOYKEY_UP, PLAYER_1) == true)//W
-	//{//Wキーが押された
-	//	nSelect2--;
-	//}
-	//else if (KeybordTrigger(DIK_S) == true || OnMouseDown(MOUSE_R) == true || JoyPadTrigger(JOYKEY_DOWN,PLAYER_1) == true)//S
-	//{//Sキーが押された
+	if (KeybordTrigger(DIK_W) == true || OnMouseDown(MOUSE_L) == true || JoyPadTrigger(JOYKEY_UP, PLAYER_1) == true)//W
+	{//Wキーが押された
+		nSelect2--;
+	}
+	else if (KeybordTrigger(DIK_S) == true || OnMouseDown(MOUSE_R) == true || JoyPadTrigger(JOYKEY_DOWN,PLAYER_1) == true)//S
+	{//Sキーが押された
+		nSelect2++;
+	}
+	
+	////ゲームパッド1P
+	//if (Pad1 & JOYKEY_DOWN)
+	//{
 	//	nSelect2++;
 	//}
-	
-	//ゲームパッド1P
-	if (Pad1 & JOYKEY_DOWN)
-	{
-		nSelect2++;
-	}
-	else if (Pad1 & JOYKEY_UP)
-	{
-		nSelect2--;
-	}
+	//else if (Pad1 & JOYKEY_UP)
+	//{
+	//	nSelect2--;
+	//}
 
-	//ゲームパッド2P
-	if (Pad2 & JOYKEY_DOWN)
-	{
-		nSelect2++;
-	}
-	else if (Pad2 & JOYKEY_UP)
-	{
-		nSelect2--;
-	}
+	////ゲームパッド2P
+	//if (Pad2 & JOYKEY_DOWN)
+	//{
+	//	nSelect2++;
+	//}
+	//else if (Pad2 & JOYKEY_UP)
+	//{
+	//	nSelect2--;
+	//}
 
 	//範囲を超えないようにする
 	if (nSelect2 < MODE_TUTRIAL)

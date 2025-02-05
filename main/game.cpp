@@ -48,7 +48,6 @@ void InitGame(void)
 
 
 	//　各オブジェクトの初期化処理
-	
 
 	//　ライト
 	InitLight();

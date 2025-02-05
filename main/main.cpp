@@ -375,16 +375,19 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		return E_FAIL;
 	}
 
-	//	
+	//	マウスの初期化処理
 	if (FAILED(InitMausu(hInstance,hWnd)))
 	{
 		return E_FAIL;
 	}
 
+	//音の初期化
 	InitSound(hWnd);
 
+	//モードの初期化
 	SetMode(g_mode);
 
+	//フェードの初期化
 	InitFade(g_mode);
 
 	return S_OK;
