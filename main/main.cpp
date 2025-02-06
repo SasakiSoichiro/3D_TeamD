@@ -426,7 +426,7 @@ void Uninit(void)
 		g_pD3DDevice = NULL;
 	}
 
-	//	‚È‚ñ‚©‚Ì”jŠü
+	//	Direct3D‚Ì”jŠü
 	if (g_pD3D != NULL)
 	{
 		g_pD3D->Release();
