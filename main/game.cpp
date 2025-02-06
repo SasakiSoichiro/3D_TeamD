@@ -124,7 +124,7 @@ void InitGame(void)
 	}
 
 	if (a == 6)
-	{
+	{//ë†
 		//Å@åÆÇÃè„ïî
 		Setitem(D3DXVECTOR3(-1169.5f, 1.5f, 421.5f), ITEMTYPE_ONE);
 	}
