@@ -118,7 +118,7 @@ void UpdateEnemy(void)
 			switch (g_Enemy[nCntEnemy].State)
 			{
 			case ENEMYSTATE_NORMAL:
-				g_Enemy[nCntEnemy].rot.y = atan2f(g_Enemy[nCntEnemy].pos.x - pPlayer->pos.x, g_Enemy[nCntEnemy].pos.z - pPlayer->pos.z);
+				g_Enemy[nCntEnemy].rotDest.y = atan2f(g_Enemy[nCntEnemy].pos.x - pPlayer->pos.x, g_Enemy[nCntEnemy].pos.z - pPlayer->pos.z);
 				fAnglemove = atan2f(pPlayer->pos.x - g_Enemy[nCntEnemy].pos.x, pPlayer->pos.z - g_Enemy[nCntEnemy].pos.z);
 
 				g_Enemy[nCntEnemy].move.x = sinf(fAnglemove) * 1.25f;
