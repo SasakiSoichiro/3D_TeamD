@@ -53,13 +53,13 @@ void InitCamera(void)
 	g_camera[0].viewport.MinZ = 0.0f;
 	g_camera[0].viewport.MaxZ = 1.0f;
 
-	////	ビューポート構成の保存	右
-	//g_camera[1].viewport.X = 640.0f;
-	//g_camera[1].viewport.Y = 0.0f;
-	//g_camera[1].viewport.Width = 640.0f;
-	//g_camera[1].viewport.Height = 720.0f;
-	//g_camera[1].viewport.MinZ = 0.0f;
-	//g_camera[1].viewport.MaxZ = 1.0f;
+	//	ビューポート構成の保存	右
+	g_camera[1].viewport.X = 640.0f;
+	g_camera[1].viewport.Y = 0.0f;
+	g_camera[1].viewport.Width = 640.0f;
+	g_camera[1].viewport.Height = 720.0f;
+	g_camera[1].viewport.MinZ = 0.0f;
+	g_camera[1].viewport.MaxZ = 1.0f;
 
 	////	ビューポート構成の保存	真ん中
 	//g_camera[2].viewport.X = 450.0f;
