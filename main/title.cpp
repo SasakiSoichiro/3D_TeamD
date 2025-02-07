@@ -184,25 +184,25 @@ void UpdateTitle(void)
 		nSelect2++;
 	}
 	
-	////ゲームパッド1P
-	//if (Pad1 & JOYKEY_DOWN)
-	//{
-	//	nSelect2++;
-	//}
-	//else if (Pad1 & JOYKEY_UP)
-	//{
-	//	nSelect2--;
-	//}
+	//ゲームパッド1P
+	if (Pad1 & JOYKEY_DOWN)
+	{
+		nSelect2++;
+	}
+	else if (Pad1 & JOYKEY_UP)
+	{
+		nSelect2--;
+	}
 
-	////ゲームパッド2P
-	//if (Pad2 & JOYKEY_DOWN)
-	//{
-	//	nSelect2++;
-	//}
-	//else if (Pad2 & JOYKEY_UP)
-	//{
-	//	nSelect2--;
-	//}
+	//ゲームパッド2P
+	if (Pad2 & JOYKEY_DOWN)
+	{
+		nSelect2++;
+	}
+	else if (Pad2 & JOYKEY_UP)
+	{
+		nSelect2--;
+	}
 
 	//範囲を超えないようにする
 	if (nSelect2 < MODE_TUTRIAL)
