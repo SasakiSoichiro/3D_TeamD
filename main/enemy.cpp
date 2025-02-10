@@ -152,8 +152,8 @@ void UpdateEnemy(void)
 				//チェイス処理
 				g_Enemy[0].rotDest.y = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z)) + D3DX_PI;
 				fAnglemove = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z));
-				g_Enemy[0].move.x = sinf(fAnglemove) *2.0f;
-				g_Enemy[0].move.z = cosf(fAnglemove) *2.0f;
+				g_Enemy[0].move.x = sinf(fAnglemove) *4.0f;
+				g_Enemy[0].move.z = cosf(fAnglemove) *4.0f;
 				break;
 
 			case ENEMYSTATE_DAMAGE:

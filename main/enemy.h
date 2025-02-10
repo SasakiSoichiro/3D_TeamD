@@ -14,6 +14,7 @@
 #define EPARTS_MAX (16)
 #define EUSEPARTS_MAX (16)
 #define POINT_MAX (4)
+#define EBLEND_FRAME (10)
 
 //敵の状態
 typedef enum
@@ -90,6 +91,16 @@ typedef struct
 	int nNumKey;//キーの総数
 	int nKey;//現在のキーNo.
 	int nCntMotion;//モーションカウンター
+
+	bool bFinishMotion;			//現在のモーションが終了しているかどうか
+	bool bBlendMotion;			//ブレンドモーションがあるかどうか
+	MOTIONTYPE motionTypeBlend;	//モーションの種類
+	int nNumKeyBlend;			//キーの総数
+	int nKeyBlend;				//現在のキーNo.
+	int nCntMotionBlend;		//モーションカウンター
+	int nFrameBlend;			//ブレンドのフレーム数
+	int nCntBlend;				//ブレンドカウンター
+
 
 	int nIdxLife;//ライフバーのIdx
 	int IdxShadow;
