@@ -94,7 +94,7 @@ typedef struct
 
 	bool bFinishMotion;			//現在のモーションが終了しているかどうか
 	bool bBlendMotion;			//ブレンドモーションがあるかどうか
-	MOTIONTYPE motionTypeBlend;	//モーションの種類
+	EMOTIONTYPE motionTypeBlend;	//モーションの種類
 	int nNumKeyBlend;			//キーの総数
 	int nKeyBlend;				//現在のキーNo.
 	int nCntMotionBlend;		//モーションカウンター

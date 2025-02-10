@@ -81,6 +81,7 @@ void Update(void);
 void Draw(void);
 void SetMode(MODE mode);
 MODE GetMode(void);
+void SetupVertexFog(DWORD Color, DWORD Mode, BOOL UseRange, FLOAT Density);
 void ToggleFullscreen(HWND hWnd);				// ウィンドウをフルスクリーンにする方法
 void DrawFPS(void);
 void DrawCameraPosR(void);
