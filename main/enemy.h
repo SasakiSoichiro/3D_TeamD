@@ -8,18 +8,20 @@
 #define _ENEMY_H_//2銃インクルード防止のマクロ定義
 #include "main.h"
 #include "model.h"
-#define GRAVI (0.05f)			//重力
+#define GRAVI (0.05f)			// 重力
 #define JUMP (2.0f)
 #define OBJ_E (20.0f)
 #define EPARTS_MAX (16)
 #define EUSEPARTS_MAX (16)
+#define POINT_MAX (4)
 
 //敵の状態
 typedef enum
 {
-	ENEMYSTATE_NORMAL = 0,
-	ENEMYSTATE_DAMAGE,
-	ENEMYSTATE_ACTION,
+	ENEMYSTATE_NORMAL = 0,	// 徘徊
+	ENEMYSTATE_CHASE,		// 追いかける
+	ENEMYSTATE_DAMAGE,		// スタン
+	ENEMYSTATE_ACTION,		// 攻撃
 	ENEMYSTATE_MAX
 }ENEMYSTATE;
 
@@ -27,11 +29,11 @@ typedef enum
 //モーションの種類
 typedef enum
 {
-	EMOTIONTYPE_NEUTRAL = 0,//着地
-	EMOTIONTYPE_MOVE,//移動
-	EMOTIONTYPE_ACTION,//アクション
-	EMOTIONTYPE_JUMP,//ジャンプ
-	EMOTIONTYPE_LANDING,//着地
+	EMOTIONTYPE_NEUTRAL = 0,	// 着地
+	EMOTIONTYPE_MOVE,			// 移動
+	EMOTIONTYPE_ACTION,			// アクション
+	EMOTIONTYPE_JUMP,			// ジャンプ
+	EMOTIONTYPE_LANDING,		// 着地
 	EMOTIONTYPE_MAX
 }EMOTIONTYPE;
 
@@ -103,6 +105,7 @@ void LoadEnemy(int nType);
 void CollisionEnemy(void);
 void HitEnemy(int nCnt, int nDamage);
 void CollisionEnemytoEnemy(int nCnt);
+void LoiterEnemy(void);
 Enemy*GetEnemy(void);
 int GetNumEnemy();
 static const char* EPARTS_FILE[EPARTS_MAX] =

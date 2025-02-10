@@ -16,6 +16,7 @@ int nCntTypeState;
 int g_nNumEnemy = 0;//敵の総数
 int g_nCntEnemyState = 0;
 int g_nIdxEnemyShadow;
+int g_nCntPos = 0;
 Enemy g_LoadEnemy[3];
 
 //初期化処理
@@ -104,6 +105,13 @@ void UpdateEnemy(void)
 	Player* pPlayer = GetPlayer();
 	Slow* pSlow = GetSlow();
 	float fAnglemove = 0.0f;
+
+	float fDistanceChase = (g_Enemy[0].pos.x - pPlayer->pos.x) * (g_Enemy[0].pos.x - pPlayer->pos.x) + (g_Enemy[0].pos.y - pPlayer->pos.y) * (g_Enemy[0].pos.y - pPlayer->pos.y) + (g_Enemy[0].pos.z - pPlayer->pos.z) * (g_Enemy[0].pos.z - pPlayer->pos.z);
+	D3DXVECTOR3 fRadChaseP(400.0f, 0.0f, 400.0f);
+	D3DXVECTOR3 fRadChaseE(400.0f, 0.0f, 400.0f);
+
+	float fRadiusChase = (fRadChaseP.x + fRadChaseE.x) * (fRadChaseP.x + fRadChaseE.x) + (fRadChaseP.y + fRadChaseE.y) * (fRadChaseP.y + fRadChaseE.y) + (fRadChaseP.z + fRadChaseE.z) * (fRadChaseP.z + fRadChaseE.z);
+
 	nCntTypeState++;
 
 	for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++)
@@ -118,12 +126,34 @@ void UpdateEnemy(void)
 			switch (g_Enemy[nCntEnemy].State)
 			{
 			case ENEMYSTATE_NORMAL:
-				g_Enemy[nCntEnemy].rotDest.y = atan2f(g_Enemy[nCntEnemy].pos.x - pPlayer->pos.x, g_Enemy[nCntEnemy].pos.z - pPlayer->pos.z);
-				fAnglemove = atan2f(pPlayer->pos.x - g_Enemy[nCntEnemy].pos.x, pPlayer->pos.z - g_Enemy[nCntEnemy].pos.z);
+				//徘徊処理
+				LoiterEnemy();
 
-				g_Enemy[nCntEnemy].move.x = sinf(fAnglemove) * 1.25f;
-				g_Enemy[nCntEnemy].move.z = cosf(fAnglemove) * 1.25f;
+				if (fDistanceChase <= fRadiusChase)
+				{//エネミーの視界内に入ったら
 
+					//チェイス状態
+					g_Enemy[0].State = ENEMYSTATE_CHASE;
+
+				}
+
+				break;
+
+			case ENEMYSTATE_CHASE://チェイス状態
+
+				if (fDistanceChase > fRadiusChase)
+				{//視界内から外れたら
+
+					//徘徊状態
+					g_Enemy[0].State = ENEMYSTATE_NORMAL;
+
+				}
+
+				//チェイス処理
+				g_Enemy[0].rotDest.y = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z)) + D3DX_PI;
+				fAnglemove = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z));
+				g_Enemy[0].move.x = sinf(fAnglemove) *2.0f;
+				g_Enemy[0].move.z = cosf(fAnglemove) *2.0f;
 				break;
 
 			case ENEMYSTATE_DAMAGE:
@@ -704,6 +734,45 @@ void CollisionEnemytoEnemy(int nCnt)
 	}
 
 }
+
+//==========
+// 徘徊処理
+//==========
+void LoiterEnemy(void)
+{
+	D3DXVECTOR3 Turn[POINT_MAX];
+
+	float fAnglemove = 0.0f;
+
+	Turn[0] = D3DXVECTOR3(500.0f, 0.0f, 500.0f);
+	Turn[1] = D3DXVECTOR3(500.0f, 0.0f, -500.0f);
+	Turn[2] = D3DXVECTOR3(-500.0f, 0.0f, -500.0f);
+	Turn[3] = D3DXVECTOR3(-500.0f, 0.0f, 500.0f);
+
+	float fDistance = (g_Enemy[0].pos.x - Turn[g_nCntPos].x) * (g_Enemy[0].pos.x - Turn[g_nCntPos].x) + (g_Enemy[0].pos.y - Turn[g_nCntPos].y) * (g_Enemy[0].pos.y - Turn[g_nCntPos].y) + (g_Enemy[0].pos.z - Turn[g_nCntPos].z) * (g_Enemy[0].pos.z - Turn[g_nCntPos].z);
+	D3DXVECTOR3 fRadP(100.0f, 0.0f, 100.0f);
+	D3DXVECTOR3 fRadE(100.0f, 0.0f, 100.0f);
+
+
+	float fRadius = (fRadP.x + fRadE.x) * (fRadP.x + fRadE.x) + (fRadP.y + fRadE.y) * (fRadP.y + fRadE.y) + (fRadP.z + fRadE.z) * (fRadP.z + fRadE.z);
+
+
+	if (fDistance <= fRadius)
+	{//ターン地点まで来たら
+
+		//次のターン地点を設定
+		g_nCntPos += 1;
+		g_nCntPos = g_nCntPos % POINT_MAX;
+
+	}
+
+	g_Enemy[0].rotDest.y = atan2f((Turn[g_nCntPos].x - g_Enemy[0].pos.x), (Turn[g_nCntPos].z - g_Enemy[0].pos.z))+D3DX_PI;
+	fAnglemove = atan2f((Turn[g_nCntPos].x - g_Enemy[0].pos.x), (Turn[g_nCntPos].z - g_Enemy[0].pos.z));
+	g_Enemy[0].move.x = sinf(fAnglemove) * 1.0f;
+	g_Enemy[0].move.z = cosf(fAnglemove) * 1.0f;
+
+}
+
 Enemy* GetEnemy(void)
 {
 	return &g_Enemy[0];
