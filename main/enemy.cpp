@@ -34,7 +34,7 @@ void InitEnemy(void)
 		g_Enemy[nCnt].rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCnt].nLife = 360;
 		g_Enemy[nCnt].nType = 0;
-
+		g_Enemy[nCnt].bBlendMotion = false;
 		g_Enemy[nCnt].bUse = false;
 
 	}
@@ -101,15 +101,58 @@ void UninitEnemy(void)
 }
 void UpdateEnemy(void)
 {
+
+	//==========
+	// 変数宣言
+	//==========
+
+	//答え格納用
+	KEY k_Answer;
+	float fRotX = 0.0f;
+	float fRotY = 0.0f;
+	float fRotZ = 0.0f;
+
+
+	//計算用
+	float fDiffMotionX;
+	float fDiffMotionY;
+	float fDiffMotionZ;
+
+	float fRotXCurrent;
+	float fRotYCurrent;
+	float fRotZCurrent;
+
+	float DiffMotionBlendX;
+	float DiffMotionBlendY;
+	float DiffMotionBlendZ;
+
+	float fRotXBlend;
+	float fRotYBlend;
+	float fRotZBlend;
+
+	float fDiffBlendX;
+	float fDiffBlendY;
+	float fDiffBlendZ;
+
+
+	//カメラ情報取得
 	Camera* pCamera = GetCamera();
+	//プレイヤー情報取得
 	Player* pPlayer = GetPlayer();
+	//スロー情報取得
 	Slow* pSlow = GetSlow();
+
+	//敵の向き用変数
 	float fAnglemove = 0.0f;
 
+	//現在のプレイヤーと敵の距離
 	float fDistanceChase = (g_Enemy[0].pos.x - pPlayer->pos.x) * (g_Enemy[0].pos.x - pPlayer->pos.x) + (g_Enemy[0].pos.y - pPlayer->pos.y) * (g_Enemy[0].pos.y - pPlayer->pos.y) + (g_Enemy[0].pos.z - pPlayer->pos.z) * (g_Enemy[0].pos.z - pPlayer->pos.z);
+
+	//プレイヤーを追いかける距離
 	D3DXVECTOR3 fRadChaseP(400.0f, 0.0f, 400.0f);
 	D3DXVECTOR3 fRadChaseE(400.0f, 0.0f, 400.0f);
 
+	//追いかける半径の設定
 	float fRadiusChase = (fRadChaseP.x + fRadChaseE.x) * (fRadChaseP.x + fRadChaseE.x) + (fRadChaseP.y + fRadChaseE.y) * (fRadChaseP.y + fRadChaseE.y) + (fRadChaseP.z + fRadChaseE.z) * (fRadChaseP.z + fRadChaseE.z);
 
 	nCntTypeState++;
@@ -236,20 +279,100 @@ void UpdateEnemy(void)
 		g_Enemy[nCntEnemy].motionType = EMOTIONTYPE_MOVE;
 
 		g_Enemy[nCntEnemy].nNumKey = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].nNumKey;
+		g_Enemy[nCntEnemy].nNumKeyBlend = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].nNumKey;
 
 
 		//全モデル(パーツ)の更新
 		for (int nCntModel = 0; nCntModel < g_Enemy[nCntEnemy].nNumModel; nCntModel++)
 		{
-			KEY k_Answer;
+			//現在のキー情報代入(ポイント
+			EKEY pKey = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel];
+			//次のキー情報代入(ポイント
+			EKEY pKeyNext = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[(g_Enemy[nCntEnemy].nKey + 1) % g_Enemy[nCntEnemy].nNumKey].aKey[nCntModel];
 
-			//キー情報から位置.向きを算出
-			k_Answer.fPosX = (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[(g_Enemy[nCntEnemy].nKey + 1) % g_Enemy[nCntEnemy].nNumKey].aKey[nCntModel].fPosX) - (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosX);
-			k_Answer.fPosY = (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[(g_Enemy[nCntEnemy].nKey + 1) % g_Enemy[nCntEnemy].nNumKey].aKey[nCntModel].fPosY) - (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosY);
-			k_Answer.fPosZ = (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[(g_Enemy[nCntEnemy].nKey + 1) % g_Enemy[nCntEnemy].nNumKey].aKey[nCntModel].fPosZ) - (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosZ);
-			k_Answer.fRotX = (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[(g_Enemy[nCntEnemy].nKey + 1) % g_Enemy[nCntEnemy].nNumKey].aKey[nCntModel].fRotX) - (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fRotX);
-			k_Answer.fRotY = (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[(g_Enemy[nCntEnemy].nKey + 1) % g_Enemy[nCntEnemy].nNumKey].aKey[nCntModel].fRotY) - (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fRotY);
-			k_Answer.fRotZ = (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[(g_Enemy[nCntEnemy].nKey + 1) % g_Enemy[nCntEnemy].nNumKey].aKey[nCntModel].fRotZ) - (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fRotZ);
+			//相対値
+			float fRateMotion = g_Enemy[nCntEnemy].nCntMotion / (float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame;
+
+			//ブレンドするフレーム
+			g_Enemy[nCntEnemy].nFrameBlend = EBLEND_FRAME;
+
+
+			//ブレンドモーション処理
+			if (g_Enemy[nCntEnemy].bBlendMotion == true)
+			{//bBlendがtrueだったら
+
+
+				//==========
+				// 変数宣言
+				//==========
+
+				// ブレンド先の情報を代入
+				// 現在のキー情報代入(ポイント
+				EKEY pKeyBlend = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[g_Enemy[nCntEnemy].nKeyBlend].aKey[nCntModel];												// 現在のキー
+
+				// 次のキー情報代入(ポイント
+				EKEY pKeyNextBlend = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[(g_Enemy[nCntEnemy].nKeyBlend + 1) % g_Enemy[nCntEnemy].nNumKeyBlend].aKey[nCntModel];	// 次のキー
+
+				// 相対値
+				float fRateMotionBlend = g_Enemy[nCntEnemy].nCntMotionBlend / (float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[g_Enemy[nCntEnemy].nKeyBlend].nFlame;
+
+				// ブレンドの相対値
+				float fRateBlend = g_Enemy[nCntEnemy].nCntBlend / (float)g_Enemy[nCntEnemy].nFrameBlend;
+
+
+
+				// X軸の回転
+				//=============================================================================================
+				fDiffMotionX = pKeyNext.fRotX - pKey.fRotX;							// 次のキーとの差分
+				fRotXCurrent = pKey.fRotX + (fDiffMotionX * fRateMotion);
+				DiffMotionBlendX = pKeyNextBlend.fRotX - pKeyBlend.fRotX;
+				fRotXBlend = pKeyBlend.fRotX + (DiffMotionBlendX * fRateMotionBlend);
+				fDiffBlendX = fRotXBlend - fRotXCurrent;								// 差分
+				fRotX = fRotXCurrent + (fDiffBlendX * fRateBlend);						// 求める値
+				//=============================================================================================
+
+
+				// Y軸の回転
+				//=============================================================================================
+				fDiffMotionY = pKeyNext.fRotY - pKey.fRotY;							// 次のキーとの差分
+				fRotYCurrent = pKey.fRotY + (fDiffMotionY * fRateMotion);
+				DiffMotionBlendY = pKeyNextBlend.fRotY - pKeyBlend.fRotY;
+				fRotYBlend = pKeyBlend.fRotY + (DiffMotionBlendY * fRateMotionBlend);
+				fDiffBlendY = fRotYBlend - fRotYCurrent;								// 差分
+				fRotY = fRotYCurrent + (fDiffBlendY * fRateBlend);						// 求める値
+				//=============================================================================================
+
+
+				// Z軸の回転
+				//=============================================================================================
+				fDiffMotionZ = pKeyNext.fRotZ - pKey.fRotZ;							// 次のキーとの差分
+				fRotZCurrent = pKey.fRotZ + (fDiffMotionZ * fRateMotion);
+				DiffMotionBlendZ = pKeyNextBlend.fRotZ - pKeyBlend.fRotZ;
+				fRotZBlend = pKeyBlend.fRotZ + (DiffMotionBlendZ * fRateMotionBlend);
+				fDiffBlendZ = fRotZBlend - fRotZCurrent;								// 差分
+				fRotZ = fRotZCurrent + (fDiffBlendZ * fRateBlend);						// 求める値
+				//=============================================================================================
+
+			}
+			else
+			{//ブレンド無し
+
+				//キー情報から位置.向きを算出
+				//次のキーとの差分
+				k_Answer.fPosX = (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[(g_Enemy[nCntEnemy].nKey + 1) % g_Enemy[nCntEnemy].nNumKey].aKey[nCntModel].fPosX) - (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosX);
+				k_Answer.fPosY = (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[(g_Enemy[nCntEnemy].nKey + 1) % g_Enemy[nCntEnemy].nNumKey].aKey[nCntModel].fPosY) - (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosY);
+				k_Answer.fPosZ = (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[(g_Enemy[nCntEnemy].nKey + 1) % g_Enemy[nCntEnemy].nNumKey].aKey[nCntModel].fPosZ) - (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosZ);
+				fDiffMotionX = (pKeyNext.fRotX) - (pKey.fRotX);
+				fDiffMotionY = (pKeyNext.fRotY) - (pKey.fRotY);
+				fDiffMotionZ = (pKeyNext.fRotZ) - (pKey.fRotZ);
+
+				//求める値
+				fRotX = pKey.fRotX + fDiffMotionX * fRateMotion;
+				fRotY = pKey.fRotY + fDiffMotionY * fRateMotion;
+				fRotZ = pKey.fRotZ + fDiffMotionZ * fRateMotion;
+
+			}
+
 
 			//パーツの位置.向きを設定
 			//位置
@@ -258,23 +381,112 @@ void UpdateEnemy(void)
 			g_Enemy[nCntEnemy].aModel[nCntModel].pos.z = g_Enemy[nCntEnemy].aModel[nCntModel].posFirst.z + g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosZ + k_Answer.fPosZ * (g_Enemy[nCntEnemy].nCntMotion / ((float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/));
 
 			//向き
-			g_Enemy[nCntEnemy].aModel[nCntModel].rot.x = g_Enemy[nCntEnemy].aModel[nCntModel].rotFirst.x + g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fRotX + k_Answer.fRotX * (g_Enemy[nCntEnemy].nCntMotion / ((float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/));//オフセット考慮
-			g_Enemy[nCntEnemy].aModel[nCntModel].rot.y = g_Enemy[nCntEnemy].aModel[nCntModel].rotFirst.y + g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fRotY + k_Answer.fRotY * (g_Enemy[nCntEnemy].nCntMotion / ((float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/));//オフセット考慮
-			g_Enemy[nCntEnemy].aModel[nCntModel].rot.z = g_Enemy[nCntEnemy].aModel[nCntModel].rotFirst.z + g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fRotZ + k_Answer.fRotZ * (g_Enemy[nCntEnemy].nCntMotion / ((float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame/* * pSlow->nMulti*/));//オフセット考慮
+			g_Enemy[nCntEnemy].aModel[nCntModel].rot.x = g_Enemy[nCntEnemy].aModel[nCntModel].rotFirst.x + fRotX;//オフセット考慮
+			g_Enemy[nCntEnemy].aModel[nCntModel].rot.y = g_Enemy[nCntEnemy].aModel[nCntModel].rotFirst.y + fRotY;//オフセット考慮
+			g_Enemy[nCntEnemy].aModel[nCntModel].rot.z = g_Enemy[nCntEnemy].aModel[nCntModel].rotFirst.z + fRotZ;//オフセット考慮
+
 
 		}
-		g_Enemy[nCntEnemy].nCntMotion++;//再生フレーム数に達したら現在のキーを1つ進める
 
-		if (g_Enemy[nCntEnemy].nCntMotion >= (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame/* * pSlow->nMulti*/))
-		{
-			g_Enemy[nCntEnemy].nCntMotion = 0;
 
-			g_Enemy[nCntEnemy].nKey += 1;
-			if (g_Enemy[nCntEnemy].nKey >= g_Enemy[nCntEnemy].nNumKey)
-			{
-				g_Enemy[nCntEnemy].nKey = 0;
+		if (g_Enemy[nCntEnemy].bBlendMotion == true)
+		{//ブレンドあり
+			if (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].bLoop == false)
+			{//ループモーションじゃない場合
+
+				if (g_Enemy[nCntEnemy].nKeyBlend + 1 != g_Enemy[nCntEnemy].nNumKeyBlend)
+				{//キー総数に達していない場合
+
+					g_Enemy[nCntEnemy].nCntMotionBlend += 1;//再生フレーム数に達したら現在のキーを1つ進める
+
+				}
+			}
+
+			else
+			{//ループモーションの場合
+
+				g_Enemy[nCntEnemy].nCntMotionBlend += 1;//カウントモーションを1つ進める
 
 			}
+
+			if (g_Enemy[nCntEnemy].nCntMotionBlend >= (pPlayer->motion.aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[g_Enemy[nCntEnemy].nKeyBlend].nFlame/* * pSlow->nMulti*/))
+			{//フレーム数を超えたら
+
+				//カウントモーションを0にする
+				g_Enemy[nCntEnemy].nCntMotionBlend = 0;
+
+				//現在のキーを1つ進める
+				g_Enemy[nCntEnemy].nKeyBlend += 1;
+
+				if (g_Enemy[nCntEnemy].nKeyBlend >= g_Enemy[nCntEnemy].nNumKeyBlend)
+				{//キー総数に達したら
+
+					//現在のキーを0にする
+					g_Enemy[nCntEnemy].nKeyBlend = 0;
+				}
+			}
+
+			//ブレンドカウントを1つ進める
+			g_Enemy[nCntEnemy].nCntBlend++;
+
+
+			if (g_Enemy[nCntEnemy].nCntBlend >= g_Enemy[nCntEnemy].nFrameBlend)
+			{//ブレンドのフレーム数に達したら
+
+				//初期化＆通常モーションに情報を代入
+				g_Enemy[nCntEnemy].nCntMotion = g_Enemy[nCntEnemy].nCntMotionBlend;
+				g_Enemy[nCntEnemy].nCntBlend = 0;
+				g_Enemy[nCntEnemy].motionType = g_Enemy[nCntEnemy].motionTypeBlend;
+				g_Enemy[nCntEnemy].nKey = g_Enemy[nCntEnemy].nKeyBlend;
+				g_Enemy[nCntEnemy].bBlendMotion = false;
+
+			}
+
+		}
+
+
+		else
+		{//ブレンドなし
+
+			if (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].bLoop == false)
+			{//ループモーションじゃない場合
+
+				if (g_Enemy[nCntEnemy].nKey + 1 != g_Enemy[nCntEnemy].nNumKey)
+				{//キー総数に達していない場合
+
+					g_Enemy[nCntEnemy].nCntMotion++;//モーションカウントを1つ進める
+
+				}
+			}
+
+
+			else
+			{//ループモーションの場合
+
+				g_Enemy[nCntEnemy].nCntMotion++;//モーションカウントを1つ進める
+
+			}
+
+
+
+			if (g_Enemy[nCntEnemy].nCntMotion >= (g_Enemy[nCntEnemy].aMotionInfo[pPlayer->motion.motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/))
+			{//フレーム数を超えたら
+
+				//カウントモーションを0にする
+				g_Enemy[nCntEnemy].nCntMotion = 0;
+
+				//現在のキーを1つ進める
+				g_Enemy[nCntEnemy].nKey += 1;
+
+				if (g_Enemy[nCntEnemy].nKey >= g_Enemy[nCntEnemy].nNumKey)
+				{//キー総数に達したら
+
+					//現在のキーを0にする
+					g_Enemy[nCntEnemy].nKey = 0;
+
+				}
+			}
+
 		}
 	}
 }

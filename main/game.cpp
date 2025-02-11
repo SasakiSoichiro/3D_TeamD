@@ -364,8 +364,11 @@ void DrawGame(void)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
 
-	//FOGの設定
-	SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
+	if (g_bEdit == false)
+	{
+		//FOGの設定
+		SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
+	}
 
 	//　各オブジェクトの描画処理
 
