@@ -150,8 +150,8 @@ static const char* X_EDIT[EDIT_MAX] =
 	"data\\model\\key_top.x",
 
 	//壁
-	"data\\model\\wallmaria.x",
-	"data\\model\\wallmaria2.x",
+	"data\\model\\wall00.x",
+	"data\\model\\wall01.x",
 };
 
 //プロトタイプ宣言
