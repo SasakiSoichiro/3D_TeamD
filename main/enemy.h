@@ -78,6 +78,7 @@ typedef struct
 	int nLife;
 	int nType;
 	int State;
+	int OldState;
 	float fRad;
 	bool bUse;
 
@@ -94,7 +95,7 @@ typedef struct
 
 	bool bFinishMotion;			//現在のモーションが終了しているかどうか
 	bool bBlendMotion;			//ブレンドモーションがあるかどうか
-	EMOTIONTYPE motionTypeBlend;	//モーションの種類
+	EMOTIONTYPE motionTypeBlend;//モーションの種類
 	int nNumKeyBlend;			//キーの総数
 	int nKeyBlend;				//現在のキーNo.
 	int nCntMotionBlend;		//モーションカウンター
@@ -119,6 +120,7 @@ void CollisionEnemytoEnemy(int nCnt);
 void LoiterEnemy(void);
 Enemy*GetEnemy(void);
 int GetNumEnemy();
+void SetMotionType(EMOTIONTYPE MotionType, bool bBlendMotion, int nFrameBlend,int nCnt);
 static const char* EPARTS_FILE[EPARTS_MAX] =
 {
 	"data\\model\\redcar000.x",//胴

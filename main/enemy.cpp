@@ -166,17 +166,19 @@ void UpdateEnemy(void)
 		//}
 		if (g_Enemy[nCntEnemy].bUse == true)
 		{
+			
 			switch (g_Enemy[nCntEnemy].State)
 			{
 			case ENEMYSTATE_NORMAL:
 				//徘徊処理
 				LoiterEnemy();
-
+				g_Enemy[nCntEnemy].motionType = EMOTIONTYPE_MOVE;
 				if (fDistanceChase <= fRadiusChase)
 				{//エネミーの視界内に入ったら
 
 					//チェイス状態
 					g_Enemy[0].State = ENEMYSTATE_CHASE;
+					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
 
 				}
 
@@ -189,14 +191,15 @@ void UpdateEnemy(void)
 
 					//徘徊状態
 					g_Enemy[0].State = ENEMYSTATE_NORMAL;
+					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
 
 				}
 
 				//チェイス処理
 				g_Enemy[0].rotDest.y = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z)) + D3DX_PI;
 				fAnglemove = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z));
-				g_Enemy[0].move.x = sinf(fAnglemove) *4.0f;
-				g_Enemy[0].move.z = cosf(fAnglemove) *4.0f;
+				g_Enemy[0].move.x = sinf(fAnglemove) *1.0f;
+				g_Enemy[0].move.z = cosf(fAnglemove) *1.0f;
 				break;
 
 			case ENEMYSTATE_DAMAGE:
@@ -211,7 +214,23 @@ void UpdateEnemy(void)
 				}
 
 				break;
+			case ENEMYSTATE_ACTION:
+				g_nCntEnemyState--;
+
+				g_Enemy[nCntEnemy].move.x = 0.0f;
+				g_Enemy[nCntEnemy].move.z = 0.0f;
+				
+				if (g_Enemy[nCntEnemy].OldState != g_Enemy[nCntEnemy].State)SetMotionType(EMOTIONTYPE_ACTION, true, 10, nCntEnemy);
+
+				if (g_nCntEnemyState <= 0)
+				{
+					g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
+				}
+
+				break;
 			}
+
+			g_Enemy[nCntEnemy].OldState = g_Enemy[nCntEnemy].State;
 
 			//現在の位置を保存
 			g_Enemy[nCntEnemy].posOld = g_Enemy[nCntEnemy].pos;
@@ -227,8 +246,8 @@ void UpdateEnemy(void)
 
 
 			float fDistance = (g_Enemy[nCntEnemy].pos.x - pPlayer->pos.x) * (g_Enemy[nCntEnemy].pos.x - pPlayer->pos.x) + (g_Enemy[nCntEnemy].pos.y - pPlayer->pos.y) * (g_Enemy[nCntEnemy].pos.y - pPlayer->pos.y) + (g_Enemy[nCntEnemy].pos.z - pPlayer->pos.z) * (g_Enemy[nCntEnemy].pos.z - pPlayer->pos.z);
-			D3DXVECTOR3 fRadP(10.0f, 0.0f, 10.0f);
-			D3DXVECTOR3 fRadE(10.0f, 0.0f, 10.0f);
+			D3DXVECTOR3 fRadP(50.0f, 0.0f, 50.0f);
+			D3DXVECTOR3 fRadE(50.0f, 0.0f, 50.0f);
 
 
 			float fRadius = (fRadP.x + fRadE.x) * (fRadP.x + fRadE.x) + (fRadP.y + fRadE.y) * (fRadP.y + fRadE.y) + (fRadP.z + fRadE.z) * (fRadP.z + fRadE.z);
@@ -236,7 +255,8 @@ void UpdateEnemy(void)
 			//当たり判定
 			if (fDistance <= fRadius && pPlayer->pState == PLAYERSTATE_NORMAL)
 			{
-				g_Enemy[nCntEnemy].motionType = EMOTIONTYPE_MOVE;
+				g_nCntEnemyState = 60;
+				g_Enemy[nCntEnemy].State = ENEMYSTATE_ACTION;
 				HitPlayer(1);
 			}
 
@@ -275,8 +295,6 @@ void UpdateEnemy(void)
 
 			//SetPositionShadow(g_nEIdxShadow, D3DXVECTOR3(g_Enemy[nCntEnemy].pos.x, 0.1f, g_Enemy[nCntEnemy].pos.z));
 		}
-
-		g_Enemy[nCntEnemy].motionType = EMOTIONTYPE_MOVE;
 
 		g_Enemy[nCntEnemy].nNumKey = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].nNumKey;
 		g_Enemy[nCntEnemy].nNumKeyBlend = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].nNumKey;
@@ -376,9 +394,9 @@ void UpdateEnemy(void)
 
 			//パーツの位置.向きを設定
 			//位置
-			g_Enemy[nCntEnemy].aModel[nCntModel].pos.x = g_Enemy[nCntEnemy].aModel[nCntModel].posFirst.x + g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosX + k_Answer.fPosX * (g_Enemy[nCntEnemy].nCntMotion / ((float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/));//オフセット考慮
-			g_Enemy[nCntEnemy].aModel[nCntModel].pos.y = g_Enemy[nCntEnemy].aModel[nCntModel].posFirst.y + g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosY + k_Answer.fPosY * (g_Enemy[nCntEnemy].nCntMotion / ((float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/));
-			g_Enemy[nCntEnemy].aModel[nCntModel].pos.z = g_Enemy[nCntEnemy].aModel[nCntModel].posFirst.z + g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosZ + k_Answer.fPosZ * (g_Enemy[nCntEnemy].nCntMotion / ((float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/));
+			//g_Enemy[nCntEnemy].aModel[nCntModel].pos.x = g_Enemy[nCntEnemy].aModel[nCntModel].posFirst.x + g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosX + k_Answer.fPosX * (g_Enemy[nCntEnemy].nCntMotion / ((float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/));//オフセット考慮
+			//g_Enemy[nCntEnemy].aModel[nCntModel].pos.y = g_Enemy[nCntEnemy].aModel[nCntModel].posFirst.y + g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosY + k_Answer.fPosY * (g_Enemy[nCntEnemy].nCntMotion / ((float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/));
+			//g_Enemy[nCntEnemy].aModel[nCntModel].pos.z = g_Enemy[nCntEnemy].aModel[nCntModel].posFirst.z + g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].aKey[nCntModel].fPosZ + k_Answer.fPosZ * (g_Enemy[nCntEnemy].nCntMotion / ((float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/));
 
 			//向き
 			g_Enemy[nCntEnemy].aModel[nCntModel].rot.x = g_Enemy[nCntEnemy].aModel[nCntModel].rotFirst.x + fRotX;//オフセット考慮
@@ -409,7 +427,7 @@ void UpdateEnemy(void)
 
 			}
 
-			if (g_Enemy[nCntEnemy].nCntMotionBlend >= (pPlayer->motion.aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[g_Enemy[nCntEnemy].nKeyBlend].nFlame/* * pSlow->nMulti*/))
+			if (g_Enemy[nCntEnemy].nCntMotionBlend >= (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[g_Enemy[nCntEnemy].nKeyBlend].nFlame/* * pSlow->nMulti*/))
 			{//フレーム数を超えたら
 
 				//カウントモーションを0にする
@@ -469,7 +487,7 @@ void UpdateEnemy(void)
 
 
 
-			if (g_Enemy[nCntEnemy].nCntMotion >= (g_Enemy[nCntEnemy].aMotionInfo[pPlayer->motion.motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/))
+			if (g_Enemy[nCntEnemy].nCntMotion >= (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/))
 			{//フレーム数を超えたら
 
 				//カウントモーションを0にする
@@ -992,4 +1010,16 @@ Enemy* GetEnemy(void)
 int GetNumEnemy()
 {
 	return g_nNumEnemy;
+}
+
+//-------------------
+//モーションの設定
+//-------------------
+void SetMotionType(EMOTIONTYPE MotionType, bool bBlendMotion, int nFrameBlend,int nCnt)
+{
+	g_Enemy[0].motionTypeBlend = MotionType;
+	g_Enemy[0].bBlendMotion = bBlendMotion;
+	g_Enemy[0].nFrameBlend = nFrameBlend;
+	g_Enemy[0].nKeyBlend = 0;
+	g_Enemy[0].nCntMotionBlend = 0;
 }
