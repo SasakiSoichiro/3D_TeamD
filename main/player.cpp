@@ -16,7 +16,7 @@
 #include "gonnzaresu.h"
 
 //グローバル変数宣言
-Player g_player;
+Player g_player[MAX_PLAYER];
 Motion LoadMotion[2];
 D3DXVECTOR3 g_Offpos[2];
 int g_nIdxShadow;
@@ -32,34 +32,37 @@ void InitPlayer(void)
 	pDevice = GetDevice();
 
 	//各種変数の初期化
-	g_player.pos = D3DXVECTOR3(1750.0f, 100.0f, 100.0f);
-	g_player.posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	g_player.rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	g_player.rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	g_player.nLife = 3;
-	g_player.pState = PLAYERSTATE_NORMAL;
-	g_nCntPlayerState = 0;
-	g_player.motion.motionType = MOTIONTYPE_MOVE;
-	bLanding = true;
-
-	for (int nCntType = 0; nCntType < 2; nCntType++)
+	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++)
 	{
-		ReadScriptPlayer(nCntType);
+		g_player[nCnt].pos = D3DXVECTOR3(1750.0f, 100.0f, 100.0f);
+		g_player[nCnt].posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_player[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_player[nCnt].rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_player[nCnt].nLife = 3;
+		g_player[nCnt].pState = PLAYERSTATE_NORMAL;
+		g_nCntPlayerState = 0;
+		g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+		bLanding = true;
+		ReadScriptPlayer(nCnt);
 	}
+
 	g_Offpos[0] = D3DXVECTOR3(0.0f, 30.0f, 0.0f);
 	g_Offpos[1] = D3DXVECTOR3(0.0f, 60.0f, 0.0f);
-	g_player.Offpos = D3DXVECTOR3(0.0f, 30.0f, 0.0f);
-	g_player.motion = LoadMotion[0];
-	g_player.motion.nNumKey = 0;
-	g_player.motion.nCntMotion = 0;
 
-
-	for (int nCnt = 0; nCnt < g_player.motion.nNumModel; nCnt++)
+	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++)
 	{
-		g_player.motion.aModel[nCnt].posFirst = g_player.motion.aModel[nCnt].pos;
-		g_player.motion.aModel[nCnt].rotFirst = g_player.motion.aModel[nCnt].rot;
-	}
+		g_player[nCnt].Offpos = D3DXVECTOR3(0.0f, 30.0f, 0.0f);
+		g_player[nCnt].motion = LoadMotion[0];
+		g_player[nCnt].motion.nNumKey = 0;
+		g_player[nCnt].motion.nCntMotion = 0;
 
+		for (int i = 0; i < g_player[nCnt].motion.nNumModel; i++)
+		{
+			g_player[nCnt].motion.aModel[i].posFirst = g_player[nCnt].motion.aModel[i].pos;
+			g_player[nCnt].motion.aModel[i].rotFirst = g_player[nCnt].motion.aModel[i].rot;
+		}
+
+	}
 	//g_nIdxShadow = SetShadow(g_player.pos, g_player.rot, D3DXVECTOR3(10.0f, 1.0f, 10.0f));
 
 }
@@ -100,247 +103,253 @@ void UpdatePlayer(void)
 	pStick = GetJoyStickAngle();
 
 	g_nCntStop++;
-	OldType = g_player.nType;
-	g_player.motion.motionTypeOld = g_player.motion.motionType;//モーションの種類
-	switch (g_player.pState)
+	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++,pCamera++, pStick++)
 	{
-	case PLAYERSTATE_NORMAL:
-		break;
-	case PLAYERSTATE_DAMAGE:
-		g_nCntPlayerState++;
-		if (g_nCntPlayerState >= 120)
+		OldType = g_player[nCnt].nType;
+		g_player[nCnt].motion.motionTypeOld = g_player[nCnt].motion.motionType;//モーションの種類
+		switch (g_player[nCnt].pState)
 		{
-			g_player.pState = PLAYERSTATE_NORMAL;
-			g_nCntPlayerState = 0;
+		case PLAYERSTATE_NORMAL:
+			break;
+		case PLAYERSTATE_DAMAGE:
+			g_nCntPlayerState++;
+			if (g_nCntPlayerState >= 120)
+			{
+				g_player[nCnt].pState = PLAYERSTATE_NORMAL;
+				g_nCntPlayerState = 0;
+			}
+			break;
+		case PLAYERSTATE_MOVE:
+			g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+			break;
+		case PLAYERSTATE_JUMP:
+			g_player[nCnt].motion.motionType = MOTIONTYPE_JUMP;
+			if (bLanding == true)
+			{
+				g_player[nCnt].pState = PLAYERSTATE_NORMAL;
+			}
+
+			break;
+		case PLAYERSTATE_ACTION:
+			g_nCntPlayerState++;
+			if (g_nCntPlayerState >= 60)
+			{
+				g_player[nCnt].pState = PLAYERSTATE_NORMAL;
+				g_nCntPlayerState = 0;
+			}
+			break;
 		}
-		break;
-	case PLAYERSTATE_MOVE:
-		g_player.motion.motionType = MOTIONTYPE_MOVE;
-		break;
-	case PLAYERSTATE_JUMP:
-		g_player.motion.motionType = MOTIONTYPE_JUMP;
-		if (bLanding == true)
+
+		switch (g_player[nCnt].motion.motionType)
 		{
-			g_player.pState = PLAYERSTATE_NORMAL;
+		case MOTIONTYPE_NEUTRAL:
+			break;
+		case MOTIONTYPE_MOVE:
+			break;
+		case MOTIONTYPE_ACTION:
+			break;
+		case MOTIONTYPE_JUMP:
+			break;
+		case MOTIONTYPE_LANDING:
+			break;
 		}
 
-		break;
-	case PLAYERSTATE_ACTION:
-		g_nCntPlayerState++;
-		if (g_nCntPlayerState >= 60)
-		{
-			g_player.pState = PLAYERSTATE_NORMAL;
-			g_nCntPlayerState = 0;
+		g_player[nCnt].posOld = g_player[nCnt].pos;
+
+		//重力加算
+		g_player[nCnt].move.y -= GRAVI;
+
+		if (GetKeyboardPress(DIK_A) == true)
+		{//Aキーが押された
+			if (GetKeyboardPress(DIK_W) == true)
+			{//左上
+				g_player[nCnt].pos.x += sinf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
+				g_player[nCnt].pos.z += cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.75f;
+				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+
+
+			}
+			else if (GetKeyboardPress(DIK_S) == true)
+			{//左下
+
+				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x -= sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
+				g_player[nCnt].pos.z -= cosf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.75f;
+
+			}
+			else
+			{//左
+				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
+				g_player[nCnt].pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.5f;
+
+			}
 		}
-		break;
-	}
 
-	switch (g_player.motion.motionType)
-	{
-	case MOTIONTYPE_NEUTRAL:
-		break;
-	case MOTIONTYPE_MOVE:
-		break;
-	case MOTIONTYPE_ACTION:
-		break;
-	case MOTIONTYPE_JUMP:
-		break;
-	case MOTIONTYPE_LANDING:
-		break;
-	}
-
-	g_player.posOld = g_player.pos;
-
-	//重力加算
-	g_player.move.y -= GRAVI;
-
-	if (GetKeyboardPress(DIK_A) == true)
-	{//Aキーが押された
-		if (GetKeyboardPress(DIK_W) == true)
-		{//左上
-			g_player.pos.x += sinf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
-			g_player.pos.z += cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
-			g_player.rotDest.y = pCamera->rot.y + D3DX_PI * 0.75f;
-			g_player.motion.motionType = MOTIONTYPE_MOVE;
+		else if (GetKeyboardPress(DIK_D) == true)
+		{//Dキーが押された
 
 
+			if (GetKeyboardPress(DIK_W) == true)
+			{//右上
+				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x += sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
+				g_player[nCnt].pos.z += cosf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.75f;
+
+
+			}
+			else if (GetKeyboardPress(DIK_S) == true)
+			{//右下
+				g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
+				g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.75f;
+				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+
+			}
+			else
+			{//右
+
+				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
+				g_player[nCnt].pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.5f;
+
+			}
+		}
+
+		else if (GetKeyboardPress(DIK_W) == true)
+		{//Wキーが押された
+			if (GetKeyboardPress(DIK_LSHIFT) == true)
+			{
+				//	LShift押されたら
+				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
+				g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y;
+			}
+			else
+			{
+				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 2.0f;
+				g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 2.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y;
+			}
 		}
 		else if (GetKeyboardPress(DIK_S) == true)
-		{//左下
+		{//Sキーが押された
 
-			g_player.motion.motionType = MOTIONTYPE_MOVE;
-			g_player.pos.x -= sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
-			g_player.pos.z -= cosf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
-			g_player.rotDest.y = pCamera->rot.y - D3DX_PI * 0.75f;
-
-		}
-		else
-		{//左
-			g_player.motion.motionType = MOTIONTYPE_MOVE;
-			g_player.pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
-			g_player.pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
-			g_player.rotDest.y = pCamera->rot.y - D3DX_PI * 0.5f;
-
-		}
-	}
-
-	else if (GetKeyboardPress(DIK_D) == true)
-	{//Dキーが押された
-
-
-		if (GetKeyboardPress(DIK_W) == true)
-		{//右上
-			g_player.motion.motionType = MOTIONTYPE_MOVE;
-			g_player.pos.x += sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
-			g_player.pos.z += cosf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
-			g_player.rotDest.y = pCamera->rot.y - D3DX_PI * 0.75f;
-
-
-		}
-		else if (GetKeyboardPress(DIK_S) == true)
-		{//右下
-			g_player.pos.x -= sinf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
-			g_player.pos.z -= cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
-			g_player.rotDest.y = pCamera->rot.y + D3DX_PI * 0.75f;
-			g_player.motion.motionType = MOTIONTYPE_MOVE;
+			g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+			g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI) * 2.0f;
+			g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
+			g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
 
 		}
 		else
-		{//右
-
-			g_player.motion.motionType = MOTIONTYPE_MOVE;
-			g_player.pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
-			g_player.pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
-			g_player.rotDest.y = pCamera->rot.y + D3DX_PI * 0.5f;
-
-		}
-	}
-
-	else if (GetKeyboardPress(DIK_W) == true)
-	{//Wキーが押された
-		if (GetKeyboardPress(DIK_LSHIFT) == true)
 		{
-			//	LShift押されたら
-			g_player.motion.motionType = MOTIONTYPE_MOVE;
-			g_player.pos.x -= sinf(pCamera->rot.y) * 5.0f;
-			g_player.pos.z -= cosf(pCamera->rot.y) * 5.0f;
-			g_player.rotDest.y = pCamera->rot.y;
+			if (g_player[nCnt].motion.motionType == MOTIONTYPE_MOVE)
+			{
+				g_player[nCnt].motion.motionType = MOTIONTYPE_NEUTRAL;
+			}
 		}
-		else
+
+		if (g_player[nCnt].rotDest.y - g_player[nCnt].rot.y > D3DX_PI)
 		{
-			g_player.motion.motionType = MOTIONTYPE_MOVE;
-			g_player.pos.x -= sinf(pCamera->rot.y) * 2.0f;
-			g_player.pos.z -= cosf(pCamera->rot.y) * 2.0f;
-			g_player.rotDest.y = pCamera->rot.y;
+			g_player[nCnt].rot.y = g_player[nCnt].rot.y + (D3DX_PI * 2);
 		}
-	}
-	else if (GetKeyboardPress(DIK_S) == true)
-	{//Sキーが押された
-
-		g_player.motion.motionType = MOTIONTYPE_MOVE;
-		g_player.pos.x -= sinf(pCamera->rot.y + D3DX_PI) * 2.0f;
-		g_player.pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
-		g_player.rotDest.y = pCamera->rot.y + D3DX_PI;
-
-	}
-	else
-	{
-		if (g_player.motion.motionType == MOTIONTYPE_MOVE)
+		else if (g_player[nCnt].rot.y - g_player[nCnt].rotDest.y > D3DX_PI)
 		{
-			g_player.motion.motionType = MOTIONTYPE_NEUTRAL;
+			g_player[nCnt].rot.y = g_player[nCnt].rot.y - (D3DX_PI * 2);
 		}
-	}
 
-	if (g_player.rotDest.y - g_player.rot.y > D3DX_PI)
-	{
-		g_player.rot.y = g_player.rot.y + (D3DX_PI * 2);
-	}
-	else if (g_player.rot.y - g_player.rotDest.y > D3DX_PI)
-	{
-		g_player.rot.y = g_player.rot.y - (D3DX_PI * 2);
-	}
-
-	g_player.move.x += (0.0f - g_player.move.x) * 0.05f;
-	g_player.move.z += (0.0f - g_player.move.z) * 0.05f;
+		g_player[nCnt].move.x += (0.0f - g_player[nCnt].move.x) * 0.05f;
+		g_player[nCnt].move.z += (0.0f - g_player[nCnt].move.z) * 0.05f;
 
 
-	g_player.pos += g_player.move;
+		g_player[nCnt].pos += g_player[nCnt].move;
 
-	float SposX = g_player.motion.aModel[15].mtxWorld._41 + (g_player.SwordmtxWorld._41 - g_player.motion.aModel[15].mtxWorld._41) * 0.5f;
-	float SposY = g_player.motion.aModel[15].mtxWorld._42 + (g_player.SwordmtxWorld._42 - g_player.motion.aModel[15].mtxWorld._42) * 0.5f;
-	float SposZ = g_player.motion.aModel[15].mtxWorld._43 + (g_player.SwordmtxWorld._43 - g_player.motion.aModel[15].mtxWorld._43) * 0.5f;
+		float SposX = g_player[nCnt].motion.aModel[15].mtxWorld._41 + (g_player[nCnt].SwordmtxWorld._41 - g_player[nCnt].motion.aModel[15].mtxWorld._41) * 0.5f;
+		float SposY = g_player[nCnt].motion.aModel[15].mtxWorld._42 + (g_player[nCnt].SwordmtxWorld._42 - g_player[nCnt].motion.aModel[15].mtxWorld._42) * 0.5f;
+		float SposZ = g_player[nCnt].motion.aModel[15].mtxWorld._43 + (g_player[nCnt].SwordmtxWorld._43 - g_player[nCnt].motion.aModel[15].mtxWorld._43) * 0.5f;
 
-	if (g_player.pos.y < 0.0f)
-	{
-		bLanding = true;
-		//g_player.pState = PLAYERSTATE_NORMAL;
-		g_player.pos.y = 0.0f;
-	}
+		if (g_player[nCnt].pos.y < 0.0f)
+		{
+			bLanding = true;
+			//g_player[nCnt].pState = PLAYERSTATE_NORMAL;
+			g_player[nCnt].pos.y = 0.0f;
+		}
 
-	for (int p = 0; p < PLAYER_MAX; p++, pStick++)
-	{
 		//左スティック移動
-		if (GetJoyStick(p) == true)
+		if (GetJoyStick(nCnt) == true)
 		{
 			if (pStick->Gamepad.sThumbLX > 10922)
 			{
 				//右移動
-				g_player.motion.motionType = MOTIONTYPE_MOVE;
-				g_player.pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
-				g_player.pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
-				g_player.rotDest.y = pCamera->rot.y + D3DX_PI * 0.5f;
+				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
+				g_player[nCnt].pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.5f;
 			}
 			else if (pStick->Gamepad.sThumbLX < -10922)
 			{
 				//左移動
-				g_player.motion.motionType = MOTIONTYPE_MOVE;
-				g_player.pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
-				g_player.pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
-				g_player.rotDest.y = pCamera->rot.y - D3DX_PI * 0.5f;
+				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
+				g_player[nCnt].pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.5f;
 
 			}
 			else if (pStick->Gamepad.sThumbLY > 10922)
 			{
-				if (GetJoypadPress(JOYKEY_B, p) == true)
+				if (GetJoypadPress(JOYKEY_B, nCnt) == true)
 				{
 					//上移動
-					g_player.motion.motionType = MOTIONTYPE_MOVE;
-					g_player.pos.x -= sinf(pCamera->rot.y) * 5.0f;
-					g_player.pos.z -= cosf(pCamera->rot.y) * 5.0f;
-					g_player.rotDest.y = pCamera->rot.y;
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
+					g_player[nCnt].rotDest.y = pCamera->rot.y;
 				}
 				else
 				{
 					//上移動
-					g_player.motion.motionType = MOTIONTYPE_MOVE;
-					g_player.pos.x -= sinf(pCamera->rot.y) * 2.0f;
-					g_player.pos.z -= cosf(pCamera->rot.y) * 2.0f;
-					g_player.rotDest.y = pCamera->rot.y;
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y) * 2.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
 				}
 			}
 			else if (pStick->Gamepad.sThumbLY < -10922)
 			{
 				//下移動
-				g_player.motion.motionType = MOTIONTYPE_MOVE;
-				g_player.pos.x -= sinf(pCamera->rot.y + D3DX_PI) * 2.0f;
-				g_player.pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
-				g_player.rotDest.y = pCamera->rot.y + D3DX_PI;
+				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI) * 2.0f;
+				g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
 
 			}
 		}
+
+		g_player[nCnt].rot.y += (g_player[nCnt].rotDest.y - g_player[nCnt].rot.y) * 0.2f;
+
+		//ブロックの当たり判定
+		CollisionBlock(&g_player[nCnt].pos, &g_player[nCnt].posOld);
+
+		//ギミックの当たり判定
+		CollisionGimmick(&g_player[nCnt].pos, &g_player[nCnt].posOld);
+
+		//CollisionWall(&g_player[nCnt].pos, &g_player[nCnt].posOld);
+		//CollisionCyrynder();
+		//SetPositionShadow(g_nIdxShadow, D3DXVECTOR3(g_player[nCnt].pos.x, 1.0f, g_player[nCnt].pos.z), g_player[nCnt].pos.y);
+		bOldLanding = bLanding;
+		UpdateMotion();
+
 	}
 
-	g_player.rot.y += (g_player.rotDest.y - g_player.rot.y) * 0.2f;
-	CollisionBlock(&g_player.pos, &g_player.posOld);
-	CollisionGimmick(&g_player.pos, &g_player.posOld);
-	//CollisionWall(&g_player.pos, &g_player.posOld);
-	//CollisionCyrynder();
-	//SetPositionShadow(g_nIdxShadow, D3DXVECTOR3(g_player.pos.x, 1.0f, g_player.pos.z), g_player.pos.y);
-	bOldLanding = bLanding;
-	UpdateMotion();
-
-
 }
+//プレイヤーの描画
 void DrawPlayer(void)
 {
 	//LPDIRECT3DDEVICE9 pDevice;
@@ -429,7 +438,7 @@ void DrawPlayer(void)
 
 	//pDevice->SetMaterial(&matDef);
 }
-
+//プレイヤーのマトリックス
 void SetMatrix(void)
 {
 	LPDIRECT3DDEVICE9 pDevice;
@@ -441,36 +450,42 @@ void SetMatrix(void)
 	//現在のマテリアルの保存用
 	D3DXMATRIX mtxParent;//親のマトリックス
 
-	//ワールドマトリックスの初期化
-	D3DXMatrixIdentity(&g_player.SwordmtxWorld);
-	//向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, g_player.motion.aModel[15].rot.y, g_player.motion.aModel[15].rot.x, g_player.motion.aModel[15].rot.z);
-	D3DXMatrixMultiply(&g_player.SwordmtxWorld, &g_player.SwordmtxWorld, &mtxRot);
+	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++)
+	{
+		//ワールドマトリックスの初期化
+		D3DXMatrixIdentity(&g_player[nCnt].SwordmtxWorld);
+		//向きを反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, g_player[nCnt].motion.aModel[15].rot.y, g_player[nCnt].motion.aModel[15].rot.x, g_player[nCnt].motion.aModel[15].rot.z);
+		D3DXMatrixMultiply(&g_player[nCnt].SwordmtxWorld, &g_player[nCnt].SwordmtxWorld, &mtxRot);
 
-	//位置を反映
-	D3DXMatrixTranslation(&mtxTrans, g_player.Offpos.x, g_player.Offpos.y, g_player.Offpos.z);
-	D3DXMatrixMultiply(&g_player.SwordmtxWorld, &g_player.SwordmtxWorld, &mtxTrans);
+		//位置を反映
+		D3DXMatrixTranslation(&mtxTrans, g_player[nCnt].Offpos.x, g_player[nCnt].Offpos.y, g_player[nCnt].Offpos.z);
+		D3DXMatrixMultiply(&g_player[nCnt].SwordmtxWorld, &g_player[nCnt].SwordmtxWorld, &mtxTrans);
 
+		mtxParent = g_player[nCnt].motion.aModel[15].mtxWorld;
 
+		//算出した「パーツのワールドマトリックス」と「親のマトリックス」を掛け合わせる
+		D3DXMatrixMultiply(&g_player[nCnt].SwordmtxWorld,
+			&g_player[nCnt].SwordmtxWorld,
+			&mtxParent);
 
-	mtxParent = g_player.motion.aModel[15].mtxWorld;
-
-	//算出した「パーツのワールドマトリックス」と「親のマトリックス」を掛け合わせる
-	D3DXMatrixMultiply(&g_player.SwordmtxWorld,
-		&g_player.SwordmtxWorld,
-		&mtxParent);
-
-	pDevice->SetTransform(D3DTS_WORLD, &g_player.SwordmtxWorld);
-
+		pDevice->SetTransform(D3DTS_WORLD, &g_player[nCnt].SwordmtxWorld);
+	}
 }
+//プレイヤーのモーション
 void SetMotion(int nType)
 {
-	g_player.motion = LoadMotion[nType];
+	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++)
+	{
+		g_player[nCnt].motion = LoadMotion[nType];
+	}
 }
+//プレイヤーの取得
 Player* GetPlayer(void)
 {
-	return &g_player;
+	return &g_player[0];
 }
+//プレイヤーのファイル読み込み
 void ReadScriptPlayer(int nType)
 {
 	FILE* pFile;
@@ -728,17 +743,21 @@ void ReadScriptPlayer(int nType)
 		LoadMotion[nType].aModel[nCnt].rotFirst = LoadMotion[nType].aModel[nCnt].rot;
 	}
 }
+//プレイヤーのヒット処理
 void HitPlayer(int nDamege)
 {
-	g_player.nLife -= nDamege;
+	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++)
+	{
+		g_player[nCnt].nLife -= nDamege;
 
-	if (g_player.nLife >= 0)
-	{
-		g_player.pState = PLAYERSTATE_DAMAGE;
-		SetGonzaresu(90);
-	}
-	else
-	{
-		SetFade(MODE_RESULT);
+		if (g_player[nCnt].nLife >= 0)
+		{
+			g_player[nCnt].pState = PLAYERSTATE_DAMAGE;
+			SetGonzaresu(90);
+		}
+		else
+		{
+			SetFade(MODE_RESULT);
+		}
 	}
 }

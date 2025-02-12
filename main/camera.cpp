@@ -53,13 +53,13 @@ void InitCamera(void)
 	g_camera[0].viewport.MinZ = 0.0f;
 	g_camera[0].viewport.MaxZ = 1.0f;
 
-	//	ビューポート構成の保存	右
-	g_camera[1].viewport.X = 640.0f;
-	g_camera[1].viewport.Y = 0.0f;
-	g_camera[1].viewport.Width = 640.0f;
-	g_camera[1].viewport.Height = 720.0f;
-	g_camera[1].viewport.MinZ = 0.0f;
-	g_camera[1].viewport.MaxZ = 1.0f;
+	////	ビューポート構成の保存	右
+	//g_camera[1].viewport.X = 640.0f;
+	//g_camera[1].viewport.Y = 0.0f;
+	//g_camera[1].viewport.Width = 640.0f;
+	//g_camera[1].viewport.Height = 720.0f;
+	//g_camera[1].viewport.MinZ = 0.0f;
+	//g_camera[1].viewport.MaxZ = 1.0f;
 
 	////	ビューポート構成の保存	真ん中
 	//g_camera[2].viewport.X = 450.0f;
@@ -79,9 +79,104 @@ void UninitCamera(void)
 void UpdateCamera(void)
 {
 	Player* pPlayer = GetPlayer();
+
 	MODE mode = GetMode();
+
 	XINPUT_STATE* pStick;
 	pStick = GetJoyStickAngle();
+
+	for (int p = 0; p < PLAYER_MAX; p++, pStick++)
+	{
+		//右スティック視点
+		if (GetJoyStick(p) == true)
+		{
+			if (pStick->Gamepad.sThumbRX > 10922)
+			{
+				if (pStick->Gamepad.sThumbRY > 10922)
+				{
+					//上
+					g_camera[p].rot.x -= 0.03f;
+				}
+				else if (pStick->Gamepad.sThumbRY < -10922)
+				{
+					//下
+					g_camera[p].rot.x += 0.03f;
+				}
+
+				//右回り
+				g_camera[p].rot.y += 0.03f;
+			}
+			else if (pStick->Gamepad.sThumbRX < -10922)
+			{
+				if (pStick->Gamepad.sThumbRY > 10922)
+				{
+					//上
+					g_camera[p].rot.x -= 0.03f;
+				}
+				else if (pStick->Gamepad.sThumbRY < -10922)
+				{
+					//下
+					g_camera[p].rot.x += 0.03f;
+				}
+
+				//左回り
+				g_camera[p].rot.y -= 0.03f;
+			}
+			else if (pStick->Gamepad.sThumbRY > 10922)
+			{
+				if (pStick->Gamepad.sThumbRX > 10922)
+				{
+					//右回り
+					g_camera[p].rot.y += 0.03f;
+				}
+				else if (pStick->Gamepad.sThumbRX < -10922)
+				{
+					//左回り
+					g_camera[p].rot.y -= 0.03f;
+				}
+
+				//上
+				g_camera[p].rot.x -= 0.03f;
+			}
+			else if (pStick->Gamepad.sThumbRY < -10922)
+			{
+				if (pStick->Gamepad.sThumbRX > 10922)
+				{
+					//右回り
+					g_camera[p].rot.y += 0.03f;
+				}
+				else if (pStick->Gamepad.sThumbRX < -10922)
+				{
+					//左回り
+					g_camera[p].rot.y -= 0.03f;
+				}
+
+				//下
+				g_camera[p].rot.x += 0.03f;
+			}
+
+		}
+
+		//角度の正規化
+		if (g_camera[p].rot.y <= -D3DX_PI)
+		{
+			g_camera[p].rot.y += D3DX_PI * 2.0f;
+		}
+		else if (g_camera[p].rot.y >= D3DX_PI)
+		{
+			g_camera[p].rot.y += -D3DX_PI * 2.0f;
+		}
+
+		//角度制限
+		if (g_camera[p].rot.x > 1.57f)
+		{
+			g_camera[p].rot.x = 1.57f;
+		}
+		else if (g_camera[p].rot.x < -1.57f)
+		{
+			g_camera[p].rot.x = -1.57f;
+		}
+	}
 
 	for (int nCnt = 0; nCnt < MAX_CAMERA; nCnt++)
 	{
@@ -103,102 +198,6 @@ void UpdateCamera(void)
 
 			g_camera[nCnt].rot.x += DeltaY;
 			g_camera[nCnt].rot.y += DeltaX;
-
-			for (int p = 0; p < PLAYER_MAX; p++,pStick++)
-			{
-				//右スティック視点
-				if (GetJoyStick(p) == true)
-				{
-					if (pStick->Gamepad.sThumbRX > 10922)
-					{
-						if (pStick->Gamepad.sThumbRY > 10922)
-						{
-							//上
-							g_camera[nCnt].rot.x -= 0.03f;
-						}
-						else if (pStick->Gamepad.sThumbRY < -10922)
-						{
-							//下
-							g_camera[nCnt].rot.x += 0.03f;
-						}
-
-						//右回り
-						g_camera[nCnt].rot.y += 0.03f;
-
-					}
-					else if (pStick->Gamepad.sThumbRX < -10922)
-					{
-						if (pStick->Gamepad.sThumbRY > 10922)
-						{
-							//上
-							g_camera[nCnt].rot.x -= 0.03f;
-						}
-						else if (pStick->Gamepad.sThumbRY < -10922)
-						{
-							//下
-							g_camera[nCnt].rot.x += 0.03f;
-						}
-
-						//左回り
-						g_camera[nCnt].rot.y -= 0.03f;
-
-					}
-					else if (pStick->Gamepad.sThumbRY > 10922)
-					{
-						if (pStick->Gamepad.sThumbRX > 10922)
-						{
-							//右回り
-							g_camera[nCnt].rot.y += 0.03f;
-						}
-						else if (pStick->Gamepad.sThumbRX < -10922)
-						{
-							//左回り
-							g_camera[nCnt].rot.y -= 0.03f;
-						}
-
-						//上
-						g_camera[nCnt].rot.x -= 0.03f;
-
-					}
-					else if (pStick->Gamepad.sThumbRY < -10922)
-					{
-						if (pStick->Gamepad.sThumbRX > 10922)
-						{
-							//右回り
-							g_camera[nCnt].rot.y += 0.03f;
-						}
-						else if (pStick->Gamepad.sThumbRX < -10922)
-						{
-							//左回り
-							g_camera[nCnt].rot.y -= 0.03f;
-						}
-
-						//下
-						g_camera[nCnt].rot.x += 0.03f;
-
-					}
-				}
-
-				//角度の正規化
-				if (g_camera[nCnt].rot.y <= -D3DX_PI)
-				{
-					g_camera[nCnt].rot.y += D3DX_PI * 2.0f;
-				}
-				else if (g_camera[nCnt].rot.y >= D3DX_PI)
-				{
-					g_camera[nCnt].rot.y += -D3DX_PI * 2.0f;
-				}
-
-				//角度制限
-				if (g_camera[nCnt].rot.x > 1.57f)
-				{
-					g_camera[nCnt].rot.x = 1.57f;
-				}
-				else if (g_camera[nCnt].rot.x < -1.57f)
-				{
-					g_camera[nCnt].rot.x = -1.57f;
-				}
-			}
 
 			SetCursorPos(SCREEN_WIDTH / 1.5, SCREEN_HEIGHT / 1.5);
 

@@ -196,15 +196,14 @@ void UpdateJoypad(void)
 //===================
 bool GetJoypadPress(JOYKEY key, int player)
 {
-
-	return (g_joyKeyState[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
+	return (g_joyKeyState[player].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
 //===================
 // トリガー情報を取得
 //===================
 bool JoyPadTrigger(JOYKEY key, int player)
 {
-	return (g_joyKeyStateTrigger[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
+	return (g_joyKeyStateTrigger[player].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
 
 XINPUT_STATE* GetState(void)
@@ -226,20 +225,22 @@ int GetJoypadInputState(int InputType)
 bool GetJoyStick(int player)
 {
 	bool joykey[PLAYER_MAX] = { false };
+	int b = 0;
 
-	//左スティック
-	if (g_joyKeyState[player].Gamepad.sThumbLX >= 100 ||
-		g_joyKeyState[player].Gamepad.sThumbLX <= -100 ||
-		g_joyKeyState[player].Gamepad.sThumbLY >= 100 ||
-		g_joyKeyState[player].Gamepad.sThumbLY <= -100)
+	//	左スティック
+	if (g_joyKeyState[player].Gamepad.sThumbLX > 100 ||
+		g_joyKeyState[player].Gamepad.sThumbLX < -100 ||
+		g_joyKeyState[player].Gamepad.sThumbLY > 100 ||
+		g_joyKeyState[player].Gamepad.sThumbLY < -100)
 	{
 		joykey[player] = true;
 	}
-	//右スティック
-	else if (g_joyKeyState[player].Gamepad.sThumbRX >= 100 ||
-		g_joyKeyState[player].Gamepad.sThumbRX <= -100 ||
-		g_joyKeyState[player].Gamepad.sThumbRY >= 100 ||
-		g_joyKeyState[player].Gamepad.sThumbRY <= -100)
+
+	//	右スティック
+	if (g_joyKeyState[player].Gamepad.sThumbRX > 100 ||
+		g_joyKeyState[player].Gamepad.sThumbRX < -100 ||
+		g_joyKeyState[player].Gamepad.sThumbRY > 100 ||
+		g_joyKeyState[player].Gamepad.sThumbRY < -100)
 	{
 		joykey[player] = true;
 	}
