@@ -172,7 +172,6 @@ void UpdateEnemy(void)
 			case ENEMYSTATE_NORMAL:
 				//úpújèàóù
 				LoiterEnemy();
-				g_Enemy[nCntEnemy].motionType = EMOTIONTYPE_MOVE;
 				if (fDistanceChase <= fRadiusChase)
 				{//ÉGÉlÉ~Å[ÇÃéãäEì‡Ç…ì¸Ç¡ÇΩÇÁ
 
@@ -225,6 +224,7 @@ void UpdateEnemy(void)
 				if (g_nCntEnemyState <= 0)
 				{
 					g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
+					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
 				}
 
 				break;
