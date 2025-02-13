@@ -340,10 +340,10 @@ void UpdateEnemy(void)
 			EKEY pKeyNext = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[(g_Enemy[nCntEnemy].nKey + 1) % g_Enemy[nCntEnemy].nNumKey].aKey[nCntModel];
 
 			//相対値
-			float fRateMotion = g_Enemy[nCntEnemy].nCntMotion / (float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame;
+			float fRateMotion = g_Enemy[nCntEnemy].nCntMotion / (float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame * pSlow->nMulti;
 
 			//ブレンドするフレーム
-			g_Enemy[nCntEnemy].nFrameBlend = EBLEND_FRAME;
+			g_Enemy[nCntEnemy].nFrameBlend = EBLEND_FRAME * pSlow->nMulti;
 
 
 			//ブレンドモーション処理
@@ -363,10 +363,10 @@ void UpdateEnemy(void)
 				EKEY pKeyNextBlend = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[(g_Enemy[nCntEnemy].nKeyBlend + 1) % g_Enemy[nCntEnemy].nNumKeyBlend].aKey[nCntModel];	// 次のキー
 
 				// 相対値
-				float fRateMotionBlend = g_Enemy[nCntEnemy].nCntMotionBlend / (float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[g_Enemy[nCntEnemy].nKeyBlend].nFlame;
+				float fRateMotionBlend = g_Enemy[nCntEnemy].nCntMotionBlend / (float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[g_Enemy[nCntEnemy].nKeyBlend].nFlame * pSlow->nMulti;
 
 				// ブレンドの相対値
-				float fRateBlend = g_Enemy[nCntEnemy].nCntBlend / (float)g_Enemy[nCntEnemy].nFrameBlend;
+				float fRateBlend = g_Enemy[nCntEnemy].nCntBlend / (float)g_Enemy[nCntEnemy].nFrameBlend*pSlow->nMulti;
 
 
 
@@ -458,7 +458,7 @@ void UpdateEnemy(void)
 
 			}
 
-			if (g_Enemy[nCntEnemy].nCntMotionBlend >= (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[g_Enemy[nCntEnemy].nKeyBlend].nFlame/* * pSlow->nMulti*/))
+			if (g_Enemy[nCntEnemy].nCntMotionBlend >= (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[g_Enemy[nCntEnemy].nKeyBlend].nFlame * pSlow->nMulti))
 			{//フレーム数を超えたら
 
 				//カウントモーションを0にする
@@ -479,7 +479,7 @@ void UpdateEnemy(void)
 			g_Enemy[nCntEnemy].nCntBlend++;
 
 
-			if (g_Enemy[nCntEnemy].nCntBlend >= g_Enemy[nCntEnemy].nFrameBlend)
+			if (g_Enemy[nCntEnemy].nCntBlend >= g_Enemy[nCntEnemy].nFrameBlend*pSlow->nMulti)
 			{//ブレンドのフレーム数に達したら
 
 				//初期化＆通常モーションに情報を代入
@@ -518,7 +518,7 @@ void UpdateEnemy(void)
 
 
 
-			if (g_Enemy[nCntEnemy].nCntMotion >= (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame /** pSlow->nMulti*/))
+			if (g_Enemy[nCntEnemy].nCntMotion >= (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame * pSlow->nMulti))
 			{//フレーム数を超えたら
 
 				//カウントモーションを0にする
