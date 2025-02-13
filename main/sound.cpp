@@ -35,6 +35,7 @@ SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 {
 	{"data/BGM/Silent.wav", -1},			// BGM1
 	{"data/BGM/Darkdrama2.wav", -1},		// BGM2
+	{"data/BGM/HorrorNeverLookBack.wav",-1},	// BGM3
 	{"data/SE/depressed.wav", 0},			// SE1
 	{"data/SE/geton.wav", 0},				// SE2
 	{"data/SE/KeyOpen.wav", 0},				// SE3

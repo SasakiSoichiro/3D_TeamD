@@ -7,6 +7,7 @@
 #include "slow.h"
 #include "game.h"
 #include "fade.h"
+#include "sound.h"
 
 #define MAX_ENEMY (36)
 
