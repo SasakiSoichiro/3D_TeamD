@@ -148,12 +148,30 @@ void UpdateEnemy(void)
 	//åªç›ÇÃÉvÉåÉCÉÑÅ[Ç∆ìGÇÃãóó£
 	float fDistanceChase = (g_Enemy[0].pos.x - pPlayer->pos.x) * (g_Enemy[0].pos.x - pPlayer->pos.x) + (g_Enemy[0].pos.y - pPlayer->pos.y) * (g_Enemy[0].pos.y - pPlayer->pos.y) + (g_Enemy[0].pos.z - pPlayer->pos.z) * (g_Enemy[0].pos.z - pPlayer->pos.z);
 
+	//ìGÇÃéãñÏ
+	float fFOV = D3DX_PI / 3.0f;
+
 	//ÉvÉåÉCÉÑÅ[Çí«Ç¢Ç©ÇØÇÈãóó£
-	D3DXVECTOR3 fRadChaseP(400.0f, 0.0f, 400.0f);
-	D3DXVECTOR3 fRadChaseE(400.0f, 0.0f, 400.0f);
+	D3DXVECTOR3 fRadChaseP(200.0f, 0.0f, 200.0f);
+	D3DXVECTOR3 fRadChaseE(200.0f, 0.0f, 200.0f);
 
 	//í«Ç¢Ç©ÇØÇÈîºåaÇÃê›íË
 	float fRadiusChase = (fRadChaseP.x + fRadChaseE.x) * (fRadChaseP.x + fRadChaseE.x) + (fRadChaseP.y + fRadChaseE.y) * (fRadChaseP.y + fRadChaseE.y) + (fRadChaseP.z + fRadChaseE.z) * (fRadChaseP.z + fRadChaseE.z);
+
+	//ìGÇÃéãäEÉxÉNÉgÉã1
+	g_Enemy[0].posVec[0].x = sinf((g_Enemy[0].rot.y + fFOV / 2.0f)+D3DX_PI) * fRadiusChase - g_Enemy[0].pos.x;
+	g_Enemy[0].posVec[0].z = cosf((g_Enemy[0].rot.y + fFOV / 2.0f)+D3DX_PI) * fRadiusChase - g_Enemy[0].pos.y;
+
+	//ìGÇÃéãäEÉxÉNÉgÉã2
+	g_Enemy[0].posVec[1].x = sinf((g_Enemy[0].rot.y - fFOV / 2.0f)+D3DX_PI) * fRadiusChase - g_Enemy[0].pos.x;
+	g_Enemy[0].posVec[1].z = cosf((g_Enemy[0].rot.y - fFOV / 2.0f)+D3DX_PI) * fRadiusChase - g_Enemy[0].pos.y;
+
+	D3DXVECTOR3 vec;
+	float fvecCross[2];
+	vec = pPlayer->pos - g_Enemy[0].pos;
+	fvecCross[0] = (g_Enemy[0].posVec[0].x * vec.x) + (g_Enemy[0].posVec[0].y * vec.y) + (g_Enemy[0].posVec[0].z * vec.z);
+
+	fvecCross[1] = (g_Enemy[0].posVec[1].x * vec.x) + (g_Enemy[0].posVec[1].y * vec.y) + (g_Enemy[0].posVec[1].z * vec.z);
 
 	nCntTypeState++;
 
@@ -172,13 +190,21 @@ void UpdateEnemy(void)
 			case ENEMYSTATE_NORMAL:
 				//úpújèàóù
 				LoiterEnemy();
-				if (fDistanceChase <= fRadiusChase)
+				if (fDistanceChase <= fRadiusChase && fvecCross[0] > 0 && fvecCross[1] > 0)
 				{//ÉGÉlÉ~Å[ÇÃéãäEì‡Ç…ì¸Ç¡ÇΩÇÁ
 
 					//É`ÉFÉCÉXèÛë‘
 					g_Enemy[0].State = ENEMYSTATE_CHASE;
 					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
 
+				}
+				if (fvecCross[0] > 0 && fvecCross[1] > 0)
+				{//ãóó£ä÷åWÇ»Çµ
+					pPlayer->bEye = true;
+				}
+				else
+				{
+					pPlayer->bEye = false;
 				}
 
 				break;
@@ -191,6 +217,7 @@ void UpdateEnemy(void)
 					//úpújèÛë‘
 					g_Enemy[0].State = ENEMYSTATE_NORMAL;
 					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
+					pPlayer->bEye = false;
 
 				}
 

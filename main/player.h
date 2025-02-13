@@ -45,6 +45,7 @@ typedef struct
     int nType;
     PLAYERSTATE pState;
     Motion motion;
+    bool bEye;
 }Player;
 
 //プロトタイプ宣言

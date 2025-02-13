@@ -367,7 +367,7 @@ void DrawGame(void)
 	if (g_bEdit == false)
 	{
 		//FOGの設定
-		SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
+		//SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
 	}
 
 	//　各オブジェクトの描画処理
@@ -392,7 +392,7 @@ void DrawGame(void)
 	DrawGimmick();
 
 	//FOGを消す
-	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 	//	ゴンザレス
 	DrawGonzaresu();
@@ -407,7 +407,7 @@ void DrawGame(void)
 	DrawEyeUI();
 
 	//FOGを戻す
-	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 
 	if (g_bPause == true)

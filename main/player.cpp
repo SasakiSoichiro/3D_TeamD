@@ -40,6 +40,7 @@ void InitPlayer(void)
 		g_player[nCnt].rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_player[nCnt].nLife = 3;
 		g_player[nCnt].pState = PLAYERSTATE_NORMAL;
+		g_player[nCnt].bEye = false;
 		g_nCntPlayerState = 0;
 		g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 		bLanding = true;

@@ -6,6 +6,7 @@
 //====================================================
 
 #include "UI.h"
+#include "player.h"
 
 //マクロ定義
 #define MAX_TIMEWIDTH (150)
@@ -108,7 +109,33 @@ void UninitEyeUI()
 //====================================================
 void UpdateEyeUI()
 {
+	Player* pPlayer = GetPlayer();
 
+	VERTEX_2D* pVtx{};
+
+
+	//頂点バッファのロック、頂点データへのポインタ取得
+	g_pVtxBuffUi->Lock(0, 0, (void**)&pVtx, 0);
+
+	if (pPlayer->bEye == true)
+	{
+		//頂点カラーの設定
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	}
+	else if (pPlayer->bEye == false)
+	{
+		//頂点カラーの設定
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+	}
+
+	//頂点バッファをアンロック
+	g_pVtxBuffUi->Unlock();
 }
 
 //====================================================

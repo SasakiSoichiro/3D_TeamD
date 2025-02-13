@@ -74,7 +74,8 @@ typedef struct
 	D3DXVECTOR3 move;
 	D3DXVECTOR3 rot;
 	D3DXVECTOR3 rotDest;
-	D3DXMATRIX mtxWorld;//ワールドマトリックス
+	D3DXVECTOR3 posVec[2];		//視野用ベクトル
+	D3DXMATRIX mtxWorld;		//ワールドマトリックス
 	int nLife;
 	int nType;
 	int State;
