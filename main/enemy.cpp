@@ -197,6 +197,8 @@ void UpdateEnemy(void)
 					g_Enemy[0].State = ENEMYSTATE_CHASE;
 					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
 
+					// BGMを鳴らす
+					PlaySound(SOUND_LABEL_BGM3);
 				}
 				if (fvecCross[0] > 0 && fvecCross[1] > 0)
 				{//距離関係なし
@@ -219,6 +221,8 @@ void UpdateEnemy(void)
 					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
 					pPlayer->bEye = false;
 
+					// BGMを消す
+					StopSound(SOUND_LABEL_BGM3);
 				}
 
 				//チェイス処理
