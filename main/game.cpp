@@ -25,6 +25,7 @@
 #include "gimmick.h"
 #include "UI.h"
 #include "gonnzaresu.h"
+#include "slow.h"
 
 // ゲームの状態
 GAMESTATE g_gameState = GAMESTATE_NONE;	// 初期化
@@ -87,6 +88,9 @@ void InitGame(void)
 
 	//	ゴンザレス
 	InitGonzaresu();
+
+	// スロー
+	InitSlow();
 
 	//　各オブジェクトの設定処理
 	LoadEdit();

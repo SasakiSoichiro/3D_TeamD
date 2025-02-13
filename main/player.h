@@ -17,7 +17,7 @@
 #define OBJ_P (20.0f)
 #define PARTS_MAX (20)
 #define USEPARTS_MAX (20)
-#define MAX_PLAYER (2)
+#define MAX_PLAYER (1)
 
 typedef enum
 {

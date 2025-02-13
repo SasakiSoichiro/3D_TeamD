@@ -270,8 +270,8 @@ void UpdateEnemy(void)
 			g_Enemy[nCntEnemy].move.y -= GRAVI;
 
 			//位置を更新
-			g_Enemy[nCntEnemy].pos.x += g_Enemy[nCntEnemy].move.x;// * pSlow->fDivi;
-			g_Enemy[nCntEnemy].pos.z += g_Enemy[nCntEnemy].move.z;// * pSlow->fDivi;
+			g_Enemy[nCntEnemy].pos.x += g_Enemy[nCntEnemy].move.x * pSlow->fDivi;
+			g_Enemy[nCntEnemy].pos.z += g_Enemy[nCntEnemy].move.z * pSlow->fDivi;
 
 			//SetPositionGaugeLife(g_Enemy[nCntEnemy].nIdxLife, D3DXVECTOR3(g_Enemy[nCntEnemy].pos.x, g_Enemy[nCntEnemy].pos.y + 40.0f, g_Enemy[nCntEnemy].pos.z));
 
@@ -340,7 +340,7 @@ void UpdateEnemy(void)
 			EKEY pKeyNext = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[(g_Enemy[nCntEnemy].nKey + 1) % g_Enemy[nCntEnemy].nNumKey].aKey[nCntModel];
 
 			//相対値
-			float fRateMotion = g_Enemy[nCntEnemy].nCntMotion / (float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame * pSlow->nMulti;
+			float fRateMotion = g_Enemy[nCntEnemy].nCntMotion /( (float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].aKeyInfo[g_Enemy[nCntEnemy].nKey].nFlame * pSlow->nMulti);
 
 			//ブレンドするフレーム
 			g_Enemy[nCntEnemy].nFrameBlend = EBLEND_FRAME * pSlow->nMulti;
@@ -363,10 +363,10 @@ void UpdateEnemy(void)
 				EKEY pKeyNextBlend = g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[(g_Enemy[nCntEnemy].nKeyBlend + 1) % g_Enemy[nCntEnemy].nNumKeyBlend].aKey[nCntModel];	// 次のキー
 
 				// 相対値
-				float fRateMotionBlend = g_Enemy[nCntEnemy].nCntMotionBlend / (float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[g_Enemy[nCntEnemy].nKeyBlend].nFlame * pSlow->nMulti;
+				float fRateMotionBlend = g_Enemy[nCntEnemy].nCntMotionBlend / ((float)g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionTypeBlend].aKeyInfo[g_Enemy[nCntEnemy].nKeyBlend].nFlame * pSlow->nMulti);
 
 				// ブレンドの相対値
-				float fRateBlend = g_Enemy[nCntEnemy].nCntBlend / (float)g_Enemy[nCntEnemy].nFrameBlend*pSlow->nMulti;
+				float fRateBlend = g_Enemy[nCntEnemy].nCntBlend / ((float)g_Enemy[nCntEnemy].nFrameBlend*pSlow->nMulti);
 
 
 
@@ -479,7 +479,7 @@ void UpdateEnemy(void)
 			g_Enemy[nCntEnemy].nCntBlend++;
 
 
-			if (g_Enemy[nCntEnemy].nCntBlend >= g_Enemy[nCntEnemy].nFrameBlend*pSlow->nMulti)
+			if (g_Enemy[nCntEnemy].nCntBlend >= (g_Enemy[nCntEnemy].nFrameBlend*pSlow->nMulti))
 			{//ブレンドのフレーム数に達したら
 
 				//初期化＆通常モーションに情報を代入
@@ -1029,8 +1029,8 @@ void LoiterEnemy(void)
 
 	g_Enemy[0].rotDest.y = atan2f((Turn[g_nCntPos].x - g_Enemy[0].pos.x), (Turn[g_nCntPos].z - g_Enemy[0].pos.z))+D3DX_PI;
 	fAnglemove = atan2f((Turn[g_nCntPos].x - g_Enemy[0].pos.x), (Turn[g_nCntPos].z - g_Enemy[0].pos.z));
-	g_Enemy[0].move.x = sinf(fAnglemove) * 1.0f;
-	g_Enemy[0].move.z = cosf(fAnglemove) * 1.0f;
+	g_Enemy[0].move.x = sinf(fAnglemove) * 0.3f;
+	g_Enemy[0].move.z = cosf(fAnglemove) * 0.3f;
 
 }
 

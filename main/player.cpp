@@ -14,6 +14,7 @@
 #include "fade.h"
 #include "sound.h"
 #include "gonnzaresu.h"
+#include "slow.h"
 
 //グローバル変数宣言
 Player g_player[MAX_PLAYER];
@@ -100,6 +101,8 @@ void UpdatePlayer(void)
 {
 	Camera* pCamera = GetCamera();
 
+	Slow* pSlow = GetSlow();
+
 	XINPUT_STATE* pStick;
 	pStick = GetJoyStickAngle();
 
@@ -160,6 +163,18 @@ void UpdatePlayer(void)
 		//重力加算
 		g_player[nCnt].move.y -= GRAVI;
 
+		if (KeybordTrigger(DIK_M) == true)
+		{
+			if (pSlow->bUse == false)
+			{
+				pSlow->bUse = true;
+			}
+			else
+			{
+				pSlow->bUse = false;
+			}
+			SetSlow();
+		}
 		if (GetKeyboardPress(DIK_A) == true)
 		{//Aキーが押された
 			if (GetKeyboardPress(DIK_W) == true)
