@@ -391,11 +391,11 @@ void DrawGame(void)
 	//　ギミック
 	DrawGimmick();
 
-	//	ゴンザレス
-	DrawGonzaresu();
-
 	//FOGを消す
 	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+
+	//	ゴンザレス
+	DrawGonzaresu();
 
 	//　ビルボード
 	DrawBillboard();
@@ -407,7 +407,7 @@ void DrawGame(void)
 	DrawEyeUI();
 
 	//FOGを戻す
-	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 
 	if (g_bPause == true)
