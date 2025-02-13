@@ -20,7 +20,7 @@ void InitTutrial(void)
 
 	//	テクスチャ読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\tyutorial.png",
+		"data\\texture\\tutrial000.png",
 		&g_apTextureTutrial);
 
 	//	頂点バッファ
