@@ -36,7 +36,6 @@ void InitEnemy(void)
 		g_Enemy[nCnt].nType = 0;
 		g_Enemy[nCnt].bBlendMotion = false;
 		g_Enemy[nCnt].bUse = false;
-
 	}
 
 	nCntTypeState = 0;
@@ -71,7 +70,7 @@ void InitEnemy(void)
 
 	}
 	g_LoadEnemy[0].fRad = 30.01f;
-
+	SetMotionType(EMOTIONTYPE_MOVE, true, 10, 0);
 }
 void UninitEnemy(void)
 {
