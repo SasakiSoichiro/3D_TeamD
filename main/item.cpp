@@ -11,7 +11,7 @@
 #include "player.h"
 #include "input.h"
 #include "sound.h"
-
+#include "slow.h"
 ITEM g_item[MAX_ITEM] = {};
 LPD3DXMESH g_pMeshItem[MAX_ITEM] = { NULL };				//	頂点情報のポインター
 LPDIRECT3DTEXTURE9 g_apTextureItem[128] = {};				//	テクスチャのポインター
@@ -78,7 +78,7 @@ void Inititem(void)
 		&g_pMeshItem[4]);
 
 	//	Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\model\\flashlight.x",
+	D3DXLoadMeshFromX("data\\model\\pocketwatch000.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
@@ -155,6 +155,8 @@ void Uninititem(void)
 void Updateitem(void)
 {
 	Player* pPlayer = GetPlayer();
+	Slow* pSlow = GetSlow();
+
 
 	for (int nCnt = 0; nCnt < MAX_ITEM; nCnt++)
 	{
@@ -200,6 +202,18 @@ void Updateitem(void)
 						g_item[1].bKey_bottom = true;
 					}
 				}
+			}
+
+			if (KeybordTrigger(DIK_E) == true && g_item[ITEMTYPE_SIX].bHave == true || JoyPadTrigger(JOYKEY_X, 0)==true&& g_item[ITEMTYPE_SIX].bHave == true)
+			{//アイテムを持っている時アイテムを使用する処理
+
+				if (pSlow->bUse == false)
+				{
+					pSlow->bUse = true;
+					g_item[ITEMTYPE_SIX].bHave == false;
+					SetSlow();
+				}
+				
 			}
 		}
 	}
