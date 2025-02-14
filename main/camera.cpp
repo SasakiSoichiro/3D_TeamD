@@ -253,13 +253,21 @@ void UpdateCamera(void)
 	if (GetEditState() == false && mode == MODE_GAME)
 	{
 		g_camera[1].posV = pEnemy->pos;
-		g_camera[1].posV.y += 50.0f;
-		g_camera[1].posV.x += 5.0f;
+		g_camera[1].posV.y += 80.0f;
 
+		g_camera[1].posR.x = g_camera[1].posV.x - sinf(pEnemy->rot.y) * cosf(pEnemy->rot.x);
+		g_camera[1].posR.y = g_camera[1].posV.y - sinf(pEnemy->rot.x);
+		g_camera[1].posR.z = g_camera[1].posV.z - cosf(pEnemy->rot.y) * cosf(pEnemy->rot.x);
 
-		g_camera[1].posR.x = g_camera[1].posV.x - sinf(g_camera[1].rot.y - D3DX_PI * 0.5f) * cosf(g_camera[1].rot.x);
-		g_camera[1].posR.y = g_camera[1].posV.y - sinf(g_camera[1].rot.x);
-		g_camera[1].posR.z = g_camera[1].posV.z - cosf(g_camera[1].rot.y - D3DX_PI * 0.5f) * cosf(g_camera[1].rot.x);
+		if (g_camera[1].rot.y <= -D3DX_PI)
+		{
+			g_camera[1].rot.y += D3DX_PI * 2.0f;
+		}
+		else if (g_camera[1].rot.y >= D3DX_PI)
+		{
+			g_camera[1].rot.y += -D3DX_PI * 2.0f;
+		}
+
 
 	}
 
