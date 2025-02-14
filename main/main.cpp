@@ -597,6 +597,8 @@ void SetMode(MODE mode)
 		break;
 	}
 
+	g_mode = mode;
+
 	switch (mode)
 	{
 	case MODE_TITLE:
@@ -619,8 +621,6 @@ void SetMode(MODE mode)
 		InitRanking();		//	ランキング
 		break;
 	}
-
-	g_mode = mode;
 }
 //=================
 //	モードの取得

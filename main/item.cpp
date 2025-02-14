@@ -201,6 +201,14 @@ void Updateitem(void)
 					{
 						g_item[1].bKey_bottom = true;
 					}
+
+					if (g_item[4].bUse == false)
+					{
+						if (pPlayer->nLife <= 2)
+						{
+							pPlayer->nLife += 1;
+						}
+					}
 				}
 			}
 

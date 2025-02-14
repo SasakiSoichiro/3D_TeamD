@@ -86,97 +86,94 @@ void UpdateCamera(void)
 	XINPUT_STATE* pStick;
 	pStick = GetJoyStickAngle();
 
-	for (int p = 0; p < PLAYER_MAX; p++, pStick++)
+	//右スティック視点
+	if (GetJoyStick(0) == true)
 	{
-		//右スティック視点
-		if (GetJoyStick(p) == true)
+		if (pStick->Gamepad.sThumbRX > 10922)
 		{
-			if (pStick->Gamepad.sThumbRX > 10922)
+			if (pStick->Gamepad.sThumbRY > 10922)
 			{
-				if (pStick->Gamepad.sThumbRY > 10922)
-				{
-					//上
-					g_camera[p].rot.x -= 0.03f;
-				}
-				else if (pStick->Gamepad.sThumbRY < -10922)
-				{
-					//下
-					g_camera[p].rot.x += 0.03f;
-				}
-
-				//右回り
-				g_camera[p].rot.y += 0.03f;
-			}
-			else if (pStick->Gamepad.sThumbRX < -10922)
-			{
-				if (pStick->Gamepad.sThumbRY > 10922)
-				{
-					//上
-					g_camera[p].rot.x -= 0.03f;
-				}
-				else if (pStick->Gamepad.sThumbRY < -10922)
-				{
-					//下
-					g_camera[p].rot.x += 0.03f;
-				}
-
-				//左回り
-				g_camera[p].rot.y -= 0.03f;
-			}
-			else if (pStick->Gamepad.sThumbRY > 10922)
-			{
-				if (pStick->Gamepad.sThumbRX > 10922)
-				{
-					//右回り
-					g_camera[p].rot.y += 0.03f;
-				}
-				else if (pStick->Gamepad.sThumbRX < -10922)
-				{
-					//左回り
-					g_camera[p].rot.y -= 0.03f;
-				}
-
 				//上
-				g_camera[p].rot.x -= 0.03f;
+				g_camera[0].rot.x -= 0.03f;
 			}
 			else if (pStick->Gamepad.sThumbRY < -10922)
 			{
-				if (pStick->Gamepad.sThumbRX > 10922)
-				{
-					//右回り
-					g_camera[p].rot.y += 0.03f;
-				}
-				else if (pStick->Gamepad.sThumbRX < -10922)
-				{
-					//左回り
-					g_camera[p].rot.y -= 0.03f;
-				}
-
 				//下
-				g_camera[p].rot.x += 0.03f;
+				g_camera[0].rot.x += 0.03f;
 			}
 
+			//右回り
+			g_camera[0].rot.y += 0.03f;
+		}
+		else if (pStick->Gamepad.sThumbRX < -10922)
+		{
+			if (pStick->Gamepad.sThumbRY > 10922)
+			{
+				//上
+				g_camera[0].rot.x -= 0.03f;
+			}
+			else if (pStick->Gamepad.sThumbRY < -10922)
+			{
+				//下
+				g_camera[0].rot.x += 0.03f;
+			}
+
+			//左回り
+			g_camera[0].rot.y -= 0.03f;
+		}
+		else if (pStick->Gamepad.sThumbRY > 10922)
+		{
+			if (pStick->Gamepad.sThumbRX > 10922)
+			{
+				//右回り
+				g_camera[0].rot.y += 0.03f;
+			}
+			else if (pStick->Gamepad.sThumbRX < -10922)
+			{
+				//左回り
+				g_camera[0].rot.y -= 0.03f;
+			}
+
+			//上
+			g_camera[0].rot.x -= 0.03f;
+		}
+		else if (pStick->Gamepad.sThumbRY < -10922)
+		{
+			if (pStick->Gamepad.sThumbRX > 10922)
+			{
+				//右回り
+				g_camera[0].rot.y += 0.03f;
+			}
+			else if (pStick->Gamepad.sThumbRX < -10922)
+			{
+				//左回り
+				g_camera[0].rot.y -= 0.03f;
+			}
+
+			//下
+			g_camera[0].rot.x += 0.03f;
 		}
 
-		//角度の正規化
-		if (g_camera[p].rot.y <= -D3DX_PI)
-		{
-			g_camera[p].rot.y += D3DX_PI * 2.0f;
-		}
-		else if (g_camera[p].rot.y >= D3DX_PI)
-		{
-			g_camera[p].rot.y += -D3DX_PI * 2.0f;
-		}
+	}
 
-		//角度制限
-		if (g_camera[p].rot.x > 1.57f)
-		{
-			g_camera[p].rot.x = 1.57f;
-		}
-		else if (g_camera[p].rot.x < -1.57f)
-		{
-			g_camera[p].rot.x = -1.57f;
-		}
+	//角度の正規化
+	if (g_camera[0].rot.y <= -D3DX_PI)
+	{
+		g_camera[0].rot.y += D3DX_PI * 2.0f;
+	}
+	else if (g_camera[0].rot.y >= D3DX_PI)
+	{
+		g_camera[0].rot.y += -D3DX_PI * 2.0f;
+	}
+
+	//角度制限
+	if (g_camera[0].rot.x > 1.57f)
+	{
+		g_camera[0].rot.x = 1.57f;
+	}
+	else if (g_camera[0].rot.x < -1.57f)
+	{
+		g_camera[0].rot.x = -1.57f;
 	}
 
 	//	プレイヤーの視点
@@ -256,11 +253,21 @@ void UpdateCamera(void)
 	if (GetEditState() == false && mode == MODE_GAME)
 	{
 		g_camera[1].posV = pEnemy->pos;
-		g_camera[1].posV.y += 50.0f;
+		g_camera[1].posV.y += 80.0f;
 
-		g_camera[1].posR.x = g_camera[1].posV.x - sinf(g_camera[1].rot.y + D3DX_PI * 0.75f) * cosf(g_camera[1].rot.x);
-		g_camera[1].posR.y = g_camera[1].posV.y - sinf(g_camera[1].rot.x);
-		g_camera[1].posR.z = g_camera[1].posV.z - cosf(g_camera[1].rot.y + D3DX_PI * 0.75f) * cosf(g_camera[1].rot.x);
+		g_camera[1].posR.x = g_camera[1].posV.x - sinf(pEnemy->rot.y) * cosf(pEnemy->rot.x);
+		g_camera[1].posR.y = g_camera[1].posV.y - sinf(pEnemy->rot.x);
+		g_camera[1].posR.z = g_camera[1].posV.z - cosf(pEnemy->rot.y) * cosf(pEnemy->rot.x);
+
+		if (g_camera[1].rot.y <= -D3DX_PI)
+		{
+			g_camera[1].rot.y += D3DX_PI * 2.0f;
+		}
+		else if (g_camera[1].rot.y >= D3DX_PI)
+		{
+			g_camera[1].rot.y += -D3DX_PI * 2.0f;
+		}
+
 
 	}
 

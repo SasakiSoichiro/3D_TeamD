@@ -135,6 +135,7 @@ void InitGame(void)
 
 	//　懐中時計
 	Setitem(D3DXVECTOR3(-1500.0f, 0.0f, 700.0f), ITEMTYPE_SIX);
+	Setitem(D3DXVECTOR3(-1000.0f, 50.0f, 700.0f), ITEMTYPE_FIVE);
 
 	//　ビルボード(木)
 	SetBillboard(D3DXVECTOR3(-100.0f, 50.0f, -200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_0,D3DXVECTOR3(15.0f,35.0f,0.0f));
