@@ -133,8 +133,8 @@ void InitGame(void)
 		Setitem(D3DXVECTOR3(-1169.5f, 1.5f, 421.5f), ITEMTYPE_ONE);
 	}
 
-	//　薙刀
-	//Setitem(D3DXVECTOR3(200.0f, 0.0f, 0.0f), ITEMTYPE_FOUR);
+	//　懐中時計
+	Setitem(D3DXVECTOR3(-1500.0f, 0.0f, 700.0f), ITEMTYPE_SIX);
 
 	//　ビルボード(木)
 	SetBillboard(D3DXVECTOR3(-100.0f, 50.0f, -200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_0,D3DXVECTOR3(15.0f,35.0f,0.0f));
