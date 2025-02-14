@@ -248,7 +248,7 @@ void UpdateBillboard()
 						g_Billboard[nCnt].pos.y = pGimick->pos.y + 10.0f;
 						g_Billboard[nCnt].pos.z = pGimick->pos.z;
 
-						if (GetKeyboardPress(DIK_F) || JoyPadRelease(JOYKEY_X) == true)
+						if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_X) == true)
 						{//F‚ð‰Ÿ‚³‚ê‚½‚Æ‚«
 							a += 0.1f;
 						}

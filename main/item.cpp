@@ -125,8 +125,8 @@ void Uninititem(void)
 			//	テクスチャの破棄
 			if (g_apTextureItem[nCntMat] != NULL)
 			{
-				g_apTextureItem[count]->Release();
-				g_apTextureItem[count] = NULL;
+				g_apTextureItem[nCntMat]->Release();
+				g_apTextureItem[nCntMat] = NULL;
 			}
 		}
 	}
@@ -201,6 +201,14 @@ void Updateitem(void)
 					{
 						g_item[1].bKey_bottom = true;
 					}
+
+					if (g_item[4].bUse == false)
+					{
+						if (pPlayer->nLife <= 2)
+						{
+							pPlayer->nLife += 1;
+						}
+					}
 				}
 			}
 
@@ -210,7 +218,7 @@ void Updateitem(void)
 				if (pSlow->bUse == false)
 				{
 					pSlow->bUse = true;
-					g_item[ITEMTYPE_SIX].bHave == false;
+					g_item[ITEMTYPE_SIX].bHave = false;
 					SetSlow();
 				}
 				
