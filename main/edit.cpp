@@ -24,7 +24,7 @@ void InitEdit(void)
 	}
 
 
-	for (int nCnt = 0; nCnt <EDIT_MAX; nCnt++)
+	for (int nCnt = 2; nCnt <EDIT_MAX; nCnt++)
 	{
 		//xファイルの読み込み
 		D3DXLoadMeshFromX(X_EDIT[nCnt],
@@ -38,7 +38,7 @@ void InitEdit(void)
 	}
 
 	//マテリアルの取得
-	for (int nCnt = 0; nCnt < BLOCK_MAX; nCnt++)
+	for (int nCnt = 2; nCnt < BLOCK_MAX; nCnt++)
 	{
 			D3DXMATERIAL* pMat;//マテリアルへのポインタ
 
@@ -69,7 +69,7 @@ void InitEdit(void)
 }
 void UninitEdit(void)
 {
-	for (int nCntTex = 0; nCntTex < BLOCK_MAX; nCntTex++)
+	for (int nCntTex = 2; nCntTex < BLOCK_MAX; nCntTex++)
 	{
 
 		for (int nCntTexture = 0; nCntTexture < EDITTEXTURE; nCntTexture++)
@@ -97,6 +97,7 @@ void UninitEdit(void)
 	}
 	for (int nCntEdit = 0; nCntEdit < NUM_EDIT; nCntEdit++)
 	{
+
 		for (int nCntType = 0; nCntType < EDIT_MAX; nCntType++)
 		{
 			for (int nCntTexture = 0; nCntTexture < EDITTEXTURE; nCntTexture++)
@@ -191,6 +192,7 @@ void UpdateEdit(void)
 
 	}
 
+#ifdef _DEBUG// デバッグ
 	if (KeybordTrigger(DIK_F7) == true)
 	{
 		SaveEdit();
@@ -199,6 +201,7 @@ void UpdateEdit(void)
 	{
 		ReloadEdit();
 	}
+#endif
 }
 void DrawEdit(void)
 {
