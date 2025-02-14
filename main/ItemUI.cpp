@@ -6,10 +6,13 @@
 //====================================================
 
 #include "ItemUI.h"
+#include "item.h"
 
 //グローバル変数
-LPDIRECT3DTEXTURE9 g_ItemUiTexture[MAX_ITEMTEX] = {};	//Uiテクスチャへのポインタ
+LPDIRECT3DTEXTURE9 g_ItemUiTexture[ITEMUITYPE_MAX] = { };	//Uiテクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffItemUi = NULL;	//Uiバッファへのポインタ
+ITEMUI g_ItemUI[ITEMUITYPE_MAX];
+bool bHave;
 
 //====================================================
 //アイテムUI表示の初期化処理
@@ -22,51 +25,15 @@ void InitItemUI()
 	pDevice = GetDevice();						//デバイスの取得
 
 	//テクスチャの読み込み
-	//枠
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\waku.png",
-		&g_ItemUiTexture[0]);
-
-	//懐中電灯
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\flashPicture.png",
-		&g_ItemUiTexture[1]);
-
-	//救急箱
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\heal.png",
-		&g_ItemUiTexture[2]);
-
-	//薙刀
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\naginata.png",
-		&g_ItemUiTexture[3]);
-
-	//懐中時計
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\time.png",
-		&g_ItemUiTexture[4]);
-
-	//鍵なし
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\NOkagi.png",
-		&g_ItemUiTexture[5]);
-
-	//1/2鍵持ち
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\YesNoKagi.png",
-		&g_ItemUiTexture[6]);
-
-	//鍵
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\Perfectkagi.png",
-		&g_ItemUiTexture[7]);
-
-	//位置の初期化
-	D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	for (int nCnt = 0; nCnt < ITEMUITYPE_MAX; nCnt++)
+	{
+		D3DXCreateTextureFromFile(pDevice,
+			ITEMUI_TEXTURE[nCnt],
+			&g_ItemUiTexture[nCnt]);
+	}
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_ITEMUI,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * ITEMUITYPE_MAX,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
@@ -78,16 +45,20 @@ void InitItemUI()
 	//頂点バッファのロック、頂点データへのポインタ取得
 	g_pVtxBuffItemUi->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (int nCnt = 0; nCnt < MAX_ITEMUI; nCnt++)
+	for (int nCnt = 0; nCnt < ITEMUITYPE_MAX; nCnt++)
 	{
-		//使用状態
-		bool bUse = true;
+		// 構造体変数の初期化
+		g_ItemUI[nCnt].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_ItemUI[nCnt].fHeight = 0.0f;
+		g_ItemUI[nCnt].fWidth = 0.0f;
+		g_ItemUI[nCnt].bUse = false;
+		bHave = false;
 
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(1000.0f + nCnt * 55.0f, 0.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(1000.0f + nCnt * 55.0f + 50.0f, 0.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(1000.0f + nCnt * 55.0f, 50.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(1000.0f + nCnt * 55.0f + 50.0f, 50.0f, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -114,7 +85,6 @@ void InitItemUI()
 	g_pVtxBuffItemUi->Unlock();
 
 }
-
 //====================================================
 //アイテムUI表示の終了処理
 //====================================================
@@ -122,7 +92,7 @@ void UninitItemUI()
 {
 
 	//テクスチャの破棄
-	for (int nCnt = 0; nCnt < MAX_ITEMTEX; nCnt++)
+	for (int nCnt = 0; nCnt < ITEMUITYPE_MAX; nCnt++)
 	{
 		if (g_ItemUiTexture[nCnt] != NULL)
 		{
@@ -139,22 +109,29 @@ void UninitItemUI()
 	}
 
 }
-
 //====================================================
 //アイテムUI表示の更新処理
 //====================================================
 void UpdateItemUI()
 {
+	// アイテムの取得処理
+	ITEM* pItem = Getitem();
 
+	for (int nCnt = 0; nCnt < ITEMUITYPE_MAX; nCnt++, pItem++)
+	{
+		if (pItem->bKey_Top == true)
+		{
+			bHave = true;
+		}
+	}
 }
-
 //====================================================
 //アイテムUI表示の描画処理
 //====================================================
 void DrawItemUI()
 {
 	//デバイスへのポインタ
-	LPDIRECT3DDEVICE9 pDevice;			
+	LPDIRECT3DDEVICE9 pDevice;
 
 	//デバイスの取得
 	pDevice = GetDevice();
@@ -165,18 +142,64 @@ void DrawItemUI()
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	for (int nCnt = 0; nCnt < MAX_ITEMTEX; nCnt++)
+	for (int nCnt = 0; nCnt < ITEMUITYPE_MAX; nCnt++)
 	{
-		//テクスチャの設定
-		pDevice->SetTexture(0, g_ItemUiTexture[0]);
+		int nType = g_ItemUI[nCnt].nType;
 
-		//タイマーの描画
-		pDevice->DrawPrimitive(
-			D3DPT_TRIANGLESTRIP,//プリミティブの種類
-			nCnt * 4,//描画する最初の頂点インデックス
-			2//プリミティブ（タイマー）の数
-		);
-
+		if (g_ItemUI[nCnt].bUse == true)
+		{
+			if (bHave == true)
+			{
+				//テクスチャの設定
+				pDevice->SetTexture(0, g_ItemUiTexture[11]);
+			}
+			else
+			{
+				//テクスチャの設定
+				pDevice->SetTexture(0, g_ItemUiTexture[nType]);
+			}
+			//アイテムUIの描画
+			pDevice->DrawPrimitive(
+				D3DPT_TRIANGLESTRIP,//プリミティブの種類
+				nCnt * 4,//描画する最初の頂点インデックス
+				2//プリミティブ（アイテムUI）の数
+			);
+		}
 	}
+}
+//====================================================
+//アイテムUIの設定処理
+//====================================================
+void SetItemUI(D3DXVECTOR3 pos, ITEMUITYPE nType, float fWidth, float fHeight)
+{
+	// 頂点情報のポインタ
+	VERTEX_2D* pVtx;
+
+	//頂点バッファのロック、頂点データへのポインタ取得
+	g_pVtxBuffItemUi->Lock(0, 0, (void**)&pVtx, 0);
+
+	for (int nCnt = 0; nCnt < ITEMUITYPE_MAX; nCnt++)
+	{
+		if (g_ItemUI[nCnt].bUse == false)
+		{// 未使用状態だったら
+			g_ItemUI[nCnt].pos = pos;
+			g_ItemUI[nCnt].nType = nType;
+			g_ItemUI[nCnt].fHeight = fHeight;
+			g_ItemUI[nCnt].fWidth = fWidth;
+			g_ItemUI[nCnt].bUse = true;
+
+			//頂点座標の設定
+			pVtx[0].pos = D3DXVECTOR3(g_ItemUI[nCnt].pos.x - fWidth, g_ItemUI[nCnt].pos.y - fHeight, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_ItemUI[nCnt].pos.x + fWidth, g_ItemUI[nCnt].pos.y - fHeight, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_ItemUI[nCnt].pos.x - fWidth, g_ItemUI[nCnt].pos.y + fHeight, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_ItemUI[nCnt].pos.x + fWidth, g_ItemUI[nCnt].pos.y + fHeight, 0.0f);
+
+			break;
+		}
+		pVtx += 4;
+	}
+
+	//頂点バッファをアンロック
+	g_pVtxBuffItemUi->Unlock();
 
 }
