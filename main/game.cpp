@@ -230,7 +230,7 @@ void UpdateGame(void)
 	Player* pPlayer = GetPlayer();	//　プレイヤー情報取得
 
 	// ポーズ処理
-	if (KeybordTrigger(DIK_TAB) == true)
+	if (KeybordTrigger(DIK_TAB) || JoyPadTrigger(JOYKEY_START) == true)
 	{// TAB
 		g_bPause = g_bPause ? false : true;
 	}
@@ -303,7 +303,7 @@ void UpdateGame(void)
 
 #ifdef _DEBUG// デバッグ
 
-			if (KeybordTrigger(DIK_O) == true || JoyPadTrigger(JOYKEY_A,PLAYER_1) == true)
+			if (KeybordTrigger(DIK_O) == true || JoyPadTrigger(JOYKEY_A) == true)
 			{// OまたはAボタン
 
 				//リザルトに移る

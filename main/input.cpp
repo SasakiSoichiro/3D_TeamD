@@ -18,9 +18,10 @@
 //================================================
 // グローバル
 //================================================
-XINPUT_STATE g_joyKeyState[PLAYER_MAX] = {}; 					//ジョイパッドのプレス情報
+XINPUT_STATE g_joyKeyState[PLAYER_MAX] = {};	//ジョイパッドのプレス情報
 XINPUT_STATE g_OldKeyState[PLAYER_MAX] = {};
-XINPUT_STATE g_joyKeyStateTrigger[PLAYER_MAX] = {};
+XINPUT_STATE g_joyKeyStateTrigger[PLAYER_MAX] = {};		//ジョイパッドのトリガー情報
+XINPUT_STATE g_joyKeyStateRelease[PLAYER_MAX] = {};		//ジョイパッドのリリース情報
 LPDIRECTINPUT8 g_pInput = NULL;				//DeirectInputへのポインタ
 LPDIRECTINPUTDEVICE8 g_pDevKeyboard = NULL;	//入力デバイスへのポインタ
 LPDIRECTINPUT8 g_pInputMause = NULL;				//DeirectInputへのポインタ
@@ -186,6 +187,8 @@ void UpdateJoypad(void)
 
 			g_joyKeyStateTrigger[p].Gamepad.wButtons = Button & ~OldButton;
 
+			g_joyKeyStateRelease[p].Gamepad.wButtons = Button & ~OldButton;
+
 			g_joyKeyState[p] = joyKeyState[p];		//	ジョイパッドのプレス情報を保存
 		}
 
@@ -194,21 +197,28 @@ void UpdateJoypad(void)
 //===================
 // プレス情報を取得
 //===================
-bool GetJoypadPress(JOYKEY key, int player)
+bool GetJoypadPress(JOYKEY key)
 {
-	return (g_joyKeyState[player].Gamepad.wButtons & (0x01 << key)) ? true : false;
+	return (g_joyKeyState[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
 //===================
 // トリガー情報を取得
 //===================
-bool JoyPadTrigger(JOYKEY key, int player)
+bool JoyPadTrigger(JOYKEY key)
 {
-	return (g_joyKeyStateTrigger[player].Gamepad.wButtons & (0x01 << key)) ? true : false;
+	return (g_joyKeyStateTrigger[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
+}
+//===================
+// リリース情報を取得
+//===================
+bool JoyPadRelease(JOYKEY key)
+{
+	return (g_joyKeyStateRelease[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
 
 XINPUT_STATE* GetState(void)
 {
-	return &g_joyKeyStateTrigger[0];
+	return &g_joyKeyStateTrigger[1];
 }
 
 //ジョイパッドの入力情報取得

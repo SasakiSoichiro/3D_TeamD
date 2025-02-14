@@ -185,7 +185,7 @@ void Updateitem(void)
 			//プレイヤーがアイテムの範囲に入ったら
 			if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 			{
-				if (KeybordTrigger(DIK_F) == true)
+				if (KeybordTrigger(DIK_F) || JoyPadTrigger(JOYKEY_X) == true)
 				{//Fを押されたとき
 					PlaySound(SOUND_LABEL_SHOT02);
 					//アイテムを拾う
@@ -204,7 +204,7 @@ void Updateitem(void)
 				}
 			}
 
-			if (KeybordTrigger(DIK_E) == true && g_item[ITEMTYPE_SIX].bHave == true || JoyPadTrigger(JOYKEY_X, 0)==true&& g_item[ITEMTYPE_SIX].bHave == true)
+			if (KeybordTrigger(DIK_E) == true && g_item[ITEMTYPE_SIX].bHave == true || JoyPadTrigger(JOYKEY_X)==true&& g_item[ITEMTYPE_SIX].bHave == true)
 			{//アイテムを持っている時アイテムを使用する処理
 
 				if (pSlow->bUse == false)

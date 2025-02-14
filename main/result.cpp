@@ -103,12 +103,8 @@ void UninitResult(void)
 //----------------
 void UpdateResult(void)
 {
-	if (KeybordTrigger(DIK_RETURN) == true)
+	if (KeybordTrigger(DIK_RETURN) || GetJoypadPress(JOYKEY_A) == true)
 	{//ÉGÉìÉ^Å[Ç™âüÇ≥ÇÍÇΩÇÁ
-		SetFade(MODE_RANKING);
-	}
-	else if (GetJoypadPress(JOYKEY_START,PLAYER_1) == true)
-	{
 		SetFade(MODE_RANKING);
 	}
 }
