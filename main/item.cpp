@@ -210,7 +210,7 @@ void Updateitem(void)
 				if (pSlow->bUse == false)
 				{
 					pSlow->bUse = true;
-					g_item[ITEMTYPE_SIX].bHave == false;
+					g_item[ITEMTYPE_SIX].bHave = false;
 					SetSlow();
 				}
 				
