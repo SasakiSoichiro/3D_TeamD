@@ -13,7 +13,7 @@
 #define OBJ_E (20.0f)
 #define EPARTS_MAX (16)
 #define EUSEPARTS_MAX (16)
-#define POINT_MAX (4)
+#define POINT_MAX (8)
 #define EBLEND_FRAME (10)
 
 //ìGÇÃèÛë‘
