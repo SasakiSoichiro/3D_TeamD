@@ -312,9 +312,9 @@ void UpdatePlayer(void)
 			}
 			else if (pStick->Gamepad.sThumbLY > 10922)
 			{
-				if (GetJoypadPress(JOYKEY_B, nCnt) == true)
+				if (GetJoypadPress(JOYKEY_LB) == true)
 				{
-					//ãˆÚ“®
+					//ƒ_ƒbƒVƒ…
 					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 					g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;

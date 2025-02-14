@@ -482,8 +482,11 @@ void Draw(void)
 
 	for (int n = 0; n < MAX_CAMERA; n++, pCamera++)
 	{
-		//	ビューポートの設定
-		pDevice->SetViewport(&pCamera->viewport);
+		if (g_mode != MODE_TITLE)
+		{
+			//	ビューポートの設定
+			pDevice->SetViewport(&pCamera->viewport);
+		}
 
 		//	画面クリア
 		g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(0, 0, 0, 255), 1.0f, 0);
@@ -554,6 +557,11 @@ void Draw(void)
 
 			//	終了
 			g_pD3DDevice->EndScene();
+
+			if (g_mode != MODE_GAME)
+			{
+				break;
+			}
 		}
 	}
 
@@ -589,6 +597,8 @@ void SetMode(MODE mode)
 		break;
 	}
 
+	g_mode = mode;
+
 	switch (mode)
 	{
 	case MODE_TITLE:
@@ -611,8 +621,6 @@ void SetMode(MODE mode)
 		InitRanking();		//	ランキング
 		break;
 	}
-
-	g_mode = mode;
 }
 //=================
 //	モードの取得

@@ -147,10 +147,10 @@ void UpdateTitle(void)
 	XINPUT_STATE* pStick;
 	pStick = GetJoyStickAngle();
 
-	int Pad1, Pad2;
-	Pad1 = GetJoypadInputState(DX_INPUT_PAD1);
+	//int Pad1, Pad2;
+	//Pad1 = GetJoypadInputState(DX_INPUT_PAD1);
 
-	Pad2 = GetJoypadInputState(DX_INPUT_PAD2);
+	//Pad2 = GetJoypadInputState(DX_INPUT_PAD2);
 
 	XINPUT_STATE* pState = GetState();
 
@@ -175,34 +175,34 @@ void UpdateTitle(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffTitle->Unlock();
 
-	if (KeybordTrigger(DIK_W) == true || OnMouseDown(MOUSE_L) == true || JoyPadTrigger(JOYKEY_UP, PLAYER_1) == true)//W
+	if (KeybordTrigger(DIK_W) == true || OnMouseDown(MOUSE_L) == true || JoyPadTrigger(JOYKEY_UP) == true)//W
 	{//Wキーが押された
 		nSelect2--;
 	}
-	else if (KeybordTrigger(DIK_S) == true || OnMouseDown(MOUSE_R) == true || JoyPadTrigger(JOYKEY_DOWN,PLAYER_1) == true)//S
+	else if (KeybordTrigger(DIK_S) == true || OnMouseDown(MOUSE_R) == true || JoyPadTrigger(JOYKEY_DOWN) == true)//S
 	{//Sキーが押された
 		nSelect2++;
 	}
 	
-	//ゲームパッド1P
-	if (Pad1 & JOYKEY_DOWN)
-	{
-		nSelect2++;
-	}
-	else if (Pad1 & JOYKEY_UP)
-	{
-		nSelect2--;
-	}
+	////ゲームパッド1P
+	//if (Pad1 & JOYKEY_DOWN)
+	//{
+	//	nSelect2++;
+	//}
+	//else if (Pad1 & JOYKEY_UP)
+	//{
+	//	nSelect2--;
+	//}
 
-	//ゲームパッド2P
-	if (Pad2 & JOYKEY_DOWN)
-	{
-		nSelect2++;
-	}
-	else if (Pad2 & JOYKEY_UP)
-	{
-		nSelect2--;
-	}
+	////ゲームパッド2P
+	//if (Pad2 & JOYKEY_DOWN)
+	//{
+	//	nSelect2++;
+	//}
+	//else if (Pad2 & JOYKEY_UP)
+	//{
+	//	nSelect2--;
+	//}
 
 	//範囲を超えないようにする
 	if (nSelect2 < MODE_TUTRIAL)
@@ -214,7 +214,7 @@ void UpdateTitle(void)
 		nSelect2 = MODE_TUTRIAL;
 	}
 
-	//頂点バッファをロックし、ちょうてん情報へのポインタを取得
+	//頂点バッファをロックし、頂点情報へのポインタを取得
 	g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
 
 	//g_nSelectを基準にポリゴンを不透明にする
@@ -229,7 +229,7 @@ void UpdateTitle(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffTitle->Unlock();
 
-	if (KeybordTrigger(DIK_RETURN) == true || JoyPadTrigger(JOYKEY_A,PLAYER_2) == true || OnMouseDown(MOUSE_H) == true || JoyPadTrigger(JOYKEY_START,PLAYER_2) == true)
+	if (KeybordTrigger(DIK_RETURN) == true || JoyPadTrigger(JOYKEY_A) == true || OnMouseDown(MOUSE_H) == true)
 	{//決定キーが押された
 
 		// 音楽を鳴らす

@@ -136,6 +136,9 @@ void InitGame(void)
 	//　懐中時計
 	Setitem(D3DXVECTOR3(-1500.0f, 0.0f, 700.0f), ITEMTYPE_SIX);
 
+	//	救急箱
+	Setitem(D3DXVECTOR3(-1000.0f, 50.0f, 700.0f), ITEMTYPE_FIVE);
+
 	//　ビルボード(木)
 	SetBillboard(D3DXVECTOR3(-100.0f, 50.0f, -200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_0,D3DXVECTOR3(15.0f,35.0f,0.0f));
 
@@ -230,7 +233,7 @@ void UpdateGame(void)
 	Player* pPlayer = GetPlayer();	//　プレイヤー情報取得
 
 	// ポーズ処理
-	if (KeybordTrigger(DIK_TAB) == true)
+	if (KeybordTrigger(DIK_TAB) || JoyPadTrigger(JOYKEY_START) == true)
 	{// TAB
 		g_bPause = g_bPause ? false : true;
 	}
@@ -303,7 +306,7 @@ void UpdateGame(void)
 
 #ifdef _DEBUG// デバッグ
 
-			if (KeybordTrigger(DIK_O) == true || JoyPadTrigger(JOYKEY_A,PLAYER_1) == true)
+			if (KeybordTrigger(DIK_O) == true || JoyPadTrigger(JOYKEY_A) == true)
 			{// OまたはAボタン
 
 				//リザルトに移る
@@ -368,11 +371,8 @@ void DrawGame(void)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
 
-	if (g_bEdit == false)
-	{
-		//FOGの設定
-		//SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
-	}
+	//FOGの設定
+	SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
 
 	//　各オブジェクトの描画処理
 
@@ -396,7 +396,7 @@ void DrawGame(void)
 	DrawGimmick();
 
 	//FOGを消す
-	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 	//	ゴンザレス
 	DrawGonzaresu();
@@ -411,7 +411,7 @@ void DrawGame(void)
 	DrawEyeUI();
 
 	//FOGを戻す
-	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 
 	if (g_bPause == true)

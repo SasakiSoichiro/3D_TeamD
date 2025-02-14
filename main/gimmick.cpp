@@ -204,14 +204,14 @@ void UpdateGimmick(void)
 				if (pItem->bKey_Top == true)
 				{
 
-					if (GetKeyboardPress(DIK_F) == true)
+					if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_X) == true)
 					{
 
 						g_hold.bPush = true;
 						g_hold.bNoPush = false;
 						g_hold.NoTouch = 0;
 					}
-					else if (KeybordRelease(DIK_F) == true)
+					else if (KeybordRelease(DIK_F) || JoyPadRelease(JOYKEY_X) == true)
 					{
 						g_hold.bNoPush = true;
 						g_hold.bPush = false;

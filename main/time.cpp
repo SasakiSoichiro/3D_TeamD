@@ -89,10 +89,10 @@ void InitTime(void)
 		bool bUse = true;
 
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(650.0f + nCntS * 50.0f,		 0.0f,  0.0f);
-		pVtx[1].pos = D3DXVECTOR3(650.0f + nCntS * 50.0f + 50.0f, 0.0f,  0.0f);
-		pVtx[2].pos = D3DXVECTOR3(650.0f + nCntS * 50.0f,		 50.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(650.0f + nCntS * 50.0f + 50.0f, 50.0f, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(200.0f + nCntS * 50.0f,		 0.0f,  0.0f);
+		pVtx[1].pos = D3DXVECTOR3(200.0f + nCntS * 50.0f + 50.0f, 0.0f,  0.0f);
+		pVtx[2].pos = D3DXVECTOR3(200.0f + nCntS * 50.0f,		 50.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(200.0f + nCntS * 50.0f + 50.0f, 50.0f, 0.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -138,10 +138,10 @@ void InitTime(void)
 		bool bUse = true;
 
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(500.0f + nCntS * 50.0f, 0.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(500.0f + nCntS * 50.0f + 50.0f, 0.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(500.0f + nCntS * 50.0f, 50.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(500.0f + nCntS * 50.0f + 50.0f, 50.0f, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(50.0f + nCntS * 40.0f, 0.0f, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(50.0f + nCntS * 40.0f + 50.0f, 0.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(50.0f + nCntS * 40.0f, 50.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(50.0f + nCntS * 40.0f + 50.0f, 50.0f, 0.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -185,10 +185,10 @@ void InitTime(void)
 	bool bUse = true;
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(600.0f, 0.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(650.0f, 0.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(600.0f, 50.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(650.0f, 50.0f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(150.0f, 0.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(200.0f, 0.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(150.0f, 50.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(200.0f, 50.0f, 0.0f);
 
 	//rhwの設定
 	pVtx[0].rhw = 1.0f;

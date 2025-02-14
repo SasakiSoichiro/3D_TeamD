@@ -212,7 +212,7 @@ void UpdatePause(void)
 	//アンロック
 	g_pVtxBuffPause2->Unlock();
 
-	//頂点バッファをロックし、ちょうてん情報へのポインタを取得
+	//頂点バッファをロックし、頂点情報へのポインタを取得
 	g_pVtxBuffPause->Lock(0, 0, (void**)&pVtx, 0);
 
 	for (nCntPause = 0; nCntPause < MAX_PAUSE; nCntPause++)
@@ -229,11 +229,11 @@ void UpdatePause(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffPause->Unlock();
 
-	if (KeybordTrigger(DIK_W) == true)//W
+	if (KeybordTrigger(DIK_W) || JoyPadTrigger(JOYKEY_UP) == true)//W&↑
 	{//Wキーが押された
 		nSelect--;
 	}
-	else if (KeybordTrigger(DIK_S) == true)//S
+	else if (KeybordTrigger(DIK_S) || JoyPadTrigger(JOYKEY_DOWN) == true)//S&↓
 	{//Sキーが押された
 		nSelect++;
 	}
@@ -263,7 +263,7 @@ void UpdatePause(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffPause->Unlock();
 
-	if (KeybordTrigger(DIK_RETURN) == true)
+	if (KeybordTrigger(DIK_RETURN) || JoyPadTrigger(JOYKEY_A) == true)
 	{//決定キーが押された
 		//メニューに合わせてモードの切り替え
 		switch (nSelect)
