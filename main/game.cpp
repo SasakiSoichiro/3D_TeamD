@@ -135,6 +135,8 @@ void InitGame(void)
 
 	//　懐中時計
 	Setitem(D3DXVECTOR3(-1500.0f, 0.0f, 700.0f), ITEMTYPE_SIX);
+
+	//	救急箱
 	Setitem(D3DXVECTOR3(-1000.0f, 50.0f, 700.0f), ITEMTYPE_FIVE);
 
 	//　ビルボード(木)
