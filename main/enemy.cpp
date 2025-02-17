@@ -318,6 +318,8 @@ void UpdateEnemy(void)
 			//“G“¯Žm‚Ì“–‚½‚è”»’è
 			CollisionEnemytoEnemy(nCntEnemy);
 
+			CollisionBlock(&g_Enemy[nCntEnemy].pos, &g_Enemy[nCntEnemy].posOld);
+
 			//SetPositionShadow(g_Enemy[nCntEnemy].IdxShadow, D3DXVECTOR3(g_Enemy[nCntEnemy].pos.x, 1.0f, g_Enemy[nCntEnemy].pos.z), g_Enemy[nCntEnemy].pos.y);
 
 			if (g_Enemy[nCntEnemy].State != ENEMYSTATE_DAMAGE && pPlayer->pState == PLAYERSTATE_ACTION)
