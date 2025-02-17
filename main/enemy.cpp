@@ -1007,13 +1007,13 @@ void LoiterEnemy(void)
 
 	float fAnglemove = 0.0f;
 
-	Turn[0] = D3DXVECTOR3(500.0f, 0.0f, 300.0f);
-	Turn[1] = D3DXVECTOR3(500.0f, 0.0f, -500.0f);
-	Turn[2] = D3DXVECTOR3(-500.0f, 0.0f, -400.0f);
+	Turn[0] = D3DXVECTOR3(800.0f, 0.0f, 250.0f);
+	Turn[1] = D3DXVECTOR3(700.0f, 0.0f, -500.0f);
+	Turn[2] = D3DXVECTOR3(-800.0f, 0.0f, -400.0f);
 	Turn[3] = D3DXVECTOR3(-500.0f, 0.0f, 500.0f);
 	Turn[4] = D3DXVECTOR3(-600.0f, 0.0f, 500.0f);
 	Turn[5] = D3DXVECTOR3(500.0f, 0.0f, 600.0f);
-	Turn[6] = D3DXVECTOR3(-500.0f, 0.0f, -400.0f);
+	Turn[6] = D3DXVECTOR3(600.0f, 0.0f, 600.0f);
 	Turn[7] = D3DXVECTOR3(-600.0f, 0.0f, 500.0f);
 
 	float fDistance = (g_Enemy[0].pos.x - Turn[g_nCntPos].x) * (g_Enemy[0].pos.x - Turn[g_nCntPos].x) + (g_Enemy[0].pos.y - Turn[g_nCntPos].y) * (g_Enemy[0].pos.y - Turn[g_nCntPos].y) + (g_Enemy[0].pos.z - Turn[g_nCntPos].z) * (g_Enemy[0].pos.z - Turn[g_nCntPos].z);
