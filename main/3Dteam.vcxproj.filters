@@ -31,6 +31,7 @@
     <ClCompile Include="gimmick.cpp" />
     <ClCompile Include="gonnzaresu.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="ItemUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -63,6 +64,7 @@
     <ClInclude Include="gimmick.h" />
     <ClInclude Include="gonnzaresu.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="ItemUI.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />
