@@ -9,6 +9,7 @@
 
 #include "main.h"
 
+
 //マクロ定義
 #define NUM_EDIT (200)
 #define EDITTEXTURE (128)	//テクスチャの最大数
