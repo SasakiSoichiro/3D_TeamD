@@ -574,7 +574,7 @@ void UpdateRanking(void)
 		g_nTimerRanking *= -1;
 	}
 
-	if (KeybordTrigger(DIK_RETURN) == true || JoyPadTrigger(JOYKEY_A) == true)
+	if (KeybordTrigger(DIK_RETURN) == true || JoyPadTrigger(JOYKEY_A) == true || OnMouseDown(MOUSE_L) == true)
 	{
 		//モード設定(ゲーム画面に移行)
 		SetFade(MODE_TITLE);

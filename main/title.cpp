@@ -175,12 +175,12 @@ void UpdateTitle(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffTitle->Unlock();
 
-	if (KeybordTrigger(DIK_W) == true || OnMouseDown(MOUSE_L) == true || JoyPadTrigger(JOYKEY_UP) == true)//W
-	{//Wキーが押された
+	if (KeybordTrigger(DIK_W) == true || KeybordTrigger(DIK_UP) == true || OnMouseDown(MOUSE_L) == true || JoyPadTrigger(JOYKEY_UP) == true)//W
+	{// 上選択
 		nSelect2--;
 	}
-	else if (KeybordTrigger(DIK_S) == true || OnMouseDown(MOUSE_R) == true || JoyPadTrigger(JOYKEY_DOWN) == true)//S
-	{//Sキーが押された
+	else if (KeybordTrigger(DIK_S) == true || KeybordTrigger(DIK_DOWN) == true || OnMouseDown(MOUSE_R) == true || JoyPadTrigger(JOYKEY_DOWN) == true)//S
+	{// 下選択
 		nSelect2++;
 	}
 	
