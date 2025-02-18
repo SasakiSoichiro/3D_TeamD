@@ -229,7 +229,7 @@ void UpdateTitle(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffTitle->Unlock();
 
-	if (KeybordTrigger(DIK_RETURN) == true || JoyPadTrigger(JOYKEY_A) == true || OnMouseDown(MOUSE_H) == true)
+	if (KeybordTrigger(DIK_RETURN) == true || JoyPadTrigger(JOYKEY_A) == true || OnMouseDown(MOUSE_L) == true)
 	{//決定キーが押された
 
 		// 音楽を鳴らす
@@ -241,6 +241,7 @@ void UpdateTitle(void)
 		case MODE_TUTRIAL:
 			SetFade(MODE_GAME);
 			break;
+
 		case MODE_GAME:
 			SetFade(MODE_TUTRIAL);
 			break;

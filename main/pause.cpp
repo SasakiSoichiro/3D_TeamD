@@ -229,11 +229,11 @@ void UpdatePause(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffPause->Unlock();
 
-	if (KeybordTrigger(DIK_W) || JoyPadTrigger(JOYKEY_UP) == true)//W&↑
+	if (KeybordTrigger(DIK_W) || KeybordTrigger(DIK_UP) || JoyPadTrigger(JOYKEY_UP) == true)//W&↑
 	{//Wキーが押された
 		nSelect--;
 	}
-	else if (KeybordTrigger(DIK_S) || JoyPadTrigger(JOYKEY_DOWN) == true)//S&↓
+	else if (KeybordTrigger(DIK_S) || KeybordTrigger(DIK_DOWN) || JoyPadTrigger(JOYKEY_DOWN) == true)//S&↓
 	{//Sキーが押された
 		nSelect++;
 	}
@@ -263,7 +263,7 @@ void UpdatePause(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffPause->Unlock();
 
-	if (KeybordTrigger(DIK_RETURN) || JoyPadTrigger(JOYKEY_A) == true)
+	if (KeybordTrigger(DIK_RETURN) || JoyPadTrigger(JOYKEY_A) == true || OnMouseDown(MOUSE_L) == true)
 	{//決定キーが押された
 		//メニューに合わせてモードの切り替え
 		switch (nSelect)
@@ -304,7 +304,6 @@ void DrawPause(void)
 
 	//ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
-
 
 	//頂点フォーマットの設定
 	pDevice->SetStreamSource(0, g_pVtxBuffPause, 0, sizeof(VERTEX_2D));
