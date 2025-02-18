@@ -5,36 +5,38 @@
 // 
 //================================================
 
+// インクルードファイル
 #include "input.h"
 #include "player.h"
 
-//================================================
-// マクロ
-//================================================
+// マクロ定義
 #define NUM_KEY_MAX (256)				//	キーの最大数
 #define NUM_MAUSE_MAX (3)				//	マウスの最大数
 #define MAX_PAD (2)						//	コントローラー
 
-//================================================
-// グローバル
-//================================================
-XINPUT_STATE g_joyKeyState[PLAYER_MAX] = {};	//ジョイパッドのプレス情報
+// グローバル変数宣言
+XINPUT_STATE g_joyKeyState[PLAYER_MAX] = {};	        //ジョイパッドのプレス情報
 XINPUT_STATE g_OldKeyState[PLAYER_MAX] = {};
 XINPUT_STATE g_joyKeyStateTrigger[PLAYER_MAX] = {};		//ジョイパッドのトリガー情報
 XINPUT_STATE g_joyKeyStateRelease[PLAYER_MAX] = {};		//ジョイパッドのリリース情報
-LPDIRECTINPUT8 g_pInput = NULL;				//DeirectInputへのポインタ
-LPDIRECTINPUTDEVICE8 g_pDevKeyboard = NULL;	//入力デバイスへのポインタ
-LPDIRECTINPUT8 g_pInputMause = NULL;				//DeirectInputへのポインタ
-LPDIRECTINPUTDEVICE8 g_pDevMause = NULL;	//入力デバイスへのポインタ
+
+LPDIRECTINPUT8 g_pInput = NULL;				            //DeirectInputへのポインタ
+LPDIRECTINPUTDEVICE8 g_pDevKeyboard = NULL;	            //入力デバイスへのポインタ
+LPDIRECTINPUT8 g_pInputMause = NULL;				    //DeirectInputへのポインタ
+LPDIRECTINPUTDEVICE8 g_pDevMause = NULL;	            //入力デバイスへのポインタ
+
 BYTE g_aKeyState[NUM_KEY_MAX];
 BYTE g_aOldState[NUM_KEY_MAX];
 BYTE g_aMauseState[NUM_MAUSE_MAX];
 BYTE g_aOldMauseState[NUM_MAUSE_MAX];
-DIMOUSESTATE g_CurrentMouseState;		//!< マウスの現在の入力情報
-DIMOUSESTATE g_PrevMouseState;			//!< マウスの一フレーム前の入力情報
-DIMOUSESTATE g_Oldpos;		//!< マウスの現在の入力情報
 
-//	初期化処理
+DIMOUSESTATE g_CurrentMouseState;		                //!< マウスの現在の入力情報
+DIMOUSESTATE g_PrevMouseState;			                //!< マウスの一フレーム前の入力情報
+DIMOUSESTATE g_Oldpos;		                            //!< マウスの現在の入力情報
+
+//================================================
+// キーボードの初期化処理
+//================================================
 HRESULT InitKeyboard(HINSTANCE hInstance, HWND hWnd)
 {
 	//	Directinputオブジェクトの生成
@@ -66,33 +68,37 @@ HRESULT InitKeyboard(HINSTANCE hInstance, HWND hWnd)
 
 	return S_OK;
 }
-//	終了処理
+//================================================
+// キーボードの終了処理
+//================================================
 void UninitKeyboard(void)
 {
-	//	入力デバイスの破棄
+	// 入力デバイスの破棄
 	if (g_pDevKeyboard != NULL)
 	{
-		g_pDevKeyboard->Unacquire();		//キーボードへのアクセス権を破棄
+		g_pDevKeyboard->Unacquire(); //キーボードへのアクセス権を破棄
 		g_pDevKeyboard->Release();
 		g_pDevKeyboard = NULL;
 	}
 
-	//	DirectInputオブジェクトの破棄
+	// DirectInputオブジェクトの破棄
 	if (g_pInput != NULL)
 	{
 		g_pInput->Release();
 		g_pInput = NULL;
 	}
 }
-//	更新処理
+//================================================
+// キーボードの更新処理
+//================================================
 void UpdateKeyboard(void)
 {
-	BYTE aKeyState[NUM_KEY_MAX];	//	キーボードの入力情報
+	BYTE aKeyState[NUM_KEY_MAX];  // キーボードの入力情報
 	int nCntKey;
 
 	for (nCntKey = 0; nCntKey < NUM_KEY_MAX; nCntKey++)
 	{
-		g_aOldState[nCntKey] = g_aKeyState[nCntKey];		//	キーボードプレス情報を保存
+		g_aOldState[nCntKey] = g_aKeyState[nCntKey]; // キーボードプレス情報を保存
 	}
 
 	// 入力デバイスからデータを取得
@@ -100,7 +106,7 @@ void UpdateKeyboard(void)
 	{
 		for (nCntKey = 0; nCntKey < NUM_KEY_MAX; nCntKey++)
 		{
-			g_aKeyState[nCntKey] = aKeyState[nCntKey];		//	キーボードプレス情報を保存
+			g_aKeyState[nCntKey] = aKeyState[nCntKey]; // キーボードプレス情報を保存
 		}
 	}
 	else
@@ -108,11 +114,16 @@ void UpdateKeyboard(void)
 		g_pDevKeyboard->Acquire();
 	}
 }
-
+//================================================
+// キーボードのプレス処理
+//================================================
 bool GetKeyboardPress(int nKey)
 {// 押されてるキー
 	return (g_aKeyState[nKey] & 0x80) ? true : false;
 }
+//================================================
+// キーボードのトリガー処理
+//================================================
 bool KeybordTrigger(int nKey)
 {// 一歩だけ
 	bool Trigger = false;
@@ -122,6 +133,9 @@ bool KeybordTrigger(int nKey)
 	}
 	return Trigger;
 }
+//================================================
+// キーボードのリリース処理
+//================================================
 bool KeybordRelease(int nKey)
 {// 長押し
 	bool Trigger = false;
@@ -131,6 +145,9 @@ bool KeybordRelease(int nKey)
 	}
 	return Trigger;
 }
+//================================================
+// キーボードのリピート処理
+//================================================
 bool KeybordRepeat(int nKey)
 {// 押されてる間
 	bool Trigger = false;
@@ -140,46 +157,42 @@ bool KeybordRepeat(int nKey)
 	}
 	return Trigger;
 }
-
-//================================================================
-// ジョイパッドの処理
-//================================================================
-//===================
-// 初期化処理
-//===================
+//================================================
+// ジョイパッドの初期化処理
+//================================================
 HRESULT InitJoypad(void)
 {
 	for (int count = 0; count < PLAYER_MAX; count++)
 	{
-		//メモリのクリア
+		// メモリのクリア
 		memset(&g_joyKeyState[count], 0, sizeof(XINPUT_STATE));
 	}
 	
-	//xinputのステートの設定(有効にする
+	// Xinputのステートの設定(有効にする
 	XInputEnable(true);
 
 	return S_OK;
 }
-//===================
-// 終了処理
-//===================
+//================================================
+// ジョイパッドの終了処理
+//================================================
 void UninitJoypad(void)
 {
-	//	xinputのステートの設定(無効にする
+	//	Xinputのステートの設定(無効にする
 	XInputEnable(false);
 }
-//===================
-// 更新処理
-//===================
+//================================================
+// ジョイパッドの更新処理
+//================================================
 void UpdateJoypad(void)
 {
-	XINPUT_STATE joyKeyState[MAX_PAD];		//	入力情報
+	XINPUT_STATE joyKeyState[MAX_PAD]; // 入力情報
 
 	for (int p = 0; p < PLAYER_MAX; p++)
 	{
-		g_OldKeyState[p] = g_joyKeyState[p];		//	キーボードプレス情報を保存
+		g_OldKeyState[p] = g_joyKeyState[p]; // キーボードプレス情報を保存
 
-		//	ジョイパッドの状態を取得
+		// ジョイパッドの状態を取得
 		if (XInputGetState(0, &joyKeyState[p]) == ERROR_SUCCESS)
 		{
 			WORD Button = joyKeyState[p].Gamepad.wButtons;
@@ -189,55 +202,54 @@ void UpdateJoypad(void)
 
 			g_joyKeyStateRelease[p].Gamepad.wButtons = Button & ~OldButton;
 
-			g_joyKeyState[p] = joyKeyState[p];		//	ジョイパッドのプレス情報を保存
+			g_joyKeyState[p] = joyKeyState[p]; // ジョイパッドのプレス情報を保存
 		}
-
 	}
 }
-//===================
-// プレス情報を取得
-//===================
+//================================
+// ジョイパッドプレス情報を取得
+//================================
 bool GetJoypadPress(JOYKEY key)
 {
-	return (g_joyKeyState[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
+	return (g_joyKeyState[0].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
-//===================
-// トリガー情報を取得
-//===================
+//================================
+// ジョイパッドトリガー情報を取得
+//================================
 bool JoyPadTrigger(JOYKEY key)
 {
-	return (g_joyKeyStateTrigger[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
+	return (g_joyKeyStateTrigger[0].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
-//===================
-// リリース情報を取得
-//===================
+//================================
+// ジョイパッドリリース情報を取得
+//================================
 bool JoyPadRelease(JOYKEY key)
 {
-	return (g_joyKeyStateRelease[1].Gamepad.wButtons & (0x01 << key)) ? true : false;
+	return (g_joyKeyStateRelease[0].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
-
+//================================
+// ジョイパッド情報を取得
+//================================
 XINPUT_STATE* GetState(void)
 {
-	return &g_joyKeyStateTrigger[1];
+	return &g_joyKeyStateTrigger[0];
 }
-
-//ジョイパッドの入力情報取得
+//================================
+// ジョイパッドの入力情報取得
+//================================
 int GetJoypadInputState(int InputType)
 {
 	return S_OK;
 }
-
-//===========================
-//
-//	スティックそうさ
-//
-//===========================
+//=================================
+// ジョイパッドのスティック操作
+//=================================
 bool GetJoyStick(int player)
 {
 	bool joykey[PLAYER_MAX] = { false };
 	int b = 0;
 
-	//	左スティック
+	// 左スティック
 	if (g_joyKeyState[player].Gamepad.sThumbLX > 100 ||
 		g_joyKeyState[player].Gamepad.sThumbLX < -100 ||
 		g_joyKeyState[player].Gamepad.sThumbLY > 100 ||
@@ -246,7 +258,7 @@ bool GetJoyStick(int player)
 		joykey[player] = true;
 	}
 
-	//	右スティック
+	// 右スティック
 	if (g_joyKeyState[player].Gamepad.sThumbRX > 100 ||
 		g_joyKeyState[player].Gamepad.sThumbRX < -100 ||
 		g_joyKeyState[player].Gamepad.sThumbRY > 100 ||
@@ -257,69 +269,70 @@ bool GetJoyStick(int player)
 
 	return joykey[player];
 }
-//==========================
-//	スティックの情報取得
-//===========================
+//=====================================
+// ジョイパッドのスティックの情報取得
+//=====================================
 XINPUT_STATE* GetJoyStickAngle(void)
 {
 	return &g_joyKeyState[0];
 }
-
-//====================================
-// 
-//		マウス操作
-// 
-//====================================
+//=====================================
+// マウスの初期化処理
+//=====================================
 HRESULT InitMausu(HINSTANCE hInstance, HWND hWnd)
 {
-	//	Directinputオブジェクトの生成
+	// Directinputオブジェクトの生成
 	if (FAILED(DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&g_pInputMause, NULL)))
 	{
 		return E_FAIL;
 	}
 
-	//	入力デバイスの生成
+	// 入力デバイスの生成
 	if (FAILED(g_pInput->CreateDevice(GUID_SysMouse, &g_pDevMause, NULL)))
 	{
 		return E_FAIL;
 	}
 
-	//	データフォーマットの設定
+	// データフォーマットの設定
 	if (FAILED(g_pDevMause->SetDataFormat(&c_dfDIMouse)))
 	{
 		return E_FAIL;
 	}
 
-	//	協調モード
+	// 協調モード
 	if (FAILED(g_pDevMause->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE)))
 	{
 		return E_FAIL;
 	}
 
-	//	キーボードへのアクセス剣を獲得
+	// キーボードへのアクセス権を獲得
 	g_pDevMause->Acquire();
 
 	return S_OK;
-
 }
-
+//=====================================
+// マウスの終了処理
+//=====================================
 void UninitMausu(void)
 {
+	// 入力デバイスの破棄
 	if (g_pDevMause != NULL)
 	{
-		g_pDevMause->Unacquire();		//キーボードへのアクセス権を破棄
+		g_pDevMause->Unacquire(); // キーボードへのアクセス権を破棄
 		g_pDevMause->Release();
 		g_pDevMause = NULL;
 	}
 
-	//	DirectInputオブジェクトの破棄
+	// DirectInputオブジェクトの破棄
 	if (g_pInputMause != NULL)
 	{
 		g_pInputMause->Release();
 		g_pInputMause = NULL;
 	}
 }
-
+//=====================================
+// マウスの更新処理
+//=====================================
 void UpdateMausu(void)
 {
 	g_Oldpos = g_CurrentMouseState;
@@ -344,9 +357,10 @@ void UpdateMausu(void)
 
 	g_CurrentMouseState.lX = p.x;
 	g_CurrentMouseState.lY = p.y;
-
 }
-
+//=====================================
+// マウスが押された処理
+//=====================================
 bool OnMouseDown(MouseButton button_type)
 {
 	if (!(g_PrevMouseState.rgbButtons[button_type] & (0x80)) &&
@@ -357,7 +371,9 @@ bool OnMouseDown(MouseButton button_type)
 
 	return false;
 }
-
+//=====================================
+// マウスが離された処理
+//=====================================
 bool OnMouseUp(MouseButton button_type)
 {
 	if (g_PrevMouseState.rgbButtons[button_type] & 0x80 &&

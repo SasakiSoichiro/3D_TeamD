@@ -1,9 +1,9 @@
 //==========================================
-//
 //		プレイヤー		Player.cpp
 //			ryuusei hirata
-//
 //=========================================
+
+// インクルードファイル
 #include "main.h"
 #include "player.h"
 #include "input.h"
@@ -27,10 +27,15 @@ int g_nCntStop;
 bool bLanding, bOldLanding;
 int OldType;
 
-//初期化処理
+//========================
+//プレイヤーの初期化処理
+//========================
 void InitPlayer(void)
 {
+	// デバイスのポインタ
 	LPDIRECT3DDEVICE9 pDevice;
+
+	//デバイスの取得
 	pDevice = GetDevice();
 
 	//各種変数の初期化
@@ -69,6 +74,9 @@ void InitPlayer(void)
 	//g_nIdxShadow = SetShadow(g_player.pos, g_player.rot, D3DXVECTOR3(10.0f, 1.0f, 10.0f));
 
 }
+//========================
+//プレイヤーの終了処理
+//========================
 void UninitPlayer(void)
 {
 	//音楽(SE)を止める
@@ -78,6 +86,7 @@ void UninitPlayer(void)
 	{
 		for (int nCntModel = 0; nCntModel < LoadMotion[nCntType].nNumModel; nCntModel++)
 		{
+			//メッシュの破棄
 			if (LoadMotion[nCntType].aModel[nCntModel].pMesh != NULL)
 			{
 				LoadMotion[nCntType].aModel[nCntModel].pMesh->Release();
@@ -98,6 +107,9 @@ void UninitPlayer(void)
 
 	}
 }
+//========================
+//プレイヤーの更新処理
+//========================
 void UpdatePlayer(void)
 {
 	Camera* pCamera = GetCamera();
@@ -113,11 +125,12 @@ void UpdatePlayer(void)
 	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++,pCamera++, pStick++)
 	{
 		OldType = g_player[nCnt].nType;
-		g_player[nCnt].motion.motionTypeOld = g_player[nCnt].motion.motionType;//モーションの種類
+		g_player[nCnt].motion.motionTypeOld = g_player[nCnt].motion.motionType; // モーションの種類
 		switch (g_player[nCnt].pState)
 		{
 		case PLAYERSTATE_NORMAL:
 			break;
+
 		case PLAYERSTATE_DAMAGE:
 			g_nCntPlayerState++;
 			if (g_nCntPlayerState >= 120)
@@ -126,17 +139,19 @@ void UpdatePlayer(void)
 				g_nCntPlayerState = 0;
 			}
 			break;
+
 		case PLAYERSTATE_MOVE:
 			g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 			break;
+
 		case PLAYERSTATE_JUMP:
 			g_player[nCnt].motion.motionType = MOTIONTYPE_JUMP;
 			if (bLanding == true)
 			{
 				g_player[nCnt].pState = PLAYERSTATE_NORMAL;
 			}
-
 			break;
+
 		case PLAYERSTATE_ACTION:
 			g_nCntPlayerState++;
 			if (g_nCntPlayerState >= 60)
@@ -151,26 +166,30 @@ void UpdatePlayer(void)
 		{
 		case MOTIONTYPE_NEUTRAL:
 			break;
+
 		case MOTIONTYPE_MOVE:
 			break;
+
 		case MOTIONTYPE_ACTION:
 			break;
+
 		case MOTIONTYPE_JUMP:
 			break;
+
 		case MOTIONTYPE_LANDING:
 			break;
 		}
 
 		g_player[nCnt].posOld = g_player[nCnt].pos;
 
-		//重力加算
+		// 重力加算
 		g_player[nCnt].move.y -= GRAVI;
 
-
+		// プレイヤーの移動
 		if (GetKeyboardPress(DIK_A) == true)
-		{//Aキーが押された
+		{// Aキーが押された
 			if (GetKeyboardPress(DIK_W) == true)
-			{//左上
+			{// 左上
 				g_player[nCnt].pos.x += sinf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
 				g_player[nCnt].pos.z += cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.75f;
@@ -179,7 +198,7 @@ void UpdatePlayer(void)
 
 			}
 			else if (GetKeyboardPress(DIK_S) == true)
-			{//左下
+			{// 左下
 
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 				g_player[nCnt].pos.x -= sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
@@ -188,7 +207,7 @@ void UpdatePlayer(void)
 
 			}
 			else
-			{//左
+			{// 左
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 				g_player[nCnt].pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
 				g_player[nCnt].pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
@@ -196,13 +215,10 @@ void UpdatePlayer(void)
 
 			}
 		}
-
 		else if (GetKeyboardPress(DIK_D) == true)
-		{//Dキーが押された
-
-
+		{// Dキーが押された
 			if (GetKeyboardPress(DIK_W) == true)
-			{//右上
+			{// 右上
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 				g_player[nCnt].pos.x += sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
 				g_player[nCnt].pos.z += cosf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
@@ -211,7 +227,7 @@ void UpdatePlayer(void)
 
 			}
 			else if (GetKeyboardPress(DIK_S) == true)
-			{//右下
+			{// 右下
 				g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.75f;
@@ -219,8 +235,7 @@ void UpdatePlayer(void)
 
 			}
 			else
-			{//右
-
+			{// 右
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 				g_player[nCnt].pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
 				g_player[nCnt].pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
@@ -228,19 +243,18 @@ void UpdatePlayer(void)
 
 			}
 		}
-
 		else if (GetKeyboardPress(DIK_W) == true)
-		{//Wキーが押された
+		{// Wキーが押された
 			if (GetKeyboardPress(DIK_LSHIFT) == true)
-			{
-				//	LShift押されたら
+			{// LShift押されたら
+				//ダッシュ
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 				g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y;
 			}
 			else
-			{
+			{// 前
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 				g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 2.0f;
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 2.0f;
@@ -248,13 +262,11 @@ void UpdatePlayer(void)
 			}
 		}
 		else if (GetKeyboardPress(DIK_S) == true)
-		{//Sキーが押された
-
+		{// Sキーが押された
 			g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 			g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI) * 2.0f;
 			g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
 			g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
-
 		}
 		else
 		{
@@ -290,20 +302,18 @@ void UpdatePlayer(void)
 			g_player[nCnt].pos.y = 0.0f;
 		}
 
-		//左スティック移動
+		// 左スティック移動
 		if (GetJoyStick(nCnt) == true)
 		{
 			if (pStick->Gamepad.sThumbLX > 10922)
-			{
-				//右移動
+			{// 右移動
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 				g_player[nCnt].pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
 				g_player[nCnt].pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.5f;
 			}
 			else if (pStick->Gamepad.sThumbLX < -10922)
-			{
-				//左移動
+			{// 左移動
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 				g_player[nCnt].pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
 				g_player[nCnt].pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
@@ -312,17 +322,15 @@ void UpdatePlayer(void)
 			}
 			else if (pStick->Gamepad.sThumbLY > 10922)
 			{
-				if (GetJoypadPress(JOYKEY_LB) == true)
-				{
-					//ダッシュ
+				if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)
+				{// ダッシュ
 					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 					g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
 					g_player[nCnt].rotDest.y = pCamera->rot.y;
 				}
 				else
-				{
-					//上移動
+				{// 上移動
 					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y) * 2.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y) * 2.0f;
@@ -330,22 +338,20 @@ void UpdatePlayer(void)
 				}
 			}
 			else if (pStick->Gamepad.sThumbLY < -10922)
-			{
-				//下移動
+			{// 下移動
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 				g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI) * 2.0f;
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
-
 			}
 		}
 
 		g_player[nCnt].rot.y += (g_player[nCnt].rotDest.y - g_player[nCnt].rot.y) * 0.2f;
 
-		//ブロックの当たり判定
+		// ブロックの当たり判定
 		CollisionBlock(&g_player[nCnt].pos, &g_player[nCnt].posOld);
 
-		//ギミックの当たり判定
+		// ギミックの当たり判定
 		CollisionGimmick(&g_player[nCnt].pos, &g_player[nCnt].posOld);
 
 		//CollisionWall(&g_player[nCnt].pos, &g_player[nCnt].posOld);
@@ -353,11 +359,11 @@ void UpdatePlayer(void)
 		//SetPositionShadow(g_nIdxShadow, D3DXVECTOR3(g_player[nCnt].pos.x, 1.0f, g_player[nCnt].pos.z), g_player[nCnt].pos.y);
 		bOldLanding = bLanding;
 		UpdateMotion();
-
 	}
-
 }
-//プレイヤーの描画
+//========================
+//プレイヤーの描画処理
+//========================
 void DrawPlayer(void)
 {
 	//LPDIRECT3DDEVICE9 pDevice;
@@ -446,33 +452,39 @@ void DrawPlayer(void)
 
 	//pDevice->SetMaterial(&matDef);
 }
+//========================
 //プレイヤーのマトリックス
+//========================
 void SetMatrix(void)
 {
+	//デバイスのポインタ
 	LPDIRECT3DDEVICE9 pDevice;
+
+	//デバイスの取得
 	pDevice = GetDevice();
 
-	//計算用マトリックス
+	// 計算用マトリックス
 	D3DXMATRIX mtxRot, mtxTrans;
 
-	//現在のマテリアルの保存用
-	D3DXMATRIX mtxParent;//親のマトリックス
+	// 現在のマテリアルの保存用
+	D3DXMATRIX mtxParent; // 親のマトリックス
 
 	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++)
 	{
-		//ワールドマトリックスの初期化
+		// ワールドマトリックスの初期化
 		D3DXMatrixIdentity(&g_player[nCnt].SwordmtxWorld);
-		//向きを反映
+
+		// 向きを反映
 		D3DXMatrixRotationYawPitchRoll(&mtxRot, g_player[nCnt].motion.aModel[15].rot.y, g_player[nCnt].motion.aModel[15].rot.x, g_player[nCnt].motion.aModel[15].rot.z);
 		D3DXMatrixMultiply(&g_player[nCnt].SwordmtxWorld, &g_player[nCnt].SwordmtxWorld, &mtxRot);
 
-		//位置を反映
+		// 位置を反映
 		D3DXMatrixTranslation(&mtxTrans, g_player[nCnt].Offpos.x, g_player[nCnt].Offpos.y, g_player[nCnt].Offpos.z);
 		D3DXMatrixMultiply(&g_player[nCnt].SwordmtxWorld, &g_player[nCnt].SwordmtxWorld, &mtxTrans);
 
 		mtxParent = g_player[nCnt].motion.aModel[15].mtxWorld;
 
-		//算出した「パーツのワールドマトリックス」と「親のマトリックス」を掛け合わせる
+		// 算出した「パーツのワールドマトリックス」と「親のマトリックス」を掛け合わせる
 		D3DXMatrixMultiply(&g_player[nCnt].SwordmtxWorld,
 			&g_player[nCnt].SwordmtxWorld,
 			&mtxParent);
@@ -480,7 +492,9 @@ void SetMatrix(void)
 		pDevice->SetTransform(D3DTS_WORLD, &g_player[nCnt].SwordmtxWorld);
 	}
 }
-//プレイヤーのモーション
+//===========================
+//プレイヤーのモーション処理
+//===========================
 void SetMotion(int nType)
 {
 	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++)
@@ -488,12 +502,16 @@ void SetMotion(int nType)
 		g_player[nCnt].motion = LoadMotion[nType];
 	}
 }
+//========================
 //プレイヤーの取得
+//========================
 Player* GetPlayer(void)
 {
 	return &g_player[0];
 }
+//=============================
 //プレイヤーのファイル読み込み
+//=============================
 void ReadScriptPlayer(int nType)
 {
 	FILE* pFile;
@@ -502,9 +520,11 @@ void ReadScriptPlayer(int nType)
 	case 0:
 		pFile = fopen("data\\MOTION\\motion05.txt", "r");
 		break;
+
 	case 1:
 		pFile = fopen("data\\MOTION\\motion06.txt", "r");
 		break;
+
 	default:
 		pFile = NULL;
 		break;
@@ -518,14 +538,13 @@ void ReadScriptPlayer(int nType)
 	char FileName[30][MAX_WORD];
 	D3DXVECTOR3 pos, rot;
 
-
 	if (pFile != NULL)
 	{
-		char aString[MAX_WORD];//文字数を格納
+		char aString[MAX_WORD]; // 文字数を格納
 
 		while (1)
 		{
-			//ファイルを読み込む
+			// ファイルを読み込む
 			fscanf(pFile, "%s", &aString[0]);
 
 
@@ -533,7 +552,7 @@ void ReadScriptPlayer(int nType)
 			{
 				while (1)
 				{
-					//ファイルを読み込む
+					// ファイルを読み込む
 					fscanf(pFile, "%s", &aString[0]);
 
 					if (strcmp(aString, "NUM_MODEL") == 0)
@@ -542,7 +561,7 @@ void ReadScriptPlayer(int nType)
 						fscanf(pFile, "%d", &LoadMotion[nType].nNumModel);
 						while (nCntModel < LoadMotion[nType].nNumModel)
 						{
-							//ファイルを読み込む
+							// ファイルを読み込む
 							fscanf(pFile, "%s", &aString[0]);
 
 							if (strcmp(aString, "MODEL_FILENAME") == 0)
@@ -550,7 +569,7 @@ void ReadScriptPlayer(int nType)
 								fscanf(pFile, "%s", &str[0]);
 								fscanf(pFile, "%s", &FileName[nCntModel][0]);
 
-								//xファイルの読み込み
+								// xファイルの読み込み
 								D3DXLoadMeshFromX(FileName[nCntModel],
 									D3DXMESH_SYSTEMMEM,
 									pDevice,
@@ -569,7 +588,7 @@ void ReadScriptPlayer(int nType)
 					{
 						while (1)
 						{
-							//ファイルを読み込む
+							// ファイルを読み込む
 							fscanf(pFile, "%s", &aString[0]);
 
 							if (strcmp(aString, "NUM_PARTS") == 0)
@@ -580,14 +599,14 @@ void ReadScriptPlayer(int nType)
 							}
 							while (nCntParts < LoadMotion[nType].nNumModel)
 							{
-								//ファイルを読み込む
+								// ファイルを読み込む
 								fscanf(pFile, "%s", &aString[0]);
 
 								if (strcmp(aString, "PARTSSET") == 0)
 								{
 									while (1)
 									{
-										//ファイルを読み込む
+										// ファイルを読み込む
 										fscanf(pFile, "%s", &aString[0]);
 
 										if (strcmp(aString, "INDEX") == 0)
@@ -637,7 +656,7 @@ void ReadScriptPlayer(int nType)
 					{
 						while (1)
 						{
-							//ファイルを読み込む
+							// ファイルを読み込む
 							fscanf(pFile, "%s", &aString[0]);
 
 							if (strcmp(aString, "LOOP") == 0)
@@ -661,7 +680,7 @@ void ReadScriptPlayer(int nType)
 
 								while (nCntKey < LoadMotion[nType].aMotionInfo[nCntMotion].nNumKey)
 								{
-									//ファイルを読み込む
+									// ファイルを読み込む
 									fscanf(pFile, "%s", &aString[0]);
 
 									if (strcmp(aString, "KEYSET") == 0)
@@ -669,7 +688,7 @@ void ReadScriptPlayer(int nType)
 										nCntParts = 0;
 										while (1)
 										{
-											//ファイルを読み込む
+											// ファイルを読み込む
 											fscanf(pFile, "%s", &aString[0]);
 
 											if (strcmp(aString, "FRAME") == 0)
@@ -682,14 +701,14 @@ void ReadScriptPlayer(int nType)
 
 										while (1)
 										{
-											//ファイルを読み込む
+											// ファイルを読み込む
 											fscanf(pFile, "%s", &aString[0]);
 
 											if (strcmp(aString, "KEY") == 0)
 											{
 												while (1)
 												{
-													//ファイルを読み込む
+													// ファイルを読み込む
 													fscanf(pFile, "%s", &aString[0]);
 
 													if (strcmp(aString, "POS") == 0)
@@ -751,7 +770,9 @@ void ReadScriptPlayer(int nType)
 		LoadMotion[nType].aModel[nCnt].rotFirst = LoadMotion[nType].aModel[nCnt].rot;
 	}
 }
+//=======================
 //プレイヤーのヒット処理
+//=======================
 void HitPlayer(int nDamege)
 {
 	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++)

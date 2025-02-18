@@ -1,19 +1,19 @@
 //=============================================================================
 //
 //    プレイヤー処理 [player.h]
-// Author : 佐々木奏一郎
+//    Author : 佐々木奏一郎
 //
 //=============================================================================
-
 #ifndef _PLAYERH//このマクロ定義がされていなかったら
 #define _PLAYERH//2銃インクルード防止のマクロ定義
 
+//インクルードファイル
 #include "main.h"
 #include "model.h"
 #include "motion.h"
 
+//マクロ定義
 #define GRAVI (0.05f)            //重力
-#define JUMP (2.0f)
 #define OBJ_P (20.0f)
 #define PARTS_MAX (20)
 #define USEPARTS_MAX (20)
