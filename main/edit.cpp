@@ -1,6 +1,7 @@
 #include "block.h"
 #include "edit.h"
 #include "input.h"
+#include "player.h"
 
 //ƒOƒ[ƒoƒ‹•Ï”éŒ¾
 EDITINFO g_Edit[NUM_EDIT];
