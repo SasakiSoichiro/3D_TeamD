@@ -1,6 +1,7 @@
 #include "block.h"
 #include "edit.h"
 #include "input.h"
+
 //グローバル変数宣言
 EDITINFO g_Edit[NUM_EDIT];
 EDITTEX g_EditTex[EDIT_MAX];
@@ -24,7 +25,7 @@ void InitEdit(void)
 	}
 
 
-	for (int nCnt = 2; nCnt <EDIT_MAX; nCnt++)
+	for (int nCnt = 0; nCnt <EDIT_MAX; nCnt++)
 	{
 		//xファイルの読み込み
 		D3DXLoadMeshFromX(X_EDIT[nCnt],
@@ -38,7 +39,7 @@ void InitEdit(void)
 	}
 
 	//マテリアルの取得
-	for (int nCnt = 2; nCnt < BLOCK_MAX; nCnt++)
+	for (int nCnt = 0; nCnt < BLOCK_MAX; nCnt++)
 	{
 			D3DXMATERIAL* pMat;//マテリアルへのポインタ
 
@@ -69,7 +70,7 @@ void InitEdit(void)
 }
 void UninitEdit(void)
 {
-	for (int nCntTex = 2; nCntTex < BLOCK_MAX; nCntTex++)
+	for (int nCntTex = 0; nCntTex < BLOCK_MAX; nCntTex++)
 	{
 
 		for (int nCntTexture = 0; nCntTexture < EDITTEXTURE; nCntTexture++)
@@ -183,11 +184,9 @@ void UpdateEdit(void)
 			g_Edit[g_EditCnt + 1].bUse = true;
 
 			g_Edit[g_EditCnt + 1].nType = g_Edit[g_EditCnt].nType;
-			g_Edit[g_EditCnt + 1].tex[g_Edit[g_EditCnt + 1].nType] =g_EditTex[g_Edit[g_EditCnt].nType];
+			g_Edit[g_EditCnt + 1].tex[g_Edit[g_EditCnt + 1].nType] = g_EditTex[g_Edit[g_EditCnt].nType];
 
 			g_EditCnt++;
-
-
 		}
 
 	}
@@ -221,7 +220,9 @@ void DrawEdit(void)
 		{
 			continue;
 		}
+
 		int nType = g_Edit[nCntBlock].nType;
+
 		//ワールドマトリックスの初期化
 		D3DXMatrixIdentity(&g_Edit[nCntBlock].mtxWorld);
 		//向きを反映
@@ -336,23 +337,26 @@ void LoadEdit(void)
 					}
 				}
 			}
-			else if (strcmp(aString, "EDITCNT") == 0)
-			{
-				fscanf(pFile, "%d", &g_nReloadCnt);
-			}
+			//else if (strcmp(aString, "EDITCNT") == 0)
+			//{
+			//	fscanf(pFile, "%d", &g_nReloadCnt);
+			//}
 			if (strcmp(aString, "END_SCRIPT") == 0)
 			{
 				//whileを抜けるため
 				break;
 			}
 		}
-		//ファイルを閉じる
-		fclose(pFile);
+		////ファイルを閉じる
+		//fclose(pFile);
 	}
 	else
 	{//開けなかったときの処理
+		//ファイルを閉じる
 		return;
 	}
+	//ファイルを閉じる
+	fclose(pFile);
 
 }
 

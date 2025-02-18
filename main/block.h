@@ -6,11 +6,15 @@
 //=============================================================================
 #ifndef _BLOCK_H_//このマクロ定義がされていなかったら
 #define _BLOCK_H_//2銃インクルード防止のマクロ定義
+
+// インクルードファイル
 #include "main.h"
-#include "player.h"
+
+// マクロ定義
 #define BLOCK_TEXTURE (128) //ブロックのテクスチャの最大数
 #define NUM_BLOCK (200)		//ブロックの最大数
 
+// ブロックの種類の列挙型
 typedef enum
 {
 	//家1
@@ -69,7 +73,7 @@ typedef enum
 
 }BLOCKTYPE;
 
-
+// ブロックのテクスチャ構造体
 typedef struct
 {
 	LPD3DXMESH pMesh;								//メッシュ（頂点情報)へのポインタ
@@ -79,7 +83,7 @@ typedef struct
 	D3DXVECTOR3 vtxMin, vtxMax;						//モデルの最小値,最大値
 }BLOCKTEX;
 
-
+// ブロックの構造体情報
 typedef struct
 {
 	BLOCKTEX tex;						//テクスチャ情報
@@ -91,6 +95,7 @@ typedef struct
 
 }BLOCK;
 
+// xファイルの種類
 static const char* X_BLOCK[BLOCK_MAX] =
 {
 	//家1個目
@@ -148,7 +153,7 @@ static const char* X_BLOCK[BLOCK_MAX] =
 	"data\\model\\wall01.x",
 };
 
-//プロトタイプ宣言
+// プロトタイプ宣言
 void InitBlock(void);
 void UninitBlock(void);
 void UpdateBlock(void);

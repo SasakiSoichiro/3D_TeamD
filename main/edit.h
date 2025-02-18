@@ -8,7 +8,6 @@
 #define _EDIT_H_//2銃インクルード防止のマクロ定義
 
 #include "main.h"
-#include "player.h"
 
 //マクロ定義
 #define NUM_EDIT (200)

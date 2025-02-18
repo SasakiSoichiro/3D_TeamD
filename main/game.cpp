@@ -92,7 +92,7 @@ void InitGame(void)
 	// スロー
 	InitSlow();
 
-	//　各オブジェクトの設定処理
+	// 各オブジェクトの設定処理
 	LoadEdit();
 	
 	int a = rand() % 6 + 1;
@@ -255,6 +255,7 @@ void UpdateGame(void)
 		//ステージをロード
 		LoadEdit();
 	}
+
 	else if (g_bEdit == false && KeybordTrigger(DIK_F1))
 	{// b_Editがtrue
 		g_bEdit = true;
@@ -266,8 +267,7 @@ void UpdateGame(void)
 		{// g_Editがfalse
 
 			//　ゲーム中の各オブジェクトの更新処理
-
-			//メッシュフィールド
+# if 1			//メッシュフィールド
 			UpdateMeshfield();
 
 			//カメラ
@@ -303,7 +303,7 @@ void UpdateGame(void)
 			//	ゴンザレス
 			UpdateGonzaresu();
 
-
+#endif
 #ifdef _DEBUG// デバッグ
 
 			if (KeybordTrigger(DIK_O) == true || JoyPadTrigger(JOYKEY_A) == true)
