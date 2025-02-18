@@ -32,6 +32,7 @@
     <ClCompile Include="gonnzaresu.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="ItemUI.cpp" />
+    <ClCompile Include="noise.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -65,6 +66,7 @@
     <ClInclude Include="gonnzaresu.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="ItemUI.h" />
+    <ClInclude Include="noise.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />

@@ -12,6 +12,7 @@
 #include "meshfield.h"
 #include "light.h"
 #include "model.h"
+#include "noise.h"
 
 //タイトルの初期化
 void InitTitle3D(void)
@@ -20,6 +21,7 @@ void InitTitle3D(void)
 	InitTitle();
 	InitMeshfield();
 	InitLight();
+	InitNoise();
 }
 
 //タイトルの終了処理
@@ -29,6 +31,7 @@ void UninitTitle3D()
 	UninitTitle();
 	UninitMeshfield();
 	UninitLight();
+	UninitNoise();
 }
 
 //タイトルの更新処理
@@ -38,6 +41,7 @@ void UpdateTitle3D()
 	UpdateTitle();
 	UpdateMeshfield();
 	UpdateLight();
+	UpdateNoise();
 }
 
 //タイトルの描画処理
@@ -45,5 +49,6 @@ void DrawTitle3D()
 {
 	SetCamera(0);
 	DrawMeshfield();
+	DrawNoise();
 	DrawTitle();
 }
