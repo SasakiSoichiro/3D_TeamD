@@ -306,19 +306,52 @@ void UpdatePlayer(void)
 		if (GetJoyStick(nCnt) == true)
 		{
 			if (pStick->Gamepad.sThumbLX > 10922)
-			{// ‰EˆÚ“®
-				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
-				g_player[nCnt].pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
-				g_player[nCnt].pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
-				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.5f;
+			{
+				if (pStick->Gamepad.sThumbLY > 10922)
+				{// ãˆÚ“®
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y + D3DX_PI * 0.25f) * 2.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y + D3DX_PI * 0.25f) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
+				}
+				else if (pStick->Gamepad.sThumbLY < -10922)
+				{// ‰ºˆÚ“®
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
+				}
+				else
+				{// ‰EˆÚ“®
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
+					g_player[nCnt].pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.5f;
+				}
 			}
 			else if (pStick->Gamepad.sThumbLX < -10922)
-			{// ¶ˆÚ“®
-				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
-				g_player[nCnt].pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
-				g_player[nCnt].pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
-				g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.5f;
-
+			{
+				if (pStick->Gamepad.sThumbLY > 10922)
+				{// ãˆÚ“®
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y - D3DX_PI * 0.25f) * 2.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y - D3DX_PI * 0.25f) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
+				}
+				else if (pStick->Gamepad.sThumbLY < -10922)
+				{// ‰ºˆÚ“®
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x -= sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
+				}
+				else
+				{// ¶ˆÚ“®
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
+					g_player[nCnt].pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.5f;
+				}
 			}
 			else if (pStick->Gamepad.sThumbLY > 10922)
 			{
