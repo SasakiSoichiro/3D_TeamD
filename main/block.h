@@ -17,21 +17,17 @@
 // ブロックの種類の列挙型
 typedef enum
 {
-	//家1
-	BLOCK_HOUSE00_L = 0,		//普通のブロック
-	BLOCK_HOUSE00_R,
-
 	////家2
-	BLOCK_HOUSE01_L,
-	BLOCK_HOUSE01_r,
+	BLOCK_HOUSE000_L = 0,
+	BLOCK_HOUSE000_r,
 
 	////家3
-	BLOCK_HOUSE02_L,
-	BLOCK_HOUSE02_R,
+	BLOCK_HOUSE01_L,
+	BLOCK_HOUSE01_R,
 
 	////家4
-	BLOCK_HOUSE03_L,
-	BLOCK_HOUSE03_R,
+	BLOCK_HOUSE04_L,
+	BLOCK_HOUSE04_R,
 
 	////慰霊碑
 	BLOCK_IREIHI,
@@ -98,10 +94,6 @@ typedef struct
 // xファイルの種類
 static const char* X_BLOCK[BLOCK_MAX] =
 {
-	//家1個目
-	"data\\model\\house_L.x",
-	"data\\model\\house_R.x",
-
 	//家2個目
 	"data\\model\\house000_L.x",
 	"data\\model\\house000_r.x",

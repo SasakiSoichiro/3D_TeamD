@@ -21,7 +21,7 @@ void InitEdit(void)
 		//Šeí•Ï”‚Ì‰Šú‰»
 		g_Edit[nCnt].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Edit[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_Edit[nCnt].nType = BLOCK_HOUSE00_L;
+		g_Edit[nCnt].nType = BLOCK_HOUSE000_L;
 		g_Edit[nCnt].bUse = false;
 	}
 
