@@ -431,6 +431,7 @@ void DrawPlayer(void)
 		//全モデル（パーツ）の描画
 		for (int nCntModel = 0; nCntModel < g_player[nCnt].motion.nNumModel; nCntModel++)
 		{
+
 			//計算用マトリックス
 			D3DXMATRIX mtxRotModel, mtxTransModel;
 			D3DXMATRIX mtxParent;//親のマトリックス
@@ -557,11 +558,11 @@ void ReadScriptPlayer(int nType)
 	switch (nType)
 	{
 	case 0:
-		pFile = fopen("data\\MOTION\\walk.txt", "r");
+		pFile = fopen("data\\MOTION\\motion05.txt", "r");
 		break;
 
 	case 1:
-		pFile = fopen("data\\MOTION\\run.txt", "r");
+		pFile = fopen("data\\MOTION\\motion06.txt", "r");
 		break;
 
 	default:

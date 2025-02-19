@@ -10,10 +10,10 @@ void ReadScript(int nType)
 	switch (nType)
 	{
 	case 1:
-		pFile = fopen("data\\MOTION\\walk.txt", "r");
+		pFile = fopen("data\\MOTION\\motion05.txt", "r");
 		break;
 	case 2:
-		pFile = fopen("data\\MOTION\\run.txt", "r");
+		pFile = fopen("data\\MOTION\\motion06.txt", "r");
 		break;
 	}
 
