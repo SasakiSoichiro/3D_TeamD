@@ -144,6 +144,10 @@ void UpdatePlayer(void)
 			g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 			break;
 
+		case PLAYERSTATE_RUN:
+			g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+			break;
+
 		case PLAYERSTATE_JUMP:
 			g_player[nCnt].motion.motionType = MOTIONTYPE_JUMP;
 			if (bLanding == true)
@@ -553,11 +557,11 @@ void ReadScriptPlayer(int nType)
 	switch (nType)
 	{
 	case 0:
-		pFile = fopen("data\\MOTION\\motion05.txt", "r");
+		pFile = fopen("data\\MOTION\\walk.txt", "r");
 		break;
 
 	case 1:
-		pFile = fopen("data\\MOTION\\motion06.txt", "r");
+		pFile = fopen("data\\MOTION\\run.txt", "r");
 		break;
 
 	default:
