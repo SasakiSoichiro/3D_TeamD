@@ -144,6 +144,10 @@ void UpdatePlayer(void)
 			g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 			break;
 
+		case PLAYERSTATE_RUN:
+			g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+			break;
+
 		case PLAYERSTATE_JUMP:
 			g_player[nCnt].motion.motionType = MOTIONTYPE_JUMP;
 			if (bLanding == true)
@@ -427,6 +431,7 @@ void DrawPlayer(void)
 		//全モデル（パーツ）の描画
 		for (int nCntModel = 0; nCntModel < g_player[nCnt].motion.nNumModel; nCntModel++)
 		{
+
 			//計算用マトリックス
 			D3DXMATRIX mtxRotModel, mtxTransModel;
 			D3DXMATRIX mtxParent;//親のマトリックス
