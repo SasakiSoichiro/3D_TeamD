@@ -1,4 +1,5 @@
 //==================================
+// 
 //		げーむの処理	game.cpp
 //			ryuusei.hirata 
 //==================================
@@ -26,6 +27,7 @@
 #include "UI.h"
 #include "gonnzaresu.h"
 #include "slow.h"
+#include "gauge.h"
 
 // ゲームの状態
 GAMESTATE g_gameState = GAMESTATE_NONE;	// 初期化
@@ -94,8 +96,12 @@ void InitGame(void)
 
 	// 各オブジェクトの設定処理
 	LoadEdit();
+
+	//	ゲージ
+	InitGauge();
 	
-	int a = rand() % 6 + 1;
+	//int a = rand() % 6 + 1;
+	int a = 6;
 
 	if (a == 1)
 	{
@@ -221,6 +227,9 @@ void UninitGame(void)
 
 	//	ゴンザレス
 	UinitGonzaresu();
+
+	//	ゲージ
+	UinitGauge();
 }
 
 //---------------
@@ -302,6 +311,9 @@ void UpdateGame(void)
 
 			//	ゴンザレス
 			UpdateGonzaresu();
+
+			//	ゲージ
+			UpdateGauge();
 
 #endif
 #ifdef _DEBUG// デバッグ
@@ -409,6 +421,9 @@ void DrawGame(void)
 
 	//　目のUI
 	DrawEyeUI();
+
+	//	ゲージ
+	DrawGauge();
 
 	//FOGを戻す
 	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
