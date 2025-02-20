@@ -762,7 +762,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "data\\texture\\MYTEXTURE\\TelephonePoleWooden.jpg";
+    "C:\\Users\\student\\Desktop\\モデルビューワ Ver.3.0\\data\\TEXTURE\\TelephonePoleWooden.jpg";
    }
   }
   Material {
@@ -771,7 +771,25 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "data\\texture\\MYTEXTURE\\gray.jpg";
+    "C:\\Users\\student\\Desktop\\モデルビューワ Ver.3.0\\data\\TEXTURE\\TelephonePoleWooden.jpg";
+   }
+  }
+  Material {
+   1.000000;1.000000;1.000000;1.000000;;
+   5.000000;
+   0.000000;0.000000;0.000000;;
+   0.000000;0.000000;0.000000;;
+   TextureFilename {
+    "C:\\Users\\student\\Desktop\\モデルビューワ Ver.3.0\\data\\TEXTURE\\TelephonePoleWooden.jpg";
+   }
+  }
+  Material {
+   1.000000;1.000000;1.000000;1.000000;;
+   5.000000;
+   0.000000;0.000000;0.000000;;
+   0.000000;0.000000;0.000000;;
+   TextureFilename {
+    "C:\\Users\\student\\Downloads\\gray.jpg";
    }
   }
  }
