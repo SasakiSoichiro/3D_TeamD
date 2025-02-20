@@ -10,11 +10,12 @@
 
 typedef enum
 {
-	ITEM_A = 0,
-	ITEM_B,
-	ITEM_C,
+	ITEM_FLAME = 0,
+	ITEM_NAGINATA,
+	ITEM_HEAL,
+	ITEM_POCKETWATCH,
 	ITEM_MAX
-}ITEM;
+}ITEMUI;
 
 typedef struct
 {
@@ -28,9 +29,10 @@ typedef struct
 
 static const char* ITEM_TEXTURE[ITEM_MAX] =
 {
-	"data\\texture\\kenmon.png",		//ブロック
-	"data\\texture\\blue.JPG",			//ボタン
-	"data\\texture\\mitudomoe.png",		//動く壁
+	"data\\texture\\waku.png",		//枠
+	"data\\texture\\naginata.png",	//薙刀
+	"data\\texture\\heal.png",		//回復
+	"data\\texture\\time.png",		//懐中時計
 };
 
 //プロトタイプ宣言
