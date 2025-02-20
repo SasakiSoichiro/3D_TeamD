@@ -762,7 +762,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "data\\texture\\MYTEXTURE\\TelephonePoleWooden.jpg";
+   "data\\texture\\MYTEXTURE\\TelephonePoleWooden.jpg";
    }
   }
   Material {
@@ -771,7 +771,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "data\\texture\\MYTEXTURE\\TelephonePoleWooden.jpg";
+   "data\\texture\\MYTEXTURE\\TelephonePoleWooden.jpg";
    }
   }
   Material {
@@ -780,7 +780,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "data\\texture\\MYTEXTURE\\TelephonePoleWooden.jpg";
+   "data\\texture\\MYTEXTURE\\TelephonePoleWooden.jpg";
    }
   }
   Material {
@@ -789,7 +789,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "data\\texture\\MYTEXTURE\\gray.jpg";
+   "data\\texture\\MYTEXTURE\\gray.jpg";
    }
   }
  }
