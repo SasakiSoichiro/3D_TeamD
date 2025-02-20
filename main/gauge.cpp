@@ -107,61 +107,63 @@ void UpdateGauge(void)
 	//頂点バッファのロック、頂点データへのポインタ取得
 	g_pVtxBuffGauge->Lock(0, 0, (void**)&pVtx, 0);
 
-	//プレイヤーの半径の算出用変数
-	float fPRadPos = 28.0f;
-
-	//アイテムの半径の算出用変数
-	float fIRadPos = 28.0f;
-
-	//アイテムのプレイヤーの距離の差
-	D3DXVECTOR3 diff = pPlayer->pos - pGimmick->pos;
-
-	//範囲計算
-	float fDisX = pPlayer->pos.x - pGimmick->pos.x;
-	float fDisY = pPlayer->pos.y - pGimmick->pos.y;
-	float fDisZ = pPlayer->pos.z - pGimmick->pos.z;
-
-	//二つの半径を求める
-	float fRadX = fPRadPos + fIRadPos;
-
-	//プレイヤーがアイテムの範囲に入ったら
-	if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
+	if (g_gauge.bUse)
 	{
-		g_gauge.bUse = true;
+		//プレイヤーの半径の算出用変数
+		float fPRadPos = 50.0f;
 
-		if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_X) == true)
+		//アイテムの半径の算出用変数
+		float fIRadPos = 50.0f;
+
+		//アイテムのプレイヤーの距離の差
+		D3DXVECTOR3 diff = pPlayer->pos - pGimmick->pos;
+
+		//範囲計算
+		float fDisX = pPlayer->pos.x - pGimmick->pos.x;
+		float fDisY = pPlayer->pos.y - pGimmick->pos.y;
+		float fDisZ = pPlayer->pos.z - pGimmick->pos.z;
+
+		//二つの半径を求める
+		float fRadX = fPRadPos + fIRadPos;
+
+		//プレイヤーがアイテムの範囲に入ったら
+		if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 		{
-			g_gauge.fCnt += 0.05f;
+
+			if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_X) == true)
+			{
+				g_gauge.fCnt += 0.011f;
+			}
+			else if(g_gauge.fCnt >= 0)
+			{
+				g_gauge.fCnt -= 0.005f;
+			}
+
+			if (g_gauge.fCnt >= 30.0f)
+			{
+				g_gauge.fCnt = 30.0f;
+			}
+			else if (g_gauge.fCnt < 0)
+			{
+				g_gauge.fCnt = 0.0f;
+			}
+
+			pVtx[0].pos.x = 320.0f;
+			pVtx[0].pos.y = 400.0f;
+			pVtx[0].pos.z = 0.0f;
+
+			pVtx[1].pos.x = 320.0f * g_gauge.fCnt;
+			pVtx[1].pos.y = 400.0f;
+			pVtx[1].pos.z = 0.0f;
+
+			pVtx[2].pos.x = 320.0f;
+			pVtx[2].pos.y = 450.0f;
+			pVtx[2].pos.z = 0.0f;
+
+			pVtx[3].pos.x = 320.0f * g_gauge.fCnt;
+			pVtx[3].pos.y = 450.0f;
+			pVtx[3].pos.z = 0.0f;
 		}
-		else
-		{
-			g_gauge.fCnt -= 0.005f;
-		}
-
-		if (g_gauge.fCnt >= 30.0f)
-		{
-			g_gauge.fCnt = 30.0f;
-		}
-		else if (g_gauge.fCnt < 0)
-		{
-			g_gauge.fCnt = 0.0f;
-		}
-
-		pVtx[0].pos.x = 50.0f;
-		pVtx[0].pos.y = 400.0f;
-		pVtx[0].pos.z = 0.0f;
-
-		pVtx[1].pos.x = 50.0f * g_gauge.fCnt;
-		pVtx[1].pos.y = 400.0f;
-		pVtx[1].pos.z = 0.0f;
-
-		pVtx[2].pos.x = 50.0f;
-		pVtx[2].pos.y = 450.0f;
-		pVtx[2].pos.z = 0.0f;
-
-		pVtx[3].pos.x = 50.0f * g_gauge.fCnt;
-		pVtx[3].pos.y = 450.0f;
-		pVtx[3].pos.z = 0.0f;
 	}
 
 	//頂点バッファをアンロック
@@ -200,5 +202,9 @@ void DrawGauge(void)
 //===================
 void SetGauge(D3DXVECTOR3 pos)
 {
-	g_gauge.pos = pos;
+	if (g_gauge.bUse == false)
+	{
+		g_gauge.pos = pos;
+		g_gauge.bUse = true;
+	}
 }

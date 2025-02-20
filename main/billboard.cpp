@@ -16,12 +16,11 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffBillboard = NULL;					//頂点バッファへのポインタ
 LPDIRECT3DTEXTURE9 g_pTextureBillboard[BILLBOARDTYPE_MAX] = {};		//テクスチャへのポインタ
-Billboard g_Billboard[MAX_BILLBOARD];
-static float a;
-bool bExchange;
-bool bNext;
-bool bChange;
-bool bGive;
+Billboard g_Billboard[MAX_BILLBOARD]; // 構造体変数
+bool bExchange; // 脱出可能か否か
+bool bNext; // 溜めゲージが使用されているか否か
+bool bChange; // 鍵を持っていない(1 / 2)
+bool bGive; // 鍵を持っていない(0/2)
 
 //====================================================
 //アイテムの初期化処理
@@ -47,6 +46,7 @@ void InitBillboard()
 		D3DPOOL_MANAGED,
 		&g_pVtxBuffBillboard, NULL);
 
+	// 頂点情報のポインタ
 	VERTEX_3D* pVtx = NULL;
 
 	//頂点バッファをロック
@@ -60,16 +60,17 @@ void InitBillboard()
 		g_Billboard[nCnt].bTest = false;
 		g_Billboard[nCnt].bDisplay = false;
 		g_Billboard[nCnt].bUse = false;
+
 		bExchange = false;
 		bNext = false;
 		bChange = false;
-		a = 0.0f;
+		bGive = false;
 
 		//頂点情報の設定
-		pVtx[0].pos = D3DXVECTOR3(-15.0f, 35.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(15.0f, 35.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(-15.0f, -35.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(15.0f, -35.0f, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 		//各頂点の法線の設定(ベクトルの大きさは1にする)
 		pVtx[0].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
@@ -123,13 +124,14 @@ void UninitBillboard()
 //====================================================
 void UpdateBillboard()
 {
+	// 頂点情報のポインタ
 	VERTEX_3D* pVtx = NULL;
 
-	Player* pPlayer = GetPlayer();
-	ITEM* pItem = Getitem();
-	bool isbill = IsBill();
-	GIMMICK* pGimick = GetGimmick();
-	HOLD* pHold = GetHold();
+	Player* pPlayer = GetPlayer(); // プレイヤーの取得
+	ITEM* pItem = Getitem(); // アイテムの取得
+	bool isbill = IsBill(); // 範囲取得
+	GIMMICK* pGimick = GetGimmick(); // ギミックの取得
+	HOLD* pHold = GetHold(); // アイテムの取得判定変数
 
 	//頂点バッファをロック
 	g_pVtxBuffBillboard->Lock(0, 0, (void**)&pVtx, 0);
@@ -223,44 +225,7 @@ void UpdateBillboard()
 						bExchange = true;					//脱出可能の条件文
 						g_Billboard[nCnt].bUse = true;		//使用
 						g_Billboard[nCnt].bDisplay = true;	//見る
-					}
-					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_5)
-					{
-
-						bNext = true;						//溜めゲージの条件文
-						bChange = false;					//鍵を持っていない(1/2)ときの条件文
-						g_Billboard[nCnt].bUse = true;		//使用
-						g_Billboard[nCnt].bDisplay = true;	//見る
-
-						g_Billboard[nCnt].pos.x = pGimick->pos.x + 10.0f;
-						g_Billboard[nCnt].pos.y = pGimick->pos.y + 10.0f;
-						g_Billboard[nCnt].pos.z = pGimick->pos.z;
-
-						if (GetKeyboardPress(DIK_F) == true)
-						{//Fを押されたとき
-							a += 0.1f;
-						}
-						else
-						{
-							a -= 0.01f;
-						}
-						if (a >= 30.0f)
-						{
-							a = 10.0f;
-						}
-						else if (a < 0)
-						{
-							a = 0.0f;
-						}
-
-						pVtx[0].pos = D3DXVECTOR3(-g_Billboard[nCnt].size.x, g_Billboard[nCnt].size.y, g_Billboard[nCnt].size.z);
-						pVtx[1].pos = D3DXVECTOR3(g_Billboard[nCnt].size.x * a, g_Billboard[nCnt].size.y, g_Billboard[nCnt].size.z);
-						pVtx[2].pos = D3DXVECTOR3(-g_Billboard[nCnt].size.x, -g_Billboard[nCnt].size.y, g_Billboard[nCnt].size.z);
-						pVtx[3].pos = D3DXVECTOR3(g_Billboard[nCnt].size.x * a, -g_Billboard[nCnt].size.y, g_Billboard[nCnt].size.z);
-
-
-					}
-					pVtx += 4;
+					}			
 
 				}
 
@@ -518,22 +483,22 @@ void DrawBillboard()
 //====================================================
 void SetBillboard(D3DXVECTOR3 pos, D3DXVECTOR3 dir, TYPE nType, D3DXVECTOR3 size)
 {
-	VERTEX_3D* pVtx = NULL;
-	LPDIRECT3DDEVICE9 pDevice;							//デバイスへのポインタ
+	VERTEX_3D* pVtx = NULL; // 頂点情報のポインタ
+	LPDIRECT3DDEVICE9 pDevice; // デバイスへのポインタ
 
-	pDevice = GetDevice();								//デバイスの取得
+	pDevice = GetDevice();	// デバイスの取得
 
-		//頂点バッファをロック
+	//頂点バッファをロック
 	g_pVtxBuffBillboard->Lock(0, 0, (void**)&pVtx, 0);
 
 	for (int nCnt = 0; nCnt < MAX_BILLBOARD; nCnt++)
 	{
 		if (g_Billboard[nCnt].bUse == false)
 		{
-			g_Billboard[nCnt].pos = pos;				//	位置
-			g_Billboard[nCnt].nType = nType;			//	種類
-			g_Billboard[nCnt].size = size;
-			g_Billboard[nCnt].bUse = true;			//	使用しているとき
+			g_Billboard[nCnt].pos = pos;		//	位置
+			g_Billboard[nCnt].nType = nType;	//	種類
+			g_Billboard[nCnt].size = size;		//	大きさ
+			g_Billboard[nCnt].bUse = true;		//	使用しているとき
 
 			//	頂点情報の設定
 			pVtx[0].pos = D3DXVECTOR3(-size.x, size.y, size.z);

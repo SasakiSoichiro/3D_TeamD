@@ -202,10 +202,13 @@ void InitGame(void)
 	SetBillboard(D3DXVECTOR3(-100.0f, 75.0f, -100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_1, D3DXVECTOR3(2.0f, 2.0f, 0.0f));
 	SetBillboard(D3DXVECTOR3(-100.0f, 75.0f, -100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_1, D3DXVECTOR3(2.0f, 2.0f, 0.0f));
 
-	//	ビルボード(×)
+	//	ビルボード(0/2)
+	SetBillboard(D3DXVECTOR3(-1785.0f, 75.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_2, D3DXVECTOR3(4.0f, 4.0f, 0.0f));
+
+	//	ビルボード(1/2)
 	SetBillboard(D3DXVECTOR3(-1780.0f, 75.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_3, D3DXVECTOR3(4.0f, 4.0f, 0.0f));
 
-	//	ビルボード(〇)
+	//	ビルボード(脱出可能)
 	SetBillboard(D3DXVECTOR3(-1780.0f, 75.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_4, D3DXVECTOR3(4.0f, 4.0f, 0.0f));
 
 	//	ビルボード(解除)
@@ -219,6 +222,8 @@ void InitGame(void)
 
 	//	鍵のUI
 	SetKeyUI(D3DXVECTOR3(940.0f, 40.0f, 0.0f), ITEMKEYUITYPE_NO5, 35.0f, 35.0f);
+
+	SetGauge(D3DXVECTOR3(640.0f, 0.0f, 0.0f));
 
 	//　目のUI
 	InitEyeUI();
@@ -475,11 +480,11 @@ void DrawGame(void)
 	////FOGを消す
 	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
-	//	ゴンザレス
-	DrawGonzaresu();
-
 	//　ビルボード
 	DrawBillboard();
+
+	//	ゴンザレス
+	DrawGonzaresu();
 
 	//　タイム
 	DrawTime();
