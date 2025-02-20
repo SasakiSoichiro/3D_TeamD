@@ -34,6 +34,7 @@
     <ClCompile Include="ItemUI.cpp" />
     <ClCompile Include="noise.cpp" />
     <ClCompile Include="gauge.cpp" />
+    <ClCompile Include="KeyUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -69,6 +70,7 @@
     <ClInclude Include="ItemUI.h" />
     <ClInclude Include="noise.h" />
     <ClInclude Include="gauge.h" />
+    <ClInclude Include="KeyUI.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />

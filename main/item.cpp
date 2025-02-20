@@ -12,11 +12,10 @@
 #include "input.h"
 #include "sound.h"
 #include "slow.h"
-ITEM g_item[MAX_ITEM] = {};
-LPD3DXMESH g_pMeshItem[MAX_ITEM] = { NULL };				//	頂点情報のポインター
-LPDIRECT3DTEXTURE9 g_apTextureItem[128] = {};				//	テクスチャのポインター
-LPD3DXBUFFER g_pBufferMatItem[MAX_ITEM] = { NULL };			//	マテリアルのポインター
-DWORD g_dwNuMatItem[MAX_ITEM] = { 0 };						//	マテリアルの数
+
+// グローバル変数宣言
+ITEM g_item[ITEMTYPE_MAX];
+ITEMINFO Iteminfo[ITEMTYPE_MAX]; // 種類
 
 //=================
 //	初期化処理
@@ -25,87 +24,44 @@ void Inititem(void)
 {
 	//	デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	D3DXMATERIAL* pMat;
+	
 
-	//	Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\model\\key_top.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBufferMatItem[0],
-		NULL,
-		&g_dwNuMatItem[0],
-		&g_pMeshItem[0]);
-
-	//	Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\model\\key_bottom.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBufferMatItem[1],
-		NULL,
-		&g_dwNuMatItem[1],
-		&g_pMeshItem[1]);
-
-	//	Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\model\\key.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBufferMatItem[2],
-		NULL,
-		&g_dwNuMatItem[2],
-		&g_pMeshItem[2]);
-
-	//	Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\model\\naginata.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBufferMatItem[3],
-		NULL,
-		&g_dwNuMatItem[3],
-		&g_pMeshItem[3]);
-
-	//	Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\model\\recovery.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBufferMatItem[4],
-		NULL,
-		&g_dwNuMatItem[4],
-		&g_pMeshItem[4]);
-
-	//	Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\model\\pocketwatch000.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBufferMatItem[5],
-		NULL,
-		&g_dwNuMatItem[5],
-		&g_pMeshItem[5]);
-
-	for (int count = 0; count < MAX_ITEM; count++)
+	for (int nCnt = 0; nCnt < ITEMTYPE_MAX; nCnt++)
 	{
-		g_item[count].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_item[count].bUse = false;
+		//	Xファイルの読み込み
+		D3DXLoadMeshFromX(ITEM_MODEL[nCnt],
+			D3DXMESH_SYSTEMMEM,
+			pDevice,
+			NULL,
+			&Iteminfo[nCnt].pBufferMat,
+			NULL,
+			&Iteminfo[nCnt].dwNuMat,
+			&Iteminfo[nCnt].pMesh);
+	}
+
+	for (int count = 0; count < ITEMTYPE_MAX; count++)
+	{
+		g_item[count].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f); // 座標
+		g_item[count].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); // 角度
+		g_item[count].nType = 0; // 種類
+		g_item[count].bUse = false; // 未使用判定
 		g_item[count].bHave = false;
-		g_item[count].bKey_Top = false;
-		g_item[count].bKey_bottom = false;
+		g_item[count].bHold = false;
 
-		//	テクスチャの読み込み
-		pMat = (D3DXMATERIAL*)g_pBufferMatItem[count]->GetBufferPointer();
+		// マテリアルのポインタ
+		D3DXMATERIAL* pMat;
 
-		for (int nCntMat = 0; nCntMat < (int)g_dwNuMatItem[count]; nCntMat++)
+		//	マテリアルを代入
+		pMat = (D3DXMATERIAL*)Iteminfo[count].pBufferMat->GetBufferPointer();
+
+		for (int nCntMat = 0; nCntMat < (int)Iteminfo[count].dwNuMat; nCntMat++)
 		{
 			//	テクスチャの読み込み
 			if (pMat[nCntMat].pTextureFilename != NULL)
 			{
 				D3DXCreateTextureFromFile(pDevice,
 					pMat[nCntMat].pTextureFilename,
-					&g_apTextureItem[nCntMat]);
+					&Iteminfo[count].pTexture[nCntMat]);
 			}
 		}
 	}
@@ -118,33 +74,35 @@ void Uninititem(void)
 {
 	StopSound();
 
-	for (int count = 0; count < MAX_ITEM; count++)
+	for (int count = 0; count < ITEMTYPE_MAX; count++)
 	{
-		for (int nCntMat = 0; nCntMat < (int)g_dwNuMatItem[count]; nCntMat++)
+		int nType = g_item[count].nType;
+
+		for (int nCntMat = 0; nCntMat < (int)Iteminfo[count].dwNuMat; nCntMat++)
 		{
 			//	テクスチャの破棄
-			if (g_apTextureItem[nCntMat] != NULL)
+			if (Iteminfo[nType].pTexture[nCntMat] != NULL)
 			{
-				g_apTextureItem[nCntMat]->Release();
-				g_apTextureItem[nCntMat] = NULL;
+				Iteminfo[nType].pTexture[nCntMat]->Release();
+				Iteminfo[nType].pTexture[nCntMat] = NULL;
 			}
 		}
 	}
 
-	for (int count = 0; count < MAX_ITEM; count++)
+	for (int count = 0; count < ITEMTYPE_MAX; count++)
 	{
 		//	メッシュの破棄
-		if (g_pMeshItem[count] != NULL)
+		if (Iteminfo[count].pMesh != NULL)
 		{
-			g_pMeshItem[count]->Release();
-			g_pMeshItem[count] = NULL;
+			Iteminfo[count].pMesh->Release();
+			Iteminfo[count].pMesh = NULL;
 		}
 
 		//	マテリアルの破棄
-		if (g_pBufferMatItem[count] != NULL)
+		if (Iteminfo[count].pBufferMat != NULL)
 		{
-			g_pBufferMatItem[count]->Release();
-			g_pBufferMatItem[count] = NULL;
+			Iteminfo[count].pBufferMat->Release();
+			Iteminfo[count].pBufferMat = NULL;
 		}
 	}
 }
@@ -152,13 +110,87 @@ void Uninititem(void)
 //=================
 //	更新処理
 //=================
+//void Updateitem(void)
+//{
+//	Player* pPlayer = GetPlayer();
+//	Slow* pSlow = GetSlow();
+//
+//
+//	for (int nCnt = 0; nCnt < MAX_ITEM; nCnt++)
+//	{
+//		if (g_item[nCnt].bUse == true)
+//		{
+//			//プレイヤーの半径の算出用変数
+//			float fPRadPos = 28.0f;
+//
+//			//アイテムの半径の算出用変数
+//			float fIRadPos = 28.0f;
+//
+//			//プレやーの位置を取得
+//			D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
+//
+//			//アイテムのプレイヤーの距離の差
+//			D3DXVECTOR3 diff = PlayerPos - g_item[nCnt].pos;
+//
+//			//範囲計算
+//			float fDisX = PlayerPos.x - g_item[nCnt].pos.x;
+//			float fDisY = PlayerPos.y - g_item[nCnt].pos.y;
+//			float fDisZ = PlayerPos.z - g_item[nCnt].pos.z;
+//
+//			//二つの半径を求める
+//			float fRadX = fPRadPos + fIRadPos;
+//
+//			//プレイヤーがアイテムの範囲に入ったら
+//			if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
+//			{
+//				if (KeybordTrigger(DIK_F) || JoyPadTrigger(JOYKEY_X) == true)
+//				{//Fを押されたとき
+//					PlaySound(SOUND_LABEL_SHOT02);
+//					//アイテムを拾う
+//					g_item[nCnt].bHave = true;
+//					g_item[nCnt].bUse = false;
+//					
+//					//	脱出条件
+//					if (g_item[0].bUse == false)
+//					{
+//						g_item[0].bKey_Top = true;
+//					}
+//					else if(g_item[1].bUse == false)
+//					{
+//						g_item[1].bKey_bottom = true;
+//					}
+//
+//					if (g_item[4].bUse == false)
+//					{
+//						if (pPlayer->nLife <= 2)
+//						{
+//							pPlayer->nLife += 1;
+//						}
+//					}
+//				}
+//			}
+//
+//			if (KeybordTrigger(DIK_E) == true && g_item[ITEMTYPE_SIX].bHave == true || JoyPadTrigger(JOYKEY_X)==true&& g_item[ITEMTYPE_SIX].bHave == true)
+//			{//アイテムを持っている時アイテムを使用する処理
+//
+//				if (pSlow->bUse == false)
+//				{
+//					pSlow->bUse = true;
+//					g_item[ITEMTYPE_SIX].bHave = false;
+//					SetSlow();
+//				}
+//				
+//			}
+//		}
+//	}
+//}
+
 void Updateitem(void)
 {
 	Player* pPlayer = GetPlayer();
 	Slow* pSlow = GetSlow();
 
-
-	for (int nCnt = 0; nCnt < MAX_ITEM; nCnt++)
+	for (int nCnt = 0; nCnt < ITEMTYPE_MAX; nCnt++)
 	{
 		if (g_item[nCnt].bUse == true)
 		{
@@ -185,43 +217,44 @@ void Updateitem(void)
 			//プレイヤーがアイテムの範囲に入ったら
 			if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 			{
-				if (KeybordTrigger(DIK_F) || JoyPadTrigger(JOYKEY_X) == true)
+				if (KeybordTrigger(DIK_F) == true)
 				{//Fを押されたとき
 					PlaySound(SOUND_LABEL_SHOT02);
 					//アイテムを拾う
 					g_item[nCnt].bHave = true;
 					g_item[nCnt].bUse = false;
-					
+
 					//	脱出条件
-					if (g_item[0].bUse == false)
+					if (g_item[nCnt].bUse == false && g_item[nCnt].nType == ITEMTYPE_ONE)
 					{
-						g_item[0].bKey_Top = true;
+						g_item[nCnt].bHold = true;
 					}
-					else if(g_item[1].bUse == false)
+					if (g_item[nCnt].bUse == false && g_item[nCnt].nType == ITEMTYPE_TWO)
 					{
-						g_item[1].bKey_bottom = true;
+						g_item[nCnt].bHold = true;
 					}
 
-					if (g_item[4].bUse == false)
+					//回復アイテム
+					if (g_item[nCnt].bUse == false)
 					{
 						if (pPlayer->nLife <= 2)
 						{
 							pPlayer->nLife += 1;
 						}
 					}
-				}
-			}
 
-			if (KeybordTrigger(DIK_E) == true && g_item[ITEMTYPE_SIX].bHave == true || JoyPadTrigger(JOYKEY_X)==true&& g_item[ITEMTYPE_SIX].bHave == true)
-			{//アイテムを持っている時アイテムを使用する処理
+					if ((KeybordTrigger(DIK_E) == true && g_item[ITEMTYPE_THREE].bHave == true) || (JoyPadTrigger(JOYKEY_X) == true && g_item[ITEMTYPE_THREE].bHave == true))
+					{//アイテムを持っている時アイテムを使用する処理
 
-				if (pSlow->bUse == false)
-				{
-					pSlow->bUse = true;
-					g_item[ITEMTYPE_SIX].bHave = false;
-					SetSlow();
+						if (pSlow->bUse == false)
+						{
+							pSlow->bUse = true;
+							g_item[ITEMTYPE_SIX].bHave = false;
+							SetSlow();
+						}
+
+					}
 				}
-				
 			}
 		}
 	}
@@ -286,47 +319,16 @@ ITEM* Getitem(void)
 //=================
 //	配置処理
 //=================
-void Setitem(D3DXVECTOR3 pos, ITEMTYPE type)
+void Setitem(D3DXVECTOR3 pos, int nType)
 {
-	switch (type)
+	for (int nCnt = 0; nCnt < ITEMTYPE_MAX; nCnt++)
 	{
-	case ITEMTYPE_ONE:			//	鍵の上部
-		g_item[0].bUse = true;
-		g_item[0].pos = pos;
-		
-		break;
-
-	case ITEMTYPE_TWO:			//	鍵の下部
-		g_item[1].bUse = true;
-		g_item[1].pos = pos;
-
-		break;
-
-	case ITEMTYPE_THREE:		//	鍵本体
-		g_item[2].bUse = true;
-		g_item[2].pos = pos;
-
-		break;
-
-	case ITEMTYPE_FOUR:			//	なぎなた
-		g_item[3].bUse = true;
-		g_item[3].pos = pos;
-
-		break;
-
-	case ITEMTYPE_FIVE:			//	救急箱
-		g_item[4].bUse = true;
-		g_item[4].pos = pos;
-
-		break;
-
-	case ITEMTYPE_SIX:			//	懐中時計
-		g_item[5].bUse = true;
-		g_item[5].pos = pos;
-
-		break;
-
-	default:
-		break;
+		if (g_item[nCnt].bUse == false)
+		{
+			g_item[nCnt].pos = pos;
+			g_item[nCnt].nType = nType;
+			g_item[nCnt].bUse = true;
+			break;
+		}
 	}
 }

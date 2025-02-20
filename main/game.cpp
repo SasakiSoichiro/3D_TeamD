@@ -28,6 +28,11 @@
 #include "gonnzaresu.h"
 #include "slow.h"
 #include "gauge.h"
+#include "KeyUI.h"
+#include <time.h>
+
+// マクロ定義
+#define RAND (6) // ランダム用変数
 
 // ゲームの状態
 GAMESTATE g_gameState = GAMESTATE_NONE;	// 初期化
@@ -99,9 +104,12 @@ void InitGame(void)
 
 	//	ゲージ
 	InitGauge();
+
+	// 鍵のUI
+	InitKeyUI();
 	
 	//int a = rand() % 6 + 1;
-	int a = 6;
+	int a = rand() % RAND + 1;
 
 	if (a == 1)
 	{
@@ -139,9 +147,43 @@ void InitGame(void)
 		Setitem(D3DXVECTOR3(-1169.5f, 1.5f, 421.5f), ITEMTYPE_ONE);
 	}
 
+	int b = rand() % RAND + 1;
 
-	//　鍵の上部
-	Setitem(D3DXVECTOR3(0.5f, 0.5f, 0.5f), ITEMTYPE_TWO);
+	if (b == 1)
+	{
+		//　鍵の下部
+		Setitem(D3DXVECTOR3(200.0f, 1.5f, 320.5f), ITEMTYPE_TWO);
+	}
+
+	if (b == 2)
+	{
+		//　鍵の下部
+		Setitem(D3DXVECTOR3(932.5f, 1.5f, -512.5f), ITEMTYPE_TWO);
+	}
+
+	if (b == 3)
+	{
+		//　鍵の下部
+		Setitem(D3DXVECTOR3(717.5f, 1.5f, 25.5f), ITEMTYPE_TWO);
+	}
+
+	if (b == 4)
+	{
+		//　鍵の下部
+		Setitem(D3DXVECTOR3(-1092.5f, 1.5f, 452.5f), ITEMTYPE_TWO);
+	}
+
+	if (b == 5)
+	{
+		//　鍵の下部
+		Setitem(D3DXVECTOR3(-391.5f, 1.5f, -111.5f), ITEMTYPE_TWO);
+	}
+
+	if (b == 6)
+	{//蔵
+		//　鍵の下部
+		Setitem(D3DXVECTOR3(-10.5f, 1.5f, -387.5f), ITEMTYPE_TWO);
+	}
 
 	//　懐中時計
 	Setitem(D3DXVECTOR3(-1500.0f, 0.0f, 700.0f), ITEMTYPE_SIX);
@@ -234,6 +276,9 @@ void UninitGame(void)
 
 	//	ゲージ
 	UinitGauge();
+
+	// 鍵のUI
+	UninitKeyUI();
 }
 
 //---------------
@@ -318,6 +363,9 @@ void UpdateGame(void)
 
 			//	ゲージ
 			UpdateGauge();
+
+			//　鍵のUI
+			UpdateKeyUI();
 
 #endif
 #ifdef _DEBUG// デバッグ
@@ -428,6 +476,9 @@ void DrawGame(void)
 
 	//	ゲージ
 	DrawGauge();
+
+	//	鍵のUI
+	DrawKeyUI();
 
 	////FOGを戻す
 	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
