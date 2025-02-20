@@ -33,6 +33,7 @@
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="ItemUI.cpp" />
     <ClCompile Include="noise.cpp" />
+    <ClCompile Include="gauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -67,6 +68,7 @@
     <ClInclude Include="UI.h" />
     <ClInclude Include="ItemUI.h" />
     <ClInclude Include="noise.h" />
+    <ClInclude Include="gauge.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />

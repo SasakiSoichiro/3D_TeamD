@@ -3015,7 +3015,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "data\\TEXTURE\\MYTEXTURE\\tree000.jpg";
+    "data\\texture\\MYTEXTURE\\tree000.jpg";
    }
   }
  }

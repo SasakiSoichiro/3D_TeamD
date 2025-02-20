@@ -10,7 +10,7 @@
 void LoadStage(void)
 {
 	//‰Æ000
-	SetBlock(D3DXVECTOR3(0.0f, 0.0f, 0.0f),BLOCK_HOUSE00_L);
+	SetBlock(D3DXVECTOR3(0.0f, 0.0f, 0.0f),BLOCK_HOUSE000_L);
 
 	////‰Æ01
 	//SetBlock(D3DXVECTOR3(200.0f, 0.0f, -200.0f), BLOCK_HOUSE01);

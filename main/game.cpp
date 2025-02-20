@@ -1,4 +1,5 @@
 //==================================
+// 
 //		げーむの処理	game.cpp
 //			ryuusei.hirata 
 //==================================
@@ -26,6 +27,7 @@
 #include "UI.h"
 #include "gonnzaresu.h"
 #include "slow.h"
+#include "gauge.h"
 
 // ゲームの状態
 GAMESTATE g_gameState = GAMESTATE_NONE;	// 初期化
@@ -94,8 +96,12 @@ void InitGame(void)
 
 	// 各オブジェクトの設定処理
 	LoadEdit();
+
+	//	ゲージ
+	InitGauge();
 	
-	int a = rand() % 6 + 1;
+	//int a = rand() % 6 + 1;
+	int a = 6;
 
 	if (a == 1)
 	{
@@ -221,6 +227,9 @@ void UninitGame(void)
 
 	//	ゴンザレス
 	UinitGonzaresu();
+
+	//	ゲージ
+	UinitGauge();
 }
 
 //---------------
@@ -303,6 +312,9 @@ void UpdateGame(void)
 			//	ゴンザレス
 			UpdateGonzaresu();
 
+			//	ゲージ
+			UpdateGauge();
+
 #endif
 #ifdef _DEBUG// デバッグ
 
@@ -371,8 +383,8 @@ void DrawGame(void)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
 
-	//FOGの設定
-	SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
+	////FOGの設定
+	//SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
 
 	//　各オブジェクトの描画処理
 
@@ -395,8 +407,8 @@ void DrawGame(void)
 	//　ギミック
 	DrawGimmick();
 
-	//FOGを消す
-	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	////FOGを消す
+	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 	//	ゴンザレス
 	DrawGonzaresu();
@@ -410,8 +422,11 @@ void DrawGame(void)
 	//　目のUI
 	DrawEyeUI();
 
-	//FOGを戻す
-	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	//	ゲージ
+	DrawGauge();
+
+	////FOGを戻す
+	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 
 	if (g_bPause == true)

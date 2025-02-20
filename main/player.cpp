@@ -144,6 +144,10 @@ void UpdatePlayer(void)
 			g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 			break;
 
+		case PLAYERSTATE_RUN:
+			g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+			break;
+
 		case PLAYERSTATE_JUMP:
 			g_player[nCnt].motion.motionType = MOTIONTYPE_JUMP;
 			if (bLanding == true)
@@ -306,19 +310,52 @@ void UpdatePlayer(void)
 		if (GetJoyStick(nCnt) == true)
 		{
 			if (pStick->Gamepad.sThumbLX > 10922)
-			{// 右移動
-				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
-				g_player[nCnt].pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
-				g_player[nCnt].pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
-				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.5f;
+			{
+				if (pStick->Gamepad.sThumbLY > 10922)
+				{// 上移動
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y + D3DX_PI * 0.25f) * 2.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y + D3DX_PI * 0.25f) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
+				}
+				else if (pStick->Gamepad.sThumbLY < -10922)
+				{// 下移動
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
+				}
+				else
+				{// 右移動
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
+					g_player[nCnt].pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.5f;
+				}
 			}
 			else if (pStick->Gamepad.sThumbLX < -10922)
-			{// 左移動
-				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
-				g_player[nCnt].pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
-				g_player[nCnt].pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
-				g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.5f;
-
+			{
+				if (pStick->Gamepad.sThumbLY > 10922)
+				{// 上移動
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y - D3DX_PI * 0.25f) * 2.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y - D3DX_PI * 0.25f) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
+				}
+				else if (pStick->Gamepad.sThumbLY < -10922)
+				{// 下移動
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x -= sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
+				}
+				else
+				{// 左移動
+					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
+					g_player[nCnt].pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.5f;
+				}
 			}
 			else if (pStick->Gamepad.sThumbLY > 10922)
 			{
@@ -366,91 +403,94 @@ void UpdatePlayer(void)
 //========================
 void DrawPlayer(void)
 {
-	//LPDIRECT3DDEVICE9 pDevice;
-	//pDevice = GetDevice();
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = GetDevice();
 
-	////計算用マトリックス
-	//D3DXMATRIX mtxRot, mtxTrans;
-	////現在のマテリアルの保存用
-	//D3DMATERIAL9 matDef;//現在のマテリアルの保存用
-	//D3DXMATERIAL* pMat;//マテリアルデータへのポインタ
-	//int nCnt = 0;
+	//計算用マトリックス
+	D3DXMATRIX mtxRot, mtxTrans;
+	//現在のマテリアルの保存用
+	D3DMATERIAL9 matDef;//現在のマテリアルの保存用
+	D3DXMATERIAL* pMat;//マテリアルデータへのポインタ
+	int nCnt = 0;
 
-	////ワールドマトリックスの初期化
-	//D3DXMatrixIdentity(&g_player.mtxWorld);
-	////向きを反映
-	//D3DXMatrixRotationYawPitchRoll(&mtxRot, g_player.rot.y, g_player.rot.x, g_player.rot.z);
-	//D3DXMatrixMultiply(&g_player.mtxWorld, &g_player.mtxWorld, &mtxRot);
+	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++)
+	{
+		//ワールドマトリックスの初期化
+		D3DXMatrixIdentity(&g_player[nCnt].mtxWorld);
+		//向きを反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, g_player[nCnt].rot.y, g_player[nCnt].rot.x, g_player[nCnt].rot.z);
+		D3DXMatrixMultiply(&g_player[nCnt].mtxWorld, &g_player[nCnt].mtxWorld, &mtxRot);
 
-	////位置を反映
-	//D3DXMatrixTranslation(&mtxTrans, g_player.pos.x, g_player.pos.y, g_player.pos.z);
-	//D3DXMatrixMultiply(&g_player.mtxWorld, &g_player.mtxWorld, &mtxTrans);
+		//位置を反映
+		D3DXMatrixTranslation(&mtxTrans, g_player[nCnt].pos.x, g_player[nCnt].pos.y, g_player[nCnt].pos.z);
+		D3DXMatrixMultiply(&g_player[nCnt].mtxWorld, &g_player[nCnt].mtxWorld, &mtxTrans);
 
-	//pDevice->SetTransform(D3DTS_WORLD, &g_player.mtxWorld);
+		pDevice->SetTransform(D3DTS_WORLD, &g_player[nCnt].mtxWorld);
 
-	//pDevice->GetMaterial(&matDef);
-	////全モデル（パーツ）の描画
-	//for (int nCntModel = 0; nCntModel < g_player.motion.nNumModel; nCntModel++)
-	//{
-	//	//計算用マトリックス
-	//	D3DXMATRIX mtxRotModel, mtxTransModel;
-	//	D3DXMATRIX mtxParent;//親のマトリックス
+		pDevice->GetMaterial(&matDef);
+		//全モデル（パーツ）の描画
+		for (int nCntModel = 0; nCntModel < g_player[nCnt].motion.nNumModel; nCntModel++)
+		{
 
-	//	//パーツのワールドマトリックスの初期化
-	//	D3DXMatrixIdentity(&g_player.motion.aModel[nCntModel].mtxWorld);
+			//計算用マトリックス
+			D3DXMATRIX mtxRotModel, mtxTransModel;
+			D3DXMATRIX mtxParent;//親のマトリックス
 
-	//	//向きを反映
-	//	D3DXMatrixRotationYawPitchRoll(&mtxRotModel, g_player.motion.aModel[nCntModel].rot.y, g_player.motion.aModel[nCntModel].rot.x, g_player.motion.aModel[nCntModel].rot.z);
-	//	D3DXMatrixMultiply(&g_player.motion.aModel[nCntModel].mtxWorld, &g_player.motion.aModel[nCntModel].mtxWorld, &mtxRotModel);
+			//パーツのワールドマトリックスの初期化
+			D3DXMatrixIdentity(&g_player[nCnt].motion.aModel[nCntModel].mtxWorld);
 
-	//	//位置を反映
-	//	D3DXMatrixTranslation(&mtxTransModel, g_player.motion.aModel[nCntModel].pos.x, g_player.motion.aModel[nCntModel].pos.y, g_player.motion.aModel[nCntModel].pos.z);
-	//	D3DXMatrixMultiply(&g_player.motion.aModel[nCntModel].mtxWorld, &g_player.motion.aModel[nCntModel].mtxWorld, &mtxTransModel);
+			//向きを反映
+			D3DXMatrixRotationYawPitchRoll(&mtxRotModel, g_player[nCnt].motion.aModel[nCntModel].rot.y, g_player[nCnt].motion.aModel[nCntModel].rot.x, g_player[nCnt].motion.aModel[nCntModel].rot.z);
+			D3DXMatrixMultiply(&g_player[nCnt].motion.aModel[nCntModel].mtxWorld, &g_player[nCnt].motion.aModel[nCntModel].mtxWorld, &mtxRotModel);
 
-	//	//パーツの「親のマトリックス」を設定
-	//	if (g_player.motion.aModel[nCntModel].nIdxModelParent != -1)
-	//	{//親モデルがある場合
-	//		mtxParent = g_player.motion.aModel[g_player.motion.aModel[nCntModel].nIdxModelParent].mtxWorld;
+			//位置を反映
+			D3DXMatrixTranslation(&mtxTransModel, g_player[nCnt].motion.aModel[nCntModel].pos.x, g_player[nCnt].motion.aModel[nCntModel].pos.y, g_player[nCnt].motion.aModel[nCntModel].pos.z);
+			D3DXMatrixMultiply(&g_player[nCnt].motion.aModel[nCntModel].mtxWorld, &g_player[nCnt].motion.aModel[nCntModel].mtxWorld, &mtxTransModel);
 
-	//	}
-	//	else
-	//	{
-	//		mtxParent = g_player.mtxWorld;
-	//	}
+			//パーツの「親のマトリックス」を設定
+			if (g_player[nCnt].motion.aModel[nCntModel].nIdxModelParent != -1)
+			{//親モデルがある場合
+				mtxParent = g_player[nCnt].motion.aModel[g_player[nCnt].motion.aModel[nCntModel].nIdxModelParent].mtxWorld;
 
-	//	//算出した「パーツのワールドマトリックス」と「親のマトリックス」を掛け合わせる
-	//	D3DXMatrixMultiply(&g_player.motion.aModel[nCntModel].mtxWorld,
-	//		&g_player.motion.aModel[nCntModel].mtxWorld,
-	//		&mtxParent);
-	//	//パーツのワールドマトリックスの設定
-	//	pDevice->SetTransform(D3DTS_WORLD,
-	//		&g_player.motion.aModel[nCntModel].mtxWorld);
+			}
+			else
+			{
+				mtxParent = g_player[nCnt].mtxWorld;
+			}
+
+			//算出した「パーツのワールドマトリックス」と「親のマトリックス」を掛け合わせる
+			D3DXMatrixMultiply(&g_player[nCnt].motion.aModel[nCntModel].mtxWorld,
+				&g_player[nCnt].motion.aModel[nCntModel].mtxWorld,
+				&mtxParent);
+			//パーツのワールドマトリックスの設定
+			pDevice->SetTransform(D3DTS_WORLD,
+				&g_player[nCnt].motion.aModel[nCntModel].mtxWorld);
 
 
-	//	//マテリアルデータへのポインタを取得
-	//	pMat = (D3DXMATERIAL*)g_player.motion.aModel[nCntModel].pBuffMat->GetBufferPointer();
+			//マテリアルデータへのポインタを取得
+			pMat = (D3DXMATERIAL*)g_player[nCnt].motion.aModel[nCntModel].pBuffMat->GetBufferPointer();
 
-	//	for (int nCntMat = 0; nCntMat < (int)g_player.motion.aModel[nCntModel].dwNumMat; nCntMat++)
-	//	{
+			for (int nCntMat = 0; nCntMat < (int)g_player[nCnt].motion.aModel[nCntModel].dwNumMat; nCntMat++)
+			{
 
-	//		//マテリアルの設定
-	//		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+				//マテリアルの設定
+				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
-	//		//テクスチャの設定
-	//		pDevice->SetTexture(0, g_player.motion.aModel[nCntModel].apTexture[nCntMat]);
+				//テクスチャの設定
+				pDevice->SetTexture(0, g_player[nCnt].motion.aModel[nCntModel].apTexture[nCntMat]);
 
-	//		//モデル（パーツ）の描画
-	//		g_player.motion.aModel[nCntModel].pMesh->DrawSubset(nCntMat);
+				//モデル（パーツ）の描画
+				g_player[nCnt].motion.aModel[nCntModel].pMesh->DrawSubset(nCntMat);
 
-	//	}
-	//	nCnt++;
-	//	if (nCnt == 15)
-	//	{
-	//		SetMatrix();
-	//	}
-	//}
-
-	//pDevice->SetMaterial(&matDef);
+			}
+			nCnt++;
+			if (nCnt == 15)
+			{
+				SetMatrix();
+			}
+		}
+	}
+	pDevice->SetMaterial(&matDef);
 }
 //========================
 //プレイヤーのマトリックス

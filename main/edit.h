@@ -18,21 +18,17 @@
 
 typedef enum
 {
-	//â∆1
-	EDIT_HOUSE00_L = 0,		//ïÅí ÇÃÉuÉçÉbÉN
-	EDIT_HOUSE00_R,
-
 	//â∆2
+	EDIT_HOUSE000_L = 0,
+	EDIT_HOUSE000_r,
+
+	//â∆3
 	EDIT_HOUSE01_L,
-	EDIT_HOUSE01_r,
+	EDIT_HOUSE01_R,
 
 	//â∆3
-	EDIT_HOUSE02_L,
-	EDIT_HOUSE02_R,
-
-	//â∆3
-	EDIT_HOUSE03_L,
-	EDIT_HOUSE03_R,
+	EDIT_HOUSE04_L,
+	EDIT_HOUSE04_R,
 
 	//à‘óÏîË
 	EDIT_IREIHI,
@@ -96,10 +92,6 @@ typedef struct
 
 static const char* X_EDIT[EDIT_MAX] =
 {
-	//â∆1å¬ñ⁄
-	"data\\model\\house_L.x",
-	"data\\model\\house_R.x",
-
 	//â∆2å¬ñ⁄
 	"data\\model\\house000_L.x",
 	"data\\model\\house000_r.x",
@@ -130,7 +122,6 @@ static const char* X_EDIT[EDIT_MAX] =
 
 	//íπè¨âÆ
 	"data\\model\\torigoya.x",
-
 
 	//à‰åÀ
 	"data\\model\\Well.x",
