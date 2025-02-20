@@ -30,7 +30,8 @@
 #include "gauge.h"
 #include "KeyUI.h"
 #include <time.h>
-#include"ItemUI.h"
+#include "ItemUI.h"
+#include "stamina.h"
 
 // マクロ定義
 #define RAND (6) // ランダム用変数
@@ -111,6 +112,9 @@ void InitGame(void)
 
 	// アイテムのUI
 	InitItemUI();
+
+	// スタミナ
+	InitStamina();
 	
 	//int a = rand() % 6 + 1;
 	int a = rand() % RAND + 1;
@@ -294,6 +298,9 @@ void UninitGame(void)
 
 	// アイテムのUI
 	UninitItemUI();
+
+	// スタミナ
+	UninitStamina();
 }
 
 //---------------
@@ -384,6 +391,9 @@ void UpdateGame(void)
 
 			// アイテムのUI
 			UpdateItemUI();
+
+			// スタミナ
+			UpdateStamina();
 
 #endif
 #ifdef _DEBUG// デバッグ
@@ -479,6 +489,10 @@ void DrawGame(void)
 
 	////FOGを消す
 	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+
+
+	// スタミナ
+	DrawStamina();
 
 	//　ビルボード
 	DrawBillboard();

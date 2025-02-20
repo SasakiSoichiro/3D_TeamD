@@ -24,7 +24,7 @@ typedef enum
     PLAYERSTATE_NORMAL = 0,
     PLAYERSTATE_DAMAGE,
     PLAYERSTATE_MOVE,
-    PLAYERSTATE_RUN,
+    PLAYERSTATE_DASH,
     PLAYERSTATE_JUMP,
     PLAYERSTATE_ACTION,
     PLAYERSTATE_MAX
@@ -44,6 +44,7 @@ typedef struct
     D3DXMATRIX SwordmtxWorld;
     int nLife;
     int nType;
+    int nStamina;
     PLAYERSTATE pState;
     Motion motion;
     bool bEye;

@@ -35,6 +35,7 @@
     <ClCompile Include="noise.cpp" />
     <ClCompile Include="gauge.cpp" />
     <ClCompile Include="KeyUI.cpp" />
+    <ClCompile Include="stamina.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -71,6 +72,7 @@
     <ClInclude Include="noise.h" />
     <ClInclude Include="gauge.h" />
     <ClInclude Include="KeyUI.h" />
+    <ClInclude Include="stamina.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />

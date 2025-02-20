@@ -46,6 +46,7 @@ void InitPlayer(void)
 		g_player[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_player[nCnt].rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_player[nCnt].nLife = 3;
+		g_player[nCnt].nStamina = 100;
 		g_player[nCnt].pState = PLAYERSTATE_NORMAL;
 		g_player[nCnt].bEye = false;
 		g_nCntPlayerState = 0;
@@ -144,7 +145,7 @@ void UpdatePlayer(void)
 			g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 			break;
 
-		case PLAYERSTATE_RUN:
+		case PLAYERSTATE_DASH:
 			g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
 			break;
 
@@ -249,17 +250,19 @@ void UpdatePlayer(void)
 		}
 		else if (GetKeyboardPress(DIK_W) == true)
 		{// Wキーが押された
-			if (GetKeyboardPress(DIK_LSHIFT) == true)
+			if (GetKeyboardPress(DIK_LSHIFT) == true && g_player[nCnt].nStamina > 0)
 			{// LShift押されたら
 				//ダッシュ
-				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pState = PLAYERSTATE_DASH;
+				//g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 				g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y;
 			}
 			else
 			{// 前
-				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pState = PLAYERSTATE_MOVE;
+				//g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 				g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 2.0f;
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y;
