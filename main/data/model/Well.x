@@ -2391,7 +2391,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Downloads\\Well.jpg";
+    "data\\texture\\MYTEXTURE\\Well.jpg";
    }
   }
  }

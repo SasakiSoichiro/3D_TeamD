@@ -771,24 +771,6 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "data\\texture\\MYTEXTURE\\TelephonePoleWooden.jpg";
-   }
-  }
-  Material {
-   1.000000;1.000000;1.000000;1.000000;;
-   5.000000;
-   0.000000;0.000000;0.000000;;
-   0.000000;0.000000;0.000000;;
-   TextureFilename {
-    "data\\texture\\MYTEXTURE\\TelephonePoleWooden.jpg";
-   }
-  }
-  Material {
-   1.000000;1.000000;1.000000;1.000000;;
-   5.000000;
-   0.000000;0.000000;0.000000;;
-   0.000000;0.000000;0.000000;;
-   TextureFilename {
     "data\\texture\\MYTEXTURE\\gray.jpg";
    }
   }
