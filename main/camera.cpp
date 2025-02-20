@@ -296,7 +296,7 @@ void SetCamera(int nIdx)
 
 		//	プロジェクションマトリックスの初期化
 		D3DXMatrixPerspectiveFovLH(&g_camera[nIdx].mtxProjection,
-			D3DXToRadian(40.0f),								//	視野角
+			D3DXToRadian(70.0f),								//	視野角
 			SCREEN_WIDTH / SCREEN_HEIGHT,									//	アスペクト比
 			10.0f,												//	どこからどこまで
 			3000.0f);											//	カメラで表示するか
