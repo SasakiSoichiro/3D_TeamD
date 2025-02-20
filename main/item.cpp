@@ -196,10 +196,10 @@ void Updateitem(void)
 		if (g_item[nCnt].bUse == true)
 		{
 			//プレイヤーの半径の算出用変数
-			float fPRadPos = 28.0f;
+			float fPRadPos = 50.0f;
 
 			//アイテムの半径の算出用変数
-			float fIRadPos = 28.0f;
+			float fIRadPos = 50.0f;
 
 			//プレやーの位置を取得
 			D3DXVECTOR3 PlayerPos = GetPlayer()->pos;

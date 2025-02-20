@@ -32,7 +32,7 @@ void InitItemUI(void)
 	{
 		//テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,
-			ITEM_TEXTURE[nCnt],
+			ITEMUI_TEXTURE[nCnt],
 			&g_pTextureItemUI[nCnt]);
 	}
 	//ループ処理
@@ -125,11 +125,11 @@ void UpdateItemUI(void)
 	ITEM* pItem = Getitem();
 	if (pItem->bHave == true)
 	{
-		for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++, pItem++)
+		for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++)
 		{
 			if (g_aItemUI[nCnt].nType == ITEM_FLAME)
 			{
-				switch (pItem->nType)
+				switch (pItem[nCnt].nType)
 				{
 				case ITEMTYPE_FOUR:
 					g_aItemUI[nCnt].nType = ITEM_NAGINATA;

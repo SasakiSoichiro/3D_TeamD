@@ -27,7 +27,7 @@ typedef struct
 	bool bUse;			//égópÇµÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
 }ItemUI;
 
-static const char* ITEM_TEXTURE[ITEM_MAX] =
+static const char* ITEMUI_TEXTURE[ITEM_MAX] =
 {
 	"data\\texture\\waku.png",		//òg
 	"data\\texture\\naginata.png",	//ì„ìÅ
