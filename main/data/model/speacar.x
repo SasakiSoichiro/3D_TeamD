@@ -3190,7 +3190,7 @@ Mesh {
    0.560000;0.560000;0.560000;;
    0.200000;0.200000;0.200000;;
    TextureFilename {
-    "data\\texture\\MYTEXTURE\\wood000.jpg";
+    "G:\\マイドライブ\\写真動画\\wood000.jpg";
    }
   }
   Material {
