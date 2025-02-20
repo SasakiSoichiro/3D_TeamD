@@ -123,27 +123,34 @@ void UninitItemUI(void)
 void UpdateItemUI(void)
 {
 	ITEM* pItem = Getitem();
-	if (pItem->bHave == true)
+
+	for (int nCntItem = 0; nCntItem < ITEMTYPE_MAX; nCntItem++, pItem++)
 	{
-		for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++)
+		if (pItem->bHave==true&& pItem->bOldHave == false)
 		{
-			if (g_aItemUI[nCnt].nType == ITEM_FLAME)
+			for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++)
 			{
-				switch (pItem[nCnt].nType)
+				if (g_aItemUI[nCnt].nType == ITEM_FLAME)
 				{
-				case ITEMTYPE_FOUR:
-					g_aItemUI[nCnt].nType = ITEM_NAGINATA;
-					break;
-				case ITEMTYPE_FIVE:
-					g_aItemUI[nCnt].nType = ITEM_HEAL;
-					break;
-				case ITEMTYPE_SIX:
-					g_aItemUI[nCnt].nType = ITEM_POCKETWATCH;
+					switch (pItem->nType)
+					{
+					case ITEMTYPE_THREE:
+						g_aItemUI[nCnt].nType = ITEM_POCKETWATCH;
+						break;
+					case ITEMTYPE_FOUR:
+						g_aItemUI[nCnt].nType = ITEM_NAGINATA;
+						break;
+					case ITEMTYPE_FIVE:
+						g_aItemUI[nCnt].nType = ITEM_HEAL;
+						break;
+
+					}
+
 					break;
 				}
-
-				break;
 			}
+			break;
+
 		}
 	}
 

@@ -193,6 +193,8 @@ void Updateitem(void)
 
 	for (int nCnt = 0; nCnt < ITEMTYPE_MAX; nCnt++)
 	{
+		//前回持っていたものを保存
+		g_item[nCnt].bOldHave = g_item[nCnt].bHave;
 		//アイテムが使用されていたら
 		if (g_item[nCnt].bUse == true)
 		{
@@ -216,8 +218,6 @@ void Updateitem(void)
 			//二つの半径を求める
 			float fRadX = fPRadPos + fIRadPos;
 
-			//前回持っていたものを保存
-			g_item[nCnt].bOldHave = g_item[nCnt].bHave;
 
 			//プレイヤーがアイテムの範囲に入ったら
 			if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
@@ -228,6 +228,7 @@ void Updateitem(void)
 					PlaySound(SOUND_LABEL_SHOT02);
 
 					//アイテムを拾う
+
 					g_item[nCnt].bHave = true;
 					g_item[nCnt].bUse = false;
 
