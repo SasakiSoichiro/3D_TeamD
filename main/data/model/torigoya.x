@@ -893,7 +893,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "G:\\マイドライブ\\写真動画\\niwatori.jpeg";
+    "data\\texture\\MYTEXTURE\\niwatori.jpeg";
    }
   }
   Material {
@@ -902,7 +902,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "G:\\マイドライブ\\写真動画\\wood00.jpg";
+    "data\\texture\\MYTEXTURE\\wood00.jpg";
    }
   }
  }
