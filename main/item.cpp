@@ -192,6 +192,7 @@ void Updateitem(void)
 
 	for (int nCnt = 0; nCnt < ITEMTYPE_MAX; nCnt++)
 	{
+		//アイテムが使用されていたら
 		if (g_item[nCnt].bUse == true)
 		{
 			//プレイヤーの半径の算出用変数
@@ -219,7 +220,9 @@ void Updateitem(void)
 			{
 				if (KeybordTrigger(DIK_F) == true)
 				{//Fを押されたとき
+
 					PlaySound(SOUND_LABEL_SHOT02);
+
 					//アイテムを拾う
 					g_item[nCnt].bHave = true;
 					g_item[nCnt].bUse = false;
@@ -229,6 +232,7 @@ void Updateitem(void)
 					{
 						g_item[nCnt].bHold = true;
 					}
+
 					if (g_item[nCnt].bUse == false && g_item[nCnt].nType == ITEMTYPE_TWO)
 					{
 						g_item[nCnt].bHold = true;
@@ -237,6 +241,7 @@ void Updateitem(void)
 					//回復アイテム
 					if (g_item[nCnt].bUse == false)
 					{
+						//プレイヤーの体力が2以下なら
 						if (pPlayer->nLife <= 2)
 						{
 							pPlayer->nLife += 1;
@@ -244,12 +249,15 @@ void Updateitem(void)
 					}
 
 					if ((KeybordTrigger(DIK_E) == true && g_item[ITEMTYPE_THREE].bHave == true) || (JoyPadTrigger(JOYKEY_X) == true && g_item[ITEMTYPE_THREE].bHave == true))
-					{//アイテムを持っている時アイテムを使用する処理
+					{//懐中時計を持っている時、懐中時計を使用する処理
 
 						if (pSlow->bUse == false)
-						{
+						{//懐中時計を使ってなかったら
+
 							pSlow->bUse = true;
-							g_item[ITEMTYPE_SIX].bHave = false;
+
+							g_item[ITEMTYPE_THREE].bHave = false;
+
 							SetSlow();
 						}
 
@@ -273,38 +281,51 @@ void Drawitem(void)
 	D3DMATERIAL9 matDef;
 	D3DXMATERIAL* pMat;
 
-	for (int count = 0; count < MAX_ITEM; count++)
+	for (int count = 0; count < ITEMTYPE_MAX; count++)
 	{
-		if (g_item[count].bUse == true)
-		{
-			//	ワールドマトリックスの初期化
-			D3DXMatrixIdentity(&g_item[count].mtxWorld);
-
-			//	位置の反映
-			D3DXMatrixTranslation(&mtxTrans, g_item[count].pos.x, g_item[count].pos.y, g_item[count].pos.z);
-			D3DXMatrixMultiply(&g_item[count].mtxWorld, &g_item[count].mtxWorld, &mtxTrans);
-
-			//	ワールドマトリックスの設定
-			pDevice->SetTransform(D3DTS_WORLD, &g_item[count].mtxWorld);
-
-			//	現在のマテリアルを保存
-			pDevice->GetMaterial(&matDef);
-
-			//	マテリアルデータへのポインタを取得
-			pMat = (D3DXMATERIAL*)g_pBufferMatItem[count]->GetBufferPointer();
-
-			for (int nCntMat = 0; nCntMat < (int)g_dwNuMatItem[count]; nCntMat++)
-			{
-				//	マテリアルの設定
-				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
-
-				//	テクスチャの設定
-				pDevice->SetTexture(0, g_apTextureItem[nCntMat]);
-
-				//	モデルの描画
-				g_pMeshItem[count]->DrawSubset(nCntMat);
-			}
+		if (g_item[count].bUse == false)
+		{// 未使用だったら
+			// 下の処理を通さないでカウントを進める
+			continue;
 		}
+
+		// 種類を保存
+		int nType = g_item[count].nType;
+
+		//	ワールドマトリックスの初期化
+		D3DXMatrixIdentity(&g_item[count].mtxWorld);
+
+		//	向きを反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, g_item[count].rot.y, g_item[count].rot.x, g_item[count].rot.z);
+		D3DXMatrixMultiply(&g_item[count].mtxWorld, &g_item[count].mtxWorld, &mtxRot);
+
+		//	位置の反映
+		D3DXMatrixTranslation(&mtxTrans, g_item[count].pos.x, g_item[count].pos.y, g_item[count].pos.z);
+		D3DXMatrixMultiply(&g_item[count].mtxWorld, &g_item[count].mtxWorld, &mtxTrans);
+
+		//	ワールドマトリックスの設定
+		pDevice->SetTransform(D3DTS_WORLD, &g_item[count].mtxWorld);
+
+		//	現在のマテリアルを保存
+		pDevice->GetMaterial(&matDef);
+
+		for (int nCntMat = 0; nCntMat < (int)Iteminfo[nType].dwNuMat; nCntMat++)
+		{
+			//	マテリアルデータへのポインタを取得
+			pMat = (D3DXMATERIAL*)Iteminfo[nType].pBufferMat->GetBufferPointer();
+
+			//	マテリアルの設定
+			pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+
+			//	テクスチャの設定
+			pDevice->SetTexture(0, Iteminfo[nType].pTexture[nCntMat]);
+
+			//	モデルの描画
+			Iteminfo[nType].pMesh->DrawSubset(nCntMat);
+		}
+
+		// マテリアルを戻す
+		pDevice->SetMaterial(&matDef);
 	}
 }
 
