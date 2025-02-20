@@ -45,6 +45,7 @@ typedef struct
     int nType;
     bool bUse;
     bool bHave;
+    bool bOldHave;
     bool bHold;
 }ITEM;
 

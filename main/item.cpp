@@ -46,6 +46,7 @@ void Inititem(void)
 		g_item[count].nType = 0; // 種類
 		g_item[count].bUse = false; // 未使用判定
 		g_item[count].bHave = false;
+		g_item[count].bOldHave = false;
 		g_item[count].bHold = false;
 
 		// マテリアルのポインタ
@@ -214,6 +215,9 @@ void Updateitem(void)
 
 			//二つの半径を求める
 			float fRadX = fPRadPos + fIRadPos;
+
+			//前回持っていたものを保存
+			g_item[nCnt].bOldHave = g_item[nCnt].bHave;
 
 			//プレイヤーがアイテムの範囲に入ったら
 			if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
