@@ -1,77 +1,41 @@
-//====================================================
+//=============================================================================
 //
-// アイテム表示の処理 [ItemUI.h]
-// Author : yabuki yukito
+//	アイテム持つの処理 [itemUI.h]
+// Author : 佐々木奏一郎
 //
-//====================================================
-
-#ifndef _ITEMUI_H_
-#define _ITEMUI_H_
-
+//=============================================================================
+#ifndef _ITEMUI_H_//このマクロ定義がされていなかったら
+#define _ITEMUI_H_//2重インクルード防止のマクロ定義
 #include "main.h"
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++
-//マクロ定義
-//++++++++++++++++++++++++++++++++++++++++++++++++++++
-#define MAX_WIDTH (150)  //UIの横幅
-#define MAX_HEIGHT (100) //UIの高さ
-#define MAX_ITEMUI (20)   //アイテムの数
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++
-//アイテムUIのテクスチャ状態
-//++++++++++++++++++++++++++++++++++++++++++++++++++++
 typedef enum
 {
-	ITEMUITYPE_WAKU = 0,	//	枠					0
-	ITEMUITYPE_NO1,			//	薙刀(0/1)			1
-	ITEMUITYPE_1,			//	薙刀(完成)			2
-	ITEMUITYPE_NO2,			//	懐中電灯(0/1)		3
-	ITEMUITYPE_2,			//	懐中電灯(完成)		4
-	ITEMUITYPE_NO3,			//	救急箱(0/1)			5
-	ITEMUITYPE_3,			//	救急箱(完成)		6
-	ITEMUITYPE_NO4,			//	懐中時計(0/1)		7
-	ITEMUITYPE_4,			//	懐中時計(完成)		8
-	ITEMUITYPE_NO5,			//	鍵(0/2)				9
-	ITEMUITYPE_YESNO5,		//	鍵(1/2)				10
-	ITEMUITYPE_5,			//	鍵(完成)			11
-	ITEMUITYPE_MAX
-}ITEMUITYPE;
+	ITEM_A = 0,
+	ITEM_B,
+	ITEM_C,
+	ITEM_MAX
+}ITEM;
 
-static const char* ITEMUI_TEXTURE[ITEMUITYPE_MAX] =
-{
-	"data\\texture\\waku.png",				//枠				0
-	"data\\texture\\NOnaginata.png",		//薙刀(0/1)			1
-	"data\\texture\\naginata.png",			//薙刀(完成)		2
-	"data\\texture\\NOflashPicture.png",	//懐中電灯(0/1)		3 
-	"data\\texture\\flashPicture.png",		//懐中電灯(完成)	4
-	"data\\texture\\NOheal.png",			//救急箱(0/1)		5
-	"data\\texture\\heal.png",				//救急箱(完成)		6
-	"data\\texture\\NOtime.png",			//懐中時計(0/1)		7
-	"data\\texture\\time.png",				//懐中時計(完成)	8
-	"data\\texture\\NOkagi.png",			//鍵(0/2)			9
-	"data\\texture\\YesNoKagi.png",			//鍵(1/2)			10
-	"data\\texture\\Perfectkagi.png",		//鍵(完成)			11
-};
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++
-//アイテムUIの構造体
-//++++++++++++++++++++++++++++++++++++++++++++++++++++
 typedef struct
 {
-	D3DXVECTOR3 pos;
-	ITEMUITYPE nType;
-	bool bUse;
-	float fWidth; // 横幅
-	float fHeight;// 高さ
-}ITEMUI;
-//++++++++++++++++++++++++++++++++++++++++++++++++++++
-//プロトタイプ宣言
-//++++++++++++++++++++++++++++++++++++++++++++++++++++
-void InitItemUI();
-void UninitItemUI();
-void UpdateItemUI();
-void DrawItemUI();
-void SetItemUI(D3DXVECTOR3 pos, ITEMUITYPE nType, float fWidth, float fHeight);
-//bool GetMinUI();
+	D3DXVECTOR3 pos;	//位置
+	D3DXVECTOR3 move;	//動き
+	float fWidth;		//幅
+	float fHeight;		//高さ
+	int nType;			//ブロックのタイプ
+	bool bUse;			//使用しているかどうか
+}ItemUI;
 
+static const char* ITEM_TEXTURE[ITEM_MAX] =
+{
+	"data\\texture\\kenmon.png",		//ブロック
+	"data\\texture\\blue.JPG",			//ボタン
+	"data\\texture\\mitudomoe.png",		//動く壁
+};
+
+//プロトタイプ宣言
+void InitItemUI(void);
+void UninitItemUI(void);
+void UpdateItemUI(void);
+void DrawItemUI(void);
 #endif

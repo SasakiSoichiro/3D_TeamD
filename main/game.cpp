@@ -139,6 +139,10 @@ void InitGame(void)
 		Setitem(D3DXVECTOR3(-1169.5f, 1.5f, 421.5f), ITEMTYPE_ONE);
 	}
 
+
+	//@Œ®‚Ìã•”
+	Setitem(D3DXVECTOR3(0.5f, 0.5f, 0.5f), ITEMTYPE_TWO);
+
 	//@‰ù’†Œv
 	Setitem(D3DXVECTOR3(-1500.0f, 0.0f, 700.0f), ITEMTYPE_SIX);
 
