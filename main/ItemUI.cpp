@@ -43,7 +43,7 @@ void InitItemUI(void)
 		g_aItemUI[nCntBlock].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//移動値を初期化する
 		g_aItemUI[nCntBlock].fWidth = 0.0f;							//幅を初期化する
 		g_aItemUI[nCntBlock].fHeight = 0.0f;						//高さを初期化する
-		g_aItemUI[nCntBlock].nType = ITEM_FLAME;						//種類を初期化する
+		g_aItemUI[nCntBlock].nType = ITEM_FLAME;					//種類を初期化する
 		g_aItemUI[nCntBlock].bUse = false;							//使われていない状態にする	
 	}
 
@@ -123,34 +123,27 @@ void UninitItemUI(void)
 void UpdateItemUI(void)
 {
 	ITEM* pItem = Getitem();
-
-	for (int nCntItem = 0; nCntItem < ITEMTYPE_MAX; nCntItem++, pItem++)
+	if (pItem->bHave == true)
 	{
-		if (pItem->bHave==true&& pItem->bOldHave == false)
+		for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++, pItem++)
 		{
-			for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++)
+			if (g_aItemUI[nCnt].nType == ITEM_FLAME)
 			{
-				if (g_aItemUI[nCnt].nType == ITEM_FLAME)
+				switch (pItem->nType)
 				{
-					switch (pItem->nType)
-					{
-					case ITEMTYPE_THREE:
-						g_aItemUI[nCnt].nType = ITEM_POCKETWATCH;
-						break;
-					case ITEMTYPE_FOUR:
-						g_aItemUI[nCnt].nType = ITEM_NAGINATA;
-						break;
-					case ITEMTYPE_FIVE:
-						g_aItemUI[nCnt].nType = ITEM_HEAL;
-						break;
-
-					}
-
+				case ITEMTYPE_FOUR:
+					g_aItemUI[nCnt].nType = ITEM_NAGINATA;
+					break;
+				case ITEMTYPE_FIVE:
+					g_aItemUI[nCnt].nType = ITEM_HEAL;
+					break;
+				case ITEMTYPE_SIX:
+					g_aItemUI[nCnt].nType = ITEM_POCKETWATCH;
 					break;
 				}
-			}
-			break;
 
+				break;
+			}
 		}
 	}
 
@@ -175,7 +168,7 @@ void DrawItemUI(void)
 	{//ブロックの数分ループする
 
 
-			//テクスチャの設定
+		// テクスチャの設定
 		pDevice->SetTexture(ITEM_FLAME, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
 		pDevice->SetTexture(ITEM_NAGINATA, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
 		pDevice->SetTexture(ITEM_HEAL, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
