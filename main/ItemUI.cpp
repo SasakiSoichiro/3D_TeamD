@@ -7,6 +7,7 @@
 #include "itemUI.h"
 #include "player.h"
 #include "input.h"
+#include "item.h"
 
 #define MAX_ITEMUI (3)
 #define ITEMUI_SIZE (60)
@@ -17,7 +18,7 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffItemUI = NULL;		//頂点バッファへのポインタ
 ItemUI g_aItemUI[MAX_ITEMUI];							//ブロックの情報
 
 //=====================
-//ブロックの初期化処理
+//アイテムUIの初期化処理
 //=====================
 void InitItemUI(void)
 {
@@ -42,7 +43,7 @@ void InitItemUI(void)
 		g_aItemUI[nCntBlock].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//移動値を初期化する
 		g_aItemUI[nCntBlock].fWidth = 0.0f;							//幅を初期化する
 		g_aItemUI[nCntBlock].fHeight = 0.0f;						//高さを初期化する
-		g_aItemUI[nCntBlock].nType = ITEM_A;						//種類を初期化する
+		g_aItemUI[nCntBlock].nType = ITEM_FLAME;						//種類を初期化する
 		g_aItemUI[nCntBlock].bUse = false;							//使われていない状態にする	
 	}
 
@@ -93,7 +94,7 @@ void InitItemUI(void)
 }
 
 //==================
-//ブロックの終了処理
+//アイテムUIの終了処理
 //==================
 void UninitItemUI(void)
 {
@@ -117,38 +118,39 @@ void UninitItemUI(void)
 }
 
 //==================
-//ブロックの更新処理
+//アイテムUIの更新処理
 //==================
 void UpdateItemUI(void)
 {
-	if (KeyboardTrigger(DIK_1) == true)
+	ITEM* pItem = Getitem();
+	if (pItem->bHave == true)
 	{
-		for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++)
+		for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++, pItem++)
 		{
-			if (g_aItemUI[nCnt].nType == ITEM_A)
+			if (g_aItemUI[nCnt].nType == ITEM_FLAME)
 			{
-				g_aItemUI[nCnt].nType = ITEM_B;
+				switch (pItem->type)
+				{
+				case ITEMTYPE_FOUR:
+					g_aItemUI[nCnt].nType = ITEM_NAGINATA;
+					break;
+				case ITEMTYPE_FIVE:
+					g_aItemUI[nCnt].nType = ITEM_HEAL;
+					break;
+				case ITEMTYPE_SIX:
+					g_aItemUI[nCnt].nType = ITEM_POCKETWATCH;
+					break;
+				}
 
 				break;
 			}
 		}
 	}
-	else if (KeyboardTrigger(DIK_2) == true)
-	{
-		for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++)
-		{
-			if (g_aItemUI[nCnt].nType == ITEM_A)
-			{
-				g_aItemUI[nCnt].nType = ITEM_C;
 
-				break;
-			}
-		}
-	}
 }
 
 //==================
-//ブロックの描画処理
+//アイテムUIの描画処理
 //==================
 void DrawItemUI(void)
 {
@@ -167,9 +169,10 @@ void DrawItemUI(void)
 
 
 			//テクスチャの設定
-		pDevice->SetTexture(ITEM_A, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
-		pDevice->SetTexture(ITEM_B, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
-		pDevice->SetTexture(ITEM_C, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
+		pDevice->SetTexture(ITEM_FLAME, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
+		pDevice->SetTexture(ITEM_NAGINATA, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
+		pDevice->SetTexture(ITEM_HEAL, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
+		pDevice->SetTexture(ITEM_POCKETWATCH, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
 		//ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4 * nCntItemUI, 2);
 	}
