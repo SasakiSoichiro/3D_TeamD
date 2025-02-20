@@ -30,6 +30,7 @@
 #include "gauge.h"
 #include "KeyUI.h"
 #include <time.h>
+#include"ItemUI.h"
 
 // マクロ定義
 #define RAND (6) // ランダム用変数
@@ -107,6 +108,9 @@ void InitGame(void)
 
 	// 鍵のUI
 	InitKeyUI();
+
+	// アイテムのUI
+	InitItemUI();
 	
 	//int a = rand() % 6 + 1;
 	int a = rand() % RAND + 1;
@@ -279,6 +283,9 @@ void UninitGame(void)
 
 	// 鍵のUI
 	UninitKeyUI();
+
+	// アイテムのUI
+	UninitItemUI();
 }
 
 //---------------
@@ -366,6 +373,9 @@ void UpdateGame(void)
 
 			//　鍵のUI
 			UpdateKeyUI();
+
+			// アイテムのUI
+			UpdateItemUI();
 
 #endif
 #ifdef _DEBUG// デバッグ
@@ -479,6 +489,9 @@ void DrawGame(void)
 
 	//	鍵のUI
 	DrawKeyUI();
+
+	// アイテムのUI
+	DrawItemUI();
 
 	////FOGを戻す
 	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);

@@ -129,7 +129,7 @@ void UpdateItemUI(void)
 		{
 			if (g_aItemUI[nCnt].nType == ITEM_FLAME)
 			{
-				switch (pItem->type)
+				switch (pItem->nType)
 				{
 				case ITEMTYPE_FOUR:
 					g_aItemUI[nCnt].nType = ITEM_NAGINATA;
