@@ -21,6 +21,7 @@ static float a;
 bool bExchange;
 bool bNext;
 bool bChange;
+bool bGive;
 
 //====================================================
 //アイテムの初期化処理
@@ -124,21 +125,21 @@ void UpdateBillboard()
 {
 	VERTEX_3D* pVtx = NULL;
 
-	//頂点バッファをロック
-	g_pVtxBuffBillboard->Lock(0, 0, (void**)&pVtx, 0);
-
 	Player* pPlayer = GetPlayer();
 	ITEM* pItem = Getitem();
 	bool isbill = IsBill();
 	GIMMICK* pGimick = GetGimmick();
 	HOLD* pHold = GetHold();
-	
-	for (int count = 0; count < MAX_ITEM; count++, pItem++)
+
+	//頂点バッファをロック
+	g_pVtxBuffBillboard->Lock(0, 0, (void**)&pVtx, 0);
+
+	for (int count = 0; count < ITEMTYPE_MAX; count++)
 	{
 		for (int nCnt = 0; nCnt < MAX_BILLBOARD; nCnt++)
 		{
 
-			if (pItem->bUse == true)
+			if (pItem[count].bUse == true)
 			{
 				//プレイヤーの半径の算出用変数
 				float fPRadPos = 28.0f;
@@ -175,7 +176,7 @@ void UpdateBillboard()
 						g_Billboard[nCnt].pos.z = pItem->pos.z;
 
 						//Fを押されたとき
-						if (KeybordTrigger(DIK_F) || JoyPadRelease(JOYKEY_X) == true)
+						if (KeybordTrigger(DIK_F) == true)
 						{
 							g_Billboard[nCnt].bUse = false;
 						}
@@ -188,36 +189,16 @@ void UpdateBillboard()
 					g_Billboard[nCnt].bDisplay = false;
 				}
 			}
+
 			//鍵を持った時
-			if (pItem->bKey_Top == true)
+			if (pItem[0].bHold == true && pItem[1].bHold == true)
 			{
 
-				//脱出ドアの範囲に入ったとき
-				if (isbill == true)
-				{
-
-					//脱出可能ビルボードを使われてるとき
-					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_4)
-					{
-						bExchange = true;
-						bChange = false;
-						g_Billboard[nCnt].bUse = true;
-						g_Billboard[nCnt].bDisplay = true;
-					}
-				}
-
-				//脱出ドアの範囲外にいったら
-				else if (isbill == false)
-				{
-					g_Billboard[nCnt].bUse = false;
-					g_Billboard[nCnt].bDisplay = false;
-				}
-
 				//プレイヤーの半径の算出用変数
-				float fPRadPos = 28.0f;
+				float fPRadPos = 50.0f;
 
 				//アイテムの半径の算出用変数
-				float fIRadPos = 28.0f;
+				float fIRadPos = 50.0f;
 
 				//プレイヤーの位置を取得
 				D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
@@ -237,18 +218,25 @@ void UpdateBillboard()
 				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 				{
 
+					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_4)
+					{
+						bExchange = true;					//脱出可能の条件文
+						g_Billboard[nCnt].bUse = true;		//使用
+						g_Billboard[nCnt].bDisplay = true;	//見る
+					}
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_5)
 					{
-						bChange = false;
-						g_Billboard[nCnt].bUse = true;
-						g_Billboard[nCnt].bDisplay = true;
-						bNext = true;
+
+						bNext = true;						//溜めゲージの条件文
+						bChange = false;					//鍵を持っていない(1/2)ときの条件文
+						g_Billboard[nCnt].bUse = true;		//使用
+						g_Billboard[nCnt].bDisplay = true;	//見る
 
 						g_Billboard[nCnt].pos.x = pGimick->pos.x + 10.0f;
 						g_Billboard[nCnt].pos.y = pGimick->pos.y + 10.0f;
 						g_Billboard[nCnt].pos.z = pGimick->pos.z;
 
-						if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_X) == true)
+						if (GetKeyboardPress(DIK_F) == true)
 						{//Fを押されたとき
 							a += 0.1f;
 						}
@@ -269,52 +257,168 @@ void UpdateBillboard()
 						pVtx[1].pos = D3DXVECTOR3(g_Billboard[nCnt].size.x * a, g_Billboard[nCnt].size.y, g_Billboard[nCnt].size.z);
 						pVtx[2].pos = D3DXVECTOR3(-g_Billboard[nCnt].size.x, -g_Billboard[nCnt].size.y, g_Billboard[nCnt].size.z);
 						pVtx[3].pos = D3DXVECTOR3(g_Billboard[nCnt].size.x * a, -g_Billboard[nCnt].size.y, g_Billboard[nCnt].size.z);
+
+
 					}
+					pVtx += 4;
+
 				}
+
 				//プレイヤーがアイテムの範囲外にいったら
-				else if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) > (fRadX * fRadX))
+				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) > (fRadX * fRadX))
 				{
 					g_Billboard[nCnt].bDisplay = false;
 				}
 
-				pVtx += 4;
+
 			}
-			
-			//アイテムが使われてるとき
-			if (pItem->bUse == true)
+
+			//(1/2)鍵を持った時
+			else if (pItem[1].bHold == false && pItem[0].bHold == true)
 			{
-				//脱出ドアの範囲に入ったとき
-				if (isbill == true)
+
+
+				//プレイヤーの半径の算出用変数
+				float fPRadPos = 50.0f;
+
+				//アイテムの半径の算出用変数
+				float fIRadPos = 50.0f;
+
+				//プレイヤーの位置を取得
+				D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
+
+				//アイテムのプレイヤーの距離の差
+				D3DXVECTOR3 diff = PlayerPos - pGimick->pos;
+
+				//範囲計算
+				float fDisX = PlayerPos.x - pGimick->pos.x;
+				float fDisY = PlayerPos.y - pGimick->pos.y;
+				float fDisZ = PlayerPos.z - pGimick->pos.z;
+
+				//二つの半径を求める
+				float fRadX = fPRadPos + fIRadPos;
+
+				//プレイヤーがアイテムの範囲に入ったら
+				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 				{
-					//鍵を持っているが1つのみ(1/2)ビルボードが使われてるとき
+
+					//1/2鍵
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
 					{
-						bChange = true;							//鍵を持っていない(0 / 2)ときをtrueにする
-						bExchange = false;						//脱出可能をfalseにする
-						g_Billboard[nCnt].bUse = true;			//使用する
-						g_Billboard[nCnt].bDisplay = true;		//見えるようにする
+						bChange = true;					//脱出可能の条件文
+						bGive = false;
+						g_Billboard[nCnt].bUse = true;		//使用
+						g_Billboard[nCnt].bDisplay = true;	//見る
 					}
+
 				}
 
-				//脱出ドアの範囲の外にいったとき
-				if (isbill == false)
+				//プレイヤーがアイテムの範囲外にいったら
+				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) > (fRadX * fRadX))
+				{
+					g_Billboard[nCnt].bDisplay = false;
+				}
+
+
+			}
+
+			//(1/2)鍵を持った時
+			else if (pItem[0].bHold == false && pItem[1].bHold == true)
+			{
+
+
+				//プレイヤーの半径の算出用変数
+				float fPRadPos = 50.0f;
+
+				//アイテムの半径の算出用変数
+				float fIRadPos = 50.0f;
+
+				//プレイヤーの位置を取得
+				D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
+
+				//アイテムのプレイヤーの距離の差
+				D3DXVECTOR3 diff = PlayerPos - pGimick->pos;
+
+				//範囲計算
+				float fDisX = PlayerPos.x - pGimick->pos.x;
+				float fDisY = PlayerPos.y - pGimick->pos.y;
+				float fDisZ = PlayerPos.z - pGimick->pos.z;
+
+				//二つの半径を求める
+				float fRadX = fPRadPos + fIRadPos;
+
+				//プレイヤーがアイテムの範囲に入ったら
+				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 				{
 
-					//鍵を持っているが1つのみ(1/2)ビルボードが使われてるとき
+					//1/2鍵
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
 					{
-						bChange = false;						//鍵を持っていない(0 / 2)ときをelseにする
-						bExchange = true;						//脱出可能をtrueにする
-						g_Billboard[nCnt].bUse = false;			//使用する
-						g_Billboard[nCnt].bDisplay = false;		//見えるようにする
+						bChange = true;					//脱出可能の条件文
+						bGive = false;
+						g_Billboard[nCnt].bUse = true;		//使用
+						g_Billboard[nCnt].bDisplay = true;	//見る
 					}
+
 				}
+
+				//プレイヤーがアイテムの範囲外にいったら
+				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) > (fRadX * fRadX))
+				{
+					g_Billboard[nCnt].bDisplay = false;
+				}
+
+
+			}
+
+			//(0/2)鍵を持ってない時
+			else if (pItem[0].bHold == false && pItem[1].bHold == false)
+			{
+
+				//プレイヤーの半径の算出用変数
+				float fPRadPos = 50.0f;
+
+				//アイテムの半径の算出用変数
+				float fIRadPos = 50.0f;
+
+				//プレイヤーの位置を取得
+				D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
+
+				//アイテムのプレイヤーの距離の差
+				D3DXVECTOR3 diff = PlayerPos - pGimick->pos;
+
+				//範囲計算
+				float fDisX = PlayerPos.x - pGimick->pos.x;
+				float fDisY = PlayerPos.y - pGimick->pos.y;
+				float fDisZ = PlayerPos.z - pGimick->pos.z;
+
+				//二つの半径を求める
+				float fRadX = fPRadPos + fIRadPos;
+
+				//プレイヤーがアイテムの範囲に入ったら
+				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
+				{
+
+					//0/2鍵
+					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_2)
+					{
+						bGive = true;					//脱出可能の条件文
+						g_Billboard[nCnt].bUse = true;		//使用
+						g_Billboard[nCnt].bDisplay = true;	//見る
+					}
+
+				}
+
+				//プレイヤーがアイテムの範囲外にいったら
+				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) > (fRadX * fRadX))
+				{
+					g_Billboard[nCnt].bDisplay = false;
+				}
+
+
 			}
 		}
 	}
-
-		
-
 	//頂点バッファのアンロック
 	g_pVtxBuffBillboard->Unlock();
 }
@@ -327,6 +431,7 @@ void DrawBillboard()
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
+	ITEM* pItem = Getitem();
 	//計算用マトリックス
 	D3DXMATRIX mtxRot, mtxTrans;
 
@@ -335,7 +440,7 @@ void DrawBillboard()
 
 	for (int nCnt = 0; nCnt < MAX_BILLBOARD; nCnt++)
 	{
-		if (g_Billboard[nCnt].bUse == true&& g_Billboard[nCnt].bDisplay==true)
+		if (g_Billboard[nCnt].bUse == true && g_Billboard[nCnt].bDisplay == true)
 		{
 			//ワールドマトリックスの初期化
 			D3DXMatrixIdentity(&g_Billboard[nCnt].mtxWorld);
@@ -365,28 +470,31 @@ void DrawBillboard()
 			pDevice->SetStreamSource(0, g_pVtxBuffBillboard, 0, sizeof(VERTEX_3D));
 
 			//脱出可能の条件文
-			if (bExchange == true && bNext == false)
-			{
-				//テクスチャの設定
-				pDevice->SetTexture(0, g_pTextureBillboard[3]);
-			}
-
-			//溜めゲージの条件文
-			if (bNext == true && bExchange == false)
+			if (bExchange == true && g_Billboard[nCnt].nType == BILLBOARDTYPE_4)
 			{
 				//テクスチャの設定
 				pDevice->SetTexture(0, g_pTextureBillboard[4]);
 			}
-
-			//鍵を持っていない(0 / 2)ときの条件文
-			if (bChange == true)
+			//溜めゲージの条件文
+			else if (bNext == true && g_Billboard[nCnt].nType == BILLBOARDTYPE_5)
+			{
+				//テクスチャの設定
+				pDevice->SetTexture(0, g_pTextureBillboard[5]);
+			}
+			//鍵を持っていない(1/2)ときの条件文
+			else if (bChange == true && g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
 			{
 				//テクスチャの設定
 				pDevice->SetTexture(0, g_pTextureBillboard[2]);
 			}
-
+			//鍵を持っていない(0/2)ときの条件文
+			else if (bGive == true && g_Billboard[nCnt].nType == BILLBOARDTYPE_2)
+			{
+				//テクスチャの設定
+				pDevice->SetTexture(0, g_pTextureBillboard[3]);
+			}
 			//全部の条件文以外
-			else
+			else if (bExchange == false && bChange == false && bGive == false)
 			{
 				//テクスチャの設定
 				pDevice->SetTexture(0, g_pTextureBillboard[g_Billboard[nCnt].nType]);
@@ -425,14 +533,7 @@ void SetBillboard(D3DXVECTOR3 pos, D3DXVECTOR3 dir, TYPE nType, D3DXVECTOR3 size
 			g_Billboard[nCnt].pos = pos;				//	位置
 			g_Billboard[nCnt].nType = nType;			//	種類
 			g_Billboard[nCnt].size = size;
-			//if (nType == BILLBOARDTYPE_1)
-			//{
-			//	g_Billboard[nCnt].bUse = false;			//	使用しているとき
-			//}
-			//else
-			//{
-				g_Billboard[nCnt].bUse = true;			//	使用しているとき
-			//}
+			g_Billboard[nCnt].bUse = true;			//	使用しているとき
 
 			//	頂点情報の設定
 			pVtx[0].pos = D3DXVECTOR3(-size.x, size.y, size.z);

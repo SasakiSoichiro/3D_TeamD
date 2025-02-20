@@ -201,7 +201,7 @@ void UpdateGimmick(void)
 				//ビルボードを表示する
 				isBill = true;
 
-				if (pItem->bKey_Top == true)
+				if (pItem[0].bHold == true && pItem[1].bHold == true)
 				{
 
 					if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_X) == true)
