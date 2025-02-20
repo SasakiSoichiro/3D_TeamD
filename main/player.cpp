@@ -24,6 +24,7 @@ D3DXVECTOR3 g_Offpos[2];
 int g_nIdxShadow;
 int g_nCntPlayerState;
 int g_nCntStop;
+int g_nStateCnt;
 bool bLanding, bOldLanding;
 int OldType;
 
@@ -49,7 +50,9 @@ void InitPlayer(void)
 		g_player[nCnt].nStamina = 100;
 		g_player[nCnt].pState = PLAYERSTATE_NORMAL;
 		g_player[nCnt].bEye = false;
+		g_player[nCnt].bAttack = false;
 		g_nCntPlayerState = 0;
+		g_nStateCnt = 0;
 		g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 		bLanding = true;
 		ReadScriptPlayer(nCnt);
@@ -123,22 +126,24 @@ void UpdatePlayer(void)
 	pStick = GetJoyStickAngle();
 
 	g_nCntStop++;
+	g_nStateCnt++;
 	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++,pCamera++, pStick++)
 	{
 		OldType = g_player[nCnt].nType;
 		g_player[nCnt].motion.motionTypeOld = g_player[nCnt].motion.motionType; // ƒ‚[ƒVƒ‡ƒ“‚ÌŽí—Þ
+
+	
+
+
 		switch (g_player[nCnt].pState)
 		{
 		case PLAYERSTATE_NORMAL:
+
 			break;
 
 		case PLAYERSTATE_DAMAGE:
-			g_nCntPlayerState++;
-			if (g_nCntPlayerState >= 120)
-			{
-				g_player[nCnt].pState = PLAYERSTATE_NORMAL;
-				g_nCntPlayerState = 0;
-			}
+			g_nStateCnt = 0;
+			
 			break;
 
 		case PLAYERSTATE_MOVE:
@@ -183,6 +188,11 @@ void UpdatePlayer(void)
 
 		case MOTIONTYPE_LANDING:
 			break;
+		}
+
+		if (g_nStateCnt >= 60)
+		{
+			g_player[nCnt].bAttack = false;
 		}
 
 		g_player[nCnt].posOld = g_player[nCnt].pos;
@@ -821,6 +831,7 @@ void HitPlayer(int nDamege)
 	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++)
 	{
 		g_player[nCnt].nLife -= nDamege;
+		g_player[nCnt].bAttack = true;
 
 		if (g_player[nCnt].nLife >= 0)
 		{

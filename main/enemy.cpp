@@ -220,7 +220,7 @@ void UpdateEnemy(void)
 
 					//úpújèÛë‘
 					g_Enemy[0].State = ENEMYSTATE_NORMAL;
-					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
+					SetMotionType(EMOTIONTYPE_NEUTRAL, true, 10, nCntEnemy);
 					pPlayer->bEye = false;
 
 					// BGMÇè¡Ç∑
@@ -264,6 +264,13 @@ void UpdateEnemy(void)
 				break;
 			}
 
+			if (pPlayer->bAttack == true)
+			{
+				g_Enemy[nCntEnemy].move.x = 0.0f;
+				g_Enemy[nCntEnemy].move.z = 0.0f;
+
+			}
+
 			g_Enemy[nCntEnemy].OldState = g_Enemy[nCntEnemy].State;
 
 			//åªç›ÇÃà íuÇï€ë∂
@@ -287,7 +294,7 @@ void UpdateEnemy(void)
 			float fRadius = (fRadP.x + fRadE.x) * (fRadP.x + fRadE.x) + (fRadP.y + fRadE.y) * (fRadP.y + fRadE.y) + (fRadP.z + fRadE.z) * (fRadP.z + fRadE.z);
 
 			//ìñÇΩÇËîªíË
-			if (fDistance <= fRadius && pPlayer->pState == PLAYERSTATE_NORMAL)
+			if ((fDistance <= fRadius) && pPlayer->bAttack == false)
 			{
 				g_nCntEnemyState = 60;
 				g_Enemy[nCntEnemy].State = ENEMYSTATE_ACTION;

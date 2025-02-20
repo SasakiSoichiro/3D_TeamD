@@ -45,6 +45,7 @@ typedef struct
     int nLife;
     int nType;
     int nStamina;
+    bool bAttack;
     PLAYERSTATE pState;
     Motion motion;
     bool bEye;
