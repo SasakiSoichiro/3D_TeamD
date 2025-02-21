@@ -129,40 +129,42 @@ void UpdateGauge(void)
 		//プレイヤーがアイテムの範囲に入ったら
 		if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 		{
-
-			if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_X) == true)
+			if (pItem[0].bHold == true && pItem[1].bHold == true)
 			{
-				g_gauge.fCnt += 0.011f;
+				if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_X) == true)
+				{
+					g_gauge.fCnt += 0.011f;
+				}
+				else if (g_gauge.fCnt >= 0)
+				{
+					g_gauge.fCnt -= 0.005f;
+				}
+
+				if (g_gauge.fCnt >= 30.0f)
+				{
+					g_gauge.fCnt = 30.0f;
+				}
+				else if (g_gauge.fCnt < 0)
+				{
+					g_gauge.fCnt = 0.0f;
+				}
+
+				pVtx[0].pos.x = 320.0f;
+				pVtx[0].pos.y = 400.0f;
+				pVtx[0].pos.z = 0.0f;
+
+				pVtx[1].pos.x = 320.0f * g_gauge.fCnt;
+				pVtx[1].pos.y = 400.0f;
+				pVtx[1].pos.z = 0.0f;
+
+				pVtx[2].pos.x = 320.0f;
+				pVtx[2].pos.y = 450.0f;
+				pVtx[2].pos.z = 0.0f;
+
+				pVtx[3].pos.x = 320.0f * g_gauge.fCnt;
+				pVtx[3].pos.y = 450.0f;
+				pVtx[3].pos.z = 0.0f;
 			}
-			else if(g_gauge.fCnt >= 0)
-			{
-				g_gauge.fCnt -= 0.005f;
-			}
-
-			if (g_gauge.fCnt >= 30.0f)
-			{
-				g_gauge.fCnt = 30.0f;
-			}
-			else if (g_gauge.fCnt < 0)
-			{
-				g_gauge.fCnt = 0.0f;
-			}
-
-			pVtx[0].pos.x = 320.0f;
-			pVtx[0].pos.y = 400.0f;
-			pVtx[0].pos.z = 0.0f;
-
-			pVtx[1].pos.x = 320.0f * g_gauge.fCnt;
-			pVtx[1].pos.y = 400.0f;
-			pVtx[1].pos.z = 0.0f;
-
-			pVtx[2].pos.x = 320.0f;
-			pVtx[2].pos.y = 450.0f;
-			pVtx[2].pos.z = 0.0f;
-
-			pVtx[3].pos.x = 320.0f * g_gauge.fCnt;
-			pVtx[3].pos.y = 450.0f;
-			pVtx[3].pos.z = 0.0f;
 		}
 	}
 
