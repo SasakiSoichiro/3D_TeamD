@@ -32,6 +32,7 @@
 #include <time.h>
 #include "ItemUI.h"
 #include "stamina.h"
+#include "nannjamo.h"
 
 // マクロ定義
 #define RAND (6) // ランダム用変数
@@ -116,6 +117,9 @@ void InitGame(void)
 	// スタミナ
 	InitStamina();
 	
+	//	回復
+	InitNannjamo();
+
 	//int a = rand() % 6 + 1;
 	int a = rand() % RAND + 1;
 
@@ -301,6 +305,9 @@ void UninitGame(void)
 
 	// スタミナ
 	UninitStamina();
+
+	//	回復
+	UinitNannjamo();
 }
 
 //---------------
@@ -395,6 +402,8 @@ void UpdateGame(void)
 			// スタミナ
 			UpdateStamina();
 
+			//	回復
+			UpdateNannjamo();
 #endif
 #ifdef _DEBUG// デバッグ
 
@@ -514,6 +523,9 @@ void DrawGame(void)
 
 	// アイテムのUI
 	DrawItemUI();
+
+	//	回復
+	DrawNannjamo();
 
 	////FOGを戻す
 	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);

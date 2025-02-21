@@ -12,6 +12,7 @@
 #include "input.h"
 #include "sound.h"
 #include "slow.h"
+#include "nannjamo.h"
 
 // ƒOƒ[ƒoƒ‹•Ï”éŒ¾
 ITEM g_item[ITEMTYPE_MAX];
@@ -250,6 +251,7 @@ void Updateitem(void)
 						if (pPlayer->nLife <= 2)
 						{
 							pPlayer->nLife += 1;
+							SetNannjamo(90);
 						}
 					}
 
