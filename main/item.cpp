@@ -250,6 +250,7 @@ void Updateitem(void)
 						//ƒvƒŒƒCƒ„[‚Ì‘Ì—Í‚ª2ˆÈ‰º‚È‚ç
 						if (pPlayer->nLife <= 2)
 						{
+
 							pPlayer->nLife += 1;
 							SetNannjamo(90);
 						}
