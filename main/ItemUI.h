@@ -14,6 +14,7 @@ typedef enum
 	ITEM_NAGINATA,
 	ITEM_HEAL,
 	ITEM_POCKETWATCH,
+	ITEM_CAMERAWAKU,
 	ITEM_MAX
 }ITEMUI;
 
@@ -33,6 +34,7 @@ static const char* ITEMUI_TEXTURE[ITEM_MAX] =
 	"data\\texture\\naginata.png",	//薙刀
 	"data\\texture\\heal.png",		//回復
 	"data\\texture\\time.png",		//懐中時計
+	"data\\texture\\waku1.png",		//カメラの枠
 };
 
 //プロトタイプ宣言
@@ -40,4 +42,5 @@ void InitItemUI(void);
 void UninitItemUI(void);
 void UpdateItemUI(void);
 void DrawItemUI(void);
+void SetItemUI(D3DXVECTOR3 pos, int nType, float fWidth, float fHeight);
 #endif

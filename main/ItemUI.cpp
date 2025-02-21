@@ -177,3 +177,33 @@ void DrawItemUI(void)
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4 * nCntItemUI, 2);
 	}
 }
+void SetItemUI(D3DXVECTOR3 pos, int nType, float fWidth, float fHeight)
+{
+	// 頂点情報のポインタ
+	VERTEX_2D* pVtx;
+
+	//頂点バッファのロック、頂点データへのポインタ取得
+	g_pVtxBuffItemUI->Lock(0, 0, (void**)&pVtx, 0);
+
+	for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++)
+	{
+		if (g_aItemUI[nCnt].bUse == false)
+		{// 未使用状態だったら
+			g_aItemUI[nCnt].pos = pos;
+			g_aItemUI[nCnt].nType = nType;
+			g_aItemUI[nCnt].fHeight = fHeight;
+			g_aItemUI[nCnt].fWidth = fWidth;
+			g_aItemUI[nCnt].bUse = true;
+
+			//頂点座標の設定
+			pVtx[0].pos = D3DXVECTOR3(g_aItemUI[nCnt].pos.x - fWidth, g_aItemUI[nCnt].pos.y - fHeight, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_aItemUI[nCnt].pos.x + fWidth, g_aItemUI[nCnt].pos.y - fHeight, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_aItemUI[nCnt].pos.x - fWidth, g_aItemUI[nCnt].pos.y + fHeight, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_aItemUI[nCnt].pos.x + fWidth, g_aItemUI[nCnt].pos.y + fHeight, 0.0f);
+			break;
+		}
+		pVtx += 4;
+	}
+	//頂点バッファをアンロック
+	g_pVtxBuffItemUI->Unlock();
+}
