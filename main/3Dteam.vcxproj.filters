@@ -36,6 +36,7 @@
     <ClCompile Include="gauge.cpp" />
     <ClCompile Include="KeyUI.cpp" />
     <ClCompile Include="stamina.cpp" />
+    <ClCompile Include="nannjamo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -73,6 +74,7 @@
     <ClInclude Include="gauge.h" />
     <ClInclude Include="KeyUI.h" />
     <ClInclude Include="stamina.h" />
+    <ClInclude Include="nannjamo.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />
