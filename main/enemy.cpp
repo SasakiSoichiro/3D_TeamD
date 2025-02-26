@@ -231,27 +231,29 @@ void UpdateEnemy(void)
 				//チェイス処理
 				g_Enemy[0].rotDest.y = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z)) + D3DX_PI;
 				fAnglemove = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z));
-				g_Enemy[0].move.x = sinf(fAnglemove) *1.0f;
-				g_Enemy[0].move.z = cosf(fAnglemove) *1.0f;
+				g_Enemy[0].move.x = sinf(fAnglemove) * 1.0f;
+				g_Enemy[0].move.z = cosf(fAnglemove) * 1.0f;
 				break;
 
 			case ENEMYSTATE_DAMAGE:
 				g_nCntEnemyState--;
 
-				g_Enemy[nCntEnemy].move.x = 0.0f;
-				g_Enemy[nCntEnemy].move.z = 0.0f;
+				//g_Enemy[nCntEnemy].move.x = 0.0f;
+				//g_Enemy[nCntEnemy].move.z = 0.0f;
 
 				if (g_nCntEnemyState <= 0)
 				{
 					g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
+					pPlayer->bAttack = false;
+					//SetMotionType(EMOTIONTYPE_NEUTRAL, true, 10, nCntEnemy);
 				}
 
 				break;
 			case ENEMYSTATE_ACTION:
 				g_nCntEnemyState--;
 
-				g_Enemy[nCntEnemy].move.x = 0.0f;
-				g_Enemy[nCntEnemy].move.z = 0.0f;
+				//g_Enemy[nCntEnemy].move.x = 0.0f;
+				//g_Enemy[nCntEnemy].move.z = 0.0f;
 				
 				if (g_Enemy[nCntEnemy].OldState != g_Enemy[nCntEnemy].State)SetMotionType(EMOTIONTYPE_ACTION, true, 10, nCntEnemy);
 
@@ -259,6 +261,7 @@ void UpdateEnemy(void)
 				{
 					g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
 					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
+					pPlayer->bAttack = false;
 				}
 
 				break;
@@ -296,7 +299,7 @@ void UpdateEnemy(void)
 			//当たり判定
 			if ((fDistance <= fRadius) && pPlayer->bAttack == false)
 			{
-				g_nCntEnemyState = 60;
+				g_nCntEnemyState = 150;
 				g_Enemy[nCntEnemy].State = ENEMYSTATE_ACTION;
 				HitPlayer(1);
 			}
