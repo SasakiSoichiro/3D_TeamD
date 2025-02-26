@@ -251,6 +251,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:				//	ウィンドウズを破棄する
 		//WM_QUITメッセージ
 		PostQuitMessage(0);
+		Cleanup();
 		break;
 	case WM_KEYDOWN:				//	[ESC]キーが押された
 		switch (wParam)
@@ -270,6 +271,15 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
 			MouseWheel(zDelta);
 		}
+		break;
+
+	case WM_PAINT:
+		Render();
+		ValidateRect(hWnd, NULL);
+		break;
+
+	case WM_SETCURSOR:
+		ShowCursor(false);
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -311,6 +321,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	d3dpp.Windowed = bWindow;
 	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
+	d3dpp.Windowed = TRUE;
 
 	if (FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
@@ -797,4 +808,33 @@ void DrawDebugPlayer(void)
 	char aStr[256];
 	sprintf(&aStr[0], "Player->Pos.x = %.1f : Player->Pos.y = %.1f : Player->Pos.z = %.1f\n", pPlayer->pos.x,pPlayer->pos.y,pPlayer->pos.z);
 	g_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));
+}
+//-----------------------------------------------------------------------------
+// クリーンアップ
+//-----------------------------------------------------------------------------
+VOID Cleanup()
+{
+	if (g_pD3DDevice != NULL)
+		g_pD3DDevice->Release();
+
+	if (g_pD3D != NULL)
+		g_pD3D->Release();
+}
+//-----------------------------------------------------------------------------
+// レンダー
+//-----------------------------------------------------------------------------
+VOID Render()
+{
+	if (NULL == g_pD3DDevice)
+		return;
+
+	// 白でクリア
+	g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(255, 255, 255), 1.0f, 0);
+
+	if (SUCCEEDED(g_pD3DDevice->BeginScene()))
+	{
+		g_pD3DDevice->EndScene();
+	}
+
+	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
 }

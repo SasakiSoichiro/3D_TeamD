@@ -202,7 +202,7 @@ void UpdateCamera(void)
 		prevCursorPos.y = SCREEN_HEIGHT / (LONG)1.5f;
 
 		g_camera[0].posV = pPlayer->pos;
-		g_camera[0].posV.y += 50.0f;
+		g_camera[0].posV.y += 75.0f;
 
 		g_camera[0].posR.x = g_camera[0].posV.x - sinf(g_camera[0].rot.y) * cosf(g_camera[0].rot.x);
 		g_camera[0].posR.y = g_camera[0].posV.y - sinf(g_camera[0].rot.x);
@@ -253,7 +253,8 @@ void UpdateCamera(void)
 	if (GetEditState() == false && mode == MODE_GAME)
 	{
 		g_camera[1].posV = pEnemy->pos;
-		g_camera[1].posV.y += 80.0f;
+		g_camera[1].posV.x += 60.0f;
+		g_camera[1].posV.y += 100.0f;
 
 		g_camera[1].posR.x = g_camera[1].posV.x - sinf(pEnemy->rot.y) * cosf(pEnemy->rot.x);
 		g_camera[1].posR.y = g_camera[1].posV.y - sinf(pEnemy->rot.x);

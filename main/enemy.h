@@ -31,7 +31,7 @@ typedef enum
 typedef enum
 {
 	EMOTIONTYPE_NEUTRAL = 0,	// 着地
-	EMOTIONTYPE_MOVE,			// 移動
+	EMOTIONTYPE_MOVE,			// ダッシュ
 	EMOTIONTYPE_ACTION,			// アクション
 	EMOTIONTYPE_JUMP,			// ジャンプ
 	EMOTIONTYPE_LANDING,		// 着地

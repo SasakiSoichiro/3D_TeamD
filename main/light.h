@@ -6,8 +6,16 @@
 
 #define MAX_LIGHT (3)
 
+typedef enum
+{
+	TYPE_NORMAL = 0,
+	TYPE_POINT,
+	TYPE_MAX
+}LIGHTTYPE;
+
 void InitLight(void);
 void UninitLight(void);
 void UpdateLight(void);
+void SetupPointLight(D3DXVECTOR3 pos);
 
 #endif // !_LIGHT_H_

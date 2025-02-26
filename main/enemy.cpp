@@ -30,7 +30,7 @@ void InitEnemy(void)
 	for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++)
 	{
 		//各種変数の初期化
-		g_Enemy[nCnt].pos = D3DXVECTOR3(0.0f, 10.0f, 0.0f);
+		g_Enemy[nCnt].pos = D3DXVECTOR3(0.0f, 50.0f, 0.0f);
 		g_Enemy[nCnt].posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCnt].rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -231,27 +231,29 @@ void UpdateEnemy(void)
 				//チェイス処理
 				g_Enemy[0].rotDest.y = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z)) + D3DX_PI;
 				fAnglemove = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z));
-				g_Enemy[0].move.x = sinf(fAnglemove) *1.0f;
-				g_Enemy[0].move.z = cosf(fAnglemove) *1.0f;
+				g_Enemy[0].move.x = sinf(fAnglemove) * 1.0f;
+				g_Enemy[0].move.z = cosf(fAnglemove) * 1.0f;
 				break;
 
 			case ENEMYSTATE_DAMAGE:
 				g_nCntEnemyState--;
 
-				g_Enemy[nCntEnemy].move.x = 0.0f;
-				g_Enemy[nCntEnemy].move.z = 0.0f;
+				//g_Enemy[nCntEnemy].move.x = 0.0f;
+				//g_Enemy[nCntEnemy].move.z = 0.0f;
 
 				if (g_nCntEnemyState <= 0)
 				{
 					g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
+					pPlayer->bAttack = false;
+					//SetMotionType(EMOTIONTYPE_NEUTRAL, true, 10, nCntEnemy);
 				}
 
 				break;
 			case ENEMYSTATE_ACTION:
 				g_nCntEnemyState--;
 
-				g_Enemy[nCntEnemy].move.x = 0.0f;
-				g_Enemy[nCntEnemy].move.z = 0.0f;
+				//g_Enemy[nCntEnemy].move.x = 0.0f;
+				//g_Enemy[nCntEnemy].move.z = 0.0f;
 				
 				if (g_Enemy[nCntEnemy].OldState != g_Enemy[nCntEnemy].State)SetMotionType(EMOTIONTYPE_ACTION, true, 10, nCntEnemy);
 
@@ -259,6 +261,7 @@ void UpdateEnemy(void)
 				{
 					g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
 					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
+					pPlayer->bAttack = false;
 				}
 
 				break;
@@ -296,7 +299,7 @@ void UpdateEnemy(void)
 			//当たり判定
 			if ((fDistance <= fRadius) && pPlayer->bAttack == false)
 			{
-				g_nCntEnemyState = 60;
+				g_nCntEnemyState = 150;
 				g_Enemy[nCntEnemy].State = ENEMYSTATE_ACTION;
 				HitPlayer(1);
 			}
@@ -675,7 +678,7 @@ void LoadEnemy(int nType)
 	int nBool;
 	char str[MAX_WORD];
 
-	pFile = fopen("data\\MOTION\\EnemyMotion.txt", "r");
+	pFile = fopen("data\\MOTION\\EnemyMotion1.txt", "r");
 
 	if (pFile != NULL)
 	{
