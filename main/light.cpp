@@ -10,6 +10,7 @@
 
 //	グローバル
 D3DLIGHT9 g_light[MAX_LIGHT] = {};	//	ライト情報
+D3DLIGHT9 light;
 
 void InitLight(void)
 {
@@ -85,4 +86,15 @@ void UpdateLight(void)
 
 	}
 	
+}
+void SetupPointLight(D3DXVECTOR3 pos)
+{
+	ZeroMemory(&light, sizeof(light));
+	for (int nCntLight = 0; nCntLight < MAX_LIGHT; nCntLight++)
+	{
+		g_light[nCntLight].Type = D3DLIGHT_POINT;
+		g_light[nCntLight].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);		// 白色の拡散光
+		g_light[nCntLight].Position = D3DXVECTOR3(pos.x, pos.y, pos.z); // ライトの位置
+		g_light[nCntLight].Range = 100.0f;
+	}
 }
