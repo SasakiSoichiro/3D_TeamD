@@ -401,13 +401,16 @@ void UpdateGame(void)
 			UpdateKeyUI();
 
 			// アイテムのUI
-			UpdateItemUI();
+			//UpdateItemUI();
 
 			// スタミナ
 			UpdateStamina();
 
-			//	回復
+			// 回復
 			UpdateNannjamo();
+
+			// スロー
+			UpdateSlow();
 #endif
 #ifdef _DEBUG// デバッグ
 
@@ -530,6 +533,9 @@ void DrawGame(void)
 
 	//	回復
 	DrawNannjamo();
+
+	// スロー
+	DrawSlow();
 
 	////FOGを戻す
 	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);

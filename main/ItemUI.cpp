@@ -120,32 +120,38 @@ void UninitItemUI(void)
 //==================
 //アイテムUIの更新処理
 //==================
-void UpdateItemUI(void)
+void UpdateItemUI(int nType)
 {
-	ITEM* pItem = Getitem();
-	if (pItem->bHave == true)
-	{
-		for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++, pItem++)
-		{
-			if (g_aItemUI[nCnt].nType == ITEM_FLAME)
+	//ITEM* pItem = Getitem();
+
+	//for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++, pItem++)
+	//{
+	//	if (pItem->bHave == true)
+	//	{
+			for (int nCntUI = 0; nCntUI < MAX_ITEMUI; nCntUI++)
 			{
-				switch (pItem->nType)
+				if (g_aItemUI[nCntUI].nType == ITEM_FLAME)
 				{
-				case ITEMTYPE_FOUR:
-					g_aItemUI[nCnt].nType = ITEM_NAGINATA;
-					break;
-				case ITEMTYPE_FIVE:
-					g_aItemUI[nCnt].nType = ITEM_HEAL;
-					break;
-				case ITEMTYPE_SIX:
-					g_aItemUI[nCnt].nType = ITEM_POCKETWATCH;
+					switch (/*pItem->*/nType)
+					{
+					case ITEMTYPE_THREE:
+						g_aItemUI[nCntUI].nType = ITEM_POCKETWATCH;
+						break;
+					case ITEMTYPE_FOUR:
+						g_aItemUI[nCntUI].nType = ITEM_NAGINATA;
+						break;
+					case ITEMTYPE_FIVE:
+						g_aItemUI[nCntUI].nType = ITEM_HEAL;
+						break;
+					}
+
 					break;
 				}
-
-				break;
+				
 			}
-		}
-	}
+			//break;
+	//	}
+	//}
 
 }
 

@@ -40,7 +40,7 @@ static const char* ITEMUI_TEXTURE[ITEM_MAX] =
 //プロトタイプ宣言
 void InitItemUI(void);
 void UninitItemUI(void);
-void UpdateItemUI(void);
+void UpdateItemUI(int nType);
 void DrawItemUI(void);
 void SetItemUI(D3DXVECTOR3 pos, int nType, float fWidth, float fHeight);
 #endif

@@ -13,6 +13,7 @@
 #include "sound.h"
 #include "slow.h"
 #include "nannjamo.h"
+#include "ItemUI.h"
 
 // グローバル変数宣言
 ITEM g_item[ITEMTYPE_MAX];
@@ -233,6 +234,7 @@ void Updateitem(void)
 
 					g_item[nCnt].bHave = true;
 					g_item[nCnt].bUse = false;
+					UpdateItemUI(g_item[nCnt].nType);
 
 					//	脱出条件
 					if (g_item[nCnt].bUse == false && g_item[nCnt].nType == ITEMTYPE_ONE)
