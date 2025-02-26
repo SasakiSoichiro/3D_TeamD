@@ -24,7 +24,6 @@
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title3D.cpp" />
     <ClCompile Include="tutrial.cpp" />
-    <ClCompile Include="sound.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="slow.cpp" />
     <ClCompile Include="edit.cpp" />
@@ -37,6 +36,7 @@
     <ClCompile Include="KeyUI.cpp" />
     <ClCompile Include="stamina.cpp" />
     <ClCompile Include="nannjamo.cpp" />
+    <ClCompile Include="sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -62,7 +62,6 @@
     <ClInclude Include="title.h" />
     <ClInclude Include="title3D.h" />
     <ClInclude Include="tutrial.h" />
-    <ClInclude Include="sound.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="slow.h" />
     <ClInclude Include="edit.h" />
@@ -75,6 +74,7 @@
     <ClInclude Include="KeyUI.h" />
     <ClInclude Include="stamina.h" />
     <ClInclude Include="nannjamo.h" />
+    <ClInclude Include="sound.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />
