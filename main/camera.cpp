@@ -202,7 +202,7 @@ void UpdateCamera(void)
 		prevCursorPos.y = SCREEN_HEIGHT / (LONG)1.5f;
 
 		g_camera[0].posV = pPlayer->pos;
-		g_camera[0].posV.y += 50.0f;
+		g_camera[0].posV.y += 75.0f;
 
 		g_camera[0].posR.x = g_camera[0].posV.x - sinf(g_camera[0].rot.y) * cosf(g_camera[0].rot.x);
 		g_camera[0].posR.y = g_camera[0].posV.y - sinf(g_camera[0].rot.x);
