@@ -33,6 +33,7 @@
 #include "ItemUI.h"
 #include "stamina.h"
 #include "nannjamo.h"
+#include "Cancellation.h"
 
 // マクロ定義
 #define RAND (6) // ランダム用変数
@@ -107,6 +108,9 @@ void InitGame(void)
 
 	//	ゲージ
 	InitGauge();
+
+	// 解除UI
+	InitCancellation();
 
 	// 鍵のUI
 	InitKeyUI();
@@ -201,7 +205,7 @@ void InitGame(void)
 	Setitem(D3DXVECTOR3(-1500.0f, 0.0f, 700.0f), ITEMTYPE_THREE);
 
 	//	救急箱
-	Setitem(D3DXVECTOR3(0.0f, 50.0f, 0.0f), ITEMTYPE_FIVE);
+	Setitem(D3DXVECTOR3(0.0f, 0.0f, 0.0f), ITEMTYPE_FIVE);
 
 	//　ビルボード(木)
 	SetBillboard(D3DXVECTOR3(-100.0f, 50.0f, -200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_0,D3DXVECTOR3(15.0f,35.0f,0.0f));
@@ -301,6 +305,9 @@ void UninitGame(void)
 	//	ゲージ
 	UinitGauge();
 
+	// 解除UI
+	UinitCancellation();
+
 	// 鍵のUI
 	UninitKeyUI();
 
@@ -396,6 +403,9 @@ void UpdateGame(void)
 
 			//	ゲージ
 			UpdateGauge();
+
+			// 解除UI
+			UpdateCancellation();
 
 			//　鍵のUI
 			UpdateKeyUI();
@@ -521,6 +531,9 @@ void DrawGame(void)
 
 	//	ゲージ
 	DrawGauge();
+
+	// 解除UI
+	DrawCancellation();
 
 	//	鍵のUI
 	DrawKeyUI();

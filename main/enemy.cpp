@@ -30,7 +30,7 @@ void InitEnemy(void)
 	for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++)
 	{
 		//ŠeŽí•Ï”‚Ì‰Šú‰»
-		g_Enemy[nCnt].pos = D3DXVECTOR3(0.0f, 10.0f, 0.0f);
+		g_Enemy[nCnt].pos = D3DXVECTOR3(0.0f, 50.0f, 0.0f);
 		g_Enemy[nCnt].posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCnt].rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -678,7 +678,7 @@ void LoadEnemy(int nType)
 	int nBool;
 	char str[MAX_WORD];
 
-	pFile = fopen("data\\MOTION\\EnemyMotion.txt", "r");
+	pFile = fopen("data\\MOTION\\EnemyMotion1.txt", "r");
 
 	if (pFile != NULL)
 	{

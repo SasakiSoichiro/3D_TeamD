@@ -37,6 +37,7 @@
     <ClCompile Include="stamina.cpp" />
     <ClCompile Include="nannjamo.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="Cancellation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -75,6 +76,7 @@
     <ClInclude Include="stamina.h" />
     <ClInclude Include="nannjamo.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="Cancellation.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />

@@ -261,7 +261,7 @@ void StopSound(SOUND_LABEL label)
 {
 	XAUDIO2_VOICE_STATE xa2state;
 
-	// ó‘Ôæ“¾
+	// ó‘Ôæ“¾s
 	g_apSourceVoice[label]->GetState(&xa2state);
 	if(xa2state.BuffersQueued != 0)
 	{// Ä¶’†
