@@ -19,8 +19,7 @@ typedef enum
 	SOUND_LABEL_BGM3,
 	SOUND_LABEL_SHOT01,
 	SOUND_LABEL_SHOT02,
-	SOUND_LABEL_SHOT03,
-	SOUND_LABEL_MAX,
+	SOUND_LABEL_MAX
 } SOUND_LABEL;
 
 //*****************************************************************************

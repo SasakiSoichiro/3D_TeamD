@@ -28,7 +28,7 @@ int nSelect2 = 0;
 void InitTitle(void)
 {
 	//BGMを鳴らす
-	//PlaySound(SOUND_LABEL_BGM);
+	PlaySound(SOUND_LABEL_BGM);
 
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
@@ -119,7 +119,7 @@ void InitTitle(void)
 void UninitTitle(void)
 {
 	// 音楽を止める
-	//StopSound();
+	StopSound();
 
 	UninitCamera();
 
@@ -232,8 +232,8 @@ void UpdateTitle(void)
 	if (KeybordTrigger(DIK_RETURN) == true || JoyPadTrigger(JOYKEY_A) == true || OnMouseDown(MOUSE_L) == true)
 	{//決定キーが押された
 
-		// 音楽を鳴らす
-		//PlaySound(SOUND_LABEL_SHOT01);
+		 //音楽を鳴らす
+		PlaySound(SOUND_LABEL_SHOT01);
 
 		//メニューに合わせてモードの切り替え
 		switch (nSelect2)

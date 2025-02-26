@@ -382,7 +382,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	}
 
 	//‰¹‚Ì‰Šú‰»
-	//InitSound(hWnd);
+	InitSound(hWnd);
 
 	//ƒ‚[ƒh‚Ì‰Šú‰»
 	SetMode(g_mode);

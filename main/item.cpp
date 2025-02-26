@@ -74,7 +74,8 @@ void Inititem(void)
 //=================
 void Uninititem(void)
 {
-	//StopSound();
+	//âπÇè¡Ç∑
+	StopSound();
 
 	for (int count = 0; count < ITEMTYPE_MAX; count++)
 	{
@@ -226,7 +227,7 @@ void Updateitem(void)
 				if (KeybordTrigger(DIK_F) == true)
 				{//FÇâüÇ≥ÇÍÇΩÇ∆Ç´
 
-					//PlaySound(SOUND_LABEL_SHOT02);
+					PlaySound(SOUND_LABEL_SHOT02);
 
 					//ÉAÉCÉeÉÄÇèEÇ§
 
