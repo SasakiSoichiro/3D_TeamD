@@ -382,7 +382,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	}
 
 	//音の初期化
-	InitSound(hWnd);
+	//InitSound(hWnd);
 
 	//モードの初期化
 	SetMode(g_mode);
@@ -398,7 +398,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 void Uninit(void)
 {
 	//　音の終了
-	UninitSound();
+	//UninitSound();
 
 	//	キーボード終了
 	UninitKeyboard();

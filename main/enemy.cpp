@@ -199,8 +199,8 @@ void UpdateEnemy(void)
 					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
 
 					// BGMを鳴らす
-					PlaySound(SOUND_LABEL_BGM3);
-					StopSound(SOUND_LABEL_BGM2);
+					//PlaySound(SOUND_LABEL_BGM3);
+					//StopSound(SOUND_LABEL_BGM2);
 				}
 				if (fvecCross[0] > 0 && fvecCross[1] > 0)
 				{//距離関係なし
@@ -224,8 +224,8 @@ void UpdateEnemy(void)
 					pPlayer->bEye = false;
 
 					// BGMを消す
-					StopSound(SOUND_LABEL_BGM3);
-					PlaySound(SOUND_LABEL_BGM2);
+					//StopSound(SOUND_LABEL_BGM3);
+					//PlaySound(SOUND_LABEL_BGM2);
 				}
 
 				//チェイス処理

@@ -28,7 +28,7 @@ int nSelect2 = 0;
 void InitTitle(void)
 {
 	//BGMを鳴らす
-	PlaySound(SOUND_LABEL_BGM);
+	//PlaySound(SOUND_LABEL_BGM);
 
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
@@ -119,7 +119,7 @@ void InitTitle(void)
 void UninitTitle(void)
 {
 	// 音楽を止める
-	StopSound();
+	//StopSound();
 
 	UninitCamera();
 
@@ -233,7 +233,7 @@ void UpdateTitle(void)
 	{//決定キーが押された
 
 		// 音楽を鳴らす
-		PlaySound(SOUND_LABEL_SHOT01);
+		//PlaySound(SOUND_LABEL_SHOT01);
 
 		//メニューに合わせてモードの切り替え
 		switch (nSelect2)

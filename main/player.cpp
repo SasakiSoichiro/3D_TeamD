@@ -84,7 +84,7 @@ void InitPlayer(void)
 void UninitPlayer(void)
 {
 	//‰¹Šy(SE)‚ðŽ~‚ß‚é
-	StopSound();
+	//StopSound();
 
 	for (int nCntType = 0; nCntType < 2; nCntType++)
 	{
