@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <strsafe.h>
 
 //========================
 //	ライブラリのリンク
@@ -23,6 +24,8 @@
 #pragma comment(lib,"winmm.lib")			//	システム時刻取得に必要
 #pragma comment(lib,"dinput8.lib")			//	キーボード処理に必要
 #pragma comment(lib,"xinput.lib")			//	ジョイパット処理に必要
+#pragma warning( disable : 4996 )
+#pragma warning( default : 4996 )
 
 //================
 //	マクロ定義
@@ -93,4 +96,6 @@ void DrawHoldTime(void);
 void DrawNoTouchTime(void);
 void DrawTotalTime(void);
 void DrawDebugPlayer(void);
+VOID Cleanup();
+VOID Render();
 #endif
