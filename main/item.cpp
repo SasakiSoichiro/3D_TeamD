@@ -225,7 +225,7 @@ void Updateitem(void)
 			//プレイヤーがアイテムの範囲に入ったら
 			if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 			{
-				if (KeybordTrigger(DIK_F) == true)
+				if (KeybordTrigger(DIK_F) == true || JoyPadTrigger(JOYKEY_B) == true)
 				{//Fを押されたとき
 
 					PlaySound(SOUND_LABEL_SHOT02);

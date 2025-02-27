@@ -126,7 +126,7 @@ void UpdateItemUI()
 {
 
 	VERTEX_2D* pVtx = 0;		//頂点情報へのポインタ
-	if (KeybordTrigger(DIK_1) == true)
+	if (KeybordTrigger(DIK_1) == true||JoyPadTrigger(JOYKEY_Y)==true)
 	{
 		if (g_nSelect == MAX_ITEMUI-1)
 		{
