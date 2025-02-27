@@ -14,7 +14,7 @@
 
 //	グローバル
 Cance g_Cancellation = {};
-LPDIRECT3DTEXTURE9 g_CancellationTexture = NULL;			//テクスチャへのポインタ
+LPDIRECT3DTEXTURE9 g_CancellationTexture[TEX_MAX] = {};		//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffCancellation = NULL;		//バッファへのポインタ
 
 //===================
@@ -33,10 +33,13 @@ void InitCancellation(void)
 	g_Cancellation.fCnt = 0.0f;
 	g_Cancellation.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\Cancellation.png",
-		&g_CancellationTexture);
+	for (int nCntLoad = 0; nCntLoad < TEX_MAX; nCntLoad++)
+	{
+		//テクスチャの読み込み
+		D3DXCreateTextureFromFile(pDevice,
+			"data\\texture\\Cancellation.png",
+			&g_CancellationTexture[nCntLoad]);
+	}
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
@@ -81,12 +84,16 @@ void InitCancellation(void)
 //===================
 void UinitCancellation(void)
 {
-	//テクスチャの破棄
-	if (g_CancellationTexture != NULL)
+	for (int nCnt = 0; nCnt < TEX_MAX; nCnt++)
 	{
-		g_CancellationTexture->Release();
-		g_CancellationTexture = NULL;
+		//テクスチャの破棄
+		if (g_CancellationTexture != NULL)
+		{
+			g_CancellationTexture[nCnt]->Release();
+			g_CancellationTexture[nCnt] = NULL;
+		}
 	}
+
 	//頂点バッファの破棄
 	if (g_pVtxBuffCancellation != NULL)
 	{
@@ -157,13 +164,15 @@ void DrawCancellation(void)
 
 	//	頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
-
-	if (g_Cancellation.bUse == true)
+	for (int nCntTex = 0; nCntTex < TEX_MAX; nCntTex++)
 	{
-		//	テクスチャの設定
-		pDevice->SetTexture(0, g_CancellationTexture);
+		if (g_Cancellation.bUse == true)
+		{
+			//	テクスチャの設定
+			pDevice->SetTexture(0, g_CancellationTexture[g_Cancellation.nType]);
 
-		//	ポリゴンの描画
-		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+			//	ポリゴンの描画
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+		}
 	}
 }
