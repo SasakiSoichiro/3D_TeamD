@@ -34,6 +34,7 @@
 #include "stamina.h"
 #include "nannjamo.h"
 #include "Cancellation.h"
+#include "viewportwaku.h"
 
 // マクロ定義
 #define RAND (6) // ランダム用変数
@@ -123,6 +124,9 @@ void InitGame(void)
 	
 	//	回復
 	InitNannjamo();
+
+	//	敵視点のビューポートの枠
+	InitViewUI();
 
 	//int a = rand() % 6 + 1;
 	int a = rand() % RAND + 1;
@@ -319,6 +323,10 @@ void UninitGame(void)
 
 	//	回復
 	UinitNannjamo();
+
+	//	敵視点のビューポートの枠
+	UninitViewUI();
+
 }
 
 //---------------
@@ -418,6 +426,9 @@ void UpdateGame(void)
 
 			// 回復
 			UpdateNannjamo();
+
+			//	敵視点のビューポートの枠
+			UpdateViewUI();
 
 			// スロー
 			UpdateSlow();
@@ -546,6 +557,9 @@ void DrawGame(void)
 
 	//	回復
 	DrawNannjamo();
+
+	//	敵視点のビューポートの枠
+	DrawViewUI();
 
 	// スロー
 	DrawSlow();

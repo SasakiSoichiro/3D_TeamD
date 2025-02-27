@@ -38,6 +38,7 @@
     <ClCompile Include="nannjamo.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Cancellation.cpp" />
+    <ClCompile Include="viewportwaku.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -77,6 +78,7 @@
     <ClInclude Include="nannjamo.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="Cancellation.h" />
+    <ClInclude Include="viewportwaku.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />
