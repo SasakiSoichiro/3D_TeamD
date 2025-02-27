@@ -259,24 +259,26 @@ void Updateitem(void)
 						}
 					}
 
-					if ((KeybordTrigger(DIK_E) == true && g_item[ITEMTYPE_THREE].bHave == true) || (JoyPadTrigger(JOYKEY_X) == true && g_item[ITEMTYPE_THREE].bHave == true))
-					{//懐中時計を持っている時、懐中時計を使用する処理
-
-						if (pSlow->bUse == false)
-						{//懐中時計を使ってなかったら
-
-							pSlow->bUse = true;
-
-							g_item[ITEMTYPE_THREE].bHave = false;
-
-							SetSlow();
-						}
-
-					}
 				}
 			}
 		}
 	}
+
+	if (KeybordTrigger(DIK_E) == true && g_item[ITEMTYPE_THREE].bHave == true || (JoyPadTrigger(JOYKEY_X) == true && g_item[ITEMTYPE_THREE].bHave == true))
+	{//懐中時計を持っている時、懐中時計を使用する処理
+
+		if (pSlow->bUse == false)
+		{//懐中時計を使ってなかったら
+
+			pSlow->bUse = true;
+
+			g_item[ITEMTYPE_THREE].bHave = false;
+
+			SetSlow();
+		}
+
+	}
+
 }
 
 //=================
