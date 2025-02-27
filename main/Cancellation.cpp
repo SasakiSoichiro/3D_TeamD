@@ -15,7 +15,7 @@
 //	グローバル
 Cance g_Cancellation = {};
 LPDIRECT3DTEXTURE9 g_CancellationTexture = NULL;			//テクスチャへのポインタ
-LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffCancellation = NULL;	//バッファへのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffCancellation = NULL;		//バッファへのポインタ
 
 //===================
 //	初期化処理
@@ -49,8 +49,8 @@ void InitCancellation(void)
 	g_pVtxBuffCancellation->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点情報の設定
-	pVtx[0].pos = D3DXVECTOR3(320.0f, 350.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(640.0f, 350.0f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(320.0f, 340.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(640.0f, 340.0f, 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(320.0f, 400.0f, 0.0f);
 	pVtx[3].pos = D3DXVECTOR3(640.0f, 400.0f, 0.0f);
 
