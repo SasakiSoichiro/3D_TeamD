@@ -234,7 +234,7 @@ void Updateitem(void)
 
 					g_item[nCnt].bHave = true;
 					g_item[nCnt].bUse = false;
-					UpdateItemUI(g_item[nCnt].nType);
+					SetItemUI(g_item[nCnt].nType);
 
 					//	脱出条件
 					if (g_item[nCnt].bUse == false && g_item[nCnt].nType == ITEMTYPE_ONE)
@@ -247,36 +247,51 @@ void Updateitem(void)
 						g_item[nCnt].bHold = true;
 					}
 
-					//回復アイテム
-					if (g_item[nCnt].bUse == false)
-					{
-						//プレイヤーの体力が2以下なら
-						if (pPlayer->nLife <= 2)
-						{
-
-							pPlayer->nLife += 1;
-							SetNannjamo(90);
-						}
-					}
 
 				}
 			}
 		}
 	}
 
-	if (KeybordTrigger(DIK_E) == true && g_item[ITEMTYPE_THREE].bHave == true || (JoyPadTrigger(JOYKEY_X) == true && g_item[ITEMTYPE_THREE].bHave == true))
+	int nSelect = GetSelect();
+	ItemUI *pItemUI= GetItemUI();
+	
+	if (KeybordTrigger(DIK_E) == true|| JoyPadTrigger(JOYKEY_X) == true)
 	{//懐中時計を持っている時、懐中時計を使用する処理
+		
+		pItemUI += nSelect;
+		for (int nCnt = 0; nCnt < ITEMTYPE_MAX; nCnt++)
+		{
 
-		if (pSlow->bUse == false)
-		{//懐中時計を使ってなかったら
+			switch (pItemUI->nType)
+			{
+			case ITEM_POCKETWATCH:	// スロー
+				if (g_item[nCnt].bHave == true&& g_item[nCnt].nType==ITEMTYPE_THREE)
+				{
+					pSlow->bUse = true;
 
-			pSlow->bUse = true;
+					g_item[nCnt].bHave = false;
 
-			g_item[ITEMTYPE_THREE].bHave = false;
+					SetSlow();
+				}
+				break;
+			case ITEM_HEAL:		// 回復アイテム
+				//プレイヤーの体力が2以下なら
+				if (g_item[nCnt].bHave == true && g_item[nCnt].nType == ITEMTYPE_FIVE)
+				{
+					if (pPlayer->nLife <= 2)
+					{
+						pPlayer->nLife += 1;
+						SetNannjamo(90);
+						g_item[nCnt].bHave = false;
+					}
+					
+					break;
+				}
 
-			SetSlow();
+			}
 		}
-
+		pItemUI = 0;
 	}
 
 }

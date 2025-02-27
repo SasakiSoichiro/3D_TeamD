@@ -16,6 +16,7 @@
 LPDIRECT3DTEXTURE9 g_pTextureItemUI[ITEM_MAX] = {};		//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffItemUI = NULL;		//頂点バッファへのポインタ
 ItemUI g_aItemUI[MAX_ITEMUI];							//ブロックの情報
+int g_nSelect;
 
 //=====================
 //アイテムUIの初期化処理
@@ -47,6 +48,7 @@ void InitItemUI(void)
 		g_aItemUI[nCntBlock].bUse = false;							//使われていない状態にする	
 	}
 
+	g_nSelect = 0;
 
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_ITEMUI,//(sizeof(VERTEX_2D)*必要な頂点数
 		D3DUSAGE_WRITEONLY,
@@ -76,10 +78,10 @@ void InitItemUI(void)
 		pVtx[3].rhw = 1.0f;
 
 		//頂点カラーの設定　　　　
-		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
 
 		//テクスチャ座標の設定
 		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
@@ -120,28 +122,55 @@ void UninitItemUI(void)
 //==================
 //アイテムUIの更新処理
 //==================
-void UpdateItemUI(int nType)
+void UpdateItemUI()
 {
-	for (int nCntUI = 0; nCntUI < MAX_ITEMUI; nCntUI++)
-	{
-		if (g_aItemUI[nCntUI].nType == ITEM_FLAME)
-		{
-			switch (nType)
-			{
-			case ITEMTYPE_THREE:
-				g_aItemUI[nCntUI].nType = ITEM_POCKETWATCH;
-				break;
-			case ITEMTYPE_FOUR:
-				g_aItemUI[nCntUI].nType = ITEM_NAGINATA;
-				break;
-			case ITEMTYPE_FIVE:
-				g_aItemUI[nCntUI].nType = ITEM_HEAL;
-				break;
-			}
 
-			break;
-		}	
+	VERTEX_2D* pVtx = 0;		//頂点情報へのポインタ
+	if (KeybordTrigger(DIK_1) == true)
+	{
+		if (g_nSelect == MAX_ITEMUI-1)
+		{
+			g_nSelect = 0;
+		}
+		else
+		{
+			g_nSelect++;
+		}
 	}
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	g_pVtxBuffItemUI->Lock(0, 0, (void**)&pVtx, 0);
+
+	//ループ処理
+	for (int nCntBlock = 0; nCntBlock < MAX_ITEMUI; nCntBlock++)
+	{//ブロックの数分ループする
+
+		if(nCntBlock==g_nSelect)
+		{
+			//頂点カラーの設定　　　　
+			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+		}
+		else
+		{
+			//頂点カラーの設定　　　　
+			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+			pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+			pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+			pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+
+		}
+
+
+		pVtx += 4;//頂点データのポインタを4つ分集める
+	}
+
+	//頂点バッファをアンロックする
+	g_pVtxBuffItemUI->Unlock();
+
 }
 
 //==================
@@ -161,8 +190,6 @@ void DrawItemUI(void)
 	//ループ処理
 	for (int nCntItemUI = 0; nCntItemUI < MAX_ITEMUI; nCntItemUI++)
 	{//ブロックの数分ループする
-
-
 		// テクスチャの設定
 		pDevice->SetTexture(ITEM_FLAME, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
 		pDevice->SetTexture(ITEM_NAGINATA, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
@@ -172,33 +199,41 @@ void DrawItemUI(void)
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4 * nCntItemUI, 2);
 	}
 }
-void SetItemUI(D3DXVECTOR3 pos, int nType, float fWidth, float fHeight)
+
+void SetItemUI(int nType)
 {
-	// 頂点情報のポインタ
-	VERTEX_2D* pVtx;
-
-	//頂点バッファのロック、頂点データへのポインタ取得
-	g_pVtxBuffItemUI->Lock(0, 0, (void**)&pVtx, 0);
-
-	for (int nCnt = 0; nCnt < ITEM_MAX; nCnt++)
+	for (int nCntUI = 0; nCntUI < MAX_ITEMUI; nCntUI++)
 	{
-		if (g_aItemUI[nCnt].bUse == false)
-		{// 未使用状態だったら
-			g_aItemUI[nCnt].pos = pos;
-			g_aItemUI[nCnt].nType = nType;
-			g_aItemUI[nCnt].fHeight = fHeight;
-			g_aItemUI[nCnt].fWidth = fWidth;
-			g_aItemUI[nCnt].bUse = true;
+		if (g_aItemUI[nCntUI].nType == ITEM_FLAME)
+		{
+			switch (nType)
+			{
+			case ITEMTYPE_THREE:
+				g_aItemUI[nCntUI].nType = ITEM_POCKETWATCH;
+				break;
+			case ITEMTYPE_FOUR:
+				g_aItemUI[nCntUI].nType = ITEM_NAGINATA;
+				break;
+			case ITEMTYPE_FIVE:
+				g_aItemUI[nCntUI].nType = ITEM_HEAL;
+				break;
+			}
 
-			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(g_aItemUI[nCnt].pos.x - fWidth, g_aItemUI[nCnt].pos.y - fHeight, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(g_aItemUI[nCnt].pos.x + fWidth, g_aItemUI[nCnt].pos.y - fHeight, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(g_aItemUI[nCnt].pos.x - fWidth, g_aItemUI[nCnt].pos.y + fHeight, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(g_aItemUI[nCnt].pos.x + fWidth, g_aItemUI[nCnt].pos.y + fHeight, 0.0f);
 			break;
 		}
-		pVtx += 4;
 	}
-	//頂点バッファをアンロック
-	g_pVtxBuffItemUI->Unlock();
+
+}
+
+//-----------------------
+//選択した情報を渡す処理
+//-----------------------
+ItemUI *GetItemUI()
+{
+	return &g_aItemUI[0];
+}
+
+int GetSelect()
+{
+	return g_nSelect;
 }

@@ -74,7 +74,6 @@ void InitCancellation(void)
 
 	//頂点バッファをアンロック
 	g_pVtxBuffCancellation->Unlock();
-
 }
 
 //===================

@@ -233,7 +233,7 @@ void InitGame(void)
 	SetGimmick(D3DXVECTOR3(-1800.0f, 0.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	//	カメラの枠
-	SetItemUI(D3DXVECTOR3(625.8f, 90.0f, 0.0f), ITEM_CAMERAWAKU, 189.0f, 120.0f);
+	//SetItemUI(D3DXVECTOR3(625.8f, 90.0f, 0.0f), ITEM_CAMERAWAKU, 189.0f, 120.0f);
 
 	//	鍵のUI
 	SetKeyUI(D3DXVECTOR3(940.0f, 40.0f, 0.0f), ITEMKEYUITYPE_NO5, 35.0f, 35.0f);
@@ -411,7 +411,7 @@ void UpdateGame(void)
 			UpdateKeyUI();
 
 			// アイテムのUI
-			//UpdateItemUI();
+			UpdateItemUI();
 
 			// スタミナ
 			UpdateStamina();
