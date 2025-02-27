@@ -18,7 +18,7 @@ void InitSlow(void)
 	g_Slow.nMulti = 1;
 	g_Slow.nDivi = 1;
 	g_Slow.fade = SLOWFADE_IN;
-	g_Slow.color = D3DXCOLOR(0.0f, 0.0f, 0.7f, 1.0f);
+	g_Slow.color = D3DXCOLOR(0.0f, 0.0f, 0.3f, 1.0f);
 	g_Slow.bUse = false;
 	g_nCntSlowState = 0;
 
@@ -90,6 +90,7 @@ void UpdateSlow(void)
 			g_nCntSlowState = 0;
 			g_Slow.fade = SLOWFADE_IN;
 			g_Slow.bUse = false;
+			SetSlow();
 		}
 	}
 	if (g_Slow.fade!= SLOWFADE_NONE)
