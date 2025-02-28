@@ -134,37 +134,37 @@ void InitGame(void)
 	if (a == 1)
 	{
 		//　鍵の上部
-		Setitem(D3DXVECTOR3(1413.6f, 1.5f, -491.2f), ITEMTYPE_ONE);
+		Setitem(D3DXVECTOR3(1422.6f, 1.5f, -738.7f), ITEMTYPE_ONE);
 	}
 	
 	if (a == 2)
 	{
 		//　鍵の上部
-		Setitem(D3DXVECTOR3(527.0f, 1.5f, -341.2f), ITEMTYPE_ONE);
+		Setitem(D3DXVECTOR3(-94.6f, 1.5f, -608.8f), ITEMTYPE_ONE);
 	}
 
 	if (a == 3)
 	{
 		//　鍵の上部
-		Setitem(D3DXVECTOR3(878.7f, 1.5f, 651.4f), ITEMTYPE_ONE);
+		Setitem(D3DXVECTOR3(-1199.0f, 1.5f, 396.1f), ITEMTYPE_ONE);
 	}
 
 	if (a == 4)
 	{
 		//　鍵の上部
-		Setitem(D3DXVECTOR3(165.0f, 1.5f, 591.2f), ITEMTYPE_ONE);
+		Setitem(D3DXVECTOR3(785.7f, 1.5f, 615.6f), ITEMTYPE_ONE);
 	}
 
 	if (a == 5)
 	{
 		//　鍵の上部
-		Setitem(D3DXVECTOR3(-278.3f, 1.5f, 563.1f), ITEMTYPE_ONE);
+		Setitem(D3DXVECTOR3(-94.9f, 1.5f, 480.5f), ITEMTYPE_ONE);
 	}
 
 	if (a == 6)
 	{//蔵
 		//　鍵の上部
-		Setitem(D3DXVECTOR3(-1169.5f, 1.5f, 421.5f), ITEMTYPE_ONE);
+		Setitem(D3DXVECTOR3(-1722.6f, 1.5f, -818.2f), ITEMTYPE_ONE);
 	}
 
 	int b = rand() % RAND + 1;
