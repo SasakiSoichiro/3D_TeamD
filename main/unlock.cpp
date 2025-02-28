@@ -42,10 +42,10 @@ void InitUnlock(void)
 	g_pVtxBuffUnlock->Lock(0, 0, (void**)&pVtx, 0);
 
 	//í∏ì_ç¿ïWÇÃê›íË
-	pVtx[0].pos = D3DXVECTOR3(310.0f, 390.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(970.0f, 390.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(310.0f, 460.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(970.0f, 460.0f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(307.5f, 397.5f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(972.5f, 397.5f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(307.5f, 452.5f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(972.5f, 452.5f, 0.0f);
 
 	//rhwÇÃê›íË
 	pVtx[0].rhw = 1.0f;
