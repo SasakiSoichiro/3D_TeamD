@@ -433,16 +433,6 @@ void UpdateGame(void)
 			// スロー
 			UpdateSlow();
 #endif
-#ifdef _DEBUG// デバッグ
-
-			if (KeybordTrigger(DIK_O) == true || JoyPadTrigger(JOYKEY_A) == true)
-			{// OまたはAボタン
-
-				//リザルトに移る
-				SetFade(MODE_RESULT);
-			}
-
-#endif
 		}
 		else if (g_bEdit == true)
 		{//　g_Editがtrue
