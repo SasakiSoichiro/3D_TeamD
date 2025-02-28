@@ -267,7 +267,7 @@ void UpdateEnemy(void)
 				if (g_nCntEnemyState <= 0)
 				{
 					g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
-					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
+					SetMotionType(EMOTIONTYPE_NEUTRAL, true, 10, nCntEnemy);
 					pPlayer->bAttack = false;
 				}
 
