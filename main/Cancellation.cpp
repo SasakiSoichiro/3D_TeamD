@@ -37,7 +37,7 @@ void InitCancellation(void)
 	{
 		//テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,
-			"data\\texture\\Cancellation.png",
+			"data\\texture\\kaijo.png",
 			&g_CancellationTexture[nCntLoad]);
 	}
 

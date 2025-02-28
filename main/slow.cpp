@@ -110,9 +110,9 @@ void UpdateSlow(void)
 			//	フェードアウト
 			g_Slow.color.a += 0.02f;
 
-			if (g_Slow.color.a >= 0.6f)
+			if (g_Slow.color.a >= 0.3f)
 			{
-				g_Slow.color.a = 0.6f;
+				g_Slow.color.a = 0.3f;
 			}
 		}
 
@@ -155,7 +155,6 @@ void DrawSlow(void)
 
 void SetSlow()
 {
-
 	if (g_Slow.bUse == true)
 	{
 		g_Slow.fMulti = (int)SLOW;
