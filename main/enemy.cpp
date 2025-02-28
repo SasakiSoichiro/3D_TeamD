@@ -614,7 +614,6 @@ void DrawEnemy(void)
 				if (g_Enemy[nCntEnemy].aModel[nCntModel].nIdxModelParent != -1)
 				{//eƒ‚ƒfƒ‹‚ª‚ ‚éê‡
 					mtxParent = g_Enemy[nCntEnemy].aModel[g_Enemy[nCntEnemy].aModel[nCntModel].nIdxModelParent].mtxWorld;
-
 				}
 				else
 				{
