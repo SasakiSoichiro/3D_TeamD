@@ -11,8 +11,10 @@
 
 //	グローバル
 Nannjamo g_nannjamo = {};
+
 //テクスチャへのポインタ
 LPDIRECT3DTEXTURE9 g_pTextureNannjamo = NULL;
+
 //頂点バッファへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffNannjamo = NULL;
 
@@ -21,19 +23,15 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffNannjamo = NULL;
 //====================
 void InitNannjamo(void)
 {
-	g_nannjamo.ui = Nannjamo_IN;
-	g_nannjamo.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	// 各変数の初期化
+	g_nannjamo.ui = Nannjamo_IN;	// フェードイン状態
+	g_nannjamo.col = D3DXCOLOR(0.0f, 0.4f, 0.0f, 0.7f);
 	g_nannjamo.count = 0;
 	g_nannjamo.bUse = false;
 
 	//	デバイス情報の取得
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
-
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\heal1.png",
-		&g_pTextureNannjamo);
 
 	//	頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
@@ -44,6 +42,7 @@ void InitNannjamo(void)
 		NULL);
 
 	VERTEX_2D* pVtx;
+
 	//	ロック
 	g_pVtxBuffNannjamo->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -58,12 +57,6 @@ void InitNannjamo(void)
 	pVtx[1].rhw = 1.0f;
 	pVtx[2].rhw = 1.0f;
 	pVtx[3].rhw = 1.0f;
-
-	//	tex座標
-	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
 	//	頂点カラー
 	pVtx[0].col = D3DXCOLOR(g_nannjamo.col);
@@ -80,13 +73,6 @@ void InitNannjamo(void)
 //====================
 void UinitNannjamo(void)
 {
-	//テクスチャの破棄
-	if (g_pTextureNannjamo != NULL)
-	{
-		g_pTextureNannjamo->Release();
-		g_pTextureNannjamo = NULL;
-	}
-
 	//頂点バッファの解放
 	if (g_pVtxBuffNannjamo != NULL)
 	{
@@ -100,14 +86,23 @@ void UinitNannjamo(void)
 //====================
 void UpdateNannjamo(void)
 {
-	Player* pPlayer = GetPlayer();
+	if (g_nannjamo.bUse == true)
+	{
+		g_nannjamo.count--;
 
+		if (g_nannjamo.count <= 0 && g_nannjamo.ui == Nannjamo_NONE)
+		{
+			g_nannjamo.ui = Nannjamo_IN;	// フェードイン状態
+			g_nannjamo.bUse = false;		// 表示されていなかったら
+			g_nannjamo.count = 0;			// 0にする
+		}
+	}
 	if (g_nannjamo.ui != Nannjamo_NONE)
 	{
 		if (g_nannjamo.ui == Nannjamo_IN)
 		{
 			//	フェードイン
-			g_nannjamo.col.a -= 0.01f;		//ポリゴンが透明になる速さ
+			g_nannjamo.col.a -= 0.01f;				//ポリゴンが透明になる速さ
 			if (g_nannjamo.col.a <= 0.0f)
 			{
 				g_nannjamo.col.a = 0.0f;
@@ -119,14 +114,15 @@ void UpdateNannjamo(void)
 			//	フェードアウト
 			g_nannjamo.col.a += 0.02f;
 
-			if (g_nannjamo.col.a >= 1.0f)
+			if (g_nannjamo.col.a >= 0.8f)
 			{
-				g_nannjamo.col.a = 1.0f;
-				g_nannjamo.ui = Nannjamo_NONE;
+				g_nannjamo.col.a = 0.8f;
+				g_nannjamo.ui = Nannjamo_NONE;		// 何もしていない状態
 			}
 		}
 
 		VERTEX_2D* pVtx;
+
 		//	ロック
 		g_pVtxBuffNannjamo->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -139,18 +135,6 @@ void UpdateNannjamo(void)
 		//	アンロック
 		g_pVtxBuffNannjamo->Unlock();
 	}
-
-	if (g_nannjamo.bUse == true)
-	{
-		g_nannjamo.count--;
-	}
-
-	if (g_nannjamo.count <= 0 && g_nannjamo.ui == Nannjamo_NONE && g_nannjamo.bUse == true)
-	{
-		g_nannjamo.ui = Nannjamo_IN;
-		g_nannjamo.bUse = false;
-		g_nannjamo.count = 0;
-	}
 }
 
 //====================
@@ -158,7 +142,10 @@ void UpdateNannjamo(void)
 //====================
 void DrawNannjamo(void)
 {
+	// デバイスへのポインタ
 	LPDIRECT3DDEVICE9 pDevice;
+
+	// デバイスの取得
 	pDevice = GetDevice();
 
 	//頂点フォーマットの設定
@@ -169,9 +156,6 @@ void DrawNannjamo(void)
 
 	if (g_nannjamo.bUse == true)
 	{
-		//テクスチャの設定
-		pDevice->SetTexture(0, g_pTextureNannjamo);
-
 		//ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 	}
@@ -182,7 +166,7 @@ void DrawNannjamo(void)
 //====================
 void SetNannjamo(int count)
 {
-	g_nannjamo.ui = Nannjamo_OUT;
-	g_nannjamo.count = count;
-	g_nannjamo.bUse = true;
+	g_nannjamo.ui = Nannjamo_OUT;	// フェードアウト状態
+	g_nannjamo.count = count;		// カウント
+	g_nannjamo.bUse = true;			// 表示されているなら
 }
