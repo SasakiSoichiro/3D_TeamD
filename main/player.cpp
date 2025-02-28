@@ -44,7 +44,7 @@ void InitPlayer(void)
 	{
 		g_player[nCnt].pos = D3DXVECTOR3(1750.0f, 100.0f, 100.0f);
 		g_player[nCnt].posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_player[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_player[nCnt].rot = D3DXVECTOR3(0.0f, 1.57f, 0.0f);
 		g_player[nCnt].rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_player[nCnt].nLife = 3;
 		g_player[nCnt].nStamina = 300;
