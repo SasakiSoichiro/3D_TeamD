@@ -142,6 +142,8 @@ void UpdateEnemy(void)
 	Player* pPlayer = GetPlayer();
 	//スロー情報取得
 	Slow* pSlow = GetSlow();
+	//コントローラー振動の初期化
+	static VibrationState vibrationState = { 0,0,0,0,0 };//初期化
 
 	//敵の向き用変数
 	float fAnglemove = 0.0f;
@@ -233,6 +235,7 @@ void UpdateEnemy(void)
 				fAnglemove = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z));
 				g_Enemy[0].move.x = sinf(fAnglemove) * 1.0f;
 				g_Enemy[0].move.z = cosf(fAnglemove) * 1.0f;
+				StartVibration(&vibrationState, 20);
 				break;
 
 			case ENEMYSTATE_DAMAGE:
@@ -240,7 +243,7 @@ void UpdateEnemy(void)
 
 				//g_Enemy[nCntEnemy].move.x = 0.0f;
 				//g_Enemy[nCntEnemy].move.z = 0.0f;
-
+				
 				if (g_nCntEnemyState <= 0)
 				{
 					g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
@@ -255,8 +258,13 @@ void UpdateEnemy(void)
 				//g_Enemy[nCntEnemy].move.x = 0.0f;
 				//g_Enemy[nCntEnemy].move.z = 0.0f;
 				
-				if (g_Enemy[nCntEnemy].OldState != g_Enemy[nCntEnemy].State)SetMotionType(EMOTIONTYPE_ACTION, true, 10, nCntEnemy);
-
+				if (g_Enemy[nCntEnemy].OldState != g_Enemy[nCntEnemy].State)
+				{
+					SetMotionType(EMOTIONTYPE_ACTION, true, 10, nCntEnemy);
+					StartVibration(&vibrationState, 200);
+				}
+					
+				
 				if (g_nCntEnemyState <= 0)
 				{
 					g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
@@ -553,6 +561,7 @@ void UpdateEnemy(void)
 
 		}
 	}
+	UpdateVibration(&vibrationState);
 }
 void DrawEnemy(void)
 {

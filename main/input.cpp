@@ -227,6 +227,50 @@ bool JoyPadRelease(JOYKEY key)
 {
 	return (g_joyKeyStateRelease[0].Gamepad.wButtons & (0x01 << key)) ? true : false;
 }
+
+//================================
+//コントローラーの振動処理
+//================================
+void VibrateController(int ContorollerID, WORD leftMoter, WORD rightMoter)
+{
+	XINPUT_VIBRATION vibration;
+	ZeroMemory(&vibration, sizeof(XINPUT_VIBRATION));
+
+	vibration.wLeftMotorSpeed = leftMoter;
+	vibration.wRightMotorSpeed = rightMoter;
+
+	//振動開始
+	XInputSetState(ContorollerID, &vibration);
+}
+//====================================
+// ゲーム内での振動処理を管理する関数
+//====================================
+void UpdateVibration(VibrationState* vibrationState)
+{
+	DWORD currentTime = GetTickCount();
+	if (currentTime - vibrationState->startTime < vibrationState->duration)
+	{
+		//振動中
+		VibrateController(vibrationState->contorollerID, vibrationState->leftMoter, vibrationState->rightMoter);
+	}
+	else
+	{
+		//振動終了
+		VibrateController(vibrationState->contorollerID, 0, 0);
+	}
+}
+//=================================
+//振動を終了させる処理
+//=================================
+void StartVibration(VibrationState* vibrationState, int VibrationTime)
+{
+	vibrationState->contorollerID = 0;//コントローラーID
+	vibrationState->leftMoter = 65535;//最大振動
+	vibrationState->rightMoter = 32767;//半分の振動
+	vibrationState->startTime = GetTickCount();//開始時刻
+	vibrationState->duration = VibrationTime;//200㍉秒
+}
+
 //================================
 // ジョイパッド情報を取得
 //================================

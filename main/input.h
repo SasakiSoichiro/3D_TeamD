@@ -69,6 +69,18 @@ typedef enum
 	DX_INPUT_MAX
 }InputType;
 
+//=========================
+//振動状態を管理する構造体
+//=========================
+typedef struct
+{
+	int contorollerID;
+	WORD leftMoter;
+	WORD rightMoter;
+	DWORD startTime;
+	DWORD duration;
+}VibrationState;
+
 //==================
 // プロトタイプ宣言
 //==================
@@ -92,6 +104,9 @@ bool GetJoyStick(int player);
 XINPUT_STATE* GetJoyStickAngle(void);
 XINPUT_STATE* GetState(void);
 int GetJoypadInputState(int InputType);
+void VibrateController(int ContorollerID, WORD leftMoter, WORD rightMoter);
+void UpdateVibration(VibrationState* vibrationState);
+void StartVibration(VibrationState* vibrationState, int VibrationTime);
 
 // マウス
 HRESULT InitMausu(HINSTANCE hInstance, HWND hWnd);
