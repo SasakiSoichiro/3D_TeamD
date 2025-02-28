@@ -235,7 +235,7 @@ void UpdateEnemy(void)
 				fAnglemove = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z));
 				g_Enemy[0].move.x = sinf(fAnglemove) * 1.0f;
 				g_Enemy[0].move.z = cosf(fAnglemove) * 1.0f;
-				StartVibration(&vibrationState, 20);
+				StartVibration(&vibrationState, 20,20000,20000);
 				break;
 
 			case ENEMYSTATE_DAMAGE:
@@ -261,10 +261,9 @@ void UpdateEnemy(void)
 				if (g_Enemy[nCntEnemy].OldState != g_Enemy[nCntEnemy].State)
 				{
 					SetMotionType(EMOTIONTYPE_ACTION, true, 10, nCntEnemy);
-					StartVibration(&vibrationState, 200);
+					StartVibration(&vibrationState, 1000,60000,60000);
 				}
-					
-				
+	
 				if (g_nCntEnemyState <= 0)
 				{
 					g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;

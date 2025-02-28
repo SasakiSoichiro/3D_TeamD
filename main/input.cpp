@@ -262,13 +262,13 @@ void UpdateVibration(VibrationState* vibrationState)
 //=================================
 //U“®‚ðI—¹‚³‚¹‚éˆ—
 //=================================
-void StartVibration(VibrationState* vibrationState, int VibrationTime)
+void StartVibration(VibrationState* vibrationState, int VibrationTime,int leftMoter,int rightMoter)
 {
-	vibrationState->contorollerID = 0;//ƒRƒ“ƒgƒ[ƒ‰[ID
-	vibrationState->leftMoter = 65535;//Å‘åU“®
-	vibrationState->rightMoter = 32767;//”¼•ª‚ÌU“®
-	vibrationState->startTime = GetTickCount();//ŠJŽnŽž
-	vibrationState->duration = VibrationTime;//200‡_•b
+	vibrationState->contorollerID = 0;			//ƒRƒ“ƒgƒ[ƒ‰[ID
+	vibrationState->leftMoter = leftMoter;		//Å‘å60000
+	vibrationState->rightMoter = rightMoter;	//Å‘å60000
+	vibrationState->startTime = GetTickCount();	//ŠJŽnŽž
+	vibrationState->duration = VibrationTime;	//200‡_•b
 }
 
 //================================

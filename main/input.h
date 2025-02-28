@@ -106,7 +106,7 @@ XINPUT_STATE* GetState(void);
 int GetJoypadInputState(int InputType);
 void VibrateController(int ContorollerID, WORD leftMoter, WORD rightMoter);
 void UpdateVibration(VibrationState* vibrationState);
-void StartVibration(VibrationState* vibrationState, int VibrationTime);
+void StartVibration(VibrationState* vibrationState, int VibrationTime, int leftMoter, int rightMoter);
 
 // É}ÉEÉX
 HRESULT InitMausu(HINSTANCE hInstance, HWND hWnd);
