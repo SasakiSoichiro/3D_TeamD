@@ -14,7 +14,7 @@ typedef enum
 	TEX_0 = 0,
 	TEX_1,
 	TEX_MAX
-};
+}TEXTYPE;
 
 typedef struct
 {
