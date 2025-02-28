@@ -592,6 +592,7 @@ void DrawEnemy(void)
 			pDevice->SetTransform(D3DTS_WORLD, &g_Enemy[nCntEnemy].mtxWorld);
 
 			pDevice->GetMaterial(&matDef);
+
 			//全モデル（パーツ）の描画
 			for (int nCntModel = 0; nCntModel < g_Enemy[nCntEnemy].nNumModel; nCntModel++)
 			{
@@ -634,10 +635,9 @@ void DrawEnemy(void)
 
 				for (int nCntMat = 0; nCntMat < (int)g_Enemy[nCntEnemy].aModel[nCntModel].dwNumMat; nCntMat++)
 				{
-					pMat[nCntMat].MatD3D.Diffuse = g_Enemy[nCntEnemy].aModel[nCntModel].Diffuse;
-
 					//マテリアルの設定
 					pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+
 					//テクスチャの設定
 					pDevice->SetTexture(0, g_Enemy[nCntEnemy].aModel[nCntModel].apTexture[nCntMat]);
 
