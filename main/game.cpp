@@ -517,6 +517,8 @@ void DrawGame(void)
 	////FOGを消す
 	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
+	// スロー
+	DrawSlow();
 
 	// スタミナ
 	DrawStamina();
@@ -551,8 +553,7 @@ void DrawGame(void)
 	//	敵視点のビューポートの枠
 	DrawViewUI();
 
-	// スロー
-	DrawSlow();
+
 
 	////FOGを戻す
 	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
