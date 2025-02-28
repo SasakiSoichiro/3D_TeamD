@@ -635,6 +635,7 @@ void DrawEnemy(void)
 
 				for (int nCntMat = 0; nCntMat < (int)g_Enemy[nCntEnemy].aModel[nCntModel].dwNumMat; nCntMat++)
 				{
+
 					//ƒ}ƒeƒŠƒAƒ‹‚ÌÝ’è
 					pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
