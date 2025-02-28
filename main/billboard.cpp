@@ -58,7 +58,7 @@ void InitBillboard()
 		g_Billboard[nCnt].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Billboard[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Billboard[nCnt].bTest = false;
-		g_Billboard[nCnt].bDisplay = false;
+		g_Billboard[nCnt].bDisplay = true;
 		g_Billboard[nCnt].bUse = false;
 
 		bExchange = false;
@@ -136,7 +136,7 @@ void UpdateBillboard()
 	//頂点バッファをロック
 	g_pVtxBuffBillboard->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (int count = 0; count < ITEMTYPE_MAX; count++)
+	for (int count = 0; count < ITEMTYPE_MAX; count++,pItem++)
 	{
 		for (int nCnt = 0; nCnt < MAX_BILLBOARD; nCnt++)
 		{
@@ -163,13 +163,17 @@ void UpdateBillboard()
 				//二つの半径を求める
 				float fRadX = fPRadPos + fIRadPos;
 
+				//回答格納用
+				float fDistance = (fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ);
+				float fRadius = (fRadX * fRadX);
+
 				//プレイヤーがアイテムの範囲に入ったら
-				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
+				if (fDistance < fRadius)
 				{
 
 					//拾うビルボードが使われてるとき
-					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_1)
-					{
+					//if (g_Billboard[nCnt].nType == BILLBOARDTYPE_1)
+					//{
 
 						g_Billboard[nCnt].bUse = true;
 						g_Billboard[nCnt].bDisplay = true;
@@ -182,11 +186,11 @@ void UpdateBillboard()
 						{
 							g_Billboard[nCnt].bUse = false;
 						}
-					}
+					//}
 				}
 
 				//プレイヤーがアイテムの範囲外にいったら
-				else if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) > (fRadX * fRadX))
+				else if (fDistance > fRadius)
 				{
 					g_Billboard[nCnt].bDisplay = false;
 				}
