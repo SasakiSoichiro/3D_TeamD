@@ -240,7 +240,7 @@ void InitGame(void)
 	//SetItemUI(D3DXVECTOR3(625.8f, 90.0f, 0.0f), ITEM_CAMERAWAKU, 189.0f, 120.0f);
 
 	//	åÆÇÃUI
-	SetKeyUI(D3DXVECTOR3(940.0f, 40.0f, 0.0f), ITEMKEYUITYPE_NO5, 35.0f, 35.0f);
+	SetKeyUI(D3DXVECTOR3(960.0f, 80.0f, 0.0f), ITEMKEYUITYPE_NO5, 30.0f, 30.0f);
 
 	//	ÉQÅ[ÉW
 	SetGauge(D3DXVECTOR3(640.0f, 0.0f, 0.0f));
