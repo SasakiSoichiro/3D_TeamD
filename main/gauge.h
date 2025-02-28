@@ -9,11 +9,13 @@
 
 #include "main.h"
 
+
 typedef struct
 {
 	D3DXVECTOR3 pos;
 	bool bUse;
 	float fCnt;
+	float fCnt1;
 	bool bKeyhave;
 }Gauge;
 

@@ -33,7 +33,7 @@ void InitGimmick(void)
 	g_hold.bNoPush = false;
 
 	// 構造体変数の初期化
-	for(int nCnt = 0;nCnt < MAX_DOOR;nCnt++)
+	for (int nCnt = 0; nCnt < MAX_DOOR; nCnt++)
 	{
 		//各種変数の初期化
 		g_Door[nCnt].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -131,9 +131,9 @@ void InitGimmick(void)
 					&g_apTextureDoor[nCntMat]);
 			}
 		}
-		
+
 	}
-	
+
 }
 //================================
 //終了処理
@@ -145,7 +145,7 @@ void UninitGimmick(void)
 	{
 		//メッシュの破棄
 		if (g_Door[nCnt].pMesh != NULL)
-		{	  
+		{
 			g_Door[nCnt].pMesh->Release();
 			g_Door[nCnt].pMesh = NULL;
 		}
@@ -157,7 +157,7 @@ void UninitGimmick(void)
 		}
 		// テクスチャの破棄
 		if (g_apTextureDoor[nCnt] != NULL)
-		{			  
+		{
 			g_apTextureDoor[nCnt]->Release();
 			g_apTextureDoor[nCnt] = NULL;
 		}
@@ -223,10 +223,12 @@ void UpdateGimmick(void)
 			{
 				//ビルボードを非表示にする
 				isBill = false;
+				g_hold.bNoPush = true;
+				g_hold.bPush = false;
 			}
 		}
 	}
-	
+
 	IsHold();
 }
 //================================
@@ -397,25 +399,25 @@ void IsHold()
 	{
 		g_hold.nHoldCount = g_hold.HolTime;
 	}
-	
+
 	if (g_hold.bNoPush == true)
 	{
 		g_hold.count++;
-		if (g_hold.count >= 10)
+		if (g_hold.count >= 5)
 		{
 			g_hold.count = 0;
 			g_hold.NoTouch++;
 		}
 	}
 
-	g_hold.HolTime = g_hold.nHoldCount - g_hold.NoTouch;
+	g_hold.HolTime = g_hold.nHoldCount - 1;
 
 	if (g_hold.HolTime <= 0)
 	{
 		g_hold.HolTime = 0;
 	}
 
-	if (g_hold.HolTime >= 200)
+	if (g_hold.HolTime >= 285)
 	{
 		isGoal = true;
 	}

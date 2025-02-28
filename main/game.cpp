@@ -35,6 +35,7 @@
 #include "nannjamo.h"
 #include "Cancellation.h"
 #include "viewportwaku.h"
+#include "unlock.h"
 
 // マクロ定義
 #define RAND (6) // ランダム用変数
@@ -106,6 +107,8 @@ void InitGame(void)
 
 	// 各オブジェクトの設定処理
 	LoadEdit();
+
+	InitUnlock();
 
 	//	ゲージ
 	InitGauge();
@@ -236,9 +239,6 @@ void InitGame(void)
 	//　ドア
 	SetGimmick(D3DXVECTOR3(-1800.0f, 0.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
-	//	カメラの枠
-	//SetItemUI(D3DXVECTOR3(625.8f, 90.0f, 0.0f), ITEM_CAMERAWAKU, 189.0f, 120.0f);
-
 	//	鍵のUI
 	SetKeyUI(D3DXVECTOR3(960.0f, 80.0f, 0.0f), ITEMKEYUITYPE_NO5, 30.0f, 30.0f);
 
@@ -305,6 +305,8 @@ void UninitGame(void)
 
 	//	ゴンザレス
 	UinitGonzaresu();
+
+	UninitUnlock();
 
 	//	ゲージ
 	UinitGauge();
@@ -409,6 +411,8 @@ void UpdateGame(void)
 			//	ゴンザレス
 			UpdateGonzaresu();
 
+			UpdateUnlock();
+
 			//	ゲージ
 			UpdateGauge();
 
@@ -490,8 +494,8 @@ void DrawGame(void)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
 
-	////FOGの設定
-	//SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
+	//FOGの設定
+	SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
 
 	//　各オブジェクトの描画処理
 
@@ -514,8 +518,8 @@ void DrawGame(void)
 	//　ギミック
 	DrawGimmick();
 
-	////FOGを消す
-	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	//FOGを消す
+	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 	// スロー
 	DrawSlow();
@@ -534,6 +538,8 @@ void DrawGame(void)
 
 	//　目のUI
 	DrawEyeUI();
+
+	DrawUnlock();
 
 	//	ゲージ
 	DrawGauge();
@@ -555,8 +561,8 @@ void DrawGame(void)
 
 
 
-	////FOGを戻す
-	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	//FOGを戻す
+	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 
 	if (g_bPause == true)

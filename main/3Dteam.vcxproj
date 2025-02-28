@@ -183,6 +183,7 @@
     <ClCompile Include="tutrial.cpp" />
     <ClCompile Include="gonnzaresu.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="unlock.cpp" />
     <ClCompile Include="viewportwaku.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +224,7 @@
     <ClInclude Include="tutrial.h" />
     <ClInclude Include="gonnzaresu.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="unlock.h" />
     <ClInclude Include="viewportwaku.h" />
   </ItemGroup>
   <ItemGroup>

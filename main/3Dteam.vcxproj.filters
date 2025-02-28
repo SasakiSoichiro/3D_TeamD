@@ -39,6 +39,7 @@
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Cancellation.cpp" />
     <ClCompile Include="viewportwaku.cpp" />
+    <ClCompile Include="unlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -79,6 +80,7 @@
     <ClInclude Include="sound.h" />
     <ClInclude Include="Cancellation.h" />
     <ClInclude Include="viewportwaku.h" />
+    <ClInclude Include="unlock.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />

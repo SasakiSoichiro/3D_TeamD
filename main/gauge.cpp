@@ -12,7 +12,7 @@
 
 //	グローバル
 Gauge g_gauge = {};
-LPDIRECT3DTEXTURE9 g_GaugeTexture = NULL;			//テクスチャへのポインタ
+LPDIRECT3DTEXTURE9 g_GaugeTexture =  NULL ;			//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffGauge = NULL;	//バッファへのポインタ
 
 //===================
@@ -25,15 +25,11 @@ void InitGauge(void)
 	LPDIRECT3DDEVICE9 pDevice;					//デバイスへのポインタ
 	pDevice = GetDevice();						//デバイスの取得
 
-	g_gauge.bKeyhave = false;
-	g_gauge.bUse = false;
-	g_gauge.fCnt = 0.0f;
-	g_gauge.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	//テクスチャの読み込み
+			//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
 		"data\\texture\\hold.jpg",
 		&g_GaugeTexture);
+
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
@@ -44,6 +40,13 @@ void InitGauge(void)
 
 	//頂点バッファのロック、頂点データへのポインタ取得
 	g_pVtxBuffGauge->Lock(0, 0, (void**)&pVtx, 0);
+
+	g_gauge.bKeyhave = false;
+	g_gauge.bUse = false;
+	g_gauge.fCnt = 0.0f;
+	g_gauge.fCnt1 = 0.0f;
+	g_gauge.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
 
 	pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	pVtx[1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -70,7 +73,6 @@ void InitGauge(void)
 
 	//頂点バッファをアンロック
 	g_pVtxBuffGauge->Unlock();
-
 }
 
 //===================
@@ -78,12 +80,14 @@ void InitGauge(void)
 //===================
 void UinitGauge(void)
 {
+
 	//テクスチャの破棄
 	if (g_GaugeTexture != NULL)
 	{
 		g_GaugeTexture->Release();
 		g_GaugeTexture = NULL;
 	}
+	
 	//頂点バッファの破棄
 	if (g_pVtxBuffGauge != NULL)
 	{
@@ -98,73 +102,69 @@ void UinitGauge(void)
 void UpdateGauge(void)
 {
 	Player* pPlayer = GetPlayer();
-	GIMMICK* pGimmick = GetGimmick();
+	bool isbill = IsBill(); // 範囲取得
 	ITEM* pItem = Getitem();
 
 	VERTEX_2D* pVtx{};
 	//頂点バッファのロック、頂点データへのポインタ取得
 	g_pVtxBuffGauge->Lock(0, 0, (void**)&pVtx, 0);
 
-	if (g_gauge.bUse)
+
+	//プレイヤーがアイテムの範囲に入ったら
+	if (isbill == true)
 	{
-		//プレイヤーの半径の算出用変数
-		float fPRadPos = 50.0f;
+		g_gauge.bUse = true;
 
-		//アイテムの半径の算出用変数
-		float fIRadPos = 50.0f;
-
-		//アイテムのプレイヤーの距離の差
-		D3DXVECTOR3 diff = pPlayer->pos - pGimmick->pos;
-
-		//範囲計算
-		float fDisX = pPlayer->pos.x - pGimmick->pos.x;
-		float fDisY = pPlayer->pos.y - pGimmick->pos.y;
-		float fDisZ = pPlayer->pos.z - pGimmick->pos.z;
-
-		//二つの半径を求める
-		float fRadX = fPRadPos + fIRadPos;
-
-		//プレイヤーがアイテムの範囲に入ったら
-		if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
+		if (pItem[0].bHold == true && pItem[1].bHold == true)
 		{
-			if (pItem[0].bHold == true && pItem[1].bHold == true)
+			if (g_gauge.fCnt < 3.0f)
 			{
 				if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_X) == true)
 				{
-					g_gauge.fCnt += 0.011f;
+					g_gauge.fCnt += 0.01f;
 				}
 				else if (g_gauge.fCnt >= 0)
 				{
 					g_gauge.fCnt -= 0.005f;
 				}
-				if (g_gauge.fCnt >= 30.0f)
-				{
-					g_gauge.fCnt = 30.0f;
-				}
-				else if (g_gauge.fCnt < 0)
-				{
-					g_gauge.fCnt = 0.0f;
-				}
-
-				pVtx[0].pos.x = 320.0f;
-				pVtx[0].pos.y = 400.0f;
-				pVtx[0].pos.z = 0.0f;
-
-				pVtx[1].pos.x = 320.0f * g_gauge.fCnt;
-				pVtx[1].pos.y = 400.0f;
-				pVtx[1].pos.z = 0.0f;
-
-				pVtx[2].pos.x = 320.0f;
-				pVtx[2].pos.y = 450.0f;
-				pVtx[2].pos.z = 0.0f;
-
-				pVtx[3].pos.x = 320.0f * g_gauge.fCnt;
-				pVtx[3].pos.y = 450.0f;
-				pVtx[3].pos.z = 0.0f;
 			}
+			if (g_gauge.fCnt >= 3.0f)
+			{
+				g_gauge.fCnt = 3.0f;
+			}
+			if (g_gauge.fCnt < 0)
+			{
+				g_gauge.fCnt1 = 320.0f;
+			}
+
+			pVtx[0].pos.x = g_gauge.fCnt1;
+			pVtx[0].pos.y = 400.0f;
+			pVtx[0].pos.z = 0.0f;
+
+			pVtx[1].pos.x = g_gauge.fCnt1 * g_gauge.fCnt;
+			pVtx[1].pos.y = 400.0f;
+			pVtx[1].pos.z = 0.0f;
+
+			pVtx[2].pos.x = g_gauge.fCnt1;
+			pVtx[2].pos.y = 450.0f;
+			pVtx[2].pos.z = 0.0f;
+
+			pVtx[3].pos.x = g_gauge.fCnt1 * g_gauge.fCnt;
+			pVtx[3].pos.y = 450.0f;
+			pVtx[3].pos.z = 0.0f;
+		}
+
+	}
+	else
+	{
+		g_gauge.bUse = false;
+
+		if (g_gauge.fCnt >= 0)
+		{
+			g_gauge.fCnt -= 0.005f;
 		}
 	}
-
+	
 	//頂点バッファをアンロック
 	g_pVtxBuffGauge->Unlock();
 }
@@ -175,10 +175,10 @@ void UpdateGauge(void)
 void DrawGauge(void)
 {
 	//	デバイスへのポインタ
-	LPDIRECT3DDEVICE9 pDevice;		
+	LPDIRECT3DDEVICE9 pDevice;
 
 	//	デバイスの取得
-	pDevice = GetDevice();			
+	pDevice = GetDevice();
 
 	//	頂点バッファをデータストリームに設定
 	pDevice->SetStreamSource(0, g_pVtxBuffGauge, 0, sizeof(VERTEX_2D));
@@ -190,10 +190,11 @@ void DrawGauge(void)
 	{
 		//	テクスチャの設定
 		pDevice->SetTexture(0, g_GaugeTexture);
-
+		
 		//	ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 	}
+	
 }
 
 //===================
@@ -201,9 +202,12 @@ void DrawGauge(void)
 //===================
 void SetGauge(D3DXVECTOR3 pos)
 {
+
 	if (g_gauge.bUse == false)
 	{
 		g_gauge.pos = pos;
+		
 		g_gauge.bUse = true;
 	}
+	
 }
