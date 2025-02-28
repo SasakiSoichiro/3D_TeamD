@@ -451,7 +451,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "G:\\マイドライブ\\tree2.jpg";
+    "data\\TEXTURE\\MYTEXTURE\\tree2.jpg";
    }
   }
  }
