@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="block.cpp" />
+    <ClCompile Include="buttonUI.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="Cancellation.cpp" />
     <ClCompile Include="edit.cpp" />
@@ -190,6 +191,7 @@
   <ItemGroup>
     <ClInclude Include="billboard.h" />
     <ClInclude Include="block.h" />
+    <ClInclude Include="buttonUI.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="Cancellation.h" />
     <ClInclude Include="edit.h" />

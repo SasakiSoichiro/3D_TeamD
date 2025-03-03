@@ -41,6 +41,7 @@
     <ClCompile Include="viewportwaku.cpp" />
     <ClCompile Include="unlock.cpp" />
     <ClCompile Include="pickupUI.cpp" />
+    <ClCompile Include="buttonUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -83,6 +84,7 @@
     <ClInclude Include="viewportwaku.h" />
     <ClInclude Include="unlock.h" />
     <ClInclude Include="pickupUI.h" />
+    <ClInclude Include="buttonUI.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />

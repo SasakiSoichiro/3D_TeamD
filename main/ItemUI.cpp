@@ -17,7 +17,8 @@ LPDIRECT3DTEXTURE9 g_pTextureItemUI[ITEM_MAX] = {};		//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffItemUI = NULL;		//頂点バッファへのポインタ
 ItemUI g_aItemUI[MAX_ITEMUI];							//ブロックの情報
 int g_nSelect;
-
+bool bSelect;
+bool bSelect1;
 //=====================
 //アイテムUIの初期化処理
 //=====================
