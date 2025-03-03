@@ -340,12 +340,6 @@ void UpdateEnemy(void)
 
 			//SetPositionShadow(g_Enemy[nCntEnemy].IdxShadow, D3DXVECTOR3(g_Enemy[nCntEnemy].pos.x, 1.0f, g_Enemy[nCntEnemy].pos.z), g_Enemy[nCntEnemy].pos.y);
 
-			if (g_Enemy[nCntEnemy].State != ENEMYSTATE_DAMAGE && pPlayer->pState == PLAYERSTATE_ACTION)
-			{
-				//CollisionEnemy();
-
-			}
-
 			//SetPositionShadow(g_nEIdxShadow, D3DXVECTOR3(g_Enemy[nCntEnemy].pos.x, 0.1f, g_Enemy[nCntEnemy].pos.z));
 		}
 

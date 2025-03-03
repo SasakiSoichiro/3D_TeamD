@@ -142,6 +142,11 @@ void UpdatePlayer(void)
 			break;
 
 		case PLAYERSTATE_DAMAGE:
+			g_player[nCnt].motion.motionType = MOTIONTYPE_DAMAGE;
+			if (bLanding == true)
+			{
+				g_player[nCnt].pState = PLAYERSTATE_NORMAL;
+			}
 			g_nStateCnt = 0;
 			
 			break;
@@ -154,15 +159,11 @@ void UpdatePlayer(void)
 			g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
 			break;
 
-		case PLAYERSTATE_JUMP:
-			g_player[nCnt].motion.motionType = MOTIONTYPE_JUMP;
-			if (bLanding == true)
-			{
-				g_player[nCnt].pState = PLAYERSTATE_NORMAL;
-			}
+		case MOTIONTYPE_DEATH:
+			g_player[nCnt].motion.motionType = MOTIONTYPE_DEATH;
 			break;
 
-		case PLAYERSTATE_ACTION:
+		case PLAYERSTATE_IKIGIRE:
 			g_nCntPlayerState++;
 			if (g_nCntPlayerState >= 60)
 			{
@@ -180,13 +181,16 @@ void UpdatePlayer(void)
 		case MOTIONTYPE_MOVE:
 			break;
 
-		case MOTIONTYPE_ACTION:
+		case MOTIONTYPE_RUN:
 			break;
 
-		case MOTIONTYPE_JUMP:
+		case MOTIONTYPE_DAMAGE:
 			break;
 
-		case MOTIONTYPE_LANDING:
+		case MOTIONTYPE_DEATH:
+			break;
+
+		case PLAYERSTATE_IKIGIRE:
 			break;
 		}
 
@@ -389,14 +393,14 @@ void UpdatePlayer(void)
 				if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)
 				{// ダッシュ
 					g_player[nCnt].pState = PLAYERSTATE_DASH;
-					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
 					g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
 					g_player[nCnt].rotDest.y = pCamera->rot.y;
 				}
 				else
 				{// 上移動
-					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
 					g_player[nCnt].pState = PLAYERSTATE_MOVE;
 					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y) * 2.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y) * 2.0f;
@@ -405,7 +409,7 @@ void UpdatePlayer(void)
 			}
 			else if (pStick->Gamepad.sThumbLY < -10922)
 			{// 下移動
-				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
 				g_player[nCnt].pState = PLAYERSTATE_MOVE;
 				g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI) * 2.0f;
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
@@ -512,14 +516,15 @@ void DrawPlayer(void)
 				g_player[nCnt].motion.aModel[nCntModel].pMesh->DrawSubset(nCntMat);
 
 			}
-			nCnt++;
-			if (nCnt == 15)
-			{
-				SetMatrix();
-			}
+			//nCnt++;
+			//if (nCnt == 15)
+			//{
+				//SetMatrix();
+			//}
 		}
+		pDevice->SetMaterial(&matDef);
 	}
-	pDevice->SetMaterial(&matDef);
+	
 }
 //========================
 //プレイヤーのマトリックス
@@ -587,7 +592,7 @@ void ReadScriptPlayer(int nType)
 	switch (nType)
 	{
 	case 0:
-		pFile = fopen("data\\MOTION\\motion05.txt", "r");
+		pFile = fopen("data\\MOTION\\PlayerMotion.txt", "r");
 		break;
 
 	case 1:
