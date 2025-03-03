@@ -374,6 +374,7 @@ void UpdatePlayer(void)
 			{
 				if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)
 				{// ƒ_ƒbƒVƒ…
+					g_player[nCnt].pState = PLAYERSTATE_DASH;
 					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
 					g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
