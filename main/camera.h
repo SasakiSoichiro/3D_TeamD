@@ -31,5 +31,6 @@ void UpdateCamera(void);
 void SetCamera(int nIdx);
 void MouseWheel(int zDelta);
 Camera* GetCamera(void);
+bool IsLook(void);
 
 #endif // !_CAMERA_H_
