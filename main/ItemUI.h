@@ -45,5 +45,5 @@ void DrawItemUI(void);
 void SetItemUI(int nType);
 ItemUI *GetItemUI();
 int GetSelect();
-bool IsSelect();
+int nSelect();
 #endif
