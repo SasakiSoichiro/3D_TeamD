@@ -241,6 +241,9 @@ void InitGame(void)
 	//	ビルボード(解除)
 	SetBillboard(D3DXVECTOR3(-1750.0f, 75.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_5, D3DXVECTOR3(1.0f, 1.0f, 0.0f));
 
+	//　
+	//SetPickUpUI(D3DXVECTOR3(0.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+
 	//　敵
 	SetEnemy(D3DXVECTOR3(-1750.0f, 0.0f, 0.0f),0);
 
@@ -534,12 +537,18 @@ void DrawGame(int nIdx)
 	//　アイテム
 	Drawitem();
 
+
+
 	switch (nIdx)
 	{
 	case 0:
 
 		//　敵
 		DrawEnemy();
+
+		//　アイテム収集用ビルボード
+		DrawPickUpUI();
+
 		break;
 
 	case 1:
@@ -577,11 +586,12 @@ void DrawGame(int nIdx)
 	// スタミナ
 	DrawStamina();
 
+
+
 	//　ビルボード
 	DrawBillboard();
 
-	//　アイテム収集用ビルボード
-	DrawPickUpUI();
+
 
 	//	ゴンザレス
 	DrawGonzaresu();

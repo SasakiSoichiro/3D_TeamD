@@ -304,7 +304,7 @@ void Setitem(D3DXVECTOR3 pos, int nType)
 			g_item[nCnt].pos = pos;
 			g_item[nCnt].nType = nType;
 			g_item[nCnt].bUse = true;
-			//g_item[nCnt].nIdxUI = SetPickUpUI(g_item[nCnt].pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+			g_item[nCnt].nIdxUI = SetPickUpUI(g_item[nCnt].pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 			break;
 		}
 	}
