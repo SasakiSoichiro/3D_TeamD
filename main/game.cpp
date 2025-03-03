@@ -36,6 +36,7 @@
 #include "Cancellation.h"
 #include "viewportwaku.h"
 #include "unlock.h"
+#include "pickupUI.h"
 
 // マクロ定義
 #define RAND (6) // ランダム用変数
@@ -95,6 +96,9 @@ void InitGame(void)
 
 	//　ビルボード
 	InitBillboard();
+
+	//　アイテム収集用ビルボード
+	InitPickUpUI();
 
 	//　ポーズ
 	InitPause();
@@ -294,6 +298,9 @@ void UninitGame(void)
 	//　ビルボード
 	UninitBillboard();
 
+	//　アイテム収集用ビルボード
+	UninitPickUpUI();
+
 	//　ポーズ
 	UninitPause();
 
@@ -401,6 +408,9 @@ void UpdateGame(void)
 
 			//ビルボード
 			UpdateBillboard();
+
+			//　アイテム収集用ビルボード
+			UpdatePickUpUI();
 
 			//アイテム
 			Updateitem();
@@ -553,6 +563,9 @@ void DrawGame(int nIdx)
 
 	//　ビルボード
 	DrawBillboard();
+
+	//　アイテム収集用ビルボード
+	DrawPickUpUI();
 
 	//	ゴンザレス
 	DrawGonzaresu();

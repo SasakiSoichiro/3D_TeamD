@@ -14,6 +14,7 @@
 #include "slow.h"
 #include "nannjamo.h"
 #include "ItemUI.h"
+#include "pickupUI.h"
 
 // グローバル変数宣言
 ITEM g_item[ITEMTYPE_MAX];
@@ -50,6 +51,7 @@ void Inititem(void)
 		g_item[count].bHave = false;
 		g_item[count].bOldHave = false;
 		g_item[count].bHold = false;
+		g_item[count].nIdxUI = 0;
 
 		// マテリアルのポインタ
 		D3DXMATERIAL* pMat;
@@ -111,84 +113,9 @@ void Uninititem(void)
 	}
 }
 
-//=================
-//	更新処理
-//=================
-//void Updateitem(void)
-//{
-//	Player* pPlayer = GetPlayer();
-//	Slow* pSlow = GetSlow();
-//
-//
-//	for (int nCnt = 0; nCnt < MAX_ITEM; nCnt++)
-//	{
-//		if (g_item[nCnt].bUse == true)
-//		{
-//			//プレイヤーの半径の算出用変数
-//			float fPRadPos = 28.0f;
-//
-//			//アイテムの半径の算出用変数
-//			float fIRadPos = 28.0f;
-//
-//			//プレやーの位置を取得
-//			D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
-//
-//			//アイテムのプレイヤーの距離の差
-//			D3DXVECTOR3 diff = PlayerPos - g_item[nCnt].pos;
-//
-//			//範囲計算
-//			float fDisX = PlayerPos.x - g_item[nCnt].pos.x;
-//			float fDisY = PlayerPos.y - g_item[nCnt].pos.y;
-//			float fDisZ = PlayerPos.z - g_item[nCnt].pos.z;
-//
-//			//二つの半径を求める
-//			float fRadX = fPRadPos + fIRadPos;
-//
-//			//プレイヤーがアイテムの範囲に入ったら
-//			if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
-//			{
-//				if (KeybordTrigger(DIK_F) || JoyPadTrigger(JOYKEY_X) == true)
-//				{//Fを押されたとき
-//					PlaySound(SOUND_LABEL_SHOT02);
-//					//アイテムを拾う
-//					g_item[nCnt].bHave = true;
-//					g_item[nCnt].bUse = false;
-//					
-//					//	脱出条件
-//					if (g_item[0].bUse == false)
-//					{
-//						g_item[0].bKey_Top = true;
-//					}
-//					else if(g_item[1].bUse == false)
-//					{
-//						g_item[1].bKey_bottom = true;
-//					}
-//
-//					if (g_item[4].bUse == false)
-//					{
-//						if (pPlayer->nLife <= 2)
-//						{
-//							pPlayer->nLife += 1;
-//						}
-//					}
-//				}
-//			}
-//
-//			if (KeybordTrigger(DIK_E) == true && g_item[ITEMTYPE_SIX].bHave == true || JoyPadTrigger(JOYKEY_X)==true&& g_item[ITEMTYPE_SIX].bHave == true)
-//			{//アイテムを持っている時アイテムを使用する処理
-//
-//				if (pSlow->bUse == false)
-//				{
-//					pSlow->bUse = true;
-//					g_item[ITEMTYPE_SIX].bHave = false;
-//					SetSlow();
-//				}
-//				
-//			}
-//		}
-//	}
-//}
-
+//================
+// 更新処理
+//================
 void Updateitem(void)
 {
 	Player* pPlayer = GetPlayer();
@@ -377,6 +304,7 @@ void Setitem(D3DXVECTOR3 pos, int nType)
 			g_item[nCnt].pos = pos;
 			g_item[nCnt].nType = nType;
 			g_item[nCnt].bUse = true;
+			g_item[nCnt].nIdxUI = SetPickUpUI(g_item[nCnt].pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 			break;
 		}
 	}

@@ -99,30 +99,30 @@ void DrawPickUpUI(void)
 	//ライトを無効にする
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
-	for (int nCntShadow = 0; nCntShadow < MAX_BLB; nCntShadow++)
+	for (int nCntPUU = 0; nCntPUU < MAX_BLB; nCntPUU++)
 	{
 		//ワールドマトリックスの初期化
-		D3DXMatrixIdentity(&g_aPickUpUI[nCntShadow].mtxWorld);
+		D3DXMatrixIdentity(&g_aPickUpUI[nCntPUU].mtxWorld);
 
 		//ビューマトリックス取得
 		D3DXMATRIX mtxView;
 		pDevice->GetTransform(D3DTS_VIEW, &mtxView);
 
 		//カメラの逆行列を設定
-		g_aPickUpUI[nCntShadow].mtxWorld._11 = mtxView._11;
-		g_aPickUpUI[nCntShadow].mtxWorld._12 = mtxView._21;
-		g_aPickUpUI[nCntShadow].mtxWorld._13 = mtxView._31;
-		g_aPickUpUI[nCntShadow].mtxWorld._21 = mtxView._12;
-		g_aPickUpUI[nCntShadow].mtxWorld._22 = mtxView._22;
-		g_aPickUpUI[nCntShadow].mtxWorld._23 = mtxView._32;
-		g_aPickUpUI[nCntShadow].mtxWorld._31 = mtxView._13;
-		g_aPickUpUI[nCntShadow].mtxWorld._32 = mtxView._23;
-		g_aPickUpUI[nCntShadow].mtxWorld._33 = mtxView._33;
+		g_aPickUpUI[nCntPUU].mtxWorld._11 = mtxView._11;
+		g_aPickUpUI[nCntPUU].mtxWorld._12 = mtxView._21;
+		g_aPickUpUI[nCntPUU].mtxWorld._13 = mtxView._31;
+		g_aPickUpUI[nCntPUU].mtxWorld._21 = mtxView._12;
+		g_aPickUpUI[nCntPUU].mtxWorld._22 = mtxView._22;
+		g_aPickUpUI[nCntPUU].mtxWorld._23 = mtxView._32;
+		g_aPickUpUI[nCntPUU].mtxWorld._31 = mtxView._13;
+		g_aPickUpUI[nCntPUU].mtxWorld._32 = mtxView._23;
+		g_aPickUpUI[nCntPUU].mtxWorld._33 = mtxView._33;
 
 
 		//位置を反映
-		D3DXMatrixTranslation(&mtxTrans, g_aPickUpUI[nCntShadow].pos.x, g_aPickUpUI[nCntShadow].pos.y, g_aPickUpUI[nCntShadow].pos.z);
-		D3DXMatrixMultiply(&g_aPickUpUI[nCntShadow].mtxWorld, &g_aPickUpUI[nCntShadow].mtxWorld, &mtxTrans);
+		D3DXMatrixTranslation(&mtxTrans, g_aPickUpUI[nCntPUU].pos.x, g_aPickUpUI[nCntPUU].pos.y, g_aPickUpUI[nCntPUU].pos.z);
+		D3DXMatrixMultiply(&g_aPickUpUI[nCntPUU].mtxWorld, &g_aPickUpUI[nCntPUU].mtxWorld, &mtxTrans);
 	}
 	//頂点バッファをデータストリームに設定
 	pDevice->SetStreamSource(0, g_pVtxBuffPickUpUI, 0, sizeof(VERTEX_3D));
@@ -130,17 +130,17 @@ void DrawPickUpUI(void)
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
 	//ループ処理
-	for (int nCntShadow = 0; nCntShadow < MAX_BLB; nCntShadow++)
+	for (int nCntPUU = 0; nCntPUU < MAX_BLB; nCntPUU++)
 	{
-		if (g_aPickUpUI[nCntShadow].bUse == true)
+		if (g_aPickUpUI[nCntPUU].bUse == true)
 		{
-			pDevice->SetTransform(D3DTS_WORLD, &g_aPickUpUI[nCntShadow].mtxWorld);//for文に入れる
+			pDevice->SetTransform(D3DTS_WORLD, &g_aPickUpUI[nCntPUU].mtxWorld);//for文に入れる
 
 			//テクスチャの設定
 			pDevice->SetTexture(0, g_pTexturePickUpUI);
 
 			//ポリゴンの描画
-			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4 * nCntShadow, 2);//for文に入れる
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4 * nCntPUU, 2);//for文に入れる
 		}
 	}
 
@@ -148,29 +148,24 @@ void DrawPickUpUI(void)
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
-void SetPickUpUI(D3DXVECTOR3 pos, D3DXVECTOR3 dir)
+int SetPickUpUI(D3DXVECTOR3 pos, D3DXVECTOR3 dir)
 {
 	VERTEX_3D* pVtx = 0;		//頂点情報へのポインタ
-	float fAlpha = 1.0f;
 	float rotY = 0.0f;
-
-	//頂点バッファをロックし、頂点情報へのポインタを取得
-	g_pVtxBuffPickUpUI->Lock(0, 0, (void**)&pVtx, 0);
+	int nCntPUU=0;				//ピックアップUIの番号
 
 	//ループ処理
-	for (int nCntBlock = 0; nCntBlock < MAX_BLB; nCntBlock++)
+	for (int nCntPUU = 0; nCntPUU < MAX_BLB; nCntPUU++)
 	{//ブロックの最大数分ループする
-		if (g_aPickUpUI[nCntBlock].bUse == false)
+		if (g_aPickUpUI[nCntPUU].bUse == false)
 		{//ブロックが使用されていない
 
-			g_aPickUpUI[nCntBlock].pos = pos;			//ブロックの頂点座標を代入
-			g_aPickUpUI[nCntBlock].bUse = true;		//使用している状態にする
+			g_aPickUpUI[nCntPUU].pos = pos;			//ブロックの頂点座標を代入
+			g_aPickUpUI[nCntPUU].pos.y = pos.y+20.0f;
+			g_aPickUpUI[nCntPUU].bUse = true;		//使用している状態にする
 			break;
 		}
-		pVtx += 4;//頂点データのポインタを4つ分集める
 	}
 
-	//頂点バッファをアンロックする
-	g_pVtxBuffPickUpUI->Unlock();
-
+	return nCntPUU;//ピックアップUI番号(Index)を返す
 }

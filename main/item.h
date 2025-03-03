@@ -47,6 +47,7 @@ typedef struct
     bool bHave;
     bool bOldHave;
     bool bHold;
+    int nIdxUI;
 }ITEM;
 
 void Inititem(void);
