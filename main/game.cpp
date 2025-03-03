@@ -489,7 +489,7 @@ void UpdateGame(void)
 //---------------
 //	描画処理
 //---------------
-void DrawGame(void)
+void DrawGame(int nIdx)
 {
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
@@ -498,7 +498,6 @@ void DrawGame(void)
 	SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
 
 	//　各オブジェクトの描画処理
-
 
 	//　メッシュフィールド
 	DrawMeshfield();
@@ -509,11 +508,36 @@ void DrawGame(void)
 	//　アイテム
 	Drawitem();
 
-	//　プレイヤー
-	DrawPlayer();
+	switch (nIdx)
+	{
+	case 0:
 
-	//　敵
-	DrawEnemy();
+		//　敵
+		DrawEnemy();
+		break;
+
+	case 1:
+		//　プレイヤー
+		DrawPlayer();
+		break;
+
+	default:
+		break;
+	}
+	////　メッシュフィールド
+	//DrawMeshfield();
+
+	////　ブロック
+	//DrawBlock();
+
+	////　アイテム
+	//Drawitem();
+
+	//　プレイヤー
+	//DrawPlayer();
+
+	////　敵
+	//DrawEnemy();
 
 	//　ギミック
 	DrawGimmick();
@@ -558,8 +582,6 @@ void DrawGame(void)
 
 	//	敵視点のビューポートの枠
 	DrawViewUI();
-
-
 
 	//FOGを戻す
 	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);

@@ -567,7 +567,6 @@ void DrawEnemy(void)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
 	Camera* pCamera = GetCamera();
-	bool bLook = IsLook();
 
 	//計算用マトリックス
 	D3DXMATRIX mtxRot, mtxTrans;
@@ -580,80 +579,75 @@ void DrawEnemy(void)
 	{
 		if (g_Enemy[nCntEnemy].bUse == true)
 		{
-			if (bLook == true)
+			//ワールドマトリックスの初期化
+			D3DXMatrixIdentity(&g_Enemy[nCntEnemy].mtxWorld);
+			//向きを反映
+			D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Enemy[nCntEnemy].rot.y, g_Enemy[nCntEnemy].rot.x, g_Enemy[nCntEnemy].rot.z);
+			D3DXMatrixMultiply(&g_Enemy[nCntEnemy].mtxWorld, &g_Enemy[nCntEnemy].mtxWorld, &mtxRot);
+
+			//位置を反映
+			D3DXMatrixTranslation(&mtxTrans, g_Enemy[nCntEnemy].pos.x, g_Enemy[nCntEnemy].pos.y, g_Enemy[nCntEnemy].pos.z);
+			D3DXMatrixMultiply(&g_Enemy[nCntEnemy].mtxWorld, &g_Enemy[nCntEnemy].mtxWorld, &mtxTrans);
+
+			pDevice->SetTransform(D3DTS_WORLD, &g_Enemy[nCntEnemy].mtxWorld);
+
+			pDevice->GetMaterial(&matDef);
+
+			//全モデル（パーツ）の描画
+			for (int nCntModel = 0; nCntModel < g_Enemy[nCntEnemy].nNumModel; nCntModel++)
 			{
-				//ワールドマトリックスの初期化
-				D3DXMatrixIdentity(&g_Enemy[nCntEnemy].mtxWorld);
+				//計算用マトリックス
+				D3DXMATRIX mtxRotModel, mtxTransModel;
+				D3DXMATRIX mtxParent;//親のマトリックス
+
+				//パーツのワールドマトリックスの初期化
+				D3DXMatrixIdentity(&g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld);
+
 				//向きを反映
-				D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Enemy[nCntEnemy].rot.y, g_Enemy[nCntEnemy].rot.x, g_Enemy[nCntEnemy].rot.z);
-				D3DXMatrixMultiply(&g_Enemy[nCntEnemy].mtxWorld, &g_Enemy[nCntEnemy].mtxWorld, &mtxRot);
+				D3DXMatrixRotationYawPitchRoll(&mtxRotModel, g_Enemy[nCntEnemy].aModel[nCntModel].rot.y, g_Enemy[nCntEnemy].aModel[nCntModel].rot.x, g_Enemy[nCntEnemy].aModel[nCntModel].rot.z);
+				D3DXMatrixMultiply(&g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld, &g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld, &mtxRotModel);
 
 				//位置を反映
-				D3DXMatrixTranslation(&mtxTrans, g_Enemy[nCntEnemy].pos.x, g_Enemy[nCntEnemy].pos.y, g_Enemy[nCntEnemy].pos.z);
-				D3DXMatrixMultiply(&g_Enemy[nCntEnemy].mtxWorld, &g_Enemy[nCntEnemy].mtxWorld, &mtxTrans);
+				D3DXMatrixTranslation(&mtxTransModel, g_Enemy[nCntEnemy].aModel[nCntModel].pos.x, g_Enemy[nCntEnemy].aModel[nCntModel].pos.y, g_Enemy[nCntEnemy].aModel[nCntModel].pos.z);
+				D3DXMatrixMultiply(&g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld, &g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld, &mtxTransModel);
 
-				pDevice->SetTransform(D3DTS_WORLD, &g_Enemy[nCntEnemy].mtxWorld);
-
-				pDevice->GetMaterial(&matDef);
-
-				//全モデル（パーツ）の描画
-				for (int nCntModel = 0; nCntModel < g_Enemy[nCntEnemy].nNumModel; nCntModel++)
+				//パーツの「親のマトリックス」を設定
+				if (g_Enemy[nCntEnemy].aModel[nCntModel].nIdxModelParent != -1)
+				{//親モデルがある場合
+					mtxParent = g_Enemy[nCntEnemy].aModel[g_Enemy[nCntEnemy].aModel[nCntModel].nIdxModelParent].mtxWorld;
+				}
+				else
 				{
-					//計算用マトリックス
-					D3DXMATRIX mtxRotModel, mtxTransModel;
-					D3DXMATRIX mtxParent;//親のマトリックス
-
-					//パーツのワールドマトリックスの初期化
-					D3DXMatrixIdentity(&g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld);
-
-					//向きを反映
-					D3DXMatrixRotationYawPitchRoll(&mtxRotModel, g_Enemy[nCntEnemy].aModel[nCntModel].rot.y, g_Enemy[nCntEnemy].aModel[nCntModel].rot.x, g_Enemy[nCntEnemy].aModel[nCntModel].rot.z);
-					D3DXMatrixMultiply(&g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld, &g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld, &mtxRotModel);
-
-					//位置を反映
-					D3DXMatrixTranslation(&mtxTransModel, g_Enemy[nCntEnemy].aModel[nCntModel].pos.x, g_Enemy[nCntEnemy].aModel[nCntModel].pos.y, g_Enemy[nCntEnemy].aModel[nCntModel].pos.z);
-					D3DXMatrixMultiply(&g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld, &g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld, &mtxTransModel);
-
-					//パーツの「親のマトリックス」を設定
-					if (g_Enemy[nCntEnemy].aModel[nCntModel].nIdxModelParent != -1)
-					{//親モデルがある場合
-						mtxParent = g_Enemy[nCntEnemy].aModel[g_Enemy[nCntEnemy].aModel[nCntModel].nIdxModelParent].mtxWorld;
-					}
-					else
-					{
-						mtxParent = g_Enemy[nCntEnemy].mtxWorld;
-					}
-
-					//算出した「パーツのワールドマトリックス」と「親のマトリックス」を掛け合わせる
-					D3DXMatrixMultiply(&g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld,
-						&g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld,
-						&mtxParent);
-					//パーツのワールドマトリックスの設定
-					pDevice->SetTransform(D3DTS_WORLD,
-						&g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld);
-
-
-					//マテリアルデータへのポインタを取得
-					pMat = (D3DXMATERIAL*)g_Enemy[nCntEnemy].aModel[nCntModel].pBuffMat->GetBufferPointer();
-
-					for (int nCntMat = 0; nCntMat < (int)g_Enemy[nCntEnemy].aModel[nCntModel].dwNumMat; nCntMat++)
-					{
-
-						//マテリアルの設定
-						pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
-
-						//テクスチャの設定
-						pDevice->SetTexture(0, g_Enemy[nCntEnemy].aModel[nCntModel].apTexture[nCntMat]);
-
-						//モデル（パーツ）の描画
-						g_Enemy[nCntEnemy].aModel[nCntModel].pMesh->DrawSubset(nCntMat);
-
-					}
+					mtxParent = g_Enemy[nCntEnemy].mtxWorld;
 				}
 
+				//算出した「パーツのワールドマトリックス」と「親のマトリックス」を掛け合わせる
+				D3DXMatrixMultiply(&g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld,
+					&g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld,
+					&mtxParent);
+				//パーツのワールドマトリックスの設定
+				pDevice->SetTransform(D3DTS_WORLD,
+					&g_Enemy[nCntEnemy].aModel[nCntModel].mtxWorld);
 
-				pDevice->SetMaterial(&matDef);
+
+				//マテリアルデータへのポインタを取得
+				pMat = (D3DXMATERIAL*)g_Enemy[nCntEnemy].aModel[nCntModel].pBuffMat->GetBufferPointer();
+
+				for (int nCntMat = 0; nCntMat < (int)g_Enemy[nCntEnemy].aModel[nCntModel].dwNumMat; nCntMat++)
+				{
+
+					//マテリアルの設定
+					pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+
+					//テクスチャの設定
+					pDevice->SetTexture(0, g_Enemy[nCntEnemy].aModel[nCntModel].apTexture[nCntMat]);
+
+					//モデル（パーツ）の描画
+					g_Enemy[nCntEnemy].aModel[nCntModel].pMesh->DrawSubset(nCntMat);
+
+				}
 			}
+			pDevice->SetMaterial(&matDef);
 		}
 
 	}

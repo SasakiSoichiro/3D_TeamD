@@ -517,7 +517,7 @@ void Draw(void)
 				break;
 
 			case MODE_GAME:
-				DrawGame();			//	ÉQÅ[ÉÄ
+				DrawGame(n);			//	ÉQÅ[ÉÄ
 				break;
 
 			case MODE_RESULT:

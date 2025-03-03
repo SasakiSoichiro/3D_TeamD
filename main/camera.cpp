@@ -13,7 +13,6 @@
 
 //	グローバル
 Camera g_camera[MAX_CAMERA] = {};	//カメラ情報
-bool bLook;
 //==============================
 //	初期化処理
 //==============================
@@ -44,8 +43,6 @@ void InitCamera(void)
 			g_camera[count].rot = D3DXVECTOR3(0.0f, 90.0f, 0.0f);
 		}
 	}
-	bLook = false;
-
 	//	ビューポート構成の保存	左
 	g_camera[0].viewport.X = (DWORD)0.0f;
 	g_camera[0].viewport.Y = (DWORD)0.0f;
@@ -185,8 +182,6 @@ void UpdateCamera(void)
 	//	プレイヤーの視点
 	if (GetEditState() == false && mode == MODE_GAME)
 	{
-		bLook = true;
-
 		static POINT prevCursorPos = { (long)(SCREEN_WIDTH / 1.5f), (long)(SCREEN_HEIGHT / 1.5f) };
 
 		POINT cursorPos;
@@ -219,8 +214,6 @@ void UpdateCamera(void)
 	}
 	else if (GetEditState() == true)
 	{
-		bLook = true;
-
 		static POINT prevCursorPos = { (long)(SCREEN_WIDTH / 1.5), (long)(SCREEN_HEIGHT / 1.5) };
 
 		POINT cursorPos;
@@ -260,10 +253,9 @@ void UpdateCamera(void)
 
 	//	敵の視点
 	Enemy* pEnemy = GetEnemy();
+
 	if (GetEditState() == false && mode == MODE_GAME)
 	{
-		bLook = false;
-
 		g_camera[1].posV = pEnemy->pos;
 		g_camera[1].posV.y += 100.0f;
 
@@ -279,10 +271,7 @@ void UpdateCamera(void)
 		{
 			g_camera[1].rot.y += -D3DX_PI * 2.0f;
 		}
-
-
 	}
-
 }
 
 //==============================
@@ -348,9 +337,4 @@ void MouseWheel(int zDelta)
 Camera* GetCamera(void)
 {
 	return &g_camera[0];
-}
-
-bool IsLook(void)
-{
-	return bLook;
 }

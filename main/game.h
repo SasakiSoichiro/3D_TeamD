@@ -16,7 +16,7 @@ typedef enum
 void InitGame(void);
 void UninitGame(void);
 void UpdateGame(void);
-void DrawGame(void);
+void DrawGame(int nIdx);
 void SetEnablePause(bool bPause);
 void SetGameState(GAMESTATE state);
 bool GetEditState(void);
