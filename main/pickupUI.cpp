@@ -1,4 +1,5 @@
 #include "pickupUI.h"
+#include "player.h"
 
 //グローバル変数宣言
 LPDIRECT3DTEXTURE9 g_pTexturePickUpUI = NULL;//テクスチャへのポインタ
@@ -11,7 +12,7 @@ void InitPickUpUI(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\time.png",
+		"data\\texture\\pickup00.png",
 		&g_pTexturePickUpUI);
 
 	for (int nCnt = 0; nCnt < MAX_BLB; nCnt++)
@@ -19,6 +20,7 @@ void InitPickUpUI(void)
 		//各種変数の初期化
 		g_aPickUpUI[nCnt].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_aPickUpUI[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aPickUpUI[nCnt].bDisplay = false;
 		g_aPickUpUI[nCnt].bUse = false;
 	}
 
@@ -87,7 +89,42 @@ void UninitPickUpUI(void)
 }
 void UpdatePickUpUI(void)
 {
+	//プレイヤーの半径の算出用変数
+	float fPRadPos = 50.0f;
 
+	//アイテムの半径の算出用変数
+	float fIRadPos = 50.0f;
+
+	//プレイヤーの位置を取得
+	Player *pPlayer = GetPlayer();
+	//ループ処理
+	for (int nCntPUU = 0; nCntPUU < MAX_BLB; nCntPUU++)
+	{//ブロックの最大数分ループする
+		if (g_aPickUpUI[nCntPUU].bUse == true)
+		{
+			//アイテムのプレイヤーの距離の差
+			D3DXVECTOR3 diff = pPlayer->pos - g_aPickUpUI[nCntPUU].pos;
+
+			//範囲計算
+			float fDisX = pPlayer->pos.x - g_aPickUpUI[nCntPUU].pos.x;
+			float fDisY = pPlayer->pos.y - g_aPickUpUI[nCntPUU].pos.y;
+			float fDisZ = pPlayer->pos.z - g_aPickUpUI[nCntPUU].pos.z;
+
+			//二つの半径を求める
+			float fRadX = fPRadPos + fIRadPos;
+
+			//プレイヤーがアイテムの範囲に入ったら
+			if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
+			{
+				g_aPickUpUI[nCntPUU].bDisplay = true;
+			}
+			else
+			{
+				g_aPickUpUI[nCntPUU].bDisplay = false;
+			}
+
+		}
+	}
 }
 void DrawPickUpUI(void)
 {
@@ -101,7 +138,7 @@ void DrawPickUpUI(void)
 
 	for (int nCntPUU = 0; nCntPUU < MAX_BLB; nCntPUU++)
 	{
-		if (g_aPickUpUI[nCntPUU].bUse == true)
+		if (g_aPickUpUI[nCntPUU].bUse == true&& g_aPickUpUI[nCntPUU].bDisplay == true)
 		{
 			//ワールドマトリックスの初期化
 			D3DXMatrixIdentity(&g_aPickUpUI[nCntPUU].mtxWorld);
@@ -161,14 +198,15 @@ int SetPickUpUI(D3DXVECTOR3 pos, D3DXVECTOR3 dir)
 		{//ブロックが使用されていない
 
 			g_aPickUpUI[nCntPUU].pos = pos;			//ブロックの頂点座標を代入
-			g_aPickUpUI[nCntPUU].pos.y = pos.y;
+			g_aPickUpUI[nCntPUU].pos.y = pos.y+50.0f;
+			g_aPickUpUI[nCntPUU].bDisplay = true;
 			g_aPickUpUI[nCntPUU].bUse = true;		//使用している状態にする
 
 			//	頂点情報の設定
-			pVtx[0].pos = D3DXVECTOR3(-50.0f, 50.0f, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(50.0f, 50.0f, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(-50.0f, -50.0f, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(50.0f, -50.0f, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(-PICKBILL, PICKBILL, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(PICKBILL, PICKBILL, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(-PICKBILL, -PICKBILL, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(PICKBILL, -PICKBILL, 0.0f);
 
 			break;
 		}

@@ -543,10 +543,10 @@ void DrawGame(int nIdx)
 	{
 	case 0:
 
-		//　敵
+		// 敵
 		DrawEnemy();
 
-		//　アイテム収集用ビルボード
+		// アイテム収集用ビルボード
 		DrawPickUpUI();
 
 		break;
@@ -586,12 +586,8 @@ void DrawGame(int nIdx)
 	// スタミナ
 	DrawStamina();
 
-
-
 	//　ビルボード
 	DrawBillboard();
-
-
 
 	//	ゴンザレス
 	DrawGonzaresu();

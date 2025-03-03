@@ -7,14 +7,15 @@
 #ifndef _PICKUPUI_H_//このマクロ定義がされていなかったら
 #define _PICKUPUI_H_//2重インクルード防止のマクロ定義
 #include "main.h"
-#define OBJBILL (20.0f)
-#define MAX_BLB (256)
+#define PICKBILL (10.0f)
+#define MAX_BLB (16)
 
 typedef struct
 {
 	D3DXVECTOR3 pos;
 	D3DXVECTOR3 rot;
 	D3DXMATRIX mtxWorld;
+	bool bDisplay;
 	bool bUse;
 }PickUpUI;
 
