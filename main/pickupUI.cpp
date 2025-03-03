@@ -11,7 +11,7 @@ void InitPickUpUI(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\pickup00.png",
+		"data\\texture\\time.png",
 		&g_pTexturePickUpUI);
 
 	for (int nCnt = 0; nCnt < MAX_BLB; nCnt++)
@@ -148,7 +148,7 @@ void DrawPickUpUI(void)
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
-int SetPickUpUI(D3DXVECTOR3 pos, D3DXVECTOR3 dir)
+void SetPickUpUI(D3DXVECTOR3 pos, D3DXVECTOR3 dir)
 {
 	VERTEX_3D* pVtx = 0;		//頂点情報へのポインタ
 	float rotY = 0.0f;
@@ -167,5 +167,5 @@ int SetPickUpUI(D3DXVECTOR3 pos, D3DXVECTOR3 dir)
 		}
 	}
 
-	return nCntPUU;//ピックアップUI番号(Index)を返す
+	//return nCntPUU;//ピックアップUI番号(Index)を返す
 }

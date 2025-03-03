@@ -24,6 +24,6 @@ void InitPickUpUI(void);
 void UninitPickUpUI(void);
 void UpdatePickUpUI(void);
 void DrawPickUpUI(void);
-int SetPickUpUI(D3DXVECTOR3 pos, D3DXVECTOR3 dir);
+void SetPickUpUI(D3DXVECTOR3 pos, D3DXVECTOR3 dir);
 
 #endif
