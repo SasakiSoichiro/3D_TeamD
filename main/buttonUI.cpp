@@ -21,7 +21,7 @@ void InitButtonUI()
 	for (int nCnt = 0; nCnt < BUTTONUITYPE_MAX; nCnt++)
 	{
 		D3DXCreateTextureFromFile(pDevice,
-			ITEMKEYUI_TEXTURE[nCnt],
+			BUTTONUITYPE__TEXTURE[nCnt],
 			&g_ButtonUiTexture[nCnt]);
 	}
 
@@ -116,7 +116,6 @@ void UpdateButtonUI()
 				g_ButtonUI[1].bUse = true;
 				g_ButtonUI[0].bUse = false;
 				g_ButtonUI[2].bUse = false;
-
 			}
 			else if (nSelect == 2)
 			{
@@ -124,6 +123,10 @@ void UpdateButtonUI()
 				g_ButtonUI[0].bUse = false;
 				g_ButtonUI[1].bUse = false;
 			}
+		}
+		if (g_ButtonUI[nCnt].aType == BUTTONUITYPE_BUTTON_X)
+		{
+			g_ButtonUI[nCnt].bUse = true;
 		}
 	}
 }
@@ -143,7 +146,7 @@ void DrawButtonUI()
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	for (int nCnt = 0; nCnt < BUTTONUITYPE_MAX; nCnt++)
+	for (int nCnt = 0; nCnt < MAX_BUTTONUI; nCnt++)
 	{
 
 		if (g_ButtonUI[nCnt].bUse == true)
@@ -171,7 +174,7 @@ void SetButtonUI(D3DXVECTOR3 pos, BUTTONUITYPE aType, float fWidth, float fHeigh
 	//頂点バッファのロック、頂点データへのポインタ取得
 	g_pVtxBuffButtonUi->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (int nCnt = 0; nCnt < BUTTONUITYPE_MAX; nCnt++)
+	for (int nCnt = 0; nCnt < MAX_BUTTONUI; nCnt++)
 	{
 		if (g_ButtonUI[nCnt].bUse == false)
 		{// 未使用状態だったら

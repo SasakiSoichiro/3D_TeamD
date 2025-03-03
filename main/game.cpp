@@ -37,6 +37,7 @@
 #include "viewportwaku.h"
 #include "unlock.h"
 #include "pickupUI.h"
+#include "buttonUI.h"
 
 // マクロ定義
 #define RAND (6) // ランダム用変数
@@ -134,6 +135,9 @@ void InitGame(void)
 
 	//	敵視点のビューポートの枠
 	InitViewUI();
+
+	//	ボタンのUI
+	InitButtonUI();
 
 	//int a = rand() % 6 + 1;
 	int a = rand() % RAND + 1;
@@ -252,6 +256,13 @@ void InitGame(void)
 	//　目のUI
 	InitEyeUI();
 
+	//	ボタンのUI
+	SetButtonUI(D3DXVECTOR3(1030.0f, 125.0f, 0.0f), BUTTONUITYPE_BUTTON_Y, 20.0f, 15.0f);
+	SetButtonUI(D3DXVECTOR3(1090.0f, 125.0f, 0.0f), BUTTONUITYPE_BUTTON_Y, 20.0f, 15.0f);
+	SetButtonUI(D3DXVECTOR3(1150.0f, 125.0f, 0.0f), BUTTONUITYPE_BUTTON_Y, 20.0f, 15.0f);
+	SetButtonUI(D3DXVECTOR3(1090.0f, 25.0f, 0.0f), BUTTONUITYPE_BUTTON_X, 80.0f, 20.0f);
+
+
 	//　初期化処理
 	g_bEdit = false;
 	g_gameState = GAMESTATE_NORMAL;// 通常状態に設定
@@ -336,6 +347,8 @@ void UninitGame(void)
 	//	敵視点のビューポートの枠
 	UninitViewUI();
 
+	//	ボタンのUI
+	UninitButtonUI();
 }
 
 //---------------
@@ -443,6 +456,9 @@ void UpdateGame(void)
 
 			//	敵視点のビューポートの枠
 			UpdateViewUI();
+
+			//	ボタンのUI
+			UpdateButtonUI();
 
 			// スロー
 			UpdateSlow();
@@ -595,6 +611,9 @@ void DrawGame(int nIdx)
 
 	//	敵視点のビューポートの枠
 	DrawViewUI();
+
+	//	ボタンのUI
+	DrawButtonUI();
 
 	//FOGを戻す
 	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);

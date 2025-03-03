@@ -24,7 +24,7 @@ typedef enum
 	BUTTONUITYPE_MAX,
 }BUTTONUITYPE;
 
-static const char* ITEMKEYUI_TEXTURE[BUTTONUITYPE_MAX] =
+static const char* BUTTONUITYPE__TEXTURE[BUTTONUITYPE_MAX] =
 {
 	"data\\texture\\button.png",		//	ボタン(X)			0
 	"data\\texture\\buttonX.png",		//	ボタン(Y)			1
