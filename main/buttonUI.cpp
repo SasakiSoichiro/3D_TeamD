@@ -5,11 +5,11 @@
 //
 //====================================================
 #include "buttonUI.h"
-#include "item.h"
+#include "itemUI.h"
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_ButtonUiTexture[BUTTONUITYPE_MAX] = { };	//Uiテクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffButtonUi = NULL;	//Uiバッファへのポインタ
-BUTTONUI g_ButtonUI[BUTTONUITYPE_MAX];
+BUTTONUI g_ButtonUI[MAX_BUTTONUI];
 //====================================================
 //アイテムUI表示の初期化処理
 //====================================================
@@ -26,7 +26,7 @@ void InitButtonUI()
 	}
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * BUTTONUITYPE_MAX,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_BUTTONUI,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
@@ -38,7 +38,7 @@ void InitButtonUI()
 	//頂点バッファのロック、頂点データへのポインタ取得
 	g_pVtxBuffButtonUi->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (int nCnt1 = 0; nCnt1 < BUTTONUITYPE_MAX; nCnt1++)
+	for (int nCnt1 = 0; nCnt1 < MAX_BUTTONUI; nCnt1++)
 	{
 		// 構造体変数の初期化
 		g_ButtonUI[nCnt1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -100,9 +100,32 @@ void UninitButtonUI()
 //====================================================
 void UpdateButtonUI()
 {
+	int nSelect = GetSelect();
+	for (int nCnt = 0; nCnt < MAX_BUTTONUI; nCnt++)
+	{
+		if (g_ButtonUI[nCnt].aType == BUTTONUITYPE_BUTTON_Y)
+		{
+			if (nSelect == 0)
+			{
+				g_ButtonUI[0].bUse = true;
+				g_ButtonUI[1].bUse = false;
+				g_ButtonUI[2].bUse = false;
+			}
+			else if (nSelect == 1)
+			{
+				g_ButtonUI[1].bUse = true;
+				g_ButtonUI[0].bUse = false;
+				g_ButtonUI[2].bUse = false;
 
-
-
+			}
+			else if (nSelect == 2)
+			{
+				g_ButtonUI[2].bUse = true;
+				g_ButtonUI[0].bUse = false;
+				g_ButtonUI[1].bUse = false;
+			}
+		}
+	}
 }
 //====================================================
 //アイテムUI表示の描画処理
@@ -125,19 +148,8 @@ void DrawButtonUI()
 
 		if (g_ButtonUI[nCnt].bUse == true)
 		{
-
-			
-			
-				//テクスチャの設定
-				pDevice->SetTexture(0, g_ButtonUiTexture[1]);
-			
-		
-				//テクスチャの設定
-				pDevice->SetTexture(0, g_ButtonUiTexture[2]);
-			
-			
-				//テクスチャの設定
-				pDevice->SetTexture(0, g_ButtonUiTexture[g_ButtonUI[nCnt].aType]);
+			//テクスチャの設定
+			pDevice->SetTexture(0, g_ButtonUiTexture[g_ButtonUI[nCnt].aType]);
 
 			//アイテムUIの描画
 			pDevice->DrawPrimitive(

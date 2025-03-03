@@ -17,8 +17,7 @@ LPDIRECT3DTEXTURE9 g_pTextureItemUI[ITEM_MAX] = {};		//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffItemUI = NULL;		//頂点バッファへのポインタ
 ItemUI g_aItemUI[MAX_ITEMUI];							//ブロックの情報
 int g_nSelect;
-bool bSelect;
-bool bSelect1;
+
 //=====================
 //アイテムUIの初期化処理
 //=====================
@@ -146,7 +145,7 @@ void UpdateItemUI()
 	for (int nCntBlock = 0; nCntBlock < MAX_ITEMUI; nCntBlock++)
 	{//ブロックの数分ループする
 
-		if(nCntBlock==g_nSelect)
+		if(nCntBlock == g_nSelect)
 		{
 			//頂点カラーの設定　　　　
 			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
