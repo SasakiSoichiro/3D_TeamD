@@ -134,23 +134,23 @@ void UpdateGauge(void)
 			}
 			if (g_gauge.fCnt < 0)
 			{
-				g_gauge.fCnt1 = 320.0f;
+				g_gauge.fCnt1 = 321.5f;
 			}
 
 			pVtx[0].pos.x = g_gauge.fCnt1;
-			pVtx[0].pos.y = 400.0f;
+			pVtx[0].pos.y = 399.5f;
 			pVtx[0].pos.z = 0.0f;
 
 			pVtx[1].pos.x = g_gauge.fCnt1 * g_gauge.fCnt;
-			pVtx[1].pos.y = 400.0f;
+			pVtx[1].pos.y = 399.5f;
 			pVtx[1].pos.z = 0.0f;
 
 			pVtx[2].pos.x = g_gauge.fCnt1;
-			pVtx[2].pos.y = 450.0f;
+			pVtx[2].pos.y = 450.5f;
 			pVtx[2].pos.z = 0.0f;
 
 			pVtx[3].pos.x = g_gauge.fCnt1 * g_gauge.fCnt;
-			pVtx[3].pos.y = 450.0f;
+			pVtx[3].pos.y = 450.5f;
 			pVtx[3].pos.z = 0.0f;
 		}
 

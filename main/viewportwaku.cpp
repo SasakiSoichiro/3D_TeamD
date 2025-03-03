@@ -24,7 +24,7 @@ void InitViewUI(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\waku1.png",
+		"data\\texture\\enemywaku1.png",
 		&g_pTextureViewUI);
 
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,//(sizeof(VERTEX_2D)*必要な頂点数
@@ -39,10 +39,10 @@ void InitViewUI(void)
 	g_pVtxBuffViewUI->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(436.5f, -13.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(815.0f, -13.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(436.5f, 210.5f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(815.0f, 210.5f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(417.5f, -20.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(836.0f, -20.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(417.5f, 227.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(836.0f, 227.0f, 0.0f);
 
 	//rhwの設定
 	pVtx[0].rhw = 1.0f;
