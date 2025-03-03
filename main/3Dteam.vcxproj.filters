@@ -40,6 +40,7 @@
     <ClCompile Include="Cancellation.cpp" />
     <ClCompile Include="viewportwaku.cpp" />
     <ClCompile Include="unlock.cpp" />
+    <ClCompile Include="pickupUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -81,6 +82,7 @@
     <ClInclude Include="Cancellation.h" />
     <ClInclude Include="viewportwaku.h" />
     <ClInclude Include="unlock.h" />
+    <ClInclude Include="pickupUI.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />
