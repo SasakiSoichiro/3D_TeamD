@@ -495,7 +495,7 @@ void DrawGame(int nIdx)
 	pDevice = GetDevice();
 
 	//FOGの設定
-	SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
+	//SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
 
 	//　各オブジェクトの描画処理
 
@@ -543,7 +543,7 @@ void DrawGame(int nIdx)
 	DrawGimmick();
 
 	//FOGを消す
-	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 	// スロー
 	DrawSlow();
@@ -584,7 +584,7 @@ void DrawGame(int nIdx)
 	DrawViewUI();
 
 	//FOGを戻す
-	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 
 	if (g_bPause == true)

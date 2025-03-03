@@ -481,7 +481,6 @@ void DrawPlayer(void)
 			if (g_player[nCnt].motion.aModel[nCntModel].nIdxModelParent != -1)
 			{//eƒ‚ƒfƒ‹‚ª‚ ‚éê‡
 				mtxParent = g_player[nCnt].motion.aModel[g_player[nCnt].motion.aModel[nCntModel].nIdxModelParent].mtxWorld;
-
 			}
 			else
 			{
