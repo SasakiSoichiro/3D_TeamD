@@ -209,6 +209,7 @@ void UpdatePlayer(void)
 				g_player[nCnt].pos.z += cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.75f;
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pState = PLAYERSTATE_MOVE;
 
 
 			}
@@ -216,6 +217,7 @@ void UpdatePlayer(void)
 			{// 左下
 
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pState = PLAYERSTATE_MOVE;
 				g_player[nCnt].pos.x -= sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.75f;
@@ -224,6 +226,7 @@ void UpdatePlayer(void)
 			else
 			{// 左
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pState = PLAYERSTATE_MOVE;
 				g_player[nCnt].pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
 				g_player[nCnt].pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.5f;
@@ -235,6 +238,7 @@ void UpdatePlayer(void)
 			if (GetKeyboardPress(DIK_W) == true)
 			{// 右上
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pState = PLAYERSTATE_MOVE;
 				g_player[nCnt].pos.x += sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
 				g_player[nCnt].pos.z += cosf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.75f;
@@ -247,11 +251,13 @@ void UpdatePlayer(void)
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.75f;
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pState = PLAYERSTATE_MOVE;
 
 			}
 			else
 			{// 右
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pState = PLAYERSTATE_MOVE;
 				g_player[nCnt].pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
 				g_player[nCnt].pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.5f;
@@ -281,6 +287,7 @@ void UpdatePlayer(void)
 		else if (GetKeyboardPress(DIK_S) == true)
 		{// Sキーが押された
 			g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+			g_player[nCnt].pState = PLAYERSTATE_MOVE;
 			g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI) * 2.0f;
 			g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
 			g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
@@ -291,6 +298,7 @@ void UpdatePlayer(void)
 			{
 				g_player[nCnt].motion.motionType = MOTIONTYPE_NEUTRAL;
 			}
+			g_player[nCnt].pState = PLAYERSTATE_NORMAL;
 		}
 
 		if (g_player[nCnt].rotDest.y - g_player[nCnt].rot.y > D3DX_PI)
@@ -327,6 +335,7 @@ void UpdatePlayer(void)
 				if (pStick->Gamepad.sThumbLY > 10922)
 				{// 上移動
 					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pState = PLAYERSTATE_MOVE;
 					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y + D3DX_PI * 0.25f) * 2.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y + D3DX_PI * 0.25f) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
@@ -334,6 +343,7 @@ void UpdatePlayer(void)
 				else if (pStick->Gamepad.sThumbLY < -10922)
 				{// 下移動
 					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pState = PLAYERSTATE_MOVE;
 					g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
@@ -341,6 +351,7 @@ void UpdatePlayer(void)
 				else
 				{// 右移動
 					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pState = PLAYERSTATE_MOVE;
 					g_player[nCnt].pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
 					g_player[nCnt].pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.5f;
@@ -351,6 +362,7 @@ void UpdatePlayer(void)
 				if (pStick->Gamepad.sThumbLY > 10922)
 				{// 上移動
 					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pState = PLAYERSTATE_MOVE;
 					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y - D3DX_PI * 0.25f) * 2.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y - D3DX_PI * 0.25f) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
@@ -358,6 +370,7 @@ void UpdatePlayer(void)
 				else if (pStick->Gamepad.sThumbLY < -10922)
 				{// 下移動
 					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pState = PLAYERSTATE_MOVE;
 					g_player[nCnt].pos.x -= sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
@@ -365,6 +378,7 @@ void UpdatePlayer(void)
 				else
 				{// 左移動
 					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pState = PLAYERSTATE_MOVE;
 					g_player[nCnt].pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
 					g_player[nCnt].pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.5f;
@@ -383,6 +397,7 @@ void UpdatePlayer(void)
 				else
 				{// 上移動
 					g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+					g_player[nCnt].pState = PLAYERSTATE_MOVE;
 					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y) * 2.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
@@ -391,6 +406,7 @@ void UpdatePlayer(void)
 			else if (pStick->Gamepad.sThumbLY < -10922)
 			{// 下移動
 				g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pState = PLAYERSTATE_MOVE;
 				g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI) * 2.0f;
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
