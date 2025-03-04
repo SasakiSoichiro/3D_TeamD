@@ -209,11 +209,11 @@ void Updateitem(void)
 				//ƒvƒŒƒCƒ„[‚Ì‘Ì—Í‚ª2ˆÈ‰º‚È‚ç
 				if (g_item[nCnt].bHave == true && g_item[nCnt].nType == ITEMTYPE_FIVE)
 				{
-					// SE‚ð–Â‚ç‚·
-					PlaySound(SOUND_LABEL_SE2);
-
 					if (pPlayer->nLife <= 2)
 					{
+						// SE‚ð–Â‚ç‚·
+						PlaySound(SOUND_LABEL_SE2);
+
 						pPlayer->nLife += 1;
 						SetNannjamo(90);
 						g_item[nCnt].bHave = false;
