@@ -583,6 +583,9 @@ void DrawGame(int nIdx)
 	// スロー
 	DrawSlow();
 
+	//	回復
+	DrawNannjamo();
+
 	// スタミナ
 	DrawStamina();
 
@@ -611,9 +614,6 @@ void DrawGame(int nIdx)
 
 	// アイテムのUI
 	DrawItemUI();
-
-	//	回復
-	DrawNannjamo();
 
 	//	敵視点のビューポートの枠
 	DrawViewUI();

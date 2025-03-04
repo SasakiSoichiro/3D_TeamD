@@ -26,7 +26,7 @@ void InitNannjamo(void)
 {
 	// 各変数の初期化
 	g_nannjamo.ui = Nannjamo_IN;	// フェードイン状態
-	g_nannjamo.col = D3DXCOLOR(0.2f, 0.7f, 0.1f, 0.2f);
+	g_nannjamo.col = D3DXCOLOR(0.0f, 1.0f, 0.0f, 0.2f);
 	g_nannjamo.count = 0;
 	g_nannjamo.bUse = false;
 
@@ -118,10 +118,10 @@ void UpdateNannjamo(void)
 			//	フェードアウト
 			g_nannjamo.col.a += 0.02f;
 
-			if (g_nannjamo.col.a >= 0.7f)
+			if (g_nannjamo.col.a >= 0.3f)
 			{
-				g_nannjamo.col.a = 0.7f;
-				g_nannjamo.ui = Nannjamo_NONE;		// 何もしていない状態
+				g_nannjamo.col.a = 0.3f;
+				g_nannjamo.ui = Nannjamo_IN;		// 何もしていない状態
 			}
 		}
 
