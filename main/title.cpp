@@ -233,7 +233,7 @@ void UpdateTitle(void)
 	{//決定キーが押された
 
 		 //音楽を鳴らす
-		PlaySound(SOUND_LABEL_SHOT01);
+		PlaySound(SOUND_LABEL_SE);
 
 		//メニューに合わせてモードの切り替え
 		switch (nSelect2)

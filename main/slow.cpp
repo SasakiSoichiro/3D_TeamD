@@ -1,4 +1,5 @@
 #include "slow.h"
+#include "sound.h"
 
 //グローバル変数宣言
 //	グローバル
@@ -68,6 +69,9 @@ void InitSlow(void)
 //-------------------
 void UninitSlow(void)
 {
+	// SEを止める
+	StopSound(SOUND_LABEL_SE3);
+
 	//	頂点バッファの破棄
 	if (g_pVtxBuffSlow != NULL)
 	{
