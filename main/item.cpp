@@ -202,6 +202,8 @@ void Updateitem(void)
 
 					g_item[nCnt].bHave = false;
 
+					SetUsedItemUI(g_item[nCnt].nType);
+
 					SetSlow();
 				}
 				break;
@@ -217,6 +219,7 @@ void Updateitem(void)
 						pPlayer->nLife += 1;
 						SetNannjamo(90);
 						g_item[nCnt].bHave = false;
+						SetUsedItemUI(g_item[nCnt].nType);
 					}
 					
 					break;

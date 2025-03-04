@@ -195,6 +195,9 @@ void DrawItemUI(void)
 		pDevice->SetTexture(ITEM_NAGINATA, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
 		pDevice->SetTexture(ITEM_HEAL, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
 		pDevice->SetTexture(ITEM_POCKETWATCH, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
+		pDevice->SetTexture(ITEM_USEDNAGINATA, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
+		pDevice->SetTexture(ITEM_USEDHEAL, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
+		pDevice->SetTexture(ITEM_USEDPOCKETWATCH, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
 		//ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4 * nCntItemUI, 2);
 	}
@@ -222,6 +225,34 @@ void SetItemUI(int nType)
 			break;
 		}
 	}
+
+}
+
+//--------------------------------------
+// 使い終わったアイテムを×表示する処理
+//--------------------------------------
+void SetUsedItemUI(int nType)
+{
+	ITEM* pItem = Getitem();
+
+	for (int nCntUI = 0; nCntUI < MAX_ITEMUI; nCntUI++)
+	{
+		switch (nType)
+		{
+		case ITEMTYPE_THREE:
+			if(g_aItemUI[nCntUI].nType == ITEM_POCKETWATCH)g_aItemUI[nCntUI].nType = ITEM_USEDPOCKETWATCH;
+			break;
+		case ITEMTYPE_FOUR:
+			if (g_aItemUI[nCntUI].nType == ITEM_NAGINATA)g_aItemUI[nCntUI].nType = ITEM_USEDNAGINATA;
+			break;
+		case ITEMTYPE_FIVE:
+			if (g_aItemUI[nCntUI].nType == ITEM_HEAL)g_aItemUI[nCntUI].nType = ITEM_USEDHEAL;
+			break;
+		}
+
+		break;
+	}
+
 
 }
 

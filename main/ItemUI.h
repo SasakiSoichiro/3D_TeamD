@@ -14,7 +14,9 @@ typedef enum
 	ITEM_NAGINATA,
 	ITEM_HEAL,
 	ITEM_POCKETWATCH,
-	ITEM_CAMERAWAKU,
+	ITEM_USEDNAGINATA,
+	ITEM_USEDHEAL,
+	ITEM_USEDPOCKETWATCH,
 	ITEM_MAX
 }ITEMUI;
 
@@ -30,11 +32,13 @@ typedef struct
 
 static const char* ITEMUI_TEXTURE[ITEM_MAX] =
 {
-	"data\\texture\\waku.png",		//枠
-	"data\\texture\\naginata.png",	//薙刀
-	"data\\texture\\heal.png",		//回復
-	"data\\texture\\time.png",		//懐中時計
-	"data\\texture\\waku1.png",		//カメラの枠
+	"data\\texture\\waku.png",			//枠
+	"data\\texture\\naginata.png",		//薙刀
+	"data\\texture\\heal.png",			//回復
+	"data\\texture\\time.png",			//懐中時計
+	"data\\texture\\Nonaginata.png",	//薙刀(使用済)
+	"data\\texture\\Noheal.png",		//回復(使用済)
+	"data\\texture\\Notime.png",		//懐中時計(使用済)
 };
 
 //プロトタイプ宣言
@@ -43,7 +47,7 @@ void UninitItemUI(void);
 void UpdateItemUI();
 void DrawItemUI(void);
 void SetItemUI(int nType);
+void SetUsedItemUI(int nType);
 ItemUI *GetItemUI();
 int GetSelect();
-int nSelect();
 #endif
