@@ -13,7 +13,7 @@
 #include "gimmick.h"
 #include "fade.h"
 #include "sound.h"
-#include "gonnzaresu.h"
+#include "BloodSplatter.h"
 #include "slow.h"
 #include "item.h"
 
@@ -857,7 +857,7 @@ void HitPlayer(int nDamege)
 		if (g_player[nCnt].nLife >= 0)
 		{
 			g_player[nCnt].pState = PLAYERSTATE_DAMAGE;
-			SetGonzaresu(90);
+			SetBloodSplatter(90);
 		}
 		else
 		{

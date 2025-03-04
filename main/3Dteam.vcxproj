@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="block.cpp" />
+    <ClCompile Include="BloodSplatter.cpp" />
     <ClCompile Include="buttonUI.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="Cancellation.cpp" />
@@ -167,7 +168,7 @@
     <ClCompile Include="meshwall.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="motion.cpp" />
-    <ClCompile Include="nannjamo.cpp" />
+    <ClCompile Include="Recovery.cpp" />
     <ClCompile Include="noise.cpp" />
     <ClCompile Include="pause.cpp" />
     <ClCompile Include="pickupUI.cpp" />
@@ -183,7 +184,6 @@
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title3D.cpp" />
     <ClCompile Include="tutrial.cpp" />
-    <ClCompile Include="gonnzaresu.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="unlock.cpp" />
     <ClCompile Include="viewportwaku.cpp" />
@@ -210,7 +210,7 @@
     <ClInclude Include="meshwall.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="motion.h" />
-    <ClInclude Include="nannjamo.h" />
+    <ClInclude Include="Recovery.h" />
     <ClInclude Include="noise.h" />
     <ClInclude Include="pause.h" />
     <ClInclude Include="pickupUI.h" />
@@ -226,7 +226,7 @@
     <ClInclude Include="title.h" />
     <ClInclude Include="title3D.h" />
     <ClInclude Include="tutrial.h" />
-    <ClInclude Include="gonnzaresu.h" />
+    <ClInclude Include="BloodSplatter.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="unlock.h" />
     <ClInclude Include="viewportwaku.h" />

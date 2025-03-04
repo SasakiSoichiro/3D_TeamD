@@ -28,20 +28,20 @@
     <ClCompile Include="slow.cpp" />
     <ClCompile Include="edit.cpp" />
     <ClCompile Include="gimmick.cpp" />
-    <ClCompile Include="gonnzaresu.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="ItemUI.cpp" />
     <ClCompile Include="noise.cpp" />
     <ClCompile Include="gauge.cpp" />
     <ClCompile Include="KeyUI.cpp" />
     <ClCompile Include="stamina.cpp" />
-    <ClCompile Include="nannjamo.cpp" />
+    <ClCompile Include="Recovery.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Cancellation.cpp" />
     <ClCompile Include="viewportwaku.cpp" />
     <ClCompile Include="unlock.cpp" />
     <ClCompile Include="pickupUI.cpp" />
     <ClCompile Include="buttonUI.cpp" />
+    <ClCompile Include="BloodSplatter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -71,14 +71,14 @@
     <ClInclude Include="slow.h" />
     <ClInclude Include="edit.h" />
     <ClInclude Include="gimmick.h" />
-    <ClInclude Include="gonnzaresu.h" />
+    <ClInclude Include="BloodSplatter.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="ItemUI.h" />
     <ClInclude Include="noise.h" />
     <ClInclude Include="gauge.h" />
     <ClInclude Include="KeyUI.h" />
     <ClInclude Include="stamina.h" />
-    <ClInclude Include="nannjamo.h" />
+    <ClInclude Include="Recovery.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="Cancellation.h" />
     <ClInclude Include="viewportwaku.h" />

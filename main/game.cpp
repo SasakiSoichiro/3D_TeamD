@@ -25,14 +25,14 @@
 #include "sound.h"
 #include "gimmick.h"
 #include "UI.h"
-#include "gonnzaresu.h"
+#include "BloodSplatter.h"
 #include "slow.h"
 #include "gauge.h"
 #include "KeyUI.h"
 #include <time.h>
 #include "ItemUI.h"
 #include "stamina.h"
-#include "nannjamo.h"
+#include "Recovery.h"
 #include "Cancellation.h"
 #include "viewportwaku.h"
 #include "unlock.h"
@@ -104,8 +104,8 @@ void InitGame(void)
 	//　ポーズ
 	InitPause();
 
-	//	ゴンザレス
-	InitGonzaresu();
+	//	血しぶき
+	InitBloodSplatter();
 
 	// スロー
 	InitSlow();
@@ -131,7 +131,7 @@ void InitGame(void)
 	InitStamina();
 	
 	//	回復
-	InitNannjamo();
+	InitRecovery();
 
 	//	敵視点のビューポートの枠
 	InitViewUI();
@@ -324,8 +324,8 @@ void UninitGame(void)
 	//　目のUI
 	UninitEyeUI();
 
-	//	ゴンザレス
-	UinitGonzaresu();
+	//	血しぶき
+	UinitBloodSplatter();
 
 	UninitUnlock();
 
@@ -345,7 +345,7 @@ void UninitGame(void)
 	UninitStamina();
 
 	//	回復
-	UinitNannjamo();
+	UinitRecovery();
 
 	//	敵視点のビューポートの枠
 	UninitViewUI();
@@ -434,8 +434,8 @@ void UpdateGame(void)
 			//目のUI
 			UpdateEyeUI();
 
-			//	ゴンザレス
-			UpdateGonzaresu();
+			//	血しぶき
+			UpdateBloodSplatter();
 
 			UpdateUnlock();
 
@@ -455,7 +455,7 @@ void UpdateGame(void)
 			UpdateStamina();
 
 			// 回復
-			UpdateNannjamo();
+			UpdateRecovery();
 
 			//	敵視点のビューポートの枠
 			UpdateViewUI();
@@ -584,7 +584,7 @@ void DrawGame(int nIdx)
 	DrawSlow();
 
 	//	回復
-	DrawNannjamo();
+	DrawRecovery();
 
 	// スタミナ
 	DrawStamina();
@@ -592,8 +592,8 @@ void DrawGame(int nIdx)
 	//　ビルボード
 	DrawBillboard();
 
-	//	ゴンザレス
-	DrawGonzaresu();
+	//	血しぶき
+	DrawBloodSplatter();
 
 	//　タイム
 	DrawTime();

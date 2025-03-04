@@ -12,7 +12,7 @@
 #include "input.h"
 #include "sound.h"
 #include "slow.h"
-#include "nannjamo.h"
+#include "Recovery.h"
 #include "ItemUI.h"
 #include "pickupUI.h"
 
@@ -217,7 +217,7 @@ void Updateitem(void)
 						PlaySound(SOUND_LABEL_SE2);
 
 						pPlayer->nLife += 1;
-						SetNannjamo(90);
+						SetRecovery(90);
 						g_item[nCnt].bHave = false;
 						SetUsedItemUI(g_item[nCnt].nType);
 					}
