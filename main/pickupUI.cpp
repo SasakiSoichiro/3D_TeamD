@@ -1,5 +1,6 @@
 #include "pickupUI.h"
 #include "player.h"
+#include "item.h"
 
 //グローバル変数宣言
 LPDIRECT3DTEXTURE9 g_pTexturePickUpUI = NULL;//テクスチャへのポインタ
@@ -97,6 +98,10 @@ void UpdatePickUpUI(void)
 
 	//プレイヤーの位置を取得
 	Player *pPlayer = GetPlayer();
+
+	//アイテム情報を取得
+	ITEM* pItem = Getitem();
+
 	//ループ処理
 	for (int nCntPUU = 0; nCntPUU < MAX_BLB; nCntPUU++)
 	{//ブロックの最大数分ループする
@@ -123,6 +128,14 @@ void UpdatePickUpUI(void)
 				g_aPickUpUI[nCntPUU].bDisplay = false;
 			}
 
+		}
+	}
+	for (int nCnt = 0; nCnt < MAX_ITEM; nCnt++, pItem++)
+	{
+		if (pItem->bHave == true)
+		{
+			g_aPickUpUI[pItem->nIdxUI].bUse = false;
+			g_aPickUpUI[pItem->nIdxUI].bDisplay = false;
 		}
 	}
 }
@@ -192,7 +205,7 @@ int SetPickUpUI(D3DXVECTOR3 pos, D3DXVECTOR3 dir)
 	g_pVtxBuffPickUpUI->Lock(0, 0, (void**)&pVtx, 0);
 
 	//ループ処理
-	for (int nCntPUU = 0; nCntPUU < MAX_BLB; nCntPUU++)
+	for (nCntPUU = 0; nCntPUU < MAX_BLB; nCntPUU++)
 	{//ブロックの最大数分ループする
 		if (g_aPickUpUI[nCntPUU].bUse == false)
 		{//ブロックが使用されていない
