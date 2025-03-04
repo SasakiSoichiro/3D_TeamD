@@ -25,8 +25,8 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffNannjamo = NULL;
 void InitNannjamo(void)
 {
 	// 各変数の初期化
-	g_nannjamo.ui = Nannjamo_IN;	// フェードイン状態
-	g_nannjamo.col = D3DXCOLOR(0.0f, 1.0f, 0.0f, 0.2f);
+	g_nannjamo.ui = Nannjamo_IN;							// フェードイン状態
+	g_nannjamo.col = D3DXCOLOR(0.0f, 1.0f, 0.0f, 0.2f);		// カラーの設定
 	g_nannjamo.count = 0;
 	g_nannjamo.bUse = false;
 
@@ -121,7 +121,7 @@ void UpdateNannjamo(void)
 			if (g_nannjamo.col.a >= 0.3f)
 			{
 				g_nannjamo.col.a = 0.3f;
-				g_nannjamo.ui = Nannjamo_IN;		// 何もしていない状態
+				g_nannjamo.ui = Nannjamo_IN;		// フェードイン状態
 			}
 		}
 
