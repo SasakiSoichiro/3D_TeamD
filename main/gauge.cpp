@@ -13,7 +13,7 @@
 //	グローバル
 Gauge g_gauge = {};
 LPDIRECT3DTEXTURE9 g_GaugeTexture =  NULL ;			//テクスチャへのポインタ
-LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffGauge = NULL;	//バッファへのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffGauge = NULL;		//バッファへのポインタ
 
 //===================
 //	初期化処理
