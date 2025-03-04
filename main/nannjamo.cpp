@@ -8,6 +8,7 @@
 #include "nannjamo.h"
 #include "ui.h"
 #include "player.h"
+#include "sound.h"
 
 //	グローバル
 Nannjamo g_nannjamo = {};
@@ -25,7 +26,7 @@ void InitNannjamo(void)
 {
 	// 各変数の初期化
 	g_nannjamo.ui = Nannjamo_IN;	// フェードイン状態
-	g_nannjamo.col = D3DXCOLOR(0.0f, 0.4f, 0.0f, 0.7f);
+	g_nannjamo.col = D3DXCOLOR(0.2f, 0.7f, 0.1f, 0.2f);
 	g_nannjamo.count = 0;
 	g_nannjamo.bUse = false;
 
@@ -73,6 +74,9 @@ void InitNannjamo(void)
 //====================
 void UinitNannjamo(void)
 {
+	//SEを止める
+	StopSound(SOUND_LABEL_SE2);
+
 	//頂点バッファの解放
 	if (g_pVtxBuffNannjamo != NULL)
 	{
@@ -114,9 +118,9 @@ void UpdateNannjamo(void)
 			//	フェードアウト
 			g_nannjamo.col.a += 0.02f;
 
-			if (g_nannjamo.col.a >= 0.8f)
+			if (g_nannjamo.col.a >= 0.7f)
 			{
-				g_nannjamo.col.a = 0.8f;
+				g_nannjamo.col.a = 0.7f;
 				g_nannjamo.ui = Nannjamo_NONE;		// 何もしていない状態
 			}
 		}

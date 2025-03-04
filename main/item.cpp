@@ -155,7 +155,7 @@ void Updateitem(void)
 				if (KeybordTrigger(DIK_F) == true || JoyPadTrigger(JOYKEY_B) == true)
 				{//Fを押されたとき
 
-					PlaySound(SOUND_LABEL_SHOT02);
+					PlaySound(SOUND_LABEL_SE1);
 
 					//アイテムを拾う
 
@@ -195,6 +195,9 @@ void Updateitem(void)
 			case ITEM_POCKETWATCH:	// スロー
 				if (g_item[nCnt].bHave == true&& g_item[nCnt].nType==ITEMTYPE_THREE)
 				{
+					// SEを鳴らす
+					PlaySound(SOUND_LABEL_SE3);
+
 					pSlow->bUse = true;
 
 					g_item[nCnt].bHave = false;
@@ -206,6 +209,9 @@ void Updateitem(void)
 				//プレイヤーの体力が2以下なら
 				if (g_item[nCnt].bHave == true && g_item[nCnt].nType == ITEMTYPE_FIVE)
 				{
+					// SEを鳴らす
+					PlaySound(SOUND_LABEL_SE2);
+
 					if (pPlayer->nLife <= 2)
 					{
 						pPlayer->nLife += 1;
