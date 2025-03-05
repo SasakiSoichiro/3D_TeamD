@@ -60,8 +60,8 @@ bool g_bEdit = false;
 //---------------
 void InitGame(void)
 {
-	//　BGMを鳴らす
-	PlaySound(SOUND_LABEL_BGM2);
+	////　BGMを鳴らす
+	//PlaySound(SOUND_LABEL_BGM2);
 
 
 	//　各オブジェクトの初期化処理
@@ -280,8 +280,8 @@ void InitGame(void)
 //---------------
 void UninitGame(void)
 {
-	//　音楽を止める
-	StopSound();
+	////　音楽を止める
+	//StopSound();
 
 	//　各オブジェクトの終了処理
 
