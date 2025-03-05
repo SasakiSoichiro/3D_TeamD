@@ -13,6 +13,7 @@
 
 // グローバル
 Camera g_camera[MAX_CAMERA] = {};	// カメラ情報
+
 //==============================
 // 初期化処理
 //==============================
@@ -23,6 +24,7 @@ void InitCamera(void)
 	// 視点・注視点・上方向を設定する
 	for (int count = 0; count < MAX_CAMERA; count++)
 	{
+		// 各変数の初期化
 		g_camera[count].posV = D3DXVECTOR3(100.0f, 60.0f, 0.0f);
 		g_camera[count].posR = D3DXVECTOR3(100.0f, 50.0f, 0.0f);
 		g_camera[count].posVDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -43,7 +45,8 @@ void InitCamera(void)
 			g_camera[count].rot = D3DXVECTOR3(0.0f, 90.0f, 0.0f);
 		}
 	}
-	//	ビューポート構成の保存	左
+
+	// ビューポート構成の保存	左
 	g_camera[0].viewport.X = (DWORD)0.0f;
 	g_camera[0].viewport.Y = (DWORD)0.0f;
 	g_camera[0].viewport.Width = (DWORD)1280.0f;
@@ -59,14 +62,13 @@ void InitCamera(void)
 	//g_camera[1].viewport.MinZ = 0.0f;
 	//g_camera[1].viewport.MaxZ = 1.0f;
 
-	//	ビューポート構成の保存	真ん中
+	// ビューポート構成の保存	真ん中
 	g_camera[1].viewport.X = (DWORD)450.0f;
 	g_camera[1].viewport.Y = (DWORD)0.0f;
 	g_camera[1].viewport.Width = (DWORD)350.0f;
 	g_camera[1].viewport.Height = (DWORD)200.0f;
 	g_camera[1].viewport.MinZ = 0.0f;
 	g_camera[1].viewport.MaxZ = 1.0f;
-
 }
 
 //==============================
@@ -89,77 +91,76 @@ void UpdateCamera(void)
 	XINPUT_STATE* pStick;
 	pStick = GetJoyStickAngle();
 
-	//右スティック視点
+	// 右スティック視点
 	if (GetJoyStick(0) == true)
 	{
 		if (pStick->Gamepad.sThumbRX > 10922)
 		{
 			if (pStick->Gamepad.sThumbRY > 10922)
 			{
-				//上
+				// 上
 				g_camera[0].rot.x -= 0.03f;
 			}
 			else if (pStick->Gamepad.sThumbRY < -10922)
 			{
-				//下
+				// 下
 				g_camera[0].rot.x += 0.03f;
 			}
 
-			//右回り
+			// 右回り
 			g_camera[0].rot.y += 0.03f;
 		}
 		else if (pStick->Gamepad.sThumbRX < -10922)
 		{
 			if (pStick->Gamepad.sThumbRY > 10922)
 			{
-				//上
+				// 上
 				g_camera[0].rot.x -= 0.03f;
 			}
 			else if (pStick->Gamepad.sThumbRY < -10922)
 			{
-				//下
+				// 下
 				g_camera[0].rot.x += 0.03f;
 			}
 
-			//左回り
+			// 左回り
 			g_camera[0].rot.y -= 0.03f;
 		}
 		else if (pStick->Gamepad.sThumbRY > 10922)
 		{
 			if (pStick->Gamepad.sThumbRX > 10922)
 			{
-				//右回り
+				// 右回り
 				g_camera[0].rot.y += 0.03f;
 			}
 			else if (pStick->Gamepad.sThumbRX < -10922)
 			{
-				//左回り
+				// 左回り
 				g_camera[0].rot.y -= 0.03f;
 			}
 
-			//上
+			// 上
 			g_camera[0].rot.x -= 0.03f;
 		}
 		else if (pStick->Gamepad.sThumbRY < -10922)
 		{
 			if (pStick->Gamepad.sThumbRX > 10922)
 			{
-				//右回り
+				// 右回り
 				g_camera[0].rot.y += 0.03f;
 			}
 			else if (pStick->Gamepad.sThumbRX < -10922)
 			{
-				//左回り
+				// 左回り
 				g_camera[0].rot.y -= 0.03f;
 			}
 
-			//下
+			// 下
 			g_camera[0].rot.x += 0.03f;
 		}
-
 	}
 
-	//角度の正規化
+	// 角度の正規化
 	if (g_camera[0].rot.y <= -D3DX_PI)
 	{
 		g_camera[0].rot.y += D3DX_PI * 2.0f;
@@ -169,7 +170,7 @@ void UpdateCamera(void)
 		g_camera[0].rot.y += -D3DX_PI * 2.0f;
 	}
 
-	//角度制限
+	// 角度制限
 	if (g_camera[0].rot.x > 1.57f)
 	{
 		g_camera[0].rot.x = 1.57f;
@@ -179,7 +180,7 @@ void UpdateCamera(void)
 		g_camera[0].rot.x = -1.57f;
 	}
 
-	//	プレイヤーの視点
+	// プレイヤーの視点
 	if (GetEditState() == false && mode == MODE_GAME)
 	{
 		static POINT prevCursorPos = { (long)(SCREEN_WIDTH / 1.5f), (long)(SCREEN_HEIGHT / 1.5f) };
@@ -231,7 +232,7 @@ void UpdateCamera(void)
 		g_camera[0].rot.x += DeltaY;
 		g_camera[0].rot.y += DeltaX;
 
-		//角度の正規化
+		// 角度の正規化
 		if (g_camera[0].rot.y <= -D3DX_PI)
 		{
 			g_camera[0].rot.y += D3DX_PI * 2.0f;
@@ -251,7 +252,7 @@ void UpdateCamera(void)
 
 	}
 
-	//	敵の視点
+	// 敵の視点
 	Enemy* pEnemy = GetEnemy();
 
 	if (GetEditState() == false && mode == MODE_GAME)
@@ -279,33 +280,33 @@ void UpdateCamera(void)
 //==============================
 void SetCamera(int nIdx)
 {
-	//	デバイスの取得
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 
-		//	ビューマトリックスの初期化
+		// ビューマトリックスの初期化
 		D3DXMatrixIdentity(&g_camera[nIdx].mtxView);
 
-		//	ビューマトリックスの作成
+		// ビューマトリックスの作成
 		D3DXMatrixLookAtLH(&g_camera[nIdx].mtxView,
 			&g_camera[nIdx].posV,
 			&g_camera[nIdx].posR,
 			&g_camera[nIdx].vecU);
 
-		//	ビューマトリックスの設定
+		// ビューマトリックスの設定
 		pDevice->SetTransform(D3DTS_VIEW, &g_camera[nIdx].mtxView);
 
-		//	プロジェクションマトリックスの初期化
+		// プロジェクションマトリックスの初期化
 		D3DXMatrixIdentity(&g_camera[nIdx].mtxProjection);
 
-		//	プロジェクションマトリックスの初期化
+		// プロジェクションマトリックスの初期化
 		D3DXMatrixPerspectiveFovLH(&g_camera[nIdx].mtxProjection,
-			D3DXToRadian(70.0f),								//	視野角
-			SCREEN_WIDTH / SCREEN_HEIGHT,									//	アスペクト比
-			10.0f,												//	どこからどこまで
-			3000.0f);											//	カメラで表示するか
+			D3DXToRadian(70.0f),				// 視野角
+			SCREEN_WIDTH / SCREEN_HEIGHT,		// アスペクト比
+			10.0f,								// どこからどこまで
+			3000.0f);							// カメラで表示するか
 
-		//	プロジェクトマトリックスの設定
+		// プロジェクトマトリックスの設定
 		pDevice->SetTransform(D3DTS_PROJECTION, &g_camera[nIdx].mtxProjection);
 }
 
@@ -324,7 +325,8 @@ void MouseWheel(int zDelta)
 		g_camera[0].fDistance += 15.0f;
 
 	}
-	//カメラの視点の情報
+
+	// カメラの視点の情報
 	g_camera[0].posV.x = g_camera[0].posR.x - sinf(g_camera[0].rot.x) * sinf(g_camera[0].rot.y) * g_camera[0].fDistance;
 	g_camera[0].posV.y = g_camera[0].posR.y - cosf(g_camera[0].rot.x) * g_camera[0].fDistance;
 	g_camera[0].posV.z = g_camera[0].posR.z - sinf(g_camera[0].rot.x) * cosf(g_camera[0].rot.y) * g_camera[0].fDistance;
