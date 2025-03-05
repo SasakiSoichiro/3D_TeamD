@@ -417,7 +417,10 @@ void UpdatePlayer(void)
 			}
 		}
 
-		g_player[nCnt].rot.y += (g_player[nCnt].rotDest.y - g_player[nCnt].rot.y) * 0.2f;
+		//g_player[nCnt].rot.y += (g_player[nCnt].rotDest.y - g_player[nCnt].rot.y) * 0.2f;
+		
+		//カメラとプレイヤー
+		g_player[nCnt].rot.y = pCamera[0].rot.y;
 
 		// ブロックの当たり判定
 		CollisionBlock(&g_player[nCnt].pos, &g_player[nCnt].posOld);
