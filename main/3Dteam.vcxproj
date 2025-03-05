@@ -154,6 +154,7 @@
     <ClCompile Include="Cancellation.cpp" />
     <ClCompile Include="edit.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="etcUI.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gauge.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Cancellation.h" />
     <ClInclude Include="edit.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="etcUI.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gauge.h" />
