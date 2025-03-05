@@ -11,16 +11,16 @@
 #include "game.h"
 #include "enemy.h"
 
-//	グローバル
-Camera g_camera[MAX_CAMERA] = {};	//カメラ情報
+// グローバル
+Camera g_camera[MAX_CAMERA] = {};	// カメラ情報
 //==============================
-//	初期化処理
+// 初期化処理
 //==============================
 void InitCamera(void)
 {
 	MODE mode = GetMode();
 
-	//	視点・注視点・上方向を設定する
+	// 視点・注視点・上方向を設定する
 	for (int count = 0; count < MAX_CAMERA; count++)
 	{
 		g_camera[count].posV = D3DXVECTOR3(100.0f, 60.0f, 0.0f);
