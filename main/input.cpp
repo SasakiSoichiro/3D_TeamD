@@ -248,10 +248,20 @@ void VibrateController(int ContorollerID, WORD leftMoter, WORD rightMoter)
 void UpdateVibration(VibrationState* vibrationState)
 {
 	DWORD currentTime = GetTickCount();
-	if (currentTime - vibrationState->startTime < vibrationState->duration)
+	Player* pPlayer = GetPlayer();
+
+	if (pPlayer->nLife > 0)
 	{
-		//U“®’†
-		VibrateController(vibrationState->contorollerID, vibrationState->leftMoter, vibrationState->rightMoter);
+		if (currentTime - vibrationState->startTime < vibrationState->duration)
+		{
+			//U“®’†
+			VibrateController(vibrationState->contorollerID, vibrationState->leftMoter, vibrationState->rightMoter);
+		}
+		else
+		{
+			//U“®I—¹
+			VibrateController(vibrationState->contorollerID, 0, 0);
+		}
 	}
 	else
 	{
