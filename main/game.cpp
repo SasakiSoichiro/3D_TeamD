@@ -38,7 +38,7 @@
 #include "unlock.h"
 #include "pickupUI.h"
 #include "buttonUI.h"
-#include "etcUI.h"
+//#include "etcUI.h"
 
 // マクロ定義
 #define RAND (6) // ランダム用変数
