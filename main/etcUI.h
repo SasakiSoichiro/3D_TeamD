@@ -26,7 +26,7 @@ typedef struct
 	bool bUse;			//égópÇµÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
 }EtcUI;
 
-static const char* ITEMUI_TEXTURE[ETCUI_MAX] =
+static const char* ETCUI_TEXTURE[ETCUI_MAX] =
 {
 	"data\\texture\\dash00.png",		//òg
 	"data\\texture\\naginata.png",		//ì„ìÅ

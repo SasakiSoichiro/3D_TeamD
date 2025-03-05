@@ -29,7 +29,7 @@ void InitEtcUI(void)
 	{
 		//テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,
-			ITEMUI_TEXTURE[nCnt],
+			ETCUI_TEXTURE[nCnt],
 			&g_pTextureEtcUI[nCnt]);
 	}
 	//ループ処理

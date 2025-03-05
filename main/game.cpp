@@ -38,6 +38,7 @@
 #include "unlock.h"
 #include "pickupUI.h"
 #include "buttonUI.h"
+#include "etcUI.h"
 
 // マクロ定義
 #define RAND (6) // ランダム用変数
@@ -138,6 +139,9 @@ void InitGame(void)
 
 	//	ボタンのUI
 	InitButtonUI();
+
+
+	InitEtcUI();
 
 	//int a = rand() % 6 + 1;
 	int a = rand() % RAND + 1;
@@ -352,6 +356,9 @@ void UninitGame(void)
 
 	//	ボタンのUI
 	UninitButtonUI();
+
+
+	UninitEtcUI();
 }
 
 //---------------
@@ -620,6 +627,9 @@ void DrawGame(int nIdx)
 
 	//	ボタンのUI
 	DrawButtonUI();
+
+
+	DrawEtcUI();
 
 	//FOGを戻す
 	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
