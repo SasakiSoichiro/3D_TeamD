@@ -85,8 +85,6 @@ void InitEtcUI(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffEtcUI->Unlock();
 
-	//UIを設定
-	SetEtcUI(ETCUI_DASH, D3DXVECTOR3(0.0f, 300.0f, 0.0f), 5.0f, 15.0f);
 }
 
 //==================
