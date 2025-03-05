@@ -6,13 +6,10 @@
 //=============================================================================
 #include "etcUI.h"
 
-#define MAX_ITEMUI (3)
-#define ITEMUI_SIZE (60)
-
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureEtcUI[ETCUI_MAX] = {};		//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffEtcUI = NULL;			//頂点バッファへのポインタ
-EtcUI g_aEtcUI[MAX_ITEMUI];							//ブロックの情報
+EtcUI g_aEtcUI[ETCUI_MAX];							//ブロックの情報
 
 //=====================
 //アイテムUIの初期化処理
@@ -33,7 +30,7 @@ void InitEtcUI(void)
 			&g_pTextureEtcUI[nCnt]);
 	}
 	//ループ処理
-	for (int nCntBlock = 0; nCntBlock < MAX_ITEMUI; nCntBlock++)
+	for (int nCntBlock = 0; nCntBlock < ETCUI_MAX; nCntBlock++)
 	{//ブロックの数分ループする
 
 		g_aEtcUI[nCntBlock].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//位置を初期化する
@@ -44,7 +41,7 @@ void InitEtcUI(void)
 		g_aEtcUI[nCntBlock].bUse = false;							//使われていない状態にする	
 	}
 
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_ITEMUI,//(sizeof(VERTEX_2D)*必要な頂点数
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * ETCUI_MAX,//(sizeof(VERTEX_2D)*必要な頂点数
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
@@ -56,14 +53,14 @@ void InitEtcUI(void)
 	g_pVtxBuffEtcUI->Lock(0, 0, (void**)&pVtx, 0);
 
 	//ループ処理
-	for (int nCntBlock = 0; nCntBlock < MAX_ITEMUI; nCntBlock++)
+	for (int nCntBlock = 0; nCntBlock < ETCUI_MAX; nCntBlock++)
 	{//ブロックの数分ループする
 
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(1000.0f + nCntBlock * ITEMUI_SIZE, 50.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(1000.0f + nCntBlock * ITEMUI_SIZE + ITEMUI_SIZE, 50.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(1000.0f + nCntBlock * ITEMUI_SIZE, 50.0f + ITEMUI_SIZE, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(1000.0f + nCntBlock * ITEMUI_SIZE + ITEMUI_SIZE, 50.0f + ITEMUI_SIZE, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -139,7 +136,7 @@ void DrawEtcUI(void)
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	//ループ処理
-	for (int nCntItemUI = 0; nCntItemUI < MAX_ITEMUI; nCntItemUI++)
+	for (int nCntItemUI = 0; nCntItemUI < ETCUI_MAX; nCntItemUI++)
 	{//ブロックの数分ループする
 		// テクスチャの設定
 		pDevice->SetTexture(ETCUI_DASH, g_pTextureEtcUI[g_aEtcUI[nCntItemUI].nType]);

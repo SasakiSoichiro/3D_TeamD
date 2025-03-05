@@ -141,7 +141,7 @@ void InitGame(void)
 	InitButtonUI();
 
 
-	InitEtcUI();
+	//InitEtcUI();
 
 	//int a = rand() % 6 + 1;
 	int a = rand() % RAND + 1;
@@ -358,7 +358,7 @@ void UninitGame(void)
 	UninitButtonUI();
 
 
-	UninitEtcUI();
+	//UninitEtcUI();
 }
 
 //---------------
@@ -629,7 +629,7 @@ void DrawGame(int nIdx)
 	DrawButtonUI();
 
 
-	DrawEtcUI();
+	//DrawEtcUI();
 
 	//FOG‚ð–ß‚·
 	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
