@@ -89,7 +89,7 @@ void UpdateSlow(void)
 	{
 		g_Slow.fade = SLOWFADE_OUT;
 		g_nCntSlowState++;
-		if (g_nCntSlowState > 300)
+		if (g_nCntSlowState > 600)
 		{
 			g_nCntSlowState = 0;
 			g_Slow.fade = SLOWFADE_IN;
