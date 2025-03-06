@@ -182,42 +182,43 @@ void InitGame(void)
 		Setitem(D3DXVECTOR3(-1722.6f, 1.5f, -818.2f), ITEMTYPE_ONE);
 	}
 
+
 	int b = rand() % RAND + 1;
 
 	if (b == 1)
 	{
 		//　鍵の下部
-		Setitem(D3DXVECTOR3(200.0f, 1.5f, 320.5f), ITEMTYPE_TWO);
+		Setitem(D3DXVECTOR3(1807.4f, 1.5f, 790.6f), ITEMTYPE_TWO);
 	}
 
 	if (b == 2)
 	{
 		//　鍵の下部
-		Setitem(D3DXVECTOR3(932.5f, 1.5f, -512.5f), ITEMTYPE_TWO);
+		Setitem(D3DXVECTOR3(674.0f, 1.5f, -261.1), ITEMTYPE_TWO);
 	}
 
 	if (b == 3)
 	{
 		//　鍵の下部
-		Setitem(D3DXVECTOR3(717.5f, 1.5f, 25.5f), ITEMTYPE_TWO);
+		Setitem(D3DXVECTOR3(-1049.5, 1.5f, 237.3f), ITEMTYPE_TWO);
 	}
 
 	if (b == 4)
 	{
 		//　鍵の下部
-		Setitem(D3DXVECTOR3(-1092.5f, 1.5f, 452.5f), ITEMTYPE_TWO);
+		Setitem(D3DXVECTOR3(-107.7, 1.5f, 498.6), ITEMTYPE_TWO);
 	}
 
 	if (b == 5)
 	{
 		//　鍵の下部
-		Setitem(D3DXVECTOR3(-391.5f, 1.5f, -111.5f), ITEMTYPE_TWO);
+		Setitem(D3DXVECTOR3(-234.8, 1.5f, -492.5f), ITEMTYPE_TWO);
 	}
 
 	if (b == 6)
 	{//蔵
 		//　鍵の下部
-		Setitem(D3DXVECTOR3(-10.5f, 1.5f, -387.5f), ITEMTYPE_TWO);
+		Setitem(D3DXVECTOR3(1809.9f, 1.5f, -807.0f), ITEMTYPE_TWO);
 	}
 
 	//　懐中時計
