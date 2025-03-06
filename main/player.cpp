@@ -343,6 +343,15 @@ void UpdatePlayer(void)
 					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y + D3DX_PI * 0.25f) * 2.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y + D3DX_PI * 0.25f) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
+
+					if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)
+					{// ダッシュ
+						g_player[nCnt].pState = PLAYERSTATE_DASH;
+						g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+						g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI * 0.25f) * 5.0f;
+						g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI * 0.25f) * 5.0f;
+						g_player[nCnt].rotDest.y = pCamera->rot.y;
+					}
 				}
 				else if (pStick->Gamepad.sThumbLY < -10922)
 				{// 下移動
@@ -351,6 +360,15 @@ void UpdatePlayer(void)
 					g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
+
+					if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)
+					{// ダッシュ
+						g_player[nCnt].pState = PLAYERSTATE_DASH;
+						g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+						g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI * 0.75f) * 5.0f;
+						g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI * 0.75f) * 5.0f;
+						g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
+					}
 				}
 				else
 				{// 右移動
@@ -359,6 +377,15 @@ void UpdatePlayer(void)
 					g_player[nCnt].pos.x += cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
 					g_player[nCnt].pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI * 0.5f;
+
+					if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)
+					{// ダッシュ
+						g_player[nCnt].pState = PLAYERSTATE_DASH;
+						g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+						g_player[nCnt].pos.x += cosf(pCamera->rot.y - D3DX_PI) * 5.0f;
+						g_player[nCnt].pos.z -= sinf(pCamera->rot.y - D3DX_PI) * 5.0f;
+						g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
+					}
 				}
 			}
 			else if (pStick->Gamepad.sThumbLX < -10922)
@@ -370,6 +397,15 @@ void UpdatePlayer(void)
 					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y - D3DX_PI * 0.25f) * 2.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y - D3DX_PI * 0.25f) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
+
+					if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)
+					{// ダッシュ
+						g_player[nCnt].pState = PLAYERSTATE_DASH;
+						g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+						g_player[nCnt].pos.x -= sinf(pCamera->rot.y - D3DX_PI * 0.25f) * 5.0f;
+						g_player[nCnt].pos.z -= cosf(pCamera->rot.y - D3DX_PI * 0.25f) * 5.0f;
+						g_player[nCnt].rotDest.y = pCamera->rot.y;
+					}
 				}
 				else if (pStick->Gamepad.sThumbLY < -10922)
 				{// 下移動
@@ -378,6 +414,15 @@ void UpdatePlayer(void)
 					g_player[nCnt].pos.x -= sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
 					g_player[nCnt].pos.z -= cosf(pCamera->rot.y - D3DX_PI * 0.75f) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
+
+					if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)
+					{// ダッシュ
+						g_player[nCnt].pState = PLAYERSTATE_DASH;
+						g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+						g_player[nCnt].pos.x -= sinf(pCamera->rot.y - D3DX_PI * 0.75f) * 5.0f;
+						g_player[nCnt].pos.z -= cosf(pCamera->rot.y - D3DX_PI * 0.75f) * 5.0f;
+						g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
+					}
 				}
 				else
 				{// 左移動
@@ -386,6 +431,15 @@ void UpdatePlayer(void)
 					g_player[nCnt].pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 2.0f;
 					g_player[nCnt].pos.z += sinf(pCamera->rot.y - D3DX_PI) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI * 0.5f;
+
+					if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)
+					{// ダッシュ
+						g_player[nCnt].pState = PLAYERSTATE_DASH;
+						g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+						g_player[nCnt].pos.x -= cosf(pCamera->rot.y - D3DX_PI) * 5.0f;
+						g_player[nCnt].pos.z += sinf(pCamera->rot.y - D3DX_PI) * 5.0f;
+						g_player[nCnt].rotDest.y = pCamera->rot.y - D3DX_PI;
+					}
 				}
 			}
 			else if (pStick->Gamepad.sThumbLY > 10922)
@@ -408,12 +462,23 @@ void UpdatePlayer(void)
 				}
 			}
 			else if (pStick->Gamepad.sThumbLY < -10922)
+			{
+			if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)
+			{// ダッシュ
+				g_player[nCnt].pState = PLAYERSTATE_DASH;
+				g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+				g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI) * 5.0f;
+				g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 5.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
+			}
+			else
 			{// 下移動
 				g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
 				g_player[nCnt].pState = PLAYERSTATE_MOVE;
 				g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI) * 2.0f;
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
+			}
 			}
 		}
 

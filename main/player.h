@@ -14,7 +14,7 @@
 
 //マクロ定義
 #define GRAVI (0.05f)            //重力
-#define OBJ_P (20.0f)
+#define OBJ_P (10.0f)
 #define PARTS_MAX (20)
 #define USEPARTS_MAX (20)
 #define MAX_PLAYER (1)
