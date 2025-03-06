@@ -211,7 +211,7 @@ void UpdateGimmick(void)
 						g_hold.bNoPush = false;
 						g_hold.NoTouch = 0;
 					}
-					else if (KeybordRelease(DIK_F) || JoyPadRelease(JOYKEY_X) == true)
+					else if (KeybordRelease(DIK_F) || GetJoypadPress(JOYKEY_X) == false)
 					{
 						g_hold.bNoPush = true;
 						g_hold.bPush = false;
