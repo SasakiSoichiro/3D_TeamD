@@ -56,7 +56,7 @@ void InitRanking(void)
 
 	//テクスチャの読み込み(順位)
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\number000.png",
+		"data\\texture\\number006.png",
 		&g_pTextureRank);
 
 	//テクスチャの読み込み(秒・分)

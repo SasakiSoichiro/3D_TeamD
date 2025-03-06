@@ -43,7 +43,7 @@ void InitPause(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\contene.png",
+		"data\\texture\\contene1.png",
 		&g_pTexturePause[0]);
 
 	//	テクスチャの読み込み
