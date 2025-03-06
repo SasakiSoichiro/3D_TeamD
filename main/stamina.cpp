@@ -9,7 +9,7 @@
 #include "player.h"
 
 //マクロ定義
-#define MAX_TIMEWIDTH (500)
+#define MAX_TIMEWIDTH (400)
 #define MAX_TIMEHEIGHT (10)
 
 //グローバル変数
