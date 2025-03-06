@@ -390,7 +390,7 @@ void UpdatePlayer(void)
 			}
 			else if (pStick->Gamepad.sThumbLY > 10922)
 			{
-				if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)
+				if (GetJoypadPress(JOYKEY_LB) == true && g_player[nCnt].nStamina > 0 || GetJoypadPress(JOYKEY_RB) == true && g_player[nCnt].nStamina > 0)
 				{// ƒ_ƒbƒVƒ…
 					g_player[nCnt].pState = PLAYERSTATE_DASH;
 					g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
