@@ -211,7 +211,7 @@ int SetPickUpUI(D3DXVECTOR3 pos, D3DXVECTOR3 dir)
 		{//ブロックが使用されていない
 
 			g_aPickUpUI[nCntPUU].pos = pos;			//ブロックの頂点座標を代入
-			g_aPickUpUI[nCntPUU].pos.y = pos.y+50.0f;
+			g_aPickUpUI[nCntPUU].pos.y = pos.y + 30.0f;
 			g_aPickUpUI[nCntPUU].bDisplay = true;
 			g_aPickUpUI[nCntPUU].bUse = true;		//使用している状態にする
 
