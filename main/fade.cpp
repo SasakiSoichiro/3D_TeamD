@@ -1,13 +1,13 @@
-//--------------------------
-// 
-//フェード　イン・アウト
-// 
-//--------------------------
-
+//=============================================================================
+//
+//	遷移処理 [fade.cpp]
+// Author : Ryuusei Hirata
+//
+//=============================================================================
 #include "fade.h"
 
-//	グローバル
-//	頂点バッファへのポインタ
+// グローバル
+// 頂点バッファへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffFade = NULL;
 FADE g_fade;
 MODE g_modeNext;
@@ -22,11 +22,11 @@ void InitFade(MODE modeNext)
 	g_modeNext = modeNext;
 	g_colorFade = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
 
-	//	デバイス情報の取得
+	// デバイス情報の取得
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
 
-	//	頂点バッファの生成
+	// 頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
@@ -35,31 +35,31 @@ void InitFade(MODE modeNext)
 		NULL);
 
 	VERTEX_2D* pVtx;
-	//	ロック
+	// ロック
 	g_pVtxBuffFade->Lock(0, 0, (void**)&pVtx, 0);
 
-	//	頂点座標の設定
+	// 頂点座標の設定
 	pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	pVtx[1].pos = D3DXVECTOR3(1280.0f, 0.0f, 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(0.0f, 720.0f, 0.0f);
 	pVtx[3].pos = D3DXVECTOR3(1280.0f, 720.0f, 0.0f);
 
-	//	rhwの設定
+	// rhwの設定
 	pVtx[0].rhw = 1.0f;
 	pVtx[1].rhw = 1.0f;
 	pVtx[2].rhw = 1.0f;
 	pVtx[3].rhw = 1.0f;
 
-	//	頂点カラー
+	// 頂点カラー
 	pVtx[0].col = D3DXCOLOR(g_colorFade);
 	pVtx[1].col = D3DXCOLOR(g_colorFade);
 	pVtx[2].col = D3DXCOLOR(g_colorFade);
 	pVtx[3].col = D3DXCOLOR(g_colorFade);
 
-	//	アンロック
+	// アンロック
 	g_pVtxBuffFade->Unlock();
 
-	//	モード設定
+	// モード設定
 	SetMode(g_modeNext);
 }
 
@@ -69,7 +69,7 @@ void InitFade(MODE modeNext)
 //--------
 void UninitFade(void)
 {
-	//	頂点バッファの破棄
+	// 頂点バッファの破棄
 	if (g_pVtxBuffFade != NULL)
 	{
 		g_pVtxBuffFade->Release();
@@ -87,17 +87,17 @@ void UpdateFade(void)
 	{
 		if (g_fade == FADE_IN)
 		{
-			//	フェードイン
-			g_colorFade.a -= 0.01f;		//ポリゴンが透明になる速さ
+			// フェードイン
+			g_colorFade.a -= 0.01f;		// ポリゴンが透明になる速さ
 			if (g_colorFade.a <= 0.0f)
 			{
 				g_colorFade.a = 0.0f;
-				g_fade = FADE_NONE;		//何もしていない状態
+				g_fade = FADE_NONE;		// 何もしていない状態
 			}
 		}
 		else if (g_fade == FADE_OUT)
 		{
-			//	フェードアウト
+			// フェードアウト
 			g_colorFade.a += 0.02f;
 
 			if (g_colorFade.a >= 1.0f)
@@ -109,16 +109,17 @@ void UpdateFade(void)
 		}
 
 		VERTEX_2D* pVtx;
-		//	ロック
+
+		// ロック
 		g_pVtxBuffFade->Lock(0, 0, (void**)&pVtx, 0);
 
-		//	頂点カラー
+		// 頂点カラー
 		pVtx[0].col = D3DXCOLOR(g_colorFade);
 		pVtx[1].col = D3DXCOLOR(g_colorFade);
 		pVtx[2].col = D3DXCOLOR(g_colorFade);
 		pVtx[3].col = D3DXCOLOR(g_colorFade);
 
-		//	アンロック
+		// アンロック
 		g_pVtxBuffFade->Unlock();
 	}
 }
@@ -129,20 +130,20 @@ void UpdateFade(void)
 //---------
 void DrawFade(void)
 {
-	//	デバイス情報の取得
+	// デバイス情報の取得
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
 
-	//	テクスチャの設定
+	// テクスチャの設定
 	pDevice->SetTexture(0, NULL);
 
-	//	頂点フォーマットの設定
+	// 頂点フォーマットの設定
 	pDevice->SetStreamSource(0, g_pVtxBuffFade, 0, sizeof(VERTEX_2D));
 
-	//	頂点フォーマット設定
+	// 頂点フォーマット設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	//	ポリゴンの描画
+	// ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 }
 

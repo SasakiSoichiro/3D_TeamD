@@ -1,19 +1,24 @@
-#pragma once
+//=============================================================================
+//
+//	遷移処理 [fade.h]
+// Author : Ryuusei Hirata
+//
+//=============================================================================
 #ifndef _FADE_H_
 #define _FADE_H_
 
 #include "main.h"
 
-//	フェードの状態
+// フェードの状態
 typedef enum
 {
-	FADE_NONE = 0,	//	何もしていない状態
-	FADE_IN,		//	フェードイン状態
-	FADE_OUT,		//	フェードアウト状態
+	FADE_NONE = 0,	// 何もしていない状態
+	FADE_IN,		// フェードイン状態
+	FADE_OUT,		// フェードアウト状態
 	FADE_MAX
 }FADE;
 
-//	プロトタイプ
+// プロトタイプ
 void InitFade(MODE modeNext);
 void UninitFade(void);
 void UpdateFade(void);

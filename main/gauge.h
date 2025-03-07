@@ -9,16 +9,17 @@
 
 #include "main.h"
 
-
+// ゲージの構造体
 typedef struct
 {
-	D3DXVECTOR3 pos;
-	bool bUse;
+	D3DXVECTOR3 pos;	// 位置
+	bool bUse;			// 使用しているかどうか
 	float fCnt;
 	float fCnt1;
 	bool bKeyhave;
 }Gauge;
 
+// プロトタイプ宣言
 void InitGauge(void);
 void UinitGauge(void);
 void UpdateGauge(void);

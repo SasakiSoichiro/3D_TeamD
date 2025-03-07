@@ -4,6 +4,7 @@
 // Author : Hirata ryuusei
 //
 //=============================================================================
+
 #include "BloodSplatter.h"
 #include "ui.h"
 #include "player.h"

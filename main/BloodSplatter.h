@@ -4,6 +4,7 @@
 // Author : Hirata ryuusei
 //
 //=============================================================================
+
 #ifndef _BLOODSPLATTER_H_
 #define _BLOODSPLATTER_H_
 
