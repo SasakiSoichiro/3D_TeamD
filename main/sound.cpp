@@ -33,13 +33,13 @@ DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 // サウンドの情報
 SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 {
-	{"data/BGM/Silent.wav", -1},		// BGM1
-	{"data/BGM/Darkdrama2.wav", -1},	// BGM2
+	{"data/BGM/ProhibitedArea.wav", -1},	// BGM1
+	{"data/BGM/Darkdrama2.wav", -1},		// BGM2
 	{"data/BGM/Madness.wav",-1},			// BGM3
-	{"data/SE/depressed.wav", 0},		// SE1
-	{"data/SE/geton.wav", 0},			// SE2
-	{"data/SE/Recovery2.wav",0},		// SE3
-	{"data/SE/Slow.wav",0},				// SE4
+	{"data/SE/depressed.wav", 0},			// SE1
+	{"data/SE/geton.wav", 0},				// SE2
+	{"data/SE/Recovery2.wav",0},			// SE3
+	{"data/SE/Slow.wav",0},					// SE4
 };
 
 //=============================================================================
