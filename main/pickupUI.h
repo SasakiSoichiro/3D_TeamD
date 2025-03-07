@@ -7,7 +7,7 @@
 #ifndef _PICKUPUI_H_//このマクロ定義がされていなかったら
 #define _PICKUPUI_H_//2重インクルード防止のマクロ定義
 #include "main.h"
-#define PICKBILL (10.0f)
+#define PICKBILL (7.0f)
 #define MAX_BLB (16)
 
 typedef struct
