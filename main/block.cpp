@@ -160,7 +160,6 @@ void UninitBlock(void)
 		{
 			if (g_Block[nCntEdit].tex.apTexture[nCntTexture] != NULL)
 			{
-				g_Block[nCntEdit].tex.apTexture[nCntTexture]->Release();
 				g_Block[nCntEdit].tex.apTexture[nCntTexture] = NULL;
 
 			}
@@ -169,13 +168,11 @@ void UninitBlock(void)
 		// メッシュの破棄
 		if (g_Block[nCntEdit].tex.pMesh != NULL)
 		{
-			g_Block[nCntEdit].tex.pMesh->Release();
 			g_Block[nCntEdit].tex.pMesh = NULL;
 		}
 		// 頂点バッファの解放
 		if (g_Block[nCntEdit].tex.pBuffMat != NULL)
 		{
-			g_Block[nCntEdit].tex.pBuffMat->Release();
 			g_Block[nCntEdit].tex.pBuffMat = NULL;
 		}
 

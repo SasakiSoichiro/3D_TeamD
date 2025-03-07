@@ -21,6 +21,7 @@ typedef struct
 	D3DXMATRIX mtxProjection;	// プロジェクションマトリックス
 	D3DXMATRIX mtxView;			// ビューマトリックス
 	D3DXVECTOR3 rot;			// 向き
+	D3DXVECTOR3 rotDest;		// 目的の向き
 	float fDistance;			// 視点から注視点の距離
 	D3DXVECTOR3 posRDest;		// 目的の位置(右)
 	D3DXVECTOR3 posVDest;		// 目的の位置(左)

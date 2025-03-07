@@ -252,39 +252,35 @@ void UpdateEnemy(void)
 				if (g_nCntEnemyState <= 0)
 				{
 					g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
-					pPlayer->bAttack = false;
 					//SetMotionType(EMOTIONTYPE_NEUTRAL, true, 10, nCntEnemy);
 				}
 
 				break;
 			case ENEMYSTATE_ACTION:
 				g_nCntEnemyState--;
+				
 
 				//g_Enemy[nCntEnemy].move.x = 0.0f;
 				//g_Enemy[nCntEnemy].move.z = 0.0f;
-				
-				if (g_Enemy[nCntEnemy].OldState != g_Enemy[nCntEnemy].State)
+				if (g_nCntEnemyState >= 0)
 				{
-					SetMotionType(EMOTIONTYPE_ACTION, true, 10, nCntEnemy);
-					StartVibration(&vibrationState, 1000,60000,60000);
-				}
-	
-				if (g_nCntEnemyState <= 0)
-				{
-					g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
-					SetMotionType(EMOTIONTYPE_NEUTRAL, true, 10, nCntEnemy);
-					pPlayer->bAttack = false;
-				}
+					if (g_Enemy[nCntEnemy].motionType != EMOTIONTYPE_ACTION)
+					{
+						SetMotionType(EMOTIONTYPE_ACTION, true, 10, nCntEnemy);
+						g_Enemy[nCntEnemy].move.x = 0.0f;
+						g_Enemy[nCntEnemy].move.z = 0.0f;
+						StartVibration(&vibrationState, 1000, 60000, 60000);
 
+					}
+					if (g_nCntEnemyState <= 0)
+					{
+						g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
+						SetMotionType(EMOTIONTYPE_NEUTRAL, true, 10, nCntEnemy);
+					}
+				}
 				break;
 			}
 
-			if (pPlayer->bAttack == true)
-			{
-				g_Enemy[nCntEnemy].move.x = 0.0f;
-				g_Enemy[nCntEnemy].move.z = 0.0f;
-
-			}
 
 			g_Enemy[nCntEnemy].OldState = g_Enemy[nCntEnemy].State;
 
@@ -311,9 +307,17 @@ void UpdateEnemy(void)
 			//“–‚½‚è”»’è
 			if ((fDistance <= fRadius) && pPlayer->bAttack == false)
 			{
+				pPlayer->bCaught = true;
 				g_nCntEnemyState = 150;
 				g_Enemy[nCntEnemy].State = ENEMYSTATE_ACTION;
-				HitPlayer(1);
+
+				if (g_Enemy[nCntEnemy].motionType == EMOTIONTYPE_ACTION && g_Enemy[nCntEnemy].nKey >= 2)
+				{
+					if (pPlayer->pState != PLAYERSTATE_DAMAGE)
+					{
+						HitPlayer(1);
+					}
+				}
 			}
 
 
@@ -512,6 +516,10 @@ void UpdateEnemy(void)
 
 			}
 
+			if (g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].nNumKey - 1 <= g_Enemy[nCntEnemy].nKey && g_Enemy[nCntEnemy].aMotionInfo[g_Enemy[nCntEnemy].motionType].bLoop == false)
+			{
+				g_Enemy[nCntEnemy].motionType = EMOTIONTYPE_NEUTRAL;
+			}
 		}
 
 
@@ -556,7 +564,6 @@ void UpdateEnemy(void)
 
 				}
 			}
-
 		}
 	}
 	UpdateVibration(&vibrationState);
