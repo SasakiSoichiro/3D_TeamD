@@ -161,7 +161,7 @@ void UpdateGauge(void)
 
 		if (g_gauge.fCnt >= 0)
 		{
-			g_gauge.fCnt -= 0.005f;
+			g_gauge.fCnt -= 0.01f;
 		}
 	}
 	

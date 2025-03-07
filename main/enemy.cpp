@@ -19,6 +19,7 @@ int g_nNumEnemy = 0;//敵の総数
 int g_nCntEnemyState = 0;
 int g_nIdxEnemyShadow;
 int g_nCntPos = 0;
+bool bRange;
 Enemy g_LoadEnemy[3];
 
 //初期化処理
@@ -39,7 +40,7 @@ void InitEnemy(void)
 		g_Enemy[nCnt].bBlendMotion = false;
 		g_Enemy[nCnt].bUse = false;
 	}
-
+	bRange = false;
 	nCntTypeState = 0;
 	g_nNumEnemy = 0;
 	for (int nCntType = 0; nCntType < 1; nCntType++)
@@ -196,6 +197,8 @@ void UpdateEnemy(void)
 				if (fDistanceChase <= fRadiusChase && fvecCross[0] > 0 && fvecCross[1] > 0)
 				{//エネミーの視界内に入ったら
 
+					bRange = true;
+
 					//チェイス状態
 					g_Enemy[0].State = ENEMYSTATE_CHASE;
 					SetMotionType(EMOTIONTYPE_MOVE, true, 10, nCntEnemy);
@@ -220,6 +223,8 @@ void UpdateEnemy(void)
 				if (fDistanceChase > fRadiusChase)
 				{//視界内から外れたら
 
+					bRange = false;
+
 					//徘徊状態
 					g_Enemy[0].State = ENEMYSTATE_NORMAL;
 					SetMotionType(EMOTIONTYPE_NEUTRAL, true, 10, nCntEnemy);
@@ -233,8 +238,8 @@ void UpdateEnemy(void)
 				//チェイス処理
 				g_Enemy[0].rotDest.y = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z)) + D3DX_PI;
 				fAnglemove = atan2f((pPlayer->pos.x - g_Enemy[0].pos.x), (pPlayer->pos.z - g_Enemy[0].pos.z));
-				g_Enemy[0].move.x = sinf(fAnglemove) * 1.0f;
-				g_Enemy[0].move.z = cosf(fAnglemove) * 1.0f;
+				g_Enemy[0].move.x = sinf(fAnglemove) * 1.25f;
+				g_Enemy[0].move.z = cosf(fAnglemove) * 1.25f;
 				StartVibration(&vibrationState, 20,20000,20000);
 				break;
 
@@ -1071,4 +1076,12 @@ void SetMotionType(EMOTIONTYPE MotionType, bool bBlendMotion, int nFrameBlend,in
 	g_Enemy[0].nFrameBlend = nFrameBlend;
 	g_Enemy[0].nKeyBlend = 0;
 	g_Enemy[0].nCntMotionBlend = 0;
+}
+
+//====================
+//敵の条件文処理
+//====================
+bool IsRange()
+{
+	return bRange;
 }

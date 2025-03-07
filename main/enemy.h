@@ -121,6 +121,7 @@ void CollisionEnemytoEnemy(int nCnt);
 void LoiterEnemy(void);
 Enemy*GetEnemy(void);
 int GetNumEnemy();
+bool IsRange();
 void SetMotionType(EMOTIONTYPE MotionType, bool bBlendMotion, int nFrameBlend,int nCnt);
 static const char* EPARTS_FILE[EPARTS_MAX] =
 {

@@ -38,6 +38,7 @@
 #include "unlock.h"
 #include "pickupUI.h"
 #include "buttonUI.h"
+#include "objective.h"
 //#include "etcUI.h"
 
 // マクロ定義
@@ -140,7 +141,8 @@ void InitGame(void)
 	//	ボタンのUI
 	InitButtonUI();
 
-
+	//	目的の表示
+	InitObjective();
 	//InitEtcUI();
 
 	//int a = rand() % 6 + 1;
@@ -270,6 +272,12 @@ void InitGame(void)
 	SetButtonUI(D3DXVECTOR3(1150.0f, 125.0f, 0.0f), BUTTONUITYPE_BUTTON_Y, 20.0f, 15.0f);
 	SetButtonUI(D3DXVECTOR3(1090.0f, 25.0f, 0.0f), BUTTONUITYPE_BUTTON_X, 80.0f, 20.0f);
 
+	//	目的の表示
+	SetObjective(D3DXVECTOR3(20.0f, 100.0f, 0.0f), 10.0f, 10.0f, OBJECTIVETYPE_WAKU1);
+	SetObjective(D3DXVECTOR3(20.0f, 150.0f, 0.0f), 10.0f, 10.0f, OBJECTIVETYPE_WAKU2);
+	SetObjective(D3DXVECTOR3(20.0f, 100.0f, 0.0f), 10.0f, 10.0f, OBJECTIVETYPE_CHECK);
+	SetObjective(D3DXVECTOR3(145.0f, 100.0f, 0.0f), 110.0f, 15.0f, OBJECTIVETYPE_TEXT1);
+	SetObjective(D3DXVECTOR3(165.0f, 150.0f, 0.0f), 130.0f, 15.0f, OBJECTIVETYPE_TEXT2);
 
 	//　初期化処理
 	g_bEdit = false;
@@ -358,7 +366,8 @@ void UninitGame(void)
 	//	ボタンのUI
 	UninitButtonUI();
 
-
+	//	目的の表示
+	UninitObjective();
 	//UninitEtcUI();
 }
 
@@ -470,6 +479,9 @@ void UpdateGame(void)
 
 			//	ボタンのUI
 			UpdateButtonUI();
+
+			//	目的の表示
+			UpdateObjective();
 
 			// スロー
 			UpdateSlow();
@@ -629,7 +641,8 @@ void DrawGame(int nIdx)
 	//	ボタンのUI
 	DrawButtonUI();
 
-
+	//	目的の表示
+	DrawObjective();
 	//DrawEtcUI();
 
 	//FOGを戻す

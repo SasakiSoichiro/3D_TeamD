@@ -7,6 +7,7 @@
 
 #include "stamina.h"
 #include "player.h"
+#include "enemy.h"
 
 //マクロ定義
 #define MAX_TIMEWIDTH (400)
@@ -106,6 +107,10 @@ void UninitStamina()
 void UpdateStamina()
 {
 	Player* pPlayer = GetPlayer();
+	bool pRange = IsRange();
+
+	int nDate = 2;
+	int aDate = 1;
 
 	VERTEX_2D* pVtx{};
 
@@ -113,12 +118,25 @@ void UpdateStamina()
 	if (pPlayer->pState == PLAYERSTATE_DASH)
 	{//プレイヤーが走っているとき
 
-		//スタミナ値を減らす
-		pPlayer->nStamina--;
+		if (pRange == false)
+		{
+			//スタミナ値を減らす
+			pPlayer->nStamina--;
 
-		if (pPlayer->nStamina <= 0)
-		{//スタミナが0になったとき
-			bStamina = false;
+			if (pPlayer->nStamina <= 0)
+			{//スタミナが0になったとき
+				bStamina = false;
+			}
+		}
+		else if (pRange == true)
+		{
+			//スタミナ値を減らす
+			pPlayer->nStamina = pPlayer->nStamina - nDate;
+
+			if (pPlayer->nStamina <= 0)
+			{//スタミナが0になったとき
+				bStamina = false;
+			}
 		}
 	}
 	else
@@ -139,22 +157,30 @@ void UpdateStamina()
 				//スタミナを使えるようにする
 				bStamina = true;
 			}
-			
+
 		}
 		else if (pPlayer->nStamina < 300)
 		{//スタミナが100未満で走っていないとき
-			pPlayer->nStamina++;
+
+			if (pRange == false)
+			{
+				pPlayer->nStamina++;
+			}
+			else if (pRange == true)
+			{
+				pPlayer->nStamina = pPlayer->nStamina + aDate;
+			}
 		}
-		
+
 	}
 
-	float fStamina = pPlayer->nStamina*0.01f;
+	float fStamina = pPlayer->nStamina * 0.01f;
 	//頂点バッファのロック、頂点データへのポインタ取得
 	g_pVtxBuffStamina->Lock(0, 0, (void**)&pVtx, 0);
 
-	pVtx[1].pos.x = StaminaPos.x + MAX_TIMEWIDTH* fStamina;
+	pVtx[1].pos.x = StaminaPos.x + MAX_TIMEWIDTH * fStamina;
 
-	pVtx[3].pos.x = StaminaPos.x + MAX_TIMEWIDTH* fStamina;
+	pVtx[3].pos.x = StaminaPos.x + MAX_TIMEWIDTH * fStamina;
 
 
 	//頂点バッファをアンロック
@@ -168,6 +194,7 @@ void UpdateStamina()
 	{
 		bScreen = true;
 	}
+
 }
 
 //====================================================
