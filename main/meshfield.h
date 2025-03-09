@@ -11,8 +11,8 @@
 
 #define OBJ_X (1850.0f)
 #define OBJ_Z (850.0f)
-#define XMESH (4)
-#define ZMESH (4)
+#define XMESH (20)
+#define ZMESH (20)
 //#define VTXCNT ((XMESH+1)*(ZMESH+1))
 //#define POLYCNT ((2*XMESH*ZMESH)+4*(ZMESH-1))
 //#define IDXCNT (((XMESH+1)*2*ZMESH)+(ZMESH-1)*4)

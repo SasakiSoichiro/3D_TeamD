@@ -44,6 +44,7 @@
     <ClCompile Include="BloodSplatter.cpp" />
     <ClCompile Include="etcUI.cpp" />
     <ClCompile Include="objective.cpp" />
+    <ClCompile Include="flashlight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="buttonUI.h" />
     <ClInclude Include="etcUI.h" />
     <ClInclude Include="objective.h" />
+    <ClInclude Include="flashlight.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />

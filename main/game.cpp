@@ -39,6 +39,7 @@
 #include "pickupUI.h"
 #include "buttonUI.h"
 #include "objective.h"
+#include "flashlight.h"
 //#include "etcUI.h"
 
 // マクロ定義
@@ -69,6 +70,9 @@ void InitGame(void)
 
 	//　ライト
 	InitLight();
+
+	//懐中電灯
+	InitFlashLight();
 
 	//　カメラ
 	InitCamera();
@@ -298,6 +302,9 @@ void UninitGame(void)
 	//　ライト
 	UninitLight();
 
+	//　懐中電灯
+	UninitFlashLight();
+
 	//　メッシュフィールド
 	UninitMeshfield();
 
@@ -424,6 +431,9 @@ void UpdateGame(void)
 			//ライト
 			UpdateLight();
 
+			//　懐中電灯
+			UpdateFlashLight();
+
 			//ブロック
 			UpdateBlock();
 
@@ -544,7 +554,7 @@ void DrawGame(int nIdx)
 	pDevice = GetDevice();
 
 	//FOGの設定
-	//SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
+	SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
 
 	//　各オブジェクトの描画処理
 
@@ -598,7 +608,7 @@ void DrawGame(int nIdx)
 	DrawGimmick();
 
 	//FOGを消す
-	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 	// スロー
 	DrawSlow();
@@ -646,7 +656,7 @@ void DrawGame(int nIdx)
 	//DrawEtcUI();
 
 	//FOGを戻す
-	//pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 
 	if (g_bPause == true)

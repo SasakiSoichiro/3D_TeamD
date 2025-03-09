@@ -156,6 +156,7 @@
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="etcUI.cpp" />
     <ClCompile Include="fade.cpp" />
+    <ClCompile Include="flashlight.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gauge.cpp" />
     <ClCompile Include="gimmick.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="etcUI.h" />
     <ClInclude Include="fade.h" />
+    <ClInclude Include="flashlight.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gauge.h" />
     <ClInclude Include="gimmick.h" />

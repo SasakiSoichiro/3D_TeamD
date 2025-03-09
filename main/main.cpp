@@ -646,8 +646,8 @@ void SetupVertexFog(DWORD Color, DWORD Mode, BOOL UseRange, FLOAT Density)
 	//デバイスの取得
 	pDevice = GetDevice();
 
-	float Start = 20.0f,    // Linear fog distances
-		End = 700.0f;
+	float Start = 10.0f,    // Linear fog distances
+		End = 800.0f;
 
 	// Enable fog blending.
 	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);

@@ -1059,8 +1059,8 @@ void LoiterEnemy(void)
 
 	g_Enemy[0].rotDest.y = atan2f((Turn[g_nCntPos].x - g_Enemy[0].pos.x), (Turn[g_nCntPos].z - g_Enemy[0].pos.z))+D3DX_PI;
 	fAnglemove = atan2f((Turn[g_nCntPos].x - g_Enemy[0].pos.x), (Turn[g_nCntPos].z - g_Enemy[0].pos.z));
-	g_Enemy[0].move.x = sinf(fAnglemove) * 2.0f;
-	g_Enemy[0].move.z = cosf(fAnglemove) * 2.0f;
+	g_Enemy[0].move.x = sinf(fAnglemove) * 1.0f;
+	g_Enemy[0].move.z = cosf(fAnglemove) * 1.0f;
 
 }
 
