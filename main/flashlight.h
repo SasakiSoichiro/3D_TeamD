@@ -21,5 +21,6 @@ void InitFlashLight(void);
 void UninitFlashLight(void);
 void UpdateFlashLight(void);
 void SetupFlashLight(D3DXVECTOR3 pos);
+FLASHLIGHT* GetFlashLight(void);
 
 #endif // !_LIGHT_H_

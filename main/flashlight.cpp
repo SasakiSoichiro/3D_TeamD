@@ -77,18 +77,7 @@ void UpdateFlashLight(void)
 
 	for (int nCntLight = 0; nCntLight < MAX_FLASH; nCntLight++)
 	{
-		if (KeybordTrigger(DIK_0) == true)
-		{
-			if (g_FlashLight[nCntLight].bLight == true)
-			{
-				g_FlashLight[nCntLight].bLight = false;
-			}
-			else if (g_FlashLight[nCntLight].bLight == false)
-			{
-				g_FlashLight[nCntLight].bLight = true;
-			}
-		}
-		else if (g_FlashLight[nCntLight].bLight == true)
+		if (g_FlashLight[nCntLight].bLight == true)
 		{
 			g_FlashLight[nCntLight].light.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);		// 白色の拡散光
 
@@ -98,7 +87,7 @@ void UpdateFlashLight(void)
 
 			g_FlashLight[nCntLight].light.Direction = pCamera->rot;  // プレイヤーの向いている方向にライトを向ける
 
-			g_FlashLight[nCntLight].light.Range = 900.0f;  // 光の到達距離
+			g_FlashLight[nCntLight].light.Range = 800.0f;  // 光の到達距離
 
 			//	ライトを設定する
 			pDevice->SetLight(nCntLight, &g_FlashLight[nCntLight].light);
@@ -135,4 +124,8 @@ void SetupFlashLight(D3DXVECTOR3 pos)
 		g_FlashLight[nCntLight].light.Position = D3DXVECTOR3(pos.x, pos.y, pos.z); // ライトの位置
 		g_FlashLight[nCntLight].light.Range = 100.0f;
 	}
+}
+FLASHLIGHT* GetFlashLight(void)
+{
+	return &g_FlashLight[0];
 }

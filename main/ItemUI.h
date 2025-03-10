@@ -17,6 +17,7 @@ typedef enum
 	ITEM_USEDNAGINATA,
 	ITEM_USEDHEAL,
 	ITEM_USEDPOCKETWATCH,
+	ITEM_FLASHLIGHT,
 	ITEM_MAX
 }ITEMUI;
 
@@ -39,6 +40,7 @@ static const char* ITEMUI_TEXTURE[ITEM_MAX] =
 	"data\\texture\\Nonaginata.png",	//薙刀(使用済)
 	"data\\texture\\Noheal.png",		//回復(使用済)
 	"data\\texture\\Notime.png",		//懐中時計(使用済)
+	"data\\texture\\flashPicture.png",	//懐中電灯(使用済)
 };
 
 //プロトタイプ宣言

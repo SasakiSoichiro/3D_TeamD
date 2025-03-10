@@ -1,7 +1,7 @@
 //=============================================================================
 //
 //　アイテムUI処理 [itemUI.cpp]
-// 　Author : 佐々木奏一郎
+// 　Author : SasakiSoichiro
 //
 //=============================================================================
 #include "itemUI.h"
@@ -219,6 +219,9 @@ void SetItemUI(int nType)
 				break;
 			case ITEMTYPE_FIVE:
 				g_aItemUI[nCntUI].nType = ITEM_HEAL;
+				break;
+			case ITEMTYPE_SIX:
+				g_aItemUI[nCntUI].nType = ITEM_FLASHLIGHT;
 				break;
 			}
 
