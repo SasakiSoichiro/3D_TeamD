@@ -15,7 +15,6 @@
 #include "Recovery.h"
 #include "ItemUI.h"
 #include "pickupUI.h"
-#include "flashlight.h"
 
 // グローバル変数宣言
 ITEM g_item[ITEMTYPE_MAX];
@@ -28,7 +27,7 @@ void Inititem(void)
 {
 	//	デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	
+
 
 	for (int nCnt = 0; nCnt < ITEMTYPE_MAX; nCnt++)
 	{
@@ -175,6 +174,20 @@ void Updateitem(void)
 						g_item[nCnt].bHold = true;
 					}
 
+					if (g_item[nCnt].bUse == false && g_item[nCnt].nType == ITEMTYPE_THREE)
+					{
+						g_item[nCnt].bHold = true;
+					}
+
+					if (g_item[nCnt].bUse == false && g_item[nCnt].nType == ITEMTYPE_FIVE)
+					{
+						g_item[nCnt].bHold = true;
+					}
+
+					if (g_item[nCnt].bUse == false && g_item[nCnt].nType == ITEMTYPE_SIX)
+					{
+						g_item[nCnt].bHold = true;
+					}
 
 				}
 			}
@@ -182,12 +195,11 @@ void Updateitem(void)
 	}
 
 	int nSelect = GetSelect();
-	ItemUI *pItemUI= GetItemUI();
-	FLASHLIGHT* pLight = GetFlashLight();
-	
-	if (KeybordTrigger(DIK_E) == true|| JoyPadTrigger(JOYKEY_X) == true)
+	ItemUI* pItemUI = GetItemUI();
+
+	if (KeybordTrigger(DIK_E) == true || JoyPadTrigger(JOYKEY_X) == true)
 	{//懐中時計を持っている時、懐中時計を使用する処理
-		
+
 		pItemUI += nSelect;
 		for (int nCnt = 0; nCnt < ITEMTYPE_MAX; nCnt++)
 		{
@@ -195,7 +207,7 @@ void Updateitem(void)
 			switch (pItemUI->nType)
 			{
 			case ITEM_POCKETWATCH:	// スロー
-				if (g_item[nCnt].bHave == true&& g_item[nCnt].nType==ITEMTYPE_THREE)
+				if (g_item[nCnt].bHave == true && g_item[nCnt].nType == ITEMTYPE_THREE)
 				{
 					// SEを鳴らす
 					PlaySound(SOUND_LABEL_SE3);
@@ -222,25 +234,6 @@ void Updateitem(void)
 						SetRecovery(90);
 						g_item[nCnt].bHave = false;
 						SetUsedItemUI(g_item[nCnt].nType);
-					}
-					
-					break;
-				}
-			case ITEM_FLASHLIGHT:		// 回復アイテム
-				//プレイヤーの体力が2以下なら
-				if (g_item[nCnt].bHave == true && g_item[nCnt].nType == ITEMTYPE_SIX)
-				{
-
-					// SEを鳴らす
-					PlaySound(SOUND_LABEL_SE4);
-
-					if (pLight->bLight == true)
-					{
-						pLight->bLight = false;
-					}
-					else if (pLight->bLight == false)
-					{
-						pLight->bLight = true;
 					}
 
 					break;

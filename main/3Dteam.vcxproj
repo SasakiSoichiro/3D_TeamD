@@ -155,6 +155,7 @@
     <ClCompile Include="edit.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="etcUI.cpp" />
+    <ClCompile Include="explain.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="flashlight.cpp" />
     <ClCompile Include="game.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="edit.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="etcUI.h" />
+    <ClInclude Include="explain.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="flashlight.h" />
     <ClInclude Include="game.h" />

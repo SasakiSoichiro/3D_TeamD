@@ -45,6 +45,7 @@
     <ClCompile Include="etcUI.cpp" />
     <ClCompile Include="objective.cpp" />
     <ClCompile Include="flashlight.cpp" />
+    <ClCompile Include="explain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -91,6 +92,7 @@
     <ClInclude Include="etcUI.h" />
     <ClInclude Include="objective.h" />
     <ClInclude Include="flashlight.h" />
+    <ClInclude Include="explain.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />

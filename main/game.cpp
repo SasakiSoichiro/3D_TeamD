@@ -40,6 +40,8 @@
 #include "buttonUI.h"
 #include "objective.h"
 #include "flashlight.h"
+#include "explain.h"
+
 //#include "etcUI.h"
 
 // マクロ定義
@@ -56,6 +58,8 @@ bool g_bPause = false;
 
 // エディット
 bool g_bEdit = false;
+
+bool g_bExplain = false;
 
 //---------------
 //	初期化処理
@@ -147,6 +151,9 @@ void InitGame(void)
 
 	// 目的の表示
 	InitObjective();
+
+	//	アイテム説明
+	InitExplain();
 
 	//InitEtcUI();
 
@@ -378,6 +385,9 @@ void UninitGame(void)
 
 	// 目的の表示
 	UninitObjective();
+
+	//	アイテム説明
+	UninitExplain();
 	//UninitEtcUI();
 }
 
@@ -389,6 +399,7 @@ void UpdateGame(void)
 	bool isGoal = IsGoal();			// ゴールの判定
 
 	Player* pPlayer = GetPlayer();	// プレイヤー情報取得
+	EXPLAIN* pExplain = GetExplain();
 
 	// ポーズ処理
 	if (KeybordTrigger(DIK_TAB) || JoyPadTrigger(JOYKEY_START) == true)
@@ -421,81 +432,84 @@ void UpdateGame(void)
 	{// b_Pauseがfalse
 		if (g_bEdit == false)
 		{// g_Editがfalse
-
-			// ゲーム中の各オブジェクトの更新処理
+			if (pExplain[0].bLook == false && pExplain[1].bLook == false && pExplain[2].bLook == false)
+			{
+				// ゲーム中の各オブジェクトの更新処理
 # if 1		// メッシュフィールド
-			UpdateMeshfield();
+				UpdateMeshfield();
 
-			// カメラ
-			UpdateCamera();
+				// カメラ
+				UpdateCamera();
 
-			// ライト
-			UpdateLight();
+				// ライト
+				UpdateLight();
 
-			// 懐中電灯
-			UpdateFlashLight();
+				// 懐中電灯
+				UpdateFlashLight();
 
-			// ブロック
-			UpdateBlock();
+				// ブロック
+				UpdateBlock();
 
-			// プレイヤー
-			UpdatePlayer();
+				// プレイヤー
+				UpdatePlayer();
 
-			// 敵
-			UpdateEnemy();
+				// 敵
+				UpdateEnemy();
 
-			// ギミック
-			UpdateGimmick();
+				// ギミック
+				UpdateGimmick();
 
-			// タイム
-			UpdateTime();
+				// タイム
+				UpdateTime();
 
-			// ビルボード
-			UpdateBillboard();
+				// ビルボード
+				UpdateBillboard();
 
-			// アイテム収集用ビルボード
-			UpdatePickUpUI();
+				// アイテム収集用ビルボード
+				UpdatePickUpUI();
 
-			// アイテム
-			Updateitem();
+				// アイテム
+				Updateitem();
 
-			// 目のUI
-			UpdateEyeUI();
+				// 目のUI
+				UpdateEyeUI();
 
-			// 血しぶき
-			UpdateBloodSplatter();
+				// 血しぶき
+				UpdateBloodSplatter();
 
-			UpdateUnlock();
+				UpdateUnlock();
 
-			// ゲージ
-			UpdateGauge();
+				// ゲージ
+				UpdateGauge();
 
-			// 解除UI
-			UpdateCancellation();
+				// 解除UI
+				UpdateCancellation();
 
-			// 鍵のUI
-			UpdateKeyUI();
+				// 鍵のUI
+				UpdateKeyUI();
 
-			// アイテムのUI
-			UpdateItemUI();
+				// アイテムのUI
+				UpdateItemUI();
 
-			// スタミナ
-			UpdateStamina();
+				// スタミナ
+				UpdateStamina();
 
-			// 回復
-			UpdateRecovery();
+				// 回復
+				UpdateRecovery();
 
-			// 敵視点のビューポートの枠
-			UpdateViewUI();
+				// 敵視点のビューポートの枠
+				UpdateViewUI();
 
-			// ボタンのUI
-			UpdateButtonUI();
+				// ボタンのUI
+				UpdateButtonUI();
 
-			// 目的の表示
-			UpdateObjective();
+				// 目的の表示
+				UpdateObjective();
 
-			// スロー
-			UpdateSlow();
+				// スロー
+				UpdateSlow();
+			}
+			UpdateExplain();
 #endif
 		}
 		else if (g_bEdit == true)
@@ -553,6 +567,8 @@ void DrawGame(int nIdx)
 	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
+
+	EXPLAIN* pExplain = GetExplain();
 
 	// FOGの設定
 	SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
@@ -653,6 +669,11 @@ void DrawGame(int nIdx)
 	// 目的の表示
 	DrawObjective();
 	//DrawEtcUI();
+
+	if (pExplain[0].bLook == true || pExplain[1].bLook == true || pExplain[2].bLook == true)
+	{
+		DrawExplain();
+	}
 
 	// FOGを戻す
 	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
