@@ -34,5 +34,6 @@ void UninitSound(void);
 HRESULT PlaySound(SOUND_LABEL label);
 void StopSound(SOUND_LABEL label);
 void StopSound(void);
+void SetVolume(SOUND_LABEL label,float volume);
 
 #endif

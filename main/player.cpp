@@ -296,25 +296,26 @@ void UpdatePlayer(void)
 
 				}
 			}
-			else if (GetKeyboardPress(DIK_W) == true)
+			else if ((GetKeyboardPress(DIK_W) == true && GetKeyboardPress(DIK_LSHIFT) == true) && g_player[nCnt].nStamina > 0)
 			{// Wキーが押された
-				if (GetKeyboardPress(DIK_LSHIFT) == true && g_player[nCnt].nStamina > 0)
-				{// LShift押されたら
-					//ダッシュ
-					g_player[nCnt].pState = PLAYERSTATE_DASH;
-					//g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
-					g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
-					g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
-					g_player[nCnt].rotDest.y = pCamera->rot.y;
-				}
-				else
-				{// 前
-					g_player[nCnt].pState = PLAYERSTATE_MOVE;
-					//g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
-					g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 2.0f;
-					g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 2.0f;
-					g_player[nCnt].rotDest.y = pCamera->rot.y;
-				}
+				//ダッシュ
+				g_player[nCnt].pState = PLAYERSTATE_DASH;
+				//g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
+				g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y;
+			}
+			else if(GetKeyboardPress(DIK_W) == true && GetKeyboardPress(DIK_LSHIFT) == false)
+			{// 前
+				g_player[nCnt].pState = PLAYERSTATE_MOVE;
+				//g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 2.0f;
+				g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 2.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y;
+			}
+			else if(GetKeyboardPress(DIK_W) == false && GetKeyboardPress(DIK_LSHIFT) == true)
+			{
+				g_player[nCnt].pState = PLAYERSTATE_MOVE;
 			}
 			else if (GetKeyboardPress(DIK_S) == true)
 			{// Sキーが押された
@@ -474,25 +475,28 @@ void UpdatePlayer(void)
 						}
 					}
 				}
-				else if (pStick->Gamepad.sThumbLY > 10922)
+				else if (pStick->Gamepad.sThumbLY > 10922 && (GetJoypadPress(JOYKEY_LB) == true && g_player[nCnt].nStamina > 0 || GetJoypadPress(JOYKEY_RB) == true && g_player[nCnt].nStamina > 0))
 				{
-					if (GetJoypadPress(JOYKEY_LB) == true && g_player[nCnt].nStamina > 0 || GetJoypadPress(JOYKEY_RB) == true && g_player[nCnt].nStamina > 0)
-					{// ダッシュ
-						g_player[nCnt].pState = PLAYERSTATE_DASH;
-						g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
-						g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
-						g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
-						g_player[nCnt].rotDest.y = pCamera->rot.y;
-					}
-					else
-					{// 上移動
-						g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
-						g_player[nCnt].pState = PLAYERSTATE_MOVE;
-						g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y) * 2.0f;
-						g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y) * 2.0f;
-						g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
-					}
+
+					g_player[nCnt].pState = PLAYERSTATE_DASH;
+					g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+					g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
+					g_player[nCnt].rotDest.y = pCamera->rot.y;
 				}
+				else if (pStick->Gamepad.sThumbLY > 10922 && (GetJoypadPress(JOYKEY_LB) == false && g_player[nCnt].nStamina > 0 || GetJoypadPress(JOYKEY_RB) == false))
+				{// 上移動
+					g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+					g_player[nCnt].pState = PLAYERSTATE_MOVE;
+					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y) * 2.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
+				}
+				else if ((pStick->Gamepad.sThumbLY < 10922 && pStick->Gamepad.sThumbLY > -10922) && (GetJoypadPress(JOYKEY_LB) == false && g_player[nCnt].nStamina > 0 || GetJoypadPress(JOYKEY_RB) == false))
+				{
+					g_player[nCnt].pState = PLAYERSTATE_MOVE;
+				}
+			
 				else if (pStick->Gamepad.sThumbLY < -10922)
 				{
 					if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)

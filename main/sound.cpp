@@ -381,3 +381,12 @@ HRESULT ReadChunkData(HANDLE hFile, void *pBuffer, DWORD dwBuffersize, DWORD dwB
 	return S_OK;
 }
 
+//=============================================================================
+// セグメント音量調整(ラベル指定)
+//=============================================================================
+void SetVolume(SOUND_LABEL label, float volume)
+{
+	// 音量設定
+	g_apSourceVoice[label]->SetVolume(volume);// 最大3.0f
+
+}
