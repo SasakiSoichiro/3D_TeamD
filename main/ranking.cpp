@@ -481,7 +481,7 @@ void UpdateRanking(void)
 	//該当タイマーランキング(秒)を点滅
 	if (g_nRankUpdate != -1 && g_nTimerRanking >= 0)
 	{//ランクインしてて、かつ、タイマーがゼロ以上だったら
-		//pVtx += 4 * MAX_RANKNS_NUM * g_nRankUpdate;
+		pVtx += 4 * MAX_RANKNS_NUM * g_nRankUpdate;
 
 		for (nRankTime = 0; nRankTime < MAX_RANKNS_NUM; nRankTime++)
 		{//秒の桁数分回す
@@ -518,7 +518,7 @@ void UpdateRanking(void)
 	//該当タイマーランキング(分)を点滅
 	if (g_nRankUpdate != -1 && g_nTimerRanking >= 0)
 	{//ランクインしてて、かつ、タイマーがゼロ以上だったら
-		//pVtx += 4 * MAX_RANKMIN_NUM * g_nRankUpdate;
+		pVtx += 4 * MAX_RANKMIN_NUM * g_nRankUpdate;
 
 		for (nRankTime = 0; nRankTime < MAX_RANKMIN_NUM; nRankTime++)
 		{//分の桁数分回す
