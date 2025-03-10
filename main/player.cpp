@@ -492,7 +492,7 @@ void UpdatePlayer(void)
 					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y) * 2.0f;
 					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
 				}
-				else if (pStick->Gamepad.sThumbLY == 0 && (GetJoypadPress(JOYKEY_LB) == false && g_player[nCnt].nStamina > 0 || GetJoypadPress(JOYKEY_RB) == false))
+				else if ((pStick->Gamepad.sThumbLY < 10922 && pStick->Gamepad.sThumbLY > -10922) && (GetJoypadPress(JOYKEY_LB) == false && g_player[nCnt].nStamina > 0 || GetJoypadPress(JOYKEY_RB) == false))
 				{
 					g_player[nCnt].pState = PLAYERSTATE_MOVE;
 				}
