@@ -98,7 +98,7 @@ void UpdateFlashLight(void)
 
 			g_FlashLight[nCntLight].light.Direction = pCamera->rot;  // プレイヤーの向いている方向にライトを向ける
 
-			g_FlashLight[nCntLight].light.Range = 800.0f;  // 光の到達距離
+			g_FlashLight[nCntLight].light.Range = 900.0f;  // 光の到達距離
 
 			//	ライトを設定する
 			pDevice->SetLight(nCntLight, &g_FlashLight[nCntLight].light);
