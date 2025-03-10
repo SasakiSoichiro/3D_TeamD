@@ -37,16 +37,16 @@ void InitTitle(void)
 
 	//テクスチャの読み込み 
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\title000.png",
+		"data\\texture\\title001.png",
 		&g_apTextureTitle[0]);
 
-	//テクスチャの読み込み  2
+	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\tutorial001.png",
+		"data\\texture\\tutorial002.png",
 		&g_apTextureTitle[1]);
 
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\Start1.png",
+		"data\\texture\\Start2.png",
 		&g_apTextureTitle[2]);
 
 	//頂点バッファの生成

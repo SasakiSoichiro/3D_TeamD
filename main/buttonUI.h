@@ -28,8 +28,8 @@ typedef enum
 
 static const char* BUTTONUITYPE__TEXTURE[BUTTONUITYPE_MAX] =
 {
-	"data\\texture\\button.png",		// ボタン(X)			0
-	"data\\texture\\buttonX.png",		// ボタン(Y)			1
+	"data\\texture\\button1.png",		// ボタン(X)			0
+	"data\\texture\\buttonX1.png",		// ボタン(Y)			1
 
 };
 
