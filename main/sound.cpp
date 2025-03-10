@@ -40,6 +40,7 @@ SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 	{"data/SE/geton.wav", 0},				// SE2
 	{"data/SE/Recovery2.wav",0},			// SE3
 	{"data/SE/Slow.wav",0},					// SE4
+	{"data/SE/click.wav",0},				// SE5
 };
 
 //=============================================================================

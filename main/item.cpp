@@ -232,7 +232,7 @@ void Updateitem(void)
 				{
 
 					// SE‚ð–Â‚ç‚·
-					PlaySound(SOUND_LABEL_SE2);
+					PlaySound(SOUND_LABEL_SE4);
 
 					if (pLight->bLight == true)
 					{
