@@ -30,6 +30,8 @@ void InitTitle(void)
 	//BGM‚ð–Â‚ç‚·
 	PlaySound(SOUND_LABEL_BGM);
 
+	SetVolume(SOUND_LABEL_BGM,3.0f);
+
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
 
