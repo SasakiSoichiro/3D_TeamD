@@ -179,7 +179,7 @@ void UpdatePlayer(void)
 			g_player[nCnt].motion.motionType = MOTIONTYPE_DEATH;
 			break;
 
-		case PLAYERSTATE_IKIGIRE:
+		case PLAYERSTATE_BREATH:
 			g_nCntPlayerState++;
 			if (g_nCntPlayerState >= 60)
 			{
@@ -206,7 +206,7 @@ void UpdatePlayer(void)
 		case MOTIONTYPE_DEATH:
 			break;
 
-		case PLAYERSTATE_IKIGIRE:
+		case MOTIONTYPE_BREATH:
 			break;
 		}
 
