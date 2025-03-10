@@ -48,12 +48,12 @@ void InitPause(void)
 
 	//	テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\retry.png",
+		"data\\texture\\retry1.png",
 		&g_pTexturePause[1]);
 
 	//	テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\quit.png",
+		"data\\texture\\quit1.png",
 		&g_pTexturePause[2]);
 
 	//テクスチャの読み込み
