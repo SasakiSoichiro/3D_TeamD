@@ -677,7 +677,7 @@ void SetEnablePause(bool bPause)
 }
 
 //------------------
-//ゲーム状態の設定
+// ゲーム状態の設定
 //------------------
 void SetGameState(GAMESTATE state)
 {
@@ -685,7 +685,7 @@ void SetGameState(GAMESTATE state)
 }
 
 //------------------------
-//エディットの情報の取得
+// エディットの情報の取得
 //------------------------
 bool GetEditState(void)
 {

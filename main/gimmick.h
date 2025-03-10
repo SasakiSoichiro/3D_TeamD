@@ -26,7 +26,7 @@ typedef struct
 	bool bMove;
 }GIMMICK;
 
-
+// ç\ë¢ëÃ
 typedef struct
 {
 	int nHoldCount;

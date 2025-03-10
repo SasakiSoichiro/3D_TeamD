@@ -148,7 +148,7 @@ void UninitGimmick(void)
 			g_Door[nCnt].pMesh = NULL;
 		}
 		// ƒ}ƒeƒŠƒAƒ‹‚Ì”jŠü
-		if z (g_Door[nCnt].pBuffMat != NULL)
+		if (g_Door[nCnt].pBuffMat != NULL)
 		{
 			g_Door[nCnt].pBuffMat->Release();
 			g_Door[nCnt].pBuffMat = NULL;
