@@ -296,25 +296,26 @@ void UpdatePlayer(void)
 
 				}
 			}
-			else if (GetKeyboardPress(DIK_W) == true)
+			else if ((GetKeyboardPress(DIK_W) == true && GetKeyboardPress(DIK_LSHIFT) == true) && g_player[nCnt].nStamina > 0)
 			{// Wキーが押された
-				if (GetKeyboardPress(DIK_LSHIFT) == true && g_player[nCnt].nStamina > 0)
-				{// LShift押されたら
-					//ダッシュ
-					g_player[nCnt].pState = PLAYERSTATE_DASH;
-					//g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
-					g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
-					g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
-					g_player[nCnt].rotDest.y = pCamera->rot.y;
-				}
-				else
-				{// 前
-					g_player[nCnt].pState = PLAYERSTATE_MOVE;
-					//g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
-					g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 2.0f;
-					g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 2.0f;
-					g_player[nCnt].rotDest.y = pCamera->rot.y;
-				}
+				//ダッシュ
+				g_player[nCnt].pState = PLAYERSTATE_DASH;
+				//g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
+				g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y;
+			}
+			else if(GetKeyboardPress(DIK_W) == true && GetKeyboardPress(DIK_LSHIFT) == false)
+			{// 前
+				g_player[nCnt].pState = PLAYERSTATE_MOVE;
+				//g_player[nCnt].motion.motionType = MOTIONTYPE_MOVE;
+				g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 2.0f;
+				g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 2.0f;
+				g_player[nCnt].rotDest.y = pCamera->rot.y;
+			}
+			else if(GetKeyboardPress(DIK_W) == false && GetKeyboardPress(DIK_LSHIFT) == true)
+			{
+				g_player[nCnt].pState = PLAYERSTATE_MOVE;
 			}
 			else if (GetKeyboardPress(DIK_S) == true)
 			{// Sキーが押された
