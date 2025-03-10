@@ -241,7 +241,7 @@ void InitGame(void)
 	Setitem(D3DXVECTOR3(792.3f, 0.0f, -789.5f), ITEMTYPE_FIVE);
 
 	// 懐中電灯
-	Setitem(D3DXVECTOR3(0.0f, 0.0f, 0.0f), ITEMTYPE_SIX);
+	Setitem(D3DXVECTOR3(1625.0f, 9.0f, 100.0f), ITEMTYPE_SIX);
 
 	// ビルボード(木)
 	SetBillboard(D3DXVECTOR3(-100.0f, 50.0f, -200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_0,D3DXVECTOR3(15.0f,35.0f,0.0f));
