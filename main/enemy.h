@@ -123,11 +123,21 @@ Enemy*GetEnemy(void);
 int GetNumEnemy();
 bool IsRange();
 void SetMotionType(EMOTIONTYPE MotionType, bool bBlendMotion, int nFrameBlend,int nCnt);
+void SetEnemyDistance(float fDistance);
 static const char* EPARTS_FILE[EPARTS_MAX] =
 {
 	"data\\model\\redcar000.x",//ì∑
 	"data\\model\\spear.x",		//ì™
 };
-
+//-------------------
+//ìGÇÃë´âπä«óù
+//-------------------
+//void SetEnemyDistance(float fDistance)
+//{
+//	if (fDistance < 200.0f)
+//	{
+//		SetVolume()
+//	}
+//}
 
 #endif
