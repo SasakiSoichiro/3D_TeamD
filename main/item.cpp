@@ -15,6 +15,7 @@
 #include "Recovery.h"
 #include "ItemUI.h"
 #include "pickupUI.h"
+#include "flashlight.h"
 
 // グローバル変数宣言
 ITEM g_item[ITEMTYPE_MAX];
@@ -196,6 +197,7 @@ void Updateitem(void)
 
 	int nSelect = GetSelect();
 	ItemUI* pItemUI = GetItemUI();
+	FLASHLIGHT* pFlash = GetFlashLight();
 
 	if (KeybordTrigger(DIK_E) == true || JoyPadTrigger(JOYKEY_X) == true)
 	{//懐中時計を持っている時、懐中時計を使用する処理
@@ -237,6 +239,26 @@ void Updateitem(void)
 					}
 
 					break;
+				}
+				break;
+			case ITEM_FLASHLIGHT:		// 回復アイテム
+				//プレイヤーの体力が2以下なら
+				if (g_item[nCnt].bHave == true && g_item[nCnt].nType == ITEMTYPE_SIX)
+				{
+					if (pFlash->bLight == true)
+					{
+						// SEを鳴らす
+						PlaySound(SOUND_LABEL_SE4);
+
+						pFlash->bLight = false;
+					}
+					else if (pFlash->bLight == false)
+					{
+						// SEを鳴らす
+						PlaySound(SOUND_LABEL_SE4);
+
+						pFlash->bLight = true;
+					}
 				}
 
 			}
