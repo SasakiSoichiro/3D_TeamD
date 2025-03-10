@@ -475,25 +475,28 @@ void UpdatePlayer(void)
 						}
 					}
 				}
-				else if (pStick->Gamepad.sThumbLY > 10922)
+				else if (pStick->Gamepad.sThumbLY > 10922 && (GetJoypadPress(JOYKEY_LB) == true && g_player[nCnt].nStamina > 0 || GetJoypadPress(JOYKEY_RB) == true && g_player[nCnt].nStamina > 0))
 				{
-					if (GetJoypadPress(JOYKEY_LB) == true && g_player[nCnt].nStamina > 0 || GetJoypadPress(JOYKEY_RB) == true && g_player[nCnt].nStamina > 0)
-					{// ƒ_ƒbƒVƒ…
-						g_player[nCnt].pState = PLAYERSTATE_DASH;
-						g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
-						g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
-						g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
-						g_player[nCnt].rotDest.y = pCamera->rot.y;
-					}
-					else
-					{// ãˆÚ“®
-						g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
-						g_player[nCnt].pState = PLAYERSTATE_MOVE;
-						g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y) * 2.0f;
-						g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y) * 2.0f;
-						g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
-					}
+
+					g_player[nCnt].pState = PLAYERSTATE_DASH;
+					g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+					g_player[nCnt].pos.x -= sinf(pCamera->rot.y) * 5.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera->rot.y) * 5.0f;
+					g_player[nCnt].rotDest.y = pCamera->rot.y;
 				}
+				else if (pStick->Gamepad.sThumbLY > 10922 && (GetJoypadPress(JOYKEY_LB) == false && g_player[nCnt].nStamina > 0 || GetJoypadPress(JOYKEY_RB) == false))
+				{// ãˆÚ“®
+					g_player[nCnt].motion.motionType = MOTIONTYPE_RUN;
+					g_player[nCnt].pState = PLAYERSTATE_MOVE;
+					g_player[nCnt].pos.x -= sinf(pCamera[nCnt].rot.y) * 2.0f;
+					g_player[nCnt].pos.z -= cosf(pCamera[nCnt].rot.y) * 2.0f;
+					g_player[nCnt].rotDest.y = pCamera[nCnt].rot.y;
+				}
+				else if (pStick->Gamepad.sThumbLY == 0 && (GetJoypadPress(JOYKEY_LB) == false && g_player[nCnt].nStamina > 0 || GetJoypadPress(JOYKEY_RB) == false))
+				{
+					g_player[nCnt].pState = PLAYERSTATE_MOVE;
+				}
+			
 				else if (pStick->Gamepad.sThumbLY < -10922)
 				{
 					if (GetJoypadPress(JOYKEY_LB) == true || GetJoypadPress(JOYKEY_RB) == true)
