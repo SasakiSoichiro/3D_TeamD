@@ -11,15 +11,15 @@
 #include "game.h"
 #include "item.h"
 
-//グローバル変数宣言
-LPDIRECT3DTEXTURE9 g_apTextureDoor[MAX_DOOR] = {};//テクスチャへのポインタ
+// グローバル変数宣言
+LPDIRECT3DTEXTURE9 g_apTextureDoor[MAX_DOOR] = {};	// テクスチャへのポインタ
 GIMMICK g_Door[MAX_DOOR];
 HOLD g_hold;
 bool isGoal;
 bool isBill;
 
 //================================
-//初期化処理
+// 初期化処理
 //================================
 void InitGimmick(void)
 {
@@ -35,7 +35,7 @@ void InitGimmick(void)
 	// 構造体変数の初期化
 	for (int nCnt = 0; nCnt < MAX_DOOR; nCnt++)
 	{
-		//各種変数の初期化
+		// 各種変数の初期化
 		g_Door[nCnt].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Door[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Door[nCnt].size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -48,7 +48,7 @@ void InitGimmick(void)
 		//g_Door[nCnt1][nCnt].bMove = false;
 
 		// モデル読み込み
-		//Xファイルの読み込み
+		// Xファイルの読み込み
 		D3DXLoadMeshFromX("data\\MODEL\\door.x",
 			D3DXMESH_SYSTEMMEM,
 			pDevice,
@@ -61,96 +61,94 @@ void InitGimmick(void)
 		isGoal = false;
 		isBill = false;
 		// サイズ等の取得
-		int nNumVtx;	//頂点数
-		DWORD sizeFVF;	//頂点フォーマットのサイズ
-		BYTE* pVtxBuff;	//頂点バッファへのポインタ
-		D3DXMATERIAL* pMat;	//マテリアルへのポインタ
+		int nNumVtx;			// 頂点数
+		DWORD sizeFVF;			// 頂点フォーマットのサイズ
+		BYTE* pVtxBuff;			// 頂点バッファへのポインタ
+		D3DXMATERIAL* pMat;		// マテリアルへのポインタ
 
-
-		//頂点数の取得
+		// 頂点数の取得
 		nNumVtx = g_Door[nCnt].pMesh->GetNumVertices();
-		//頂点フォーマットの取得
+
+		// 頂点フォーマットの取得
 		sizeFVF = D3DXGetFVFVertexSize(g_Door[nCnt].pMesh->GetFVF());
-		//頂点バッファのロック
+
+		// 頂点バッファのロック
 		g_Door[nCnt].pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
 
 		for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
 		{
-			//頂点座標の代入
+			// 頂点座標の代入
 			D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;
 
 			if (vtx.x > g_Door[nCnt].vtxMax.x)
-			{//もしXの値が大きかったら
+			{// もしXの値が大きかったら
 				g_Door[nCnt].vtxMax.x = vtx.x;
 			}
 			else if (vtx.x < g_Door[nCnt].vtxMin.x)
-			{//もしXの値が小さかったら
+			{// もしXの値が小さかったら
 				g_Door[nCnt].vtxMin.x = vtx.x;
 			}
 
 			if (vtx.y > g_Door[nCnt].vtxMax.y)
-			{//もしYの値が大きかったら
+			{// もしYの値が大きかったら
 				g_Door[nCnt].vtxMax.y = vtx.y;
 			}
 			else if (vtx.y < g_Door[nCnt].vtxMin.y)
-			{//もしYの値が小さかったら
+			{// もしYの値が小さかったら
 				g_Door[nCnt].vtxMin.y = vtx.y;
 			}
 
 			if (vtx.z > g_Door[nCnt].vtxMax.z)
-			{//もしZの値が大きかったら
+			{// もしZの値が大きかったら
 				g_Door[nCnt].vtxMax.z = vtx.z;
 			}
 			else if (vtx.z < g_Door[nCnt].vtxMin.z)
-			{//もしZの値が小さかったら
+			{// もしZの値が小さかったら
 				g_Door[nCnt].vtxMin.z = vtx.z;
 			}
 
-			//頂点フォーマットのサイズ分ポインタを進める
+			// 頂点フォーマットのサイズ分ポインタを進める
 			pVtxBuff += sizeFVF;
 		}
 
-		//サイズを代入
+		// サイズを代入
 		g_Door[nCnt].size.x = g_Door[nCnt].vtxMax.x - g_Door[nCnt].vtxMin.x;
 		g_Door[nCnt].size.y = g_Door[nCnt].vtxMax.y - g_Door[nCnt].vtxMin.y;
 		g_Door[nCnt].size.z = g_Door[nCnt].vtxMax.z - g_Door[nCnt].vtxMin.z;
 
-		//頂点バッファのアンロック
+		// 頂点バッファのアンロック
 		g_Door[nCnt].pMesh->UnlockVertexBuffer();
 
-		//マテリアルデータへのポインタを取得
+		// マテリアルデータへのポインタを取得
 		pMat = (D3DXMATERIAL*)g_Door[nCnt].pBuffMat->GetBufferPointer();
 
 		for (int nCntMat = 0; nCntMat < (int)g_Door[nCnt].dwNumMat; nCntMat++)
 		{
 			if (pMat[nCntMat].pTextureFilename != NULL)
-			{//テクスチャファイルが存在する
-					//テクスチャの読み込み
+			{// テクスチャファイルが存在する
+				// テクスチャの読み込み
 				D3DXCreateTextureFromFile(pDevice,
 					pMat[nCntMat].pTextureFilename,
 					&g_apTextureDoor[nCntMat]);
 			}
 		}
-
 	}
-
 }
 //================================
-//終了処理
+// 終了処理
 //================================
 void UninitGimmick(void)
 {
-
 	for (int nCnt = 0; nCnt < MAX_DOOR; nCnt++)
 	{
-		//メッシュの破棄
+		// メッシュの破棄
 		if (g_Door[nCnt].pMesh != NULL)
 		{
 			g_Door[nCnt].pMesh->Release();
 			g_Door[nCnt].pMesh = NULL;
 		}
-		//マテリアルの破棄
-		if (g_Door[nCnt].pBuffMat != NULL)
+		// マテリアルの破棄
+		if z (g_Door[nCnt].pBuffMat != NULL)
 		{
 			g_Door[nCnt].pBuffMat->Release();
 			g_Door[nCnt].pBuffMat = NULL;
@@ -162,10 +160,9 @@ void UninitGimmick(void)
 			g_apTextureDoor[nCnt] = NULL;
 		}
 	}
-
 }
 //================================
-//更新処理
+// 更新処理
 //================================
 void UpdateGimmick(void)
 {
@@ -177,28 +174,28 @@ void UpdateGimmick(void)
 	{
 		if (g_Door[nCnt].bUse == true)
 		{
-			//半径の算出変数
+			// 半径の算出変数
 			float PRadiusPos = 50.0f;
 			float BRadiusPos = 50.0f;
 
-			//プレイヤーの位置の取得
+			// プレイヤーの位置の取得
 			D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
 
-			//敵とプレイヤーの距離の差
+			// 敵とプレイヤーの距離の差
 			D3DXVECTOR3 diff = PlayerPos - g_Door[nCnt].pos;
 
-			//範囲計算
+			// 範囲計算
 			float fDisX = PlayerPos.x - g_Door[nCnt].pos.x;
 			float fDisY = PlayerPos.y - g_Door[nCnt].pos.y;
 			float fDisZ = PlayerPos.z - g_Door[nCnt].pos.z;
 
-			//二つの半径を求める
+			// 二つの半径を求める
 			float fRadX = PRadiusPos + BRadiusPos;
 
-			//プレイヤーが範囲に入ったら
+			// プレイヤーが範囲に入ったら
 			if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 			{
-				//ビルボードを表示する
+				// ビルボードを表示する
 				isBill = true;
 
 				if (pItem[0].bHold == true && pItem[1].bHold == true)
@@ -218,10 +215,10 @@ void UpdateGimmick(void)
 					}
 				}
 			}
-			//プレイヤーが範囲の外に出たら
+			// プレイヤーが範囲の外に出たら
 			else if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) >= (fRadX * fRadX))
 			{
-				//ビルボードを非表示にする
+				// ビルボードを非表示にする
 				isBill = false;
 				g_hold.bNoPush = true;
 				g_hold.bPush = false;
@@ -232,77 +229,75 @@ void UpdateGimmick(void)
 	IsHold();
 }
 //================================
-//描画処理
+// 描画処理
 //================================
 void DrawGimmick(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	D3DXMATRIX mtxRot, mtxTrans; //計算用マトリックス
-	D3DMATERIAL9 matDef; //現在のマテリアル保存用
-	D3DXMATERIAL* pMat;	//マテリアルデータへのポインタ
+	D3DXMATRIX mtxRot, mtxTrans;	// 計算用マトリックス
+	D3DMATERIAL9 matDef;			// 現在のマテリアル保存用
+	D3DXMATERIAL* pMat;				// マテリアルデータへのポインタ
 
 	for (int nCnt = 0; nCnt < MAX_DOOR; nCnt++)
 	{
 		if (g_Door[nCnt].bUse == true)
 		{// 未使用だったら下の処理を通さない
-						//ワールドマトリックスの初期化
+			// ワールドマトリックスの初期化
 			D3DXMatrixIdentity(&g_Door[nCnt].mtxWorld);
 
-			//向きを反映
+			// 向きを反映
 			D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Door[nCnt].rot.y, g_Door[nCnt].rot.x, g_Door[nCnt].rot.z);
 			D3DXMatrixMultiply(&g_Door[nCnt].mtxWorld, &g_Door[nCnt].mtxWorld, &mtxRot);
 
-			//位置を反映
+			// 位置を反映
 			D3DXMatrixTranslation(&mtxTrans, g_Door[nCnt].pos.x, g_Door[nCnt].pos.y, g_Door[nCnt].pos.z);
 			D3DXMatrixMultiply(&g_Door[nCnt].mtxWorld, &g_Door[nCnt].mtxWorld, &mtxTrans);
 
-			//ワールドマトリックスの設定
+			// ワールドマトリックスの設定
 			pDevice->SetTransform(D3DTS_WORLD, &g_Door[nCnt].mtxWorld);
 
-			//現在のマテリアルを取得
+			// 現在のマテリアルを取得
 			pDevice->GetMaterial(&matDef);
 
-			//マテリアルデータへのポインタを取得
+			// マテリアルデータへのポインタを取得
 			pMat = (D3DXMATERIAL*)g_Door[nCnt].pBuffMat->GetBufferPointer();
 
 			for (int nCntMat = 0; nCntMat < (int)g_Door[nCnt].dwNumMat; nCntMat++)
 			{
-				//マテリアルの設定
+				// マテリアルの設定
 				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
-				//テクスチャの設定
+				// テクスチャの設定
 				pDevice->SetTexture(0, g_apTextureDoor[nCntMat]);
 
-				//モデル(パーツ)の描画
+				// モデル(パーツ)の描画
 				g_Door[nCnt].pMesh->DrawSubset(nCntMat);
 			}
-			//保存していたマテリアルを隠す
+
+			// 保存していたマテリアルを隠す
 			//pDevice->SetMaterial(NULL);
 			pDevice->SetMaterial(&matDef);
 
-			//テクスチャの設定
+			// テクスチャの設定
 			pDevice->SetTexture(0, NULL);
 		}
-
 	}
 }
 //================================================
-//ブロックの設定処理
+// ブロックの設定処理
 //================================================
 void SetGimmick(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
 	for (int nCnt = 0; nCnt < MAX_DOOR; nCnt++)
 	{
 		if (g_Door[nCnt].bUse == false)
-		{//壁が使用されていない
-			//頂点座標の設定
-			g_Door[nCnt].pos = pos;
-			g_Door[nCnt].rot = rot;
-			g_Door[nCnt].bUse = true;
+		{// 壁が使用されていない
+			g_Door[nCnt].pos = pos;		// 位置
+			g_Door[nCnt].rot = rot;		// 角度
+			g_Door[nCnt].bUse = true;	// 使用している
 			break;
 		}
-
 	}
 }
 //================================================

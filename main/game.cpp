@@ -51,10 +51,10 @@ GAMESTATE g_gameState = GAMESTATE_NONE;	// 初期化
 // 状態管理カウンター
 int g_nCounterGameState = 0;
 
-//	ポーズ
+// ポーズ
 bool g_bPause = false;
 
-//エディット
+// エディット
 bool g_bEdit = false;
 
 //---------------
@@ -68,49 +68,49 @@ void InitGame(void)
 
 	//　各オブジェクトの初期化処理
 
-	//　ライト
+	// ライト
 	InitLight();
 
-	//懐中電灯
+	// 懐中電灯
 	InitFlashLight();
 
-	//　カメラ
+	// カメラ
 	InitCamera();
 
-	//　メッシュフィールド
+	// メッシュフィールド
 	InitMeshfield();
 
-	//　プレイヤー
+	// プレイヤー
 	InitPlayer();
 
-	//　アイテム
+	// アイテム
 	Inititem();
 
-	//　タイム
+	// タイム
 	InitTime();
 
-	//　敵
+	// 敵
 	InitEnemy();
 
-	//　ブロック
+	// ブロック
 	InitBlock();
 
-	//　エディット
+	// エディット
 	InitEdit();
 
-	//　ギミック
+	// ギミック
 	InitGimmick();
 
-	//　ビルボード
+	// ビルボード
 	InitBillboard();
 
-	//　アイテム収集用ビルボード
+	// アイテム収集用ビルボード
 	InitPickUpUI();
 
-	//　ポーズ
+	// ポーズ
 	InitPause();
 
-	//	血しぶき
+	// 血しぶき
 	InitBloodSplatter();
 
 	// スロー
@@ -121,7 +121,7 @@ void InitGame(void)
 
 	InitUnlock();
 
-	//	ゲージ
+	// ゲージ
 	InitGauge();
 
 	// 解除UI
@@ -136,17 +136,18 @@ void InitGame(void)
 	// スタミナ
 	InitStamina();
 	
-	//	回復
+	// 回復
 	InitRecovery();
 
-	//	敵視点のビューポートの枠
+	// 敵視点のビューポートの枠
 	InitViewUI();
 
-	//	ボタンのUI
+	// ボタンのUI
 	InitButtonUI();
 
-	//	目的の表示
+	// 目的の表示
 	InitObjective();
+
 	//InitEtcUI();
 
 	//int a = rand() % 6 + 1;
@@ -154,102 +155,101 @@ void InitGame(void)
 
 	if (a == 1)
 	{
-		//　鍵の上部
+		// 鍵の上部
 		Setitem(D3DXVECTOR3(1422.6f, 1.5f, -738.7f), ITEMTYPE_ONE);
 	}
 	
 	if (a == 2)
 	{
-		//　鍵の上部
+		// 鍵の上部
 		Setitem(D3DXVECTOR3(-94.6f, 1.5f, -608.8f), ITEMTYPE_ONE);
 	}
 
 	if (a == 3)
 	{
-		//　鍵の上部
+		// 鍵の上部
 		Setitem(D3DXVECTOR3(-1199.0f, 1.5f, 396.1f), ITEMTYPE_ONE);
 	}
 
 	if (a == 4)
 	{
-		//　鍵の上部
+		// 鍵の上部
 		Setitem(D3DXVECTOR3(785.7f, 1.5f, 615.6f), ITEMTYPE_ONE);
 	}
 
 	if (a == 5)
 	{
-		//　鍵の上部
+		// 鍵の上部
 		Setitem(D3DXVECTOR3(-94.9f, 1.5f, 480.5f), ITEMTYPE_ONE);
 	}
 
 	if (a == 6)
 	{//蔵
-		//　鍵の上部
+		// 鍵の上部
 		Setitem(D3DXVECTOR3(-1722.6f, 1.5f, -818.2f), ITEMTYPE_ONE);
 	}
-
 
 	int b = rand() % RAND + 1;
 
 	if (b == 1)
 	{
-		//　鍵の下部
+		// 鍵の下部
 		Setitem(D3DXVECTOR3(1807.4f, 1.5f, 790.6f), ITEMTYPE_TWO);
 	}
 
 	if (b == 2)
 	{
-		//　鍵の下部
+		// 鍵の下部
 		Setitem(D3DXVECTOR3(674.0f, 1.5f, -261.1), ITEMTYPE_TWO);
 	}
 
 	if (b == 3)
 	{
-		//　鍵の下部
+		// 鍵の下部
 		Setitem(D3DXVECTOR3(-1049.5, 1.5f, 237.3f), ITEMTYPE_TWO);
 	}
 
 	if (b == 4)
 	{
-		//　鍵の下部
+		// 鍵の下部
 		Setitem(D3DXVECTOR3(-107.7, 1.5f, 498.6), ITEMTYPE_TWO);
 	}
 
 	if (b == 5)
 	{
-		//　鍵の下部
+		// 鍵の下部
 		Setitem(D3DXVECTOR3(-234.8, 1.5f, -492.5f), ITEMTYPE_TWO);
 	}
 
 	if (b == 6)
 	{//蔵
-		//　鍵の下部
+		// 鍵の下部
 		Setitem(D3DXVECTOR3(1809.9f, 1.5f, -807.0f), ITEMTYPE_TWO);
 	}
 
-	//　懐中時計
+	// 懐中時計
 	Setitem(D3DXVECTOR3(-1500.0f, 0.0f, 700.0f), ITEMTYPE_THREE);
 
-	//	救急箱
+	// 救急箱
 	Setitem(D3DXVECTOR3(792.3f, 0.0f, -789.5f), ITEMTYPE_FIVE);
 
-	//　ビルボード(木)
+	// ビルボード(木)
 	SetBillboard(D3DXVECTOR3(-100.0f, 50.0f, -200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_0,D3DXVECTOR3(15.0f,35.0f,0.0f));
 
-	//	ビルボード(拾う)
+	// ビルボード(拾う)
 	SetBillboard(D3DXVECTOR3(-100.0f, 75.0f, -100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_1, D3DXVECTOR3(2.0f, 2.0f, 0.0f));
 	SetBillboard(D3DXVECTOR3(-100.0f, 75.0f, -100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_1, D3DXVECTOR3(2.0f, 2.0f, 0.0f));
 
-	//	ビルボード(0/2)
+	// ビルボード(0/2)
 	SetBillboard(D3DXVECTOR3(-1785.0f, 75.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_2, D3DXVECTOR3(4.0f, 4.0f, 0.0f));
 
-	//	ビルボード(1/2)
+	// ビルボード(1/2)
 	SetBillboard(D3DXVECTOR3(-1780.0f, 75.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_3, D3DXVECTOR3(4.0f, 4.0f, 0.0f));
 
-	//	ビルボード(脱出可能)
+	// ビルボード(脱出可能)
 	SetBillboard(D3DXVECTOR3(-1780.0f, 75.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_4, D3DXVECTOR3(4.0f, 4.0f, 0.0f));
 
-	//	ビルボード(解除)
+	// ビルボード(解除)
 	SetBillboard(D3DXVECTOR3(-1750.0f, 75.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BILLBOARDTYPE_5, D3DXVECTOR3(1.0f, 1.0f, 0.0f));
 
 	//　
@@ -258,32 +258,32 @@ void InitGame(void)
 	//　敵
 	SetEnemy(D3DXVECTOR3(-1750.0f, 0.0f, 0.0f),0);
 
-	//　ドア
+	// ドア
 	SetGimmick(D3DXVECTOR3(-1800.0f, 0.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
-	//	鍵のUI
+	// 鍵のUI
 	SetKeyUI(D3DXVECTOR3(960.0f, 80.0f, 0.0f), ITEMKEYUITYPE_NO5, 30.0f, 30.0f);
 
-	//	ゲージ
+	// ゲージ
 	SetGauge(D3DXVECTOR3(640.0f, 0.0f, 0.0f));
 
-	//　目のUI
+	// 目のUI
 	InitEyeUI();
 
-	//	ボタンのUI
+	// ボタンのUI
 	SetButtonUI(D3DXVECTOR3(1030.0f, 125.0f, 0.0f), BUTTONUITYPE_BUTTON_Y, 20.0f, 15.0f);
 	SetButtonUI(D3DXVECTOR3(1090.0f, 125.0f, 0.0f), BUTTONUITYPE_BUTTON_Y, 20.0f, 15.0f);
 	SetButtonUI(D3DXVECTOR3(1150.0f, 125.0f, 0.0f), BUTTONUITYPE_BUTTON_Y, 20.0f, 15.0f);
 	SetButtonUI(D3DXVECTOR3(1090.0f, 25.0f, 0.0f), BUTTONUITYPE_BUTTON_X, 80.0f, 20.0f);
 
-	//	目的の表示
+	// 目的の表示
 	SetObjective(D3DXVECTOR3(20.0f, 100.0f, 0.0f), 10.0f, 10.0f, OBJECTIVETYPE_WAKU1);
 	SetObjective(D3DXVECTOR3(20.0f, 150.0f, 0.0f), 10.0f, 10.0f, OBJECTIVETYPE_WAKU2);
 	SetObjective(D3DXVECTOR3(20.0f, 100.0f, 0.0f), 10.0f, 10.0f, OBJECTIVETYPE_CHECK);
 	SetObjective(D3DXVECTOR3(145.0f, 100.0f, 0.0f), 110.0f, 15.0f, OBJECTIVETYPE_TEXT1);
 	SetObjective(D3DXVECTOR3(165.0f, 150.0f, 0.0f), 130.0f, 15.0f, OBJECTIVETYPE_TEXT2);
 
-	//　初期化処理
+	// 初期化処理
 	g_bEdit = false;
 	g_gameState = GAMESTATE_NORMAL;// 通常状態に設定
 }
@@ -298,58 +298,58 @@ void UninitGame(void)
 
 	//　各オブジェクトの終了処理
 
-
-	//　ライト
+	// ライト
 	UninitLight();
 
-	//　懐中電灯
+	// 懐中電灯
 	UninitFlashLight();
 
-	//　メッシュフィールド
+	// メッシュフィールド
 	UninitMeshfield();
 
-	//　カメラ
+	// カメラ
 	UninitCamera();
 
-	//　ブロック
+	// ブロック
 	UninitBlock();
 
-	//　プレイヤー
+	// プレイヤー
 	UninitPlayer();
 
-	//　敵
+	// 敵
 	UninitEnemy();
 
-	//　アイテム
+	// アイテム
 	Uninititem();
 
-	//　タイム
+	// タイム
 	UninitTime();
 
-	//　エディット
+	// エディット
 	UninitEdit();
 
-	//　ビルボード
+	// ビルボード
 	UninitBillboard();
 
-	//　アイテム収集用ビルボード
+	// アイテム収集用ビルボード
 	UninitPickUpUI();
 
-	//　ポーズ
+	// ポーズ
 	UninitPause();
 
-	//　ギミック
+	// ギミック
 	UninitGimmick();
 
-	//　目のUI
+	// 目のUI
 	UninitEyeUI();
 
-	//	血しぶき
+	// 血しぶき
 	UinitBloodSplatter();
 
+	// アンロック
 	UninitUnlock();
 
-	//	ゲージ
+	// ゲージ
 	UinitGauge();
 
 	// 解除UI
@@ -364,16 +364,16 @@ void UninitGame(void)
 	// スタミナ
 	UninitStamina();
 
-	//	回復
+	// 回復
 	UinitRecovery();
 
-	//	敵視点のビューポートの枠
+	// 敵視点のビューポートの枠
 	UninitViewUI();
 
-	//	ボタンのUI
+	// ボタンのUI
 	UninitButtonUI();
 
-	//	目的の表示
+	// 目的の表示
 	UninitObjective();
 	//UninitEtcUI();
 }
@@ -385,7 +385,7 @@ void UpdateGame(void)
 {
 	bool isGoal = IsGoal();			// ゴールの判定
 
-	Player* pPlayer = GetPlayer();	//　プレイヤー情報取得
+	Player* pPlayer = GetPlayer();	// プレイヤー情報取得
 
 	// ポーズ処理
 	if (KeybordTrigger(DIK_TAB) || JoyPadTrigger(JOYKEY_START) == true)
@@ -398,81 +398,79 @@ void UpdateGame(void)
 		UpdatePause();
 	}
 
-
-	//エディット処理
+	// エディット処理
 	if (g_bEdit == true&&KeybordTrigger(DIK_F1))
 	{// F1
 		g_bEdit = false;
 
-		//ブロック初期化
+		// ブロック初期化
 		InitBlock();
 
-		//ステージをロード
+		// ステージをロード
 		LoadEdit();
 	}
 
 	else if (g_bEdit == false && KeybordTrigger(DIK_F1))
 	{// b_Editがtrue
 		g_bEdit = true;
-
 	}
 	if (g_bPause == false)
 	{// b_Pauseがfalse
 		if (g_bEdit == false)
 		{// g_Editがfalse
 
-			//　ゲーム中の各オブジェクトの更新処理
-# if 1			//メッシュフィールド
+			// ゲーム中の各オブジェクトの更新処理
+# if 1		// メッシュフィールド
 			UpdateMeshfield();
 
-			//カメラ
+			// カメラ
 			UpdateCamera();
 
-			//ライト
+			// ライト
 			UpdateLight();
 
-			//　懐中電灯
+			// 懐中電灯
 			UpdateFlashLight();
 
-			//ブロック
+			// ブロック
 			UpdateBlock();
 
-			//プレイヤー
+			// プレイヤー
 			UpdatePlayer();
 
-			//敵
+			// 敵
 			UpdateEnemy();
 
-			//ギミック
+			// ギミック
 			UpdateGimmick();
 
-			//タイム
+			// タイム
 			UpdateTime();
 
-			//ビルボード
+			// ビルボード
 			UpdateBillboard();
 
-			//　アイテム収集用ビルボード
+			// アイテム収集用ビルボード
 			UpdatePickUpUI();
 
-			//アイテム
+			// アイテム
 			Updateitem();
 
-			//目のUI
+			// 目のUI
 			UpdateEyeUI();
 
-			//	血しぶき
+			// 血しぶき
 			UpdateBloodSplatter();
 
 			UpdateUnlock();
 
-			//	ゲージ
+			// ゲージ
 			UpdateGauge();
 
 			// 解除UI
 			UpdateCancellation();
 
-			//　鍵のUI
+			// 鍵のUI
 			UpdateKeyUI();
 
 			// アイテムのUI
@@ -484,13 +482,13 @@ void UpdateGame(void)
 			// 回復
 			UpdateRecovery();
 
-			//	敵視点のビューポートの枠
+			// 敵視点のビューポートの枠
 			UpdateViewUI();
 
-			//	ボタンのUI
+			// ボタンのUI
 			UpdateButtonUI();
 
-			//	目的の表示
+			// 目的の表示
 			UpdateObjective();
 
 			// スロー
@@ -498,45 +496,44 @@ void UpdateGame(void)
 #endif
 		}
 		else if (g_bEdit == true)
-		{//　g_Editがtrue
+		{// g_Editがtrue
 
-			//　エディット中の各オブジェクトの更新処理
+			// エディット中の各オブジェクトの更新処理
 
-			//　カメラ
+			// カメラ
 			UpdateCamera();
 
-			//　エディット
+			// エディット
 			UpdateEdit();
 		}
-
 	}
 
 	if (isGoal == true)
-	{//ゴールがtrue
-		g_gameState = GAMESTATE_END;// ゲームを終了させる
+	{// ゴールがtrue
+		g_gameState = GAMESTATE_END;		// ゲームを終了させる
 	}
 
 	if (pPlayer->nLife <= 0)
-	{//プレイヤーが死んだとき
+	{// プレイヤーが死んだとき
 
-		//モード設定
-		g_gameState = GAMESTATE_END;// ゲームを終了させる
+		// モード設定
+		g_gameState = GAMESTATE_END;		// ゲームを終了させる
 
-		//カウントを進める
+		// カウントを進める
 		g_nCounterGameState++;
 	}
 
 	switch (g_gameState)
 	{
-	case GAMESTATE_NONE:// ゲーム通常状態
+		case GAMESTATE_NONE:				// ゲーム通常状態
 
-		break;
-	case GAMESTATE_END:	// ゲーム終了状態
+			break;
+		case GAMESTATE_END:					// ゲーム終了状態
 
 		g_nCounterGameState++;
 
 		if (g_nCounterGameState >= 30)
-		{//30Fたったら
+		{// 30Fたったら
 			g_gameState = GAMESTATE_NONE;	// 何もしていない
 			SetFade(MODE_RESULT);			// リザルト画面に遷移
 			g_nCounterGameState = 0;		// 状態カウンター初期化
@@ -550,24 +547,23 @@ void UpdateGame(void)
 //---------------
 void DrawGame(int nIdx)
 {
+	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
 
-	//FOGの設定
+	// FOGの設定
 	SetupVertexFog(D3DCOLOR_XRGB(0, 0, 0), D3DFOG_LINEAR, TRUE, 0.08f);
 
 	//　各オブジェクトの描画処理
 
-	//　メッシュフィールド
+	// メッシュフィールド
 	DrawMeshfield();
 
-	//　ブロック
+	// ブロック
 	DrawBlock();
 
-	//　アイテム
+	// アイテム
 	Drawitem();
-
-
 
 	switch (nIdx)
 	{
@@ -582,7 +578,7 @@ void DrawGame(int nIdx)
 		break;
 
 	case 1:
-		//　プレイヤー
+		// プレイヤー
 		DrawPlayer();
 		break;
 
@@ -604,75 +600,73 @@ void DrawGame(int nIdx)
 	////　敵
 	//DrawEnemy();
 
-	//　ギミック
+	// ギミック
 	DrawGimmick();
 
-	//FOGを消す
+	// FOGを消す
 	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 	// スロー
 	DrawSlow();
 
-	//	回復
+	// 回復
 	DrawRecovery();
 
 	// スタミナ
 	DrawStamina();
 
-	//　ビルボード
+	// ビルボード
 	DrawBillboard();
 
-	//	血しぶき
+	// 血しぶき
 	DrawBloodSplatter();
 
-	//　タイム
+	// タイム
 	DrawTime();
 
-	//　目のUI
+	// 目のUI
 	DrawEyeUI();
 
 	DrawUnlock();
 
-	//	ゲージ
+	// ゲージ
 	DrawGauge();
 
 	// 解除UI
 	DrawCancellation();
 
-	//	鍵のUI
+	// 鍵のUI
 	DrawKeyUI();
 
 	// アイテムのUI
 	DrawItemUI();
 
-	//	敵視点のビューポートの枠
+	// 敵視点のビューポートの枠
 	DrawViewUI();
 
-	//	ボタンのUI
+	// ボタンのUI
 	DrawButtonUI();
 
-	//	目的の表示
+	// 目的の表示
 	DrawObjective();
 	//DrawEtcUI();
 
-	//FOGを戻す
+	// FOGを戻す
 	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
-
 
 	if (g_bPause == true)
 	{//　g_Pauseがtrue
 
-		//　ポーズ
+		// ポーズ
 		DrawPause();
 	}
 	if (g_bEdit == true)
 	{//　g_bEditがtrue
 
-		//　エディット
+		// エディット
 		DrawEdit();
 	}
 }
-
 
 //----------------------
 //	ポーズのbool処理
@@ -682,7 +676,6 @@ void SetEnablePause(bool bPause)
 	g_bPause = bPause;
 }
 
-
 //------------------
 //ゲーム状態の設定
 //------------------
@@ -690,7 +683,6 @@ void SetGameState(GAMESTATE state)
 {
 	g_gameState = state;
 }
-
 
 //------------------------
 //エディットの情報の取得
