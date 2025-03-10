@@ -5,7 +5,8 @@
 //
 //=============================================================================
 
-#include"Particle.h"
+#include "Particle.h"
+#include "effect.h"
 
 //=============================================================================
 //メイン関数
@@ -13,14 +14,6 @@
 
 //マクロ定義
 #define MAX_PARTICLE (128)																//パーティクルの最大数
-
-//パーティクル構造体
-typedef struct
-{
-	D3DXVECTOR3 pos;																	//位置(発生位置)
-	int nLife;																			//寿命(発生時間)
-	bool bUse;																			//使用しているかどうか
-}Particle;
 
 //グローバル変数
 Particle g_aParticle[MAX_PARTICLE];														//パーティクルの情報
@@ -32,22 +25,15 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffParticle = NULL;										//頂点バッファへのポ
 //=============================================================================
 void InitParticle(void)
 {
-	LPDIRECT3DDEVICE9 pDevice;
-
-	//デバイスの取得
-	pDevice = GetDevice();
-
-
-
-	//頂点情報へのポインタ
-	VERTEX_2D* pVtx;
-
-	//頂点バッファをロックし、頂点情報へのポインタを取得
-	g_pVtxBuffParticle->Lock(0, 0, (void**)&pVtx, 0);
-
-	//頂点情報をアンロック
-	g_pVtxBuffParticle->Unlock();
-
+	//全パーティクル分初期化
+	for (int nCnt = 0; nCnt < MAX_PARTICLE; nCnt++)
+	{
+		g_aParticle[nCnt].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aParticle[nCnt].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aParticle[nCnt].col = D3DXCOLOR(1.0f, 1.0, 1.0f, 1.0f);
+		g_aParticle[nCnt].nLife = 0;
+		g_aParticle[nCnt].bUse = false;
+	}
 
 }
 
@@ -56,12 +42,7 @@ void InitParticle(void)
 //=============================================================================
 void UninitParticle(void)
 {
-	////頂点バッファの破棄
-	//if (g_pVtxBuffParticle != NULL)
-	//{
-	//	g_pVtxBuffParticle->Release();
-	//	g_pVtxBuffParticle = NULL;
-	//}
+
 }
 
 //=============================================================================
@@ -69,31 +50,46 @@ void UninitParticle(void)
 //=============================================================================
 void UpdateParticle(void)
 {
-	int nCntParticle;
-	int nCntAppear;
-	for (nCntParticle = 0; nCntParticle < MAX_PARTICLE; nCntParticle++)
+	for (int nCntParticle = 0; nCntParticle < MAX_PARTICLE; nCntParticle++)
 	{
+
 		if (g_aParticle[nCntParticle].bUse == true)
 		{
-			//		//パーティクルの生成
-			//		if(//寿命が尽きた)
-			//			{
-			//				g_aParticle[nCntParticle].bUse = false;
-			//			}
-			//	}
-			//}
-			//for (nCntAppear = 0; nCntAppear <//発生させたい粒子の数; nCntAppear++)
-			//{
-			//	//位置の設定
+			for (int nCntApper = 0; nCntApper < 3; nCntApper++)
+			{
+				//位置更新
+				g_aParticle[nCntParticle].pos += g_aParticle[nCntParticle].move;
 
-			//	//移動量の設定
+				D3DXVECTOR3 pos = g_aParticle[nCntParticle].pos;
 
-			//	//色の設定
+				float fAngleX = (float)(rand() % 628 - 314) * 0.01f;
+				float fAngleY = (float)(rand() % 628 - 314) * 0.01f;
+				float fAngleZ = (float)(rand() % 628 - 314) * 0.01f;
 
-			//	//寿命の設定
+				float fMoveX = (float)(rand() % 10 - 5);
+				float fMoveY = (float)(rand() % 10 - 5);
+				float fMoveZ = (float)(rand() % 10 - 5);
 
-			//	//エフェクトの設定
-			//}
+				g_aParticle[nCntParticle].move.x += sinf(fAngleX) * fMoveX;
+				g_aParticle[nCntParticle].move.y += sinf(fAngleY) * fMoveY;
+				g_aParticle[nCntParticle].move.z += cosf(fAngleZ) * fMoveZ;
+
+				D3DXVECTOR3 move = g_aParticle[nCntParticle].move;
+
+				D3DXCOLOR col = g_aParticle[nCntParticle].col;
+
+				int nLife = rand() % g_aParticle[nCntParticle].nLife + 60;
+
+				//ライフの減少
+				g_aParticle[nCntParticle].nLife--;
+
+				if (g_aParticle[nCntParticle].nLife <= 0)
+				{
+					g_aParticle[nCntParticle].bUse = false;
+				}
+
+				SetEffect(pos, move, nLife, col);
+			}
 		}
 	}
 }
@@ -109,7 +105,18 @@ void DrawParticle(void)
 //=============================================================================
 //粒子の設定処理
 //=============================================================================
-void SetParticle(D3DXVECTOR3 pos)
+void SetParticle(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXCOLOR col, int nLife)
 {
-
+	for (int nCnt = 0; nCnt < MAX_PARTICLE; nCnt++)
+	{
+		if (g_aParticle[nCnt].bUse == false)
+		{
+			g_aParticle[nCnt].pos = pos;
+			g_aParticle[nCnt].move = move;
+			g_aParticle[nCnt].col = col;
+			g_aParticle[nCnt].nLife = nLife;
+			g_aParticle[nCnt].bUse = true;
+			break;
+		}
+	}
 }

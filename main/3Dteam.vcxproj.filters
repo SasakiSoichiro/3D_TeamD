@@ -46,6 +46,8 @@
     <ClCompile Include="objective.cpp" />
     <ClCompile Include="flashlight.cpp" />
     <ClCompile Include="explain.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="effect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -93,6 +95,8 @@
     <ClInclude Include="objective.h" />
     <ClInclude Include="flashlight.h" />
     <ClInclude Include="explain.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="effect.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />

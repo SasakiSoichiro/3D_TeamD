@@ -16,6 +16,7 @@
 #include "ItemUI.h"
 #include "pickupUI.h"
 #include "flashlight.h"
+#include "Particle.h"
 
 // ƒOƒ[ƒoƒ‹•Ï”éŒ¾
 ITEM g_item[ITEMTYPE_MAX];
@@ -193,6 +194,7 @@ void Updateitem(void)
 				}
 			}
 		}
+		SetParticle(g_item[nCnt].pos, D3DXVECTOR3(0.0f, 1.0f, 0.0f), 180, D3DXCOLOR(1.0f, 1.0f, 1.0f,1.0f));
 	}
 
 	int nSelect = GetSelect();

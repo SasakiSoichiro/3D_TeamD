@@ -41,6 +41,8 @@
 #include "objective.h"
 #include "flashlight.h"
 #include "explain.h"
+#include "Particle.h"
+#include "effect.h"
 
 //#include "etcUI.h"
 
@@ -154,6 +156,10 @@ void InitGame(void)
 
 	//	アイテム説明
 	InitExplain();
+
+	InitEffect();
+
+	InitParticle();
 
 	//InitEtcUI();
 
@@ -388,6 +394,8 @@ void UninitGame(void)
 
 	//	アイテム説明
 	UninitExplain();
+
+	UninitEffect();
 	//UninitEtcUI();
 }
 
@@ -505,6 +513,10 @@ void UpdateGame(void)
 
 				// 目的の表示
 				UpdateObjective();
+
+				UpdateEffect();
+
+				UpdateParticle();
 
 				// スロー
 				UpdateSlow();
@@ -668,6 +680,8 @@ void DrawGame(int nIdx)
 
 	// 目的の表示
 	DrawObjective();
+
+	DrawEffect();
 	//DrawEtcUI();
 
 	if (pExplain[0].bLook == true || pExplain[1].bLook == true || pExplain[2].bLook == true)
