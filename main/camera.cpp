@@ -213,7 +213,6 @@ void UpdateCamera(void)
 		g_camera[0].posR.x = g_camera[0].posV.x - sinf(g_camera[0].rot.y) * cosf(g_camera[0].rot.x);
 		g_camera[0].posR.y = g_camera[0].posV.y - sinf(g_camera[0].rot.x);
 		g_camera[0].posR.z = g_camera[0].posV.z - cosf(g_camera[0].rot.y) * cosf(g_camera[0].rot.x);
-
 	}
 	else if (GetEditState() == true)
 	{
@@ -251,7 +250,6 @@ void UpdateCamera(void)
 		g_camera[0].posR.x = g_camera[0].posV.x + sinf(g_camera[0].rot.x) * sinf(g_camera[0].rot.y) * g_camera[0].fDistance;
 		g_camera[0].posR.y = g_camera[0].posV.y + cosf(g_camera[0].rot.x) * g_camera[0].fDistance;
 		g_camera[0].posR.z = g_camera[0].posV.z + sinf(g_camera[0].rot.x) * cosf(g_camera[0].rot.y) * g_camera[0].fDistance;
-
 	}
 
 	// 敵の視点
@@ -284,7 +282,6 @@ void SetCamera(int nIdx)
 {
 	// デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
 
 		// ビューマトリックスの初期化
 		D3DXMatrixIdentity(&g_camera[nIdx].mtxView);
@@ -320,12 +317,10 @@ void MouseWheel(int zDelta)
 	if (zDelta > 0)
 	{
 		g_camera[0].fDistance -= 15.0f;
-
 	}
 	else if (zDelta < 0)
 	{
 		g_camera[0].fDistance += 15.0f;
-
 	}
 
 	// カメラの視点の情報
