@@ -253,7 +253,6 @@ void SetUsedItemUI(int nType)
 			break;
 		}
 
-		break;
 	}
 
 
