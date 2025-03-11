@@ -78,6 +78,7 @@ typedef struct
 	LPD3DXBUFFER pBuffMat;							// マテリアルへのポインタ
 	DWORD dwNumMat;									// マテリアルの数
 	D3DXVECTOR3 vtxMin, vtxMax;						// モデルの最小値,最大値
+
 }BLOCKTEX;
 
 // ブロックの構造体情報

@@ -23,6 +23,7 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffUI = NULL;
 //====================
 void InitBloodSplatter(void)
 {
+	//Šeí•Ï”‚Ì‰Šú‰»
 	g_ui.ui = UI_IN;
 	g_ui.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	g_ui.count = 0;

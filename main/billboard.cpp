@@ -200,7 +200,6 @@ void UpdateBillboard()
 			// 鍵を持った時
 			if (pItem[0].bHold == true && pItem[1].bHold == true)
 			{
-
 				// プレイヤーの半径の算出用変数
 				float fPRadPos = 50.0f;
 
@@ -231,7 +230,6 @@ void UpdateBillboard()
 						g_Billboard[nCnt].bUse = true;			// 使用
 						g_Billboard[nCnt].bDisplay = true;		// 見る
 					}			
-
 				}
 
 				// プレイヤーがアイテムの範囲外にいったら
@@ -239,15 +237,11 @@ void UpdateBillboard()
 				{
 					g_Billboard[nCnt].bDisplay = false;
 				}
-
-
 			}
 
 			// (1/2)鍵を持った時
 			else if (pItem[1].bHold == false && pItem[0].bHold == true)
 			{
-
-
 				// プレイヤーの半径の算出用変数
 				float fPRadPos = 50.0f;
 
@@ -280,7 +274,6 @@ void UpdateBillboard()
 						g_Billboard[nCnt].bUse = true;		// 使用
 						g_Billboard[nCnt].bDisplay = true;	// 見る
 					}
-
 				}
 
 				// プレイヤーがアイテムの範囲外にいったら
@@ -288,15 +281,11 @@ void UpdateBillboard()
 				{
 					g_Billboard[nCnt].bDisplay = false;
 				}
-
-
 			}
 
 			// (1/2)鍵を持った時
 			else if (pItem[0].bHold == false && pItem[1].bHold == true)
 			{
-
-
 				// プレイヤーの半径の算出用変数
 				float fPRadPos = 50.0f;
 
@@ -320,7 +309,6 @@ void UpdateBillboard()
 				// プレイヤーがアイテムの範囲に入ったら
 				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 				{
-
 					// 1/2鍵
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_3)
 					{
@@ -329,7 +317,6 @@ void UpdateBillboard()
 						g_Billboard[nCnt].bUse = true;		// 使用
 						g_Billboard[nCnt].bDisplay = true;	// 見る
 					}
-
 				}
 
 				// プレイヤーがアイテムの範囲外にいったら
@@ -337,14 +324,11 @@ void UpdateBillboard()
 				{
 					g_Billboard[nCnt].bDisplay = false;
 				}
-
-
 			}
 
 			// (0/2)鍵を持ってない時
 			else if (pItem[0].bHold == false && pItem[1].bHold == false)
 			{
-
 				// プレイヤーの半径の算出用変数
 				float fPRadPos = 50.0f;
 
@@ -368,7 +352,6 @@ void UpdateBillboard()
 				// プレイヤーがアイテムの範囲に入ったら
 				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 				{
-
 					// 0/2鍵
 					if (g_Billboard[nCnt].nType == BILLBOARDTYPE_2)
 					{
@@ -376,7 +359,6 @@ void UpdateBillboard()
 						g_Billboard[nCnt].bUse = true;		// 使用
 						g_Billboard[nCnt].bDisplay = true;	// 見る
 					}
-
 				}
 
 				// プレイヤーがアイテムの範囲外にいったら
@@ -384,8 +366,6 @@ void UpdateBillboard()
 				{
 					g_Billboard[nCnt].bDisplay = false;
 				}
-
-
 			}
 		}
 	}
@@ -477,7 +457,6 @@ void DrawBillboard()
 
 			// アイテムの描画
 			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCnt * 4, 2);
-
 		}
 	}
 

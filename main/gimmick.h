@@ -1,4 +1,8 @@
-#pragma once
+//=============================================
+//
+// author chikada shouya
+//
+//=============================================
 #ifndef _GIMMICK_H_
 #define _GIMMICK_H_
 

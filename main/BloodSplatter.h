@@ -20,7 +20,7 @@ typedef enum
 	UI_MAX
 }UI_MODE;
 
-// ŒŒ‚µ‚Ô‚«‚Ì\‘¢‘Ì’è‹`
+// ŒŒ‚µ‚Ô‚«‚Ì\‘¢‘Ì
 typedef struct
 {
 	D3DXCOLOR col;

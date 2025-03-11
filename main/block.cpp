@@ -33,7 +33,6 @@ void InitBlock(void)
 		g_Block[nCnt].bUse = false;
 	}
 
-
 	for (int nCnt = 0; nCnt < BLOCK_MAX; nCnt++)
 	{
 		// xファイルの読み込み
@@ -100,6 +99,7 @@ void InitBlock(void)
 			// 頂点フォーマットのサイズ分ポインタを進める
 			pVtxBuff += sizeFVF;
 		}
+
 		// 頂点バッファのアンロック
 		g_BlockTex[nCnt].pMesh->UnlockVertexBuffer();
 
@@ -118,7 +118,6 @@ void InitBlock(void)
 					&g_BlockTex[nCnt].apTexture[nCntMat]);
 			}
 		}
-
 	}
 }
 //==============================
@@ -135,7 +134,6 @@ void UninitBlock(void)
 			{
 				g_BlockTex[nCntTex].apTexture[nCntTexture]->Release();
 				g_BlockTex[nCntTex].apTexture[nCntTexture] = NULL;
-
 			}
 		}
 		// メッシュの破棄
@@ -143,7 +141,6 @@ void UninitBlock(void)
 		{
 			g_BlockTex[nCntTex].pMesh->Release();
 			g_BlockTex[nCntTex].pMesh = NULL;
-
 		}
 		// 頂点バッファの解放
 		if (g_BlockTex[nCntTex].pBuffMat != NULL)
@@ -151,7 +148,6 @@ void UninitBlock(void)
 			g_BlockTex[nCntTex].pBuffMat->Release();
 			g_BlockTex[nCntTex].pBuffMat = NULL;
 		}
-
 	}
 
 	for (int nCntEdit = 0; nCntEdit < NUM_BLOCK; nCntEdit++)
@@ -161,7 +157,6 @@ void UninitBlock(void)
 			if (g_Block[nCntEdit].tex.apTexture[nCntTexture] != NULL)
 			{
 				g_Block[nCntEdit].tex.apTexture[nCntTexture] = NULL;
-
 			}
 		}
 
@@ -175,9 +170,9 @@ void UninitBlock(void)
 		{
 			g_Block[nCntEdit].tex.pBuffMat = NULL;
 		}
-
 	}
 }
+
 //==============================
 // ブロックの更新処理
 //==============================
@@ -185,6 +180,7 @@ void UpdateBlock(void)
 {
 	// 無し
 }
+
 //==============================
 // ブロックの描画処理
 //==============================
@@ -246,6 +242,7 @@ void DrawBlock(void)
 		pDevice->SetMaterial(&matDef);
 	}
 }
+
 //==============================
 // ブロックの設定処理
 //==============================
@@ -264,15 +261,16 @@ void SetBlock(D3DXVECTOR3 pos,int nType)
 		}
 	}
 }
+
 //==============================
 // ブロックの当たり判定処理
 //==============================
 void CollisionBlock(D3DXVECTOR3* pPos,		// 現在の位置
 					D3DXVECTOR3* pPosOld)	// 前回の位置
 {					
-	Player* pPlayer = GetPlayer();		// プレイヤーの取得
-	D3DXVECTOR3* posOld = pPosOld;		// 前フレームのプレイヤーの位置
-	D3DXVECTOR3* pos = pPos;			// 現フレームのプレイヤーの位置
+	Player* pPlayer = GetPlayer();			// プレイヤーの取得
+	D3DXVECTOR3* posOld = pPosOld;			// 前フレームのプレイヤーの位置
+	D3DXVECTOR3* pos = pPos;				// 現フレームのプレイヤーの位置
 
 	for (int nCnt = 0; nCnt < NUM_BLOCK; nCnt++)
 	{
@@ -314,7 +312,6 @@ void CollisionBlock(D3DXVECTOR3* pPos,		// 現在の位置
 						pos->z = g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMax.z + OBJ_P + 0.1f;
 					}
 				}
-
 			}
 			//if (pos->z - OBJ_P< g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMax.z && pos->z + OBJ_P > g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMin.z
 			//	&& pos->x - OBJ_P< g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMax.x && pos->x + OBJ_P > g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMin.x)

@@ -30,7 +30,6 @@ static const char* BUTTONUITYPE__TEXTURE[BUTTONUITYPE_MAX] =
 {
 	"data\\texture\\button1.png",		// ボタン(X)			0
 	"data\\texture\\buttonX1.png",		// ボタン(Y)			1
-
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++

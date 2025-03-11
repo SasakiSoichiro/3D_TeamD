@@ -95,6 +95,7 @@ void UninitButtonUI()
 			g_ButtonUiTexture[nCnt] = NULL;
 		}
 	}
+
 	// 頂点バッファの破棄
 	if (g_pVtxBuffButtonUi != NULL)
 	{
@@ -158,7 +159,6 @@ void DrawButtonUI()
 
 	for (int nCnt = 0; nCnt < MAX_BUTTONUI; nCnt++)
 	{
-
 		if (g_ButtonUI[nCnt].bUse == true)
 		{
 			// テクスチャの設定
