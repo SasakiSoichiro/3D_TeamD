@@ -1,4 +1,9 @@
-#pragma once
+//=============================================================================
+//
+//    タイトル処理 [title.h]
+//    Author : ryuusei.hirata
+//
+//=============================================================================
 #ifndef _TITLE_H_
 #define _TITLE_H_
 
@@ -34,7 +39,7 @@ typedef struct
 	TITLEMODE state;	// 状態
 }Title;
 
-//プロトタイプ
+// プロトタイプ
 void InitTitle(void);
 void UninitTitle(void);
 void UpdateTitle(void);

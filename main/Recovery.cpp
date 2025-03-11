@@ -91,6 +91,7 @@ void UpdateRecovery(void)
 {
 	if (g_Recovery.bUse == true)
 	{
+		// デクリメント
 		g_Recovery.count--;
 
 		if (g_Recovery.count <= 0 && g_Recovery.ui == Recovery_NONE)
@@ -100,6 +101,7 @@ void UpdateRecovery(void)
 			g_Recovery.count = 0;			// 0にする
 		}
 	}
+
 	if (g_Recovery.ui != Recovery_NONE)
 	{
 		if (g_Recovery.ui == Recovery_IN)
@@ -151,10 +153,10 @@ void DrawRecovery(void)
 	// デバイスの取得
 	pDevice = GetDevice();
 
-	//頂点フォーマットの設定
+	// 頂点フォーマットの設定
 	pDevice->SetStreamSource(0, g_pVtxBuffRecovery, 0, sizeof(VERTEX_2D));
 
-	//頂点フォーマット設定
+	// 頂点フォーマット設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	if (g_Recovery.bUse == true)

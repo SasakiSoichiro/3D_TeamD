@@ -1,9 +1,15 @@
-#pragma once
+//=============================================================================
+//
+//    スコア処理 [score.h]
+//    Author : ryuu HRT
+//
+//=============================================================================
 #ifndef _SCORE_H_
 #define _SCORE_H_
 
 #include "main.h"
 
+// マクロ定義
 #define MAX_SCORE_COOKEI_NOMAL (156)	// 通常クッキーのスコア
 #define MAX_SCORE_COOKEI_HARD (236)		// 硬いクッキーのスコア
 
@@ -18,7 +24,7 @@ typedef struct
 	int SCORE;				// 最終スコア
 }Score;
 
-//プロトタイプ
+// プロトタイプ
 void InitScore(void);
 void UninitScore(void);
 void UpdateScore(void);
