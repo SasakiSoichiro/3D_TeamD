@@ -14,6 +14,7 @@
 #include "fade.h"
 #include "sound.h"
 #include "player.h"
+#include "enemy.h"
 
 #define MAX_ENEMY (36)
 

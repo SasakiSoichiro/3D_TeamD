@@ -972,16 +972,25 @@ void HitPlayer(int nDamege)
 	for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++)
 	{
 
-		if (g_player[nCnt].nLife >= 0)
+		if (g_player[nCnt].nLife >= 2)
 		{
 			g_nCounterState = 180;
 
 			g_player[nCnt].pState = PLAYERSTATE_DAMAGE;
 			g_player[nCnt].nLife -= nDamege;
-			SetBloodSplatter(90);
+			SetBloodSplatter(90, UITYPE_SMALL);
 			break;
 		}
-		else
+		else if (g_player[nCnt].nLife >= 1)
+		{
+			g_nCounterState = 180;
+
+			g_player[nCnt].pState = PLAYERSTATE_DAMAGE;
+			g_player[nCnt].nLife -= nDamege;
+			SetBloodSplatter(90, UITYPE_BIG);
+			break;
+		}
+		else if (g_player[nCnt].nLife >= 0)
 		{
 			g_player[nCnt].bCaught = false;
 			SetFade(MODE_RESULT);

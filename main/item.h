@@ -64,5 +64,6 @@ void Updateitem(void);
 void Drawitem(void);
 ITEM* Getitem(void);
 void Setitem(D3DXVECTOR3 pos, int nType);
+bool IsNeed();
 
 #endif // !_ITEM_H_

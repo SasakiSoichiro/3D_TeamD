@@ -20,11 +20,25 @@ typedef enum
 	UI_MAX
 }UI_MODE;
 
-// ŒŒ‚µ‚Ô‚«‚Ì\‘¢‘Ì
+typedef enum
+{
+	UITYPE_SMALL,
+	UITYPE_BIG,
+	UITYPE_MAX
+}UITYPE;
+
+static const char* UI_TEXTURE[UITYPE_MAX] =
+{
+	"data\\texture\\BloodSplatter.png",		//Œ®(0/2)			0
+	"data\\texture\\BloodSplatter1.png",	//Œ®(1/2)			1
+};
+
+// ŒŒ‚µ‚Ô‚«‚Ì\‘¢‘Ì’è‹`
 typedef struct
 {
 	D3DXCOLOR col;
 	UI_MODE ui;
+	UITYPE nType;
 	bool bUse;
 	int count;
 }UI;
@@ -34,6 +48,6 @@ void InitBloodSplatter(void);
 void UinitBloodSplatter(void);
 void UpdateBloodSplatter(void);
 void DrawBloodSplatter(void);
-void SetBloodSplatter(int count);
+void SetBloodSplatter(int count, UITYPE nType);
 
 #endif // !_UI_H_

@@ -21,6 +21,7 @@
 // ƒOƒ[ƒoƒ‹•Ï”éŒ¾
 ITEM g_item[ITEMTYPE_MAX];
 ITEMINFO Iteminfo[ITEMTYPE_MAX]; // í—Ş
+bool bNeed;
 
 //=================
 //	‰Šú‰»ˆ—
@@ -43,6 +44,8 @@ void Inititem(void)
 			&Iteminfo[nCnt].dwNuMat,
 			&Iteminfo[nCnt].pMesh);
 	}
+
+	bNeed = false;
 
 	for (int count = 0; count < ITEMTYPE_MAX; count++)
 	{
@@ -231,6 +234,9 @@ void Updateitem(void)
 				{
 					if (pPlayer->nLife <= 2)
 					{
+
+						bNeed = true;
+
 						// SE‚ğ–Â‚ç‚·
 						PlaySound(SOUND_LABEL_SE2);
 
@@ -355,4 +361,9 @@ void Setitem(D3DXVECTOR3 pos, int nType)
 			break;
 		}
 	}
+}
+
+bool IsNeed()
+{
+	return bNeed;
 }
