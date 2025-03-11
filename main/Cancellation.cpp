@@ -6,6 +6,7 @@
 //			Yabuki
 //
 //===============================================
+
 #include "Cancellation.h"
 #include "input.h"
 #include "player.h"

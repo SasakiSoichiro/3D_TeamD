@@ -4,6 +4,7 @@
 // Author : yabuki yukito
 //
 //====================================================
+
 #ifndef _CANCELLATION_H_
 #define _CANCELLATION_H_
 

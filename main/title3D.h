@@ -1,3 +1,9 @@
+//=============================================================================
+//
+// title(3D)処理 [title3D.cpp]
+// Author: ryuusei.hirata
+//
+//=============================================================================
 #ifndef _TITLE3D_H_
 #define _TITLE3D_H_
 
@@ -6,7 +12,7 @@
 #include "game.h"
 
 
-//プロトタイプ
+// プロトタイプ
 void InitTitle3D(void);
 void UninitTitle3D(void);
 void UpdateTitle3D(void);

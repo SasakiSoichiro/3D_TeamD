@@ -4,6 +4,7 @@
 //				ryuusei hirata
 // 
 //========================================================
+
 #include "main.h"
 #include "camera.h"
 #include "input.h"

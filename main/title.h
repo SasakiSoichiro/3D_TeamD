@@ -27,7 +27,7 @@ typedef enum
 	TITLEMODE_MAX
 }TITLEMODE;
 
-//	ç\ë¢ëÃ
+// ç\ë¢ëÃ
 typedef struct
 {
 	D3DXVECTOR3 pos;	// ç¿ïW

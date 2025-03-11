@@ -14,7 +14,7 @@
 #include "model.h"
 #include "noise.h"
 
-//タイトルの初期化
+// タイトルの初期化
 void InitTitle3D(void)
 {
 	InitCamera();
@@ -24,7 +24,7 @@ void InitTitle3D(void)
 	InitNoise();
 }
 
-//タイトルの終了処理
+// タイトルの終了処理
 void UninitTitle3D()
 {
 	UninitCamera();
@@ -34,7 +34,7 @@ void UninitTitle3D()
 	UninitNoise();
 }
 
-//タイトルの更新処理
+// タイトルの更新処理
 void UpdateTitle3D()
 {
 	UpdateCamera();
@@ -44,7 +44,7 @@ void UpdateTitle3D()
 	UpdateNoise();
 }
 
-//タイトルの描画処理
+// タイトルの描画処理
 void DrawTitle3D()
 {
 	SetCamera(0);
