@@ -18,6 +18,7 @@ typedef struct
 	int nLife;
 	bool bUse;
 }Particle;
+
 //プロトタイプ
 void InitParticle(void);
 void UninitParticle(void);
