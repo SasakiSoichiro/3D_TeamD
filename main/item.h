@@ -1,16 +1,16 @@
-//=================================================================
+//=============================================================================
 //
+// アイテム処理 [item.h]
+// Author : HRT ryuusei
 //
-//
-//				あ　い　て　む　処　理　！！
-//
-//
-//
-//==================================================================
+//=============================================================================
+
 #ifndef _ITEM_H_
 #define _ITEM_H_
 
 #include "main.h"
+
+// マクロ定義
 #define MAX_ITEM (6)
 
 // 種類の列挙型
@@ -38,7 +38,7 @@ static const char* ITEM_MODEL[ITEMTYPE_MAX] =
 
 typedef struct
 {
-    LPD3DXMESH pMesh;                //  頂点情報のポインター
+    LPD3DXMESH pMesh;                   //  頂点情報のポインター
     LPDIRECT3DTEXTURE9 pTexture[128];   //  テクスチャのポインター
     LPD3DXBUFFER pBufferMat;            //  マテリアルのポインター
     DWORD dwNuMat;                      //  マテリアルの数
@@ -58,6 +58,7 @@ typedef struct
     int nIdxUI;
 }ITEM;
 
+// プロトタイプ宣言
 void Inititem(void);
 void Uninititem(void);
 void Updateitem(void);
