@@ -16,12 +16,12 @@
 // 種類の列挙型
 typedef enum
 {
-    ITEMTYPE_ONE = 0,    //    鍵の上部
-    ITEMTYPE_TWO,        //    鍵の下部
-    ITEMTYPE_THREE,      //    懐中時計
-    ITEMTYPE_FOUR,       //    なぎなた
-    ITEMTYPE_FIVE,       //    救急箱
-    ITEMTYPE_SIX,        //    懐中電灯
+    ITEMTYPE_ONE = 0,    // 鍵の上部
+    ITEMTYPE_TWO,        // 鍵の下部
+    ITEMTYPE_THREE,      // 懐中時計
+    ITEMTYPE_FOUR,       // なぎなた
+    ITEMTYPE_FIVE,       // 救急箱
+    ITEMTYPE_SIX,        // 懐中電灯
     ITEMTYPE_MAX
 }ITEMTYPE;
 

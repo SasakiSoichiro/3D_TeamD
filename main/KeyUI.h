@@ -8,12 +8,14 @@
 #define _KEYUI_H_
 
 #include "main.h"
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 //マクロ定義
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 #define MAX_WIDTH (150)  //UIの横幅
 #define MAX_HEIGHT (100) //UIの高さ
 #define MAX_ITEMUI (20)   //アイテムの数
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 //アイテムUIのテクスチャ状態
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -27,11 +29,12 @@ typedef enum
 
 static const char* ITEMKEYUI_TEXTURE[ITEMKEYUITYPE_MAX] =
 {
-	"data\\texture\\NOkagi.png",		//鍵(0/2)			0
-	"data\\texture\\YesNoKagi.png",		//鍵(1/2)			1
-	"data\\texture\\Perfectkagi.png",	//鍵(完成)			2
+	"data\\texture\\NOkagi.png",		// 鍵(0/2)			0
+	"data\\texture\\YesNoKagi.png",		// 鍵(1/2)			1
+	"data\\texture\\Perfectkagi.png",	// 鍵(完成)			2
 
 };
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 //アイテムUIの構造体
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -43,6 +46,7 @@ typedef struct
 	float fWidth; // 横幅
 	float fHeight;// 高さ
 }ITEMKEYUI;
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 //プロトタイプ宣言
 //++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -1,9 +1,10 @@
-//======================================================
+//=============================================================================
 //
 //		懐中電灯  flashlight.cpp
 //		Auther:Sasaki Soichiro
 //
-//======================================================
+//=============================================================================
+
 #include "flashlight.h"
 #include "main.h"
 #include "player.h"
@@ -13,6 +14,9 @@
 //	グローバル
 FLASHLIGHT g_FlashLight[MAX_FLASH];
 
+//=============================================================================
+// 初期化処理
+//=============================================================================
 void InitFlashLight(void)
 {
 	//	デバイスの取得
@@ -39,9 +43,11 @@ void InitFlashLight(void)
 	}
 }
 
+//=============================================================================
+// 終了処理
+//=============================================================================
 void UninitFlashLight(void)
 {
-
 	//	デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -52,9 +58,11 @@ void UninitFlashLight(void)
 	}
 }
 
+//=============================================================================
+// 更新処理
+//=============================================================================
 void UpdateFlashLight(void)
 {
-
 	//プレイヤー情報の取得
 	Player* pPlayer = GetPlayer();
 
@@ -69,7 +77,6 @@ void UpdateFlashLight(void)
 
 			//	ライトを設定する
 			pDevice->SetLight(nCntLight, &g_FlashLight[nCntLight].light);
-
 		}
 		else if (g_FlashLight[nCntLight].bLight == false)
 		{
@@ -78,17 +85,20 @@ void UpdateFlashLight(void)
 			//	ライトを設定する
 			pDevice->SetLight(nCntLight, &g_FlashLight[nCntLight].light);
 		}
-
-		
 	}
-
 }
 
+//=============================================================================
+// 懐中電灯の取得処理
+//=============================================================================
 FLASHLIGHT* GetFlashLight(void)
 {
 	return &g_FlashLight[0];
 }
 
+//=============================================================================
+// グローバル変数の初期化
+//=============================================================================
 void InitFlashGlobal(int nCnt)
 {
 	g_FlashLight[nCnt].light.Type = D3DLIGHT_POINT;  // スポットライト
@@ -104,6 +114,9 @@ void InitFlashGlobal(int nCnt)
 	g_FlashLight[nCnt].bLight = false;
 }
 
+//=============================================================================
+// 懐中電灯ON
+//=============================================================================
 void bFlashTRUE(int nCnt)
 {
 	//プレイヤー情報の取得
@@ -114,9 +127,11 @@ void bFlashTRUE(int nCnt)
 	g_FlashLight[nCnt].light.Position.y = pPlayer->pos.y + 100.0f;
 
 	g_FlashLight[nCnt].light.Range = 800.0f;  // 光の到達距離
-
 }
 
+//=============================================================================
+// 懐中電灯OFF
+//=============================================================================
 void bFlashFALSE(int nCnt)
 {
 	//プレイヤー情報の取得
@@ -127,5 +142,4 @@ void bFlashFALSE(int nCnt)
 	g_FlashLight[nCnt].light.Position.y = pPlayer->pos.y + 100.0f;
 
 	g_FlashLight[nCnt].light.Range = 10.0f;  // 光の到達距離
-
 }
