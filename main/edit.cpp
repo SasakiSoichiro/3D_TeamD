@@ -15,7 +15,9 @@ EDITTEX g_EditTex[EDIT_MAX];
 int g_EditCnt;
 int g_nReloadCnt;
 
+//=============================================================================
 // 初期化処理
+//=============================================================================
 void InitEdit(void)
 {
 	LPDIRECT3DDEVICE9 pDevice;
@@ -47,17 +49,17 @@ void InitEdit(void)
 	// マテリアルの取得
 	for (int nCnt = 0; nCnt < BLOCK_MAX; nCnt++)
 	{
-		//マテリアルへのポインタ
+		// マテリアルへのポインタ
 		D3DXMATERIAL* pMat;
 
-		//マテリアルデータへのポインタを取得
+		// マテリアルデータへのポインタを取得
 		pMat = (D3DXMATERIAL*)g_EditTex[nCnt].pBuffMat->GetBufferPointer();
 
 		for (int nCntMat = 0; nCntMat < (int)g_EditTex[nCnt].dwNumMat; nCntMat++)
 		{
 			if (pMat[nCntMat].pTextureFilename != NULL)
-			{//テクスチャファイルが存在する
-					//テクスチャの読み込み
+			{// テクスチャファイルが存在する
+					// テクスチャの読み込み
 				D3DXCreateTextureFromFile(pDevice,
 					pMat[nCntMat].pTextureFilename,
 					&g_EditTex[nCnt].apTexture[nCntMat]);
@@ -75,7 +77,9 @@ void InitEdit(void)
 	g_EditCnt = 0;
 }
 
+//=============================================================================
 // 終了処理
+//=============================================================================
 void UninitEdit(void)
 {
 	for (int nCntTex = 0; nCntTex < BLOCK_MAX; nCntTex++)
@@ -98,7 +102,7 @@ void UninitEdit(void)
 
 		}
 
-		//頂点バッファの解放
+		// 頂点バッファの解放
 		if (g_EditTex[nCntTex].pBuffMat != NULL)
 		{
 			g_EditTex[nCntTex].pBuffMat->Release();
@@ -125,7 +129,7 @@ void UninitEdit(void)
 
 			}
 
-			//頂点バッファの解放
+			// 頂点バッファの解放
 			if (g_Edit[nCntEdit].tex[nCntType].pBuffMat != NULL)
 			{
 				g_Edit[nCntEdit].tex[nCntType].pBuffMat = NULL;
@@ -134,41 +138,43 @@ void UninitEdit(void)
 	}
 }
 
+//=============================================================================
 // 更新処理
+//=============================================================================
 void UpdateEdit(void)
 {
 	if (g_Edit[g_EditCnt].bUse == true)
 	{
-		//移動量の更新
+		// 移動量の更新
 		g_Edit[g_EditCnt].move.x += (0.0f - g_Edit[g_EditCnt].move.x) * 0.25f;
 
-		//移動量の更新
+		// 移動量の更新
 		g_Edit[g_EditCnt].move.z += (0.0f - g_Edit[g_EditCnt].move.z) * 0.25f;
 
-		//位置更新
+		// 位置更新
 		g_Edit[g_EditCnt].pos.x += g_Edit[g_EditCnt].move.x;
 
-		//位置更新
+		// 位置更新
 		g_Edit[g_EditCnt].pos.z += g_Edit[g_EditCnt].move.z;
 
 		if (GetKeyboardPress(DIK_A) == true)
-		{//左に移動
+		{// 左に移動
 			g_Edit[g_EditCnt].move.z -= EDIT_MOVE;
 		}
 		else if (GetKeyboardPress(DIK_D) == true)
-		{//左に移動
+		{// 左に移動
 			g_Edit[g_EditCnt].move.z += EDIT_MOVE;
 		}
 		else if (GetKeyboardPress(DIK_W) == true)
-		{//左に移動
+		{// 左に移動
 			g_Edit[g_EditCnt].move.x -= EDIT_MOVE;
 		}
 		else if (GetKeyboardPress(DIK_S) == true)
-		{//左に移動
+		{// 左に移動
 			g_Edit[g_EditCnt].move.x += EDIT_MOVE;
 		}
 		else if (KeybordTrigger(DIK_T) == true)
-		{//左に移動
+		{// 左に移動
 			if (g_Edit[g_EditCnt].nType >= 1)
 			{
 				g_Edit[g_EditCnt].nType -= 1;
@@ -176,7 +182,7 @@ void UpdateEdit(void)
 			}
 		}
 		else if (KeybordTrigger(DIK_G) == true)
-		{//左に移動
+		{// 左に移動
 			if (g_Edit[g_EditCnt].nType < EDIT_MAX - 1)
 			{
 				g_Edit[g_EditCnt].nType += 1;
@@ -208,7 +214,9 @@ void UpdateEdit(void)
 #endif
 }
 
+//=============================================================================
 // 描画処理
+//=============================================================================
 void DrawEdit(void)
 {
 	// デバイスの取得
@@ -264,9 +272,12 @@ void DrawEdit(void)
 	}
 }
 
+//=============================================================================
+// 内容保存処理
+//=============================================================================
 void SaveEdit(void)
 {
-	//ファイルポインタを宣言
+	// ファイルポインタを宣言
 	FILE* pFile;
 
 	D3DXVECTOR3 pos = {};
@@ -293,11 +304,14 @@ void SaveEdit(void)
 		fclose(pFile);
 	}
 	else
-	{//開けなかったときの処理
+	{// 開けなかったときの処理
 		return;
 	}
 }
 
+//=============================================================================
+// 読込処理
+//=============================================================================
 void LoadEdit(void)
 {
 	FILE* pFile;
@@ -308,23 +322,24 @@ void LoadEdit(void)
 
 	if (pFile != NULL)
 	{
-		char aString[MAX_WORD];//文字数を格納
-		//全部のテキストに書かれた情報を読み取りが終わるまで回す
+		char aString[MAX_WORD];		// 文字数を格納
+
+		// 全部のテキストに書かれた情報を読み取りが終わるまで回す
 		while (1)
 		{
-			//ファイルを読み込む
+			// ファイルを読み込む
 			fscanf(pFile, "%s", &aString[0]);
 
-			//読み取る特定の文字列が一致していたら
+			// 読み取る特定の文字列が一致していたら
 			if (strcmp(aString, "BLOCKSET") == 0)
 			{
 				while (1)
 				{
-					//ファイルを読み込む
+					// ファイルを読み込む
 					fscanf(pFile, "%s", &aString[0]);
 
 					if (strcmp(aString, "POS") == 0)
-					{//POSを読み取ったら
+					{// POSを読み取ったら
 						fscanf(pFile, "%f", &pos.x);
 						fscanf(pFile, "%f", &pos.y);
 						fscanf(pFile, "%f", &pos.z);
@@ -347,7 +362,7 @@ void LoadEdit(void)
 			//}
 			if (strcmp(aString, "END_SCRIPT") == 0)
 			{
-				//whileを抜けるため
+				// whileを抜けるため
 				break;
 			}
 		}
@@ -355,14 +370,17 @@ void LoadEdit(void)
 		//fclose(pFile);
 	}
 	else
-	{//開けなかったときの処理
-		//ファイルを閉じる
+	{// 開けなかったときの処理
+		// ファイルを閉じる
 		return;
 	}
-	//ファイルを閉じる
+	// ファイルを閉じる
 	fclose(pFile);
 }
 
+//=============================================================================
+// 再読込処理
+//=============================================================================
 void ReloadEdit(void)
 {
 	FILE* pFile;
@@ -373,23 +391,24 @@ void ReloadEdit(void)
 
 	if (pFile != NULL)
 	{
-		char aString[MAX_WORD];//文字数を格納
-		//全部のテキストに書かれた情報を読み取りが終わるまで回す
+		char aString[MAX_WORD];		// 文字数を格納
+
+		// 全部のテキストに書かれた情報を読み取りが終わるまで回す
 		while (1)
 		{
-			//ファイルを読み込む
+			// ファイルを読み込む
 			fscanf(pFile, "%s", &aString[0]);
 
-			//読み取る特定の文字列が一致していたら
+			// 読み取る特定の文字列が一致していたら
 			if (strcmp(aString, "BLOCKSET") == 0)
 			{
 				while (1)
 				{
-					//ファイルを読み込む
+					// ファイルを読み込む
 					fscanf(pFile, "%s", &aString[0]);
 
 					if (strcmp(aString, "POS") == 0)
-					{//POSを読み取ったら
+					{// POSを読み取ったら
 						fscanf(pFile, "%f", &g_Edit[nCnt].pos.x);
 						fscanf(pFile, "%f", &g_Edit[nCnt].pos.y);
 						fscanf(pFile, "%f", &g_Edit[nCnt].pos.z);
@@ -412,15 +431,15 @@ void ReloadEdit(void)
 			}
 			if (strcmp(aString, "END_SCRIPT") == 0)
 			{
-				//whileを抜けるため
+				// whileを抜けるため
 				break;
 			}
 		}
-		//ファイルを閉じる
+		// ファイルを閉じる
 		fclose(pFile);
 	}
 	else
-	{//開けなかったときの処理
+	{// 開けなかったときの処理
 		return;
 	}
 	for (int nCntReload = 0; nCntReload < g_nReloadCnt; nCntReload++)
