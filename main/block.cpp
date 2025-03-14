@@ -272,61 +272,112 @@ void CollisionBlock(D3DXVECTOR3* pPos,		// 現在の位置
 	D3DXVECTOR3* posOld = pPosOld;			// 前フレームのプレイヤーの位置
 	D3DXVECTOR3* pos = pPos;				// 現フレームのプレイヤーの位置
 
+	// 四角の当たり判定
 	for (int nCnt = 0; nCnt < NUM_BLOCK; nCnt++)
 	{
+		// 使用状態の物のみ
 		if (g_Block[nCnt].bUse == true)
-		{// 使用状態のもののみ
-
-			// 左右手前奥のめり込み判定
-			if (pos->y< g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMax.y && pos->y + (OBJ_P * 2.0f) > g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMin.y)
+		{
+			// 適用しているブロックタイプ
+			if (g_Block[nCnt].nType == BLOCK_WALL00     || g_Block[nCnt].nType == BLOCK_WALL01     ||
+				g_Block[nCnt].nType == BLOCK_HOUSE000_L || g_Block[nCnt].nType == BLOCK_HOUSE000_r ||
+				g_Block[nCnt].nType == BLOCK_HOUSE01_L  || g_Block[nCnt].nType == BLOCK_HOUSE01_R  ||
+				g_Block[nCnt].nType == BLOCK_HOUSE04_L  || g_Block[nCnt].nType == BLOCK_HOUSE04_R  ||
+				g_Block[nCnt].nType == BLOCK_KURA       || g_Block[nCnt].nType == BLOCK_TORIGOYA   ||
+				g_Block[nCnt].nType == BLOCK_KANBAN)
 			{
-				// 左右のめり込み判定
-				if (pos->z - OBJ_P< g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMax.z && pos->z + OBJ_P > g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMin.z)			// プレイヤーのｚの範囲がブロックに重なっている
+				// 左右手前奥のめり込み判定
+				if (pos->y< g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMax.y && pos->y + (OBJ_P * 2.0f) > g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMin.y)
 				{
-
-					if (posOld->x + OBJ_P< g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMin.x && pos->x + OBJ_P > g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMin.x)	// Ｘが左から右にめり込んだ
+					// 左右のめり込み判定
+					if (pos->z - OBJ_P< g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMax.z && pos->z + OBJ_P > g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMin.z)			// プレイヤーのｚの範囲がブロックに重なっている
 					{
-						// pPlayer->posをモデルの左側にくっつける
-						pos->x = g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMin.x - OBJ_P - 0.1f;
 
+						if (posOld->x + OBJ_P< g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMin.x && pos->x + OBJ_P > g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMin.x)	// Ｘが左から右にめり込んだ
+						{
+							// pPlayer->posをモデルの左側にくっつける
+							pos->x = g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMin.x - OBJ_P - 0.1f;
+
+						}
+						if (posOld->x - OBJ_P > g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMax.x && pos->x - OBJ_P < g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMax.x)	// Ｘが左から右にめり込んだ
+						{
+							// pPlayer->posをモデルの右側にくっつける
+							pos->x = g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMax.x + OBJ_P + 0.1f;
+						}
 					}
-					if (posOld->x - OBJ_P > g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMax.x && pos->x - OBJ_P < g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMax.x)	// Ｘが左から右にめり込んだ
+
+					// 手前奥のめり込み判定
+					if (pos->x - OBJ_P< g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMax.x && pos->x + OBJ_P > g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMin.x)			// プレイヤーxの範囲がブロックに重なっている
 					{
-						// pPlayer->posをモデルの右側にくっつける
-						pos->x = g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMax.x + OBJ_P + 0.1f;
+
+						if (posOld->z + OBJ_P< g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMin.z && pos->z + OBJ_P > g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMin.z)	// Zが下から上にめり込んだ
+						{
+							// pPlayer->posをモデルの手前側にくっつける
+							pos->z = g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMin.z - OBJ_P - 0.1f;
+						}
+						if (posOld->z - OBJ_P > g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMax.z && pos->z - OBJ_P < g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMax.z)	// Zが上から下にめり込んだ
+						{
+							// pPlayer->posをモデルの奥側にくっつける
+							pos->z = g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMax.z + OBJ_P + 0.1f;
+						}
 					}
 				}
+				//if (pos->z - OBJ_P< g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMax.z && pos->z + OBJ_P > g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMin.z
+				//	&& pos->x - OBJ_P< g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMax.x && pos->x + OBJ_P > g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMin.x)
+				//{
+				//	if (posOld->y + (OBJ_P * 2.0f) < g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMin.y && pos->y + (OBJ_P * 2.0f) > g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMin.y)	// Ｘが左から右にめり込んだ
+				//	{
+				//		// pPlayer->posをモデルの下側にくっつける
+				//		pos->y = g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMin.y - (OBJ_P * 2.0f) - 0.1f;
+				//	}
+				//	if (posOld->y > g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMax.y && pos->y < g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMax.y)	// Ｘが左から右にめり込んだ
+				//	{
+				//		// pPlayer->posをモデルの上側にくっつける
+				//		pos->y = g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMax.y + 0.1f;
+				//	}
+				//}
+			}
+		}
+	}
 
-				// 手前奥のめり込み判定
-				if (pos->x - OBJ_P< g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMax.x && pos->x + OBJ_P > g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMin.x)			// プレイヤーxの範囲がブロックに重なっている
+	// 円の当たり判定
+	for (int nCnt = 0; nCnt < NUM_BLOCK; nCnt++)
+	{
+		// 使用状態の物のみ
+		if (g_Block[nCnt].bUse == true)
+		{
+			// 適用しているブロックタイプ
+			if (g_Block[nCnt].nType == BLOCK_WTPOLE || g_Block[nCnt].nType == BLOCK_WELL ||
+				g_Block[nCnt].nType == BLOCK_IREIHI || g_Block[nCnt].nType == BLOCK_KUMO ||
+				g_Block[nCnt].nType == BLOCK_KUMONOSU || g_Block[nCnt].nType == BLOCK_DEADTREE ||
+				g_Block[nCnt].nType == BLOCK_SPEACAR)
+			{
+				// 半径の算出変数
+				float PRadiusPos = 8.0f;
+				float BRadiusPos = 8.0f;
+
+				// プレイヤーの位置の取得
+				D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
+
+				// ブロックとプレイヤーの距離の差
+				D3DXVECTOR3 diff = PlayerPos - g_Block[nCnt].pos;
+
+				// 範囲計算
+				float fDisX = PlayerPos.x - g_Block[nCnt].pos.x;
+				float fDisY = PlayerPos.y - g_Block[nCnt].pos.y;
+				float fDisZ = PlayerPos.z - g_Block[nCnt].pos.z;
+
+				// 二つの半径を求める
+				float fRadX = PRadiusPos + BRadiusPos;
+
+				// プレイヤーが範囲に入ったら
+				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
 				{
-
-					if (posOld->z + OBJ_P< g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMin.z && pos->z + OBJ_P > g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMin.z)	// Zが下から上にめり込んだ
-					{
-						// pPlayer->posをモデルの手前側にくっつける
-						pos->z = g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMin.z - OBJ_P - 0.1f;
-					}
-					if (posOld->z - OBJ_P > g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMax.z && pos->z - OBJ_P < g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMax.z)	// Zが上から下にめり込んだ
-					{
-						// pPlayer->posをモデルの奥側にくっつける
-						pos->z = g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMax.z + OBJ_P + 0.1f;
-					}
+					pPlayer->pos.x = pPlayer->posOld.x;
+					pPlayer->pos.y = pPlayer->posOld.y;
+					pPlayer->pos.z = pPlayer->posOld.z;
 				}
 			}
-			//if (pos->z - OBJ_P< g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMax.z && pos->z + OBJ_P > g_Block[nCnt].pos.z + g_Block[nCnt].tex.vtxMin.z
-			//	&& pos->x - OBJ_P< g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMax.x && pos->x + OBJ_P > g_Block[nCnt].pos.x + g_Block[nCnt].tex.vtxMin.x)
-			//{
-			//	if (posOld->y + (OBJ_P * 2.0f) < g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMin.y && pos->y + (OBJ_P * 2.0f) > g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMin.y)	// Ｘが左から右にめり込んだ
-			//	{
-			//		// pPlayer->posをモデルの下側にくっつける
-			//		pos->y = g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMin.y - (OBJ_P * 2.0f) - 0.1f;
-			//	}
-			//	if (posOld->y > g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMax.y && pos->y < g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMax.y)	// Ｘが左から右にめり込んだ
-			//	{
-			//		// pPlayer->posをモデルの上側にくっつける
-			//		pos->y = g_Block[nCnt].pos.y + g_Block[nCnt].tex.vtxMax.y + 0.1f;
-			//	}
-			//}
 		}
 	}
 }
