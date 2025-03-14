@@ -18,6 +18,7 @@
 #define EUSEPARTS_MAX (16)
 #define POINT_MAX (8)
 #define EBLEND_FRAME (10)
+#define MAX_ENEMY (1)
 
 //敵の状態
 typedef enum
@@ -108,9 +109,9 @@ typedef struct
 	int nFrameBlend;			// ブレンドのフレーム数
 	int nCntBlend;				// ブレンドカウンター
 
-
 	int nIdxLife;				// ライフバーのIdx
 	int IdxShadow;
+	int nCount;
 }Enemy;
 
 //プロトタイプ宣言

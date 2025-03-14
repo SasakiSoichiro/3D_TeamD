@@ -17,8 +17,6 @@
 #include "player.h"
 #include "enemy.h"
 
-#define MAX_ENEMY (36)
-
 Enemy g_Enemy[MAX_ENEMY];
 int g_nEIdxShadow;
 int nCntTypeState;
@@ -48,6 +46,7 @@ void InitEnemy(void)
 		g_Enemy[nCnt].nType = 0;
 		g_Enemy[nCnt].bBlendMotion = false;
 		g_Enemy[nCnt].bUse = false;
+		g_Enemy[nCnt].nCount = 0;
 	}
 	bRange = false;
 	nCntTypeState = 0;
@@ -90,7 +89,7 @@ void InitEnemy(void)
 //=============================================================================
 void UninitEnemy(void)
 {
-	// çUåÇâπÇé~ÇﬂÇÈ
+	//// çUåÇâπÇé~ÇﬂÇÈ
 	StopSound(SOUND_LABEL_SE6);
 
 	for (int nCntType = 0; nCntType < 1; nCntType++)
@@ -201,11 +200,14 @@ void UpdateEnemy(void)
 
 	for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++)
 	{
-		//if (g_Enemy[nCntEnemy].nLife <= -1)
-		//{
-		//	g_Enemy[nCntEnemy].nLife = 0;
+		g_Enemy[nCntEnemy].nCount++;
 
-		//}
+		if (g_Enemy[nCntEnemy].nCount > 60)
+		{
+			PlaySound(SOUND_LABEL_SE7);
+			g_Enemy[nCntEnemy].nCount = 0;
+		}
+
 		if (g_Enemy[nCntEnemy].bUse == true)
 		{			
 			switch (g_Enemy[nCntEnemy].State)
@@ -1076,7 +1078,6 @@ void CollisionEnemytoEnemy(int nCnt)
 void LoiterEnemy(void)
 {
 
-	//PlaySound(SOUND_LABEL_SE7);
 
 	D3DXVECTOR3 Turn[POINT_MAX];
 
