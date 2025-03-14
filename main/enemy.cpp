@@ -200,12 +200,12 @@ void UpdateEnemy(void)
 
 	for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++)
 	{
-		g_Enemy[nCntEnemy].nCount++;
+		g_Enemy[nCntEnemy].nCount++;	// ƒCƒ“ƒNƒŠƒƒ“ƒg
 
-		if (g_Enemy[nCntEnemy].nCount > 60)
+		if (g_Enemy[nCntEnemy].nCount > 60)	// 60‚æ‚è‘å‚«‚©‚Á‚½‚ç
 		{
-			PlaySound(SOUND_LABEL_SE7);
-			g_Enemy[nCntEnemy].nCount = 0;
+			PlaySound(SOUND_LABEL_SE7);		// ‘«‰¹‚ð–Â‚ç‚·
+			g_Enemy[nCntEnemy].nCount = 0;	// 0‚É–ß‚·
 		}
 
 		if (g_Enemy[nCntEnemy].bUse == true)
@@ -230,8 +230,12 @@ void UpdateEnemy(void)
 
 					// ‘–‚é‰¹‚ð–Â‚ç‚·
 					
+					//if (g_Enemy[nCntEnemy].nCount < 60)
+					//{
+					//	StopSound(SOUND_LABEL_SE7);
+					//	//g_Enemy[nCntEnemy].nCount = 0;
+					//}
 
-					//StopSound(SOUND_LABEL_BGM2);
 				}
 				if (fvecCross[0] > 0 && fvecCross[1] > 0)
 				{//‹——£ŠÖŒW‚È‚µ
