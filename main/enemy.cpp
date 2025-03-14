@@ -90,6 +90,9 @@ void InitEnemy(void)
 //=============================================================================
 void UninitEnemy(void)
 {
+	// çUåÇâπÇé~ÇﬂÇÈ
+	StopSound(SOUND_LABEL_SE6);
+
 	for (int nCntType = 0; nCntType < 1; nCntType++)
 	{
 		for (int nCntModel = 0; nCntModel < g_LoadEnemy[nCntType].nNumModel; nCntModel++)
@@ -204,13 +207,13 @@ void UpdateEnemy(void)
 
 		//}
 		if (g_Enemy[nCntEnemy].bUse == true)
-		{
-			
+		{			
 			switch (g_Enemy[nCntEnemy].State)
 			{
 			case ENEMYSTATE_NORMAL:
 				//úpújèàóù
 				LoiterEnemy();
+
 				if (fDistanceChase <= fRadiusChase && fvecCross[0] > 0 && fvecCross[1] > 0)
 				{//ÉGÉlÉ~Å[ÇÃéãäEì‡Ç…ì¸Ç¡ÇΩÇÁ
 
@@ -222,6 +225,10 @@ void UpdateEnemy(void)
 
 					// BGMÇñ¬ÇÁÇ∑
 					PlaySound(SOUND_LABEL_BGM3);
+
+					// ëñÇÈâπÇñ¬ÇÁÇ∑
+					
+
 					//StopSound(SOUND_LABEL_BGM2);
 				}
 				if (fvecCross[0] > 0 && fvecCross[1] > 0)
@@ -249,6 +256,13 @@ void UpdateEnemy(void)
 
 					// BGMÇè¡Ç∑
 					StopSound(SOUND_LABEL_BGM3);
+
+					//// ëñÇÈâπÇè¡Ç∑
+					//StopSound();
+
+					// ï‡Ç≠âπÇñ¬ÇÁÇ∑
+
+
 					//PlaySound(SOUND_LABEL_BGM2);
 				}
 
@@ -333,6 +347,7 @@ void UpdateEnemy(void)
 					if (pPlayer->pState != PLAYERSTATE_DAMAGE)
 					{
 						HitPlayer(1);
+						PlaySound(SOUND_LABEL_SE6);
 					}
 				}
 			}
@@ -1060,6 +1075,9 @@ void CollisionEnemytoEnemy(int nCnt)
 //=============================================================================
 void LoiterEnemy(void)
 {
+
+	//PlaySound(SOUND_LABEL_SE7);
+
 	D3DXVECTOR3 Turn[POINT_MAX];
 
 	float fAnglemove = 0.0f;

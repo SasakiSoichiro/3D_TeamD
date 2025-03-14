@@ -42,6 +42,8 @@ SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 	{"data/SE/Slow.wav",0},					// SE4
 	{"data/SE/click.wav",0},				// SE5
 	{"data/SE/SoilWalk.wav",0},				// SE6
+	{"data/SE/attackE.wav",0},				// SE7
+	{"data/SE/EnemyWalk1.wav",0},			// SE7
 };
 
 //=============================================================================
