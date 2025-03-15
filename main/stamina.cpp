@@ -159,7 +159,7 @@ void UpdateStamina()
 			}
 
 		}
-		else if (pPlayer->nStamina < 300)
+		else if (pPlayer->nStamina < 400)
 		{//スタミナが100未満で走っていないとき
 
 			if (pRange == false)

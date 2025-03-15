@@ -204,7 +204,7 @@ void UpdateEnemy(void)
 
 		if (g_Enemy[nCntEnemy].nCount > 60)	// 60‚æ‚è‘å‚«‚©‚Á‚½‚ç
 		{
-			PlaySound(SOUND_LABEL_SE7);		// ‘«‰¹‚ğ–Â‚ç‚·
+			//PlaySound(SOUND_LABEL_SE7);		// ‘«‰¹‚ğ–Â‚ç‚·
 			g_Enemy[nCntEnemy].nCount = 0;	// 0‚É–ß‚·
 		}
 
@@ -303,6 +303,7 @@ void UpdateEnemy(void)
 				{
 					if (g_Enemy[nCntEnemy].motionType != EMOTIONTYPE_ACTION)
 					{
+
 						SetMotionType(EMOTIONTYPE_ACTION, true, 10, nCntEnemy);
 						g_Enemy[nCntEnemy].move.x = 0.0f;
 						g_Enemy[nCntEnemy].move.z = 0.0f;
@@ -313,6 +314,8 @@ void UpdateEnemy(void)
 					{
 						g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
 						SetMotionType(EMOTIONTYPE_NEUTRAL, true, 10, nCntEnemy);
+						// BGM‚ğÁ‚·
+						StopSound(SOUND_LABEL_BGM3);
 					}
 				}
 				break;

@@ -119,7 +119,7 @@ void UpdateGauge(void)
 		{
 			if (g_gauge.fCnt < 3.0f)
 			{
-				if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_X) == true)
+				if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_B) == true)
 				{
 					g_gauge.fCnt += 0.01f;
 				}

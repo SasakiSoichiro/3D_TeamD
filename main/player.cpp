@@ -49,7 +49,7 @@ void InitPlayer(void)
 		g_player[nCnt].rot = D3DXVECTOR3(0.0f, 1.57f, 0.0f);
 		g_player[nCnt].rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_player[nCnt].nLife = 3;
-		g_player[nCnt].nStamina = 300;
+		g_player[nCnt].nStamina = 400;
 		g_player[nCnt].pState = PLAYERSTATE_NORMAL;
 		g_player[nCnt].bEye = false;
 		g_player[nCnt].bAttack = false;
@@ -140,7 +140,11 @@ void UpdatePlayer(void)
 
 	
 
-
+		g_nCounterState--;
+		if (g_nCounterState <= 0)
+		{
+			g_player[nCnt].bAttack = false;
+		}
 		switch (g_player[nCnt].pState)
 		{
 		case PLAYERSTATE_NORMAL:
@@ -151,13 +155,14 @@ void UpdatePlayer(void)
 		{
 
 			g_nStateCnt++;
-			g_nCounterState--;
+			
 
 			g_player[nCnt].bCaught = false;
 
 			if (g_nCounterState <= 0)
 			{
 				g_player[nCnt].motion.motionType = MOTIONTYPE_DAMAGE;
+				
 				if (bLanding == true)
 				{
 					g_player[nCnt].pState = PLAYERSTATE_NORMAL;
@@ -978,6 +983,7 @@ void HitPlayer(int nDamege)
 
 			g_player[nCnt].pState = PLAYERSTATE_DAMAGE;
 			g_player[nCnt].nLife -= nDamege;
+			g_player[nCnt].bAttack = true;
 			SetBloodSplatter(90, UITYPE_SMALL);
 			break;
 		}
@@ -987,6 +993,7 @@ void HitPlayer(int nDamege)
 
 			g_player[nCnt].pState = PLAYERSTATE_DAMAGE;
 			g_player[nCnt].nLife -= nDamege;
+			g_player[nCnt].bAttack = true;
 			SetBloodSplatter(90, UITYPE_BIG);
 			break;
 		}

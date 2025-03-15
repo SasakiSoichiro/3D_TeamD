@@ -202,14 +202,14 @@ void UpdateGimmick(void)
 				if (pItem[0].bHold == true && pItem[1].bHold == true)
 				{
 
-					if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_X) == true)
+					if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_B) == true)
 					{
 
 						g_hold.bPush = true;
 						g_hold.bNoPush = false;
 						g_hold.NoTouch = 0;
 					}
-					else if (KeybordRelease(DIK_F) || GetJoypadPress(JOYKEY_X) == false)
+					else if (KeybordRelease(DIK_F) || GetJoypadPress(JOYKEY_B) == false)
 					{
 						g_hold.bNoPush = true;
 						g_hold.bPush = false;

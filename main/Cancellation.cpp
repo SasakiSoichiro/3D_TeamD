@@ -136,7 +136,7 @@ void UpdateCancellation(void)
 		{
 			if (pItem[0].bHold == true && pItem[1].bHold == true)
 			{
-				if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_X) == true)
+				if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_B) == true)
 				{// F‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚ç
 					g_Cancellation.bUse = true;
 				}
