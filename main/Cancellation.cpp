@@ -146,6 +146,10 @@ void UpdateCancellation(void)
 				}
 			}
 		}
+		else
+		{
+			g_Cancellation.bUse = false;
+		}
 	//}
 }
 

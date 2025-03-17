@@ -9,7 +9,7 @@
 #include "effect.h"
 
 //マクロ定義
-#define MAX_PARTICLE (1024)																//パーティクルの最大数
+#define MAX_PARTICLE (128)																//パーティクルの最大数
 
 //グローバル変数
 Particle g_aParticle[MAX_PARTICLE];														//パーティクルの情報
