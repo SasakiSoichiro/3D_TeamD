@@ -237,6 +237,18 @@ void UpdatePlayer(void)
 		//捕まってないとき
 		if (g_player[nCnt].bCaught == false)
 		{
+			g_player[nCnt].nCountA++;	// インクリメント
+
+			if (g_player[nCnt].nCountA > 180)	// 60より大きかったら
+			{
+				PlaySound(SOUND_LABEL_SE5);		// 足音を鳴らす
+				g_player[nCnt].nCountA = 0;		// 0に戻す
+			}
+			//else if (GetKeyboardPress(DIK_W) == false)
+			//{
+			//	StopSound(SOUND_LABEL_SE5);
+			//}
+
 			// プレイヤーの移動
 			if (GetKeyboardPress(DIK_A) == true)
 			{// Aキーが押された
@@ -337,6 +349,10 @@ void UpdatePlayer(void)
 				g_player[nCnt].pos.x -= sinf(pCamera->rot.y + D3DX_PI) * 2.0f;
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
+			}
+			else if (GetKeyboardPress(DIK_W) == false)
+			{
+				StopSound(SOUND_LABEL_SE5);
 			}
 			else
 			{
@@ -539,6 +555,7 @@ void UpdatePlayer(void)
 				}
 			}
 		}
+
 		//g_player[nCnt].rot.y += (g_player[nCnt].rotDest.y - g_player[nCnt].rot.y) * 0.2f;
 		
 		//カメラとプレイヤー

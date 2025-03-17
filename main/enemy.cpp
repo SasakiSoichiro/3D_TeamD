@@ -232,7 +232,7 @@ void UpdateEnemy(void)
 					
 					//if (g_Enemy[nCntEnemy].nCount < 60)
 					//{
-					//	StopSound(SOUND_LABEL_SE7);
+						StopSound(SOUND_LABEL_SE5);
 					//	//g_Enemy[nCntEnemy].nCount = 0;
 					//}
 
