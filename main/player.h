@@ -45,6 +45,7 @@ typedef struct
     int nLife;
     int nType;
     int nStamina;
+    int nCountA;
     bool bAttack;
     bool bCaught;
     PLAYERSTATE pState;
