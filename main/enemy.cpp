@@ -155,6 +155,17 @@ void UpdateEnemy(void)
 	float fDiffBlendY;
 	float fDiffBlendZ;
 
+	// プレイヤーの半径の算出用変数
+	float fPRadPos = 1000.0f;
+
+	// 敵の半径の算出用変数
+	float fERadPos = 200.0f;
+
+	// 敵の半径の算出用変数1
+	float fERadPos1 = 300.0f;
+
+	// 敵の半径の算出用変数2
+	float fERadPos2 = 350.0f;
 
 	//カメラ情報取得
 	Camera* pCamera = GetCamera();
@@ -164,6 +175,23 @@ void UpdateEnemy(void)
 	Slow* pSlow = GetSlow();
 	//コントローラー振動の初期化
 	static VibrationState vibrationState = { 0,0,0,0,0 };//初期化
+
+	// プレやーの位置を取得
+	D3DXVECTOR3 PlayerPos = pPlayer->pos;
+
+	// 範囲計算
+	float fDisX = PlayerPos.x - g_Enemy[0].pos.x;
+	float fDisY = PlayerPos.y - g_Enemy[0].pos.y;
+	float fDisZ = PlayerPos.z - g_Enemy[0].pos.z;
+
+	// 二つの半径を求める
+	float fRadX = fPRadPos + fERadPos;
+
+	// 二つの半径を求める
+	float fRadX1 = fPRadPos + fERadPos1;
+
+	// 二つの半径を求める
+	float fRadX2 = fPRadPos + fERadPos2;
 
 	//敵の向き用変数
 	float fAnglemove = 0.0f;
@@ -204,7 +232,7 @@ void UpdateEnemy(void)
 
 		if (g_Enemy[nCntEnemy].nCount > 60)	// 60より大きかったら
 		{
-			//PlaySound(SOUND_LABEL_SE7);		// 足音を鳴らす
+			PlaySound(SOUND_LABEL_SE7);		// 足音を鳴らす
 			g_Enemy[nCntEnemy].nCount = 0;	// 0に戻す
 		}
 
@@ -215,6 +243,23 @@ void UpdateEnemy(void)
 			case ENEMYSTATE_NORMAL:
 				//徘徊処理
 				LoiterEnemy();
+
+				if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
+				{
+					SetVolume(SOUND_LABEL_SE7, 3.0f);
+				}
+				else if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX1 * fRadX1))
+				{
+					SetVolume(SOUND_LABEL_SE7, 2.0f);
+				}
+				else if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX2 * fRadX2))
+				{
+					SetVolume(SOUND_LABEL_SE7, 1.0f);
+				}
+				else
+				{
+					SetVolume(SOUND_LABEL_SE7, 0.0f);
+				}
 
 				if (fDistanceChase <= fRadiusChase && fvecCross[0] > 0 && fvecCross[1] > 0)
 				{//エネミーの視界内に入ったら
