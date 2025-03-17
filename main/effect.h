@@ -10,7 +10,7 @@
 #include"main.h"
 
 //マクロ定義
-#define MAX_EFFECT (200)
+#define MAX_EFFECT (1024)
 #define EFC_LIFE (20)
 
 //エフェクトの構造体

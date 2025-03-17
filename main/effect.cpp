@@ -8,7 +8,7 @@
 #include"player.h"
 
 // グローバル宣言
-LPDIRECT3DTEXTURE9 g_pTextureeffect = {};			// テクスチャへのポインタ
+LPDIRECT3DTEXTURE9 g_pTextureeffect = NULL;			// テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffeffect = NULL;	// 頂点バッファへのポインタ
 Effect g_effect[MAX_EFFECT];
 
@@ -65,10 +65,10 @@ void InitEffect(void)
 	for (int nCnt = 0; nCnt < MAX_EFFECT; nCnt++)
 	{
 		// 頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(g_effect[nCnt].pos.x - 10.0f, g_effect[nCnt].pos.y + 10.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(g_effect[nCnt].pos.x + 10.0f, g_effect[nCnt].pos.y + 10.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(g_effect[nCnt].pos.x - 10.0f, g_effect[nCnt].pos.y - 10.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(g_effect[nCnt].pos.x + 10.0f, g_effect[nCnt].pos.y - 10.0f, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(g_effect[nCnt].pos.x - 1.0f, g_effect[nCnt].pos.y + 1.0f, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(g_effect[nCnt].pos.x + 1.0f, g_effect[nCnt].pos.y + 1.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(g_effect[nCnt].pos.x - 1.0f, g_effect[nCnt].pos.y - 1.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(g_effect[nCnt].pos.x + 1.0f, g_effect[nCnt].pos.y - 1.0f, 0.0f);
 
 		// 各頂点の法線の設定(※ベクトルの大きさは１にする必要がある)
 		pVtx[0].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
@@ -77,10 +77,10 @@ void InitEffect(void)
 		pVtx[3].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 
 		// 頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(0.5f, 1.0f, 1.0f, 1.0f);
-		pVtx[1].col = D3DXCOLOR(0.5f, 1.0f, 1.0f, 1.0f);
-		pVtx[2].col = D3DXCOLOR(0.5f, 1.0f, 1.0f, 1.0f);
-		pVtx[3].col = D3DXCOLOR(0.5f, 1.0f, 1.0f, 1.0f);
+		pVtx[0].col = D3DXCOLOR(0.5f, 0.5, 0.0f, 1.0f);
+		pVtx[1].col = D3DXCOLOR(0.5f, 0.5, 0.0f, 1.0f);
+		pVtx[2].col = D3DXCOLOR(0.5f, 0.5, 0.0f, 1.0f);
+		pVtx[3].col = D3DXCOLOR(0.5f, 0.5, 0.0f, 1.0f);
 
 		// テクスチャ座標の設定
 		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
@@ -130,7 +130,7 @@ void UpdateEffect(void)
 		{
 			g_effect[nCnt].pos += g_effect[nCnt].move;
 
-			g_effect[nCnt].nLife -= 1;
+			g_effect[nCnt].nLife--;
 
 			if (g_effect[nCnt].nLife <= 0)
 			{
@@ -248,8 +248,8 @@ void SetEffect(D3DXVECTOR3 pos, D3DXVECTOR3 dir, int nLife, D3DXCOLOR col)
 		{
 			g_effect[nCnt].pos = pos;
 			g_effect[nCnt].move = dir;
-			//g_effect[nCnt].rot = rot;
-			g_effect[nCnt].nLife = EFC_LIFE;
+			g_effect[nCnt].nLife = nLife;
+			g_effect[nCnt].col = col;
 			g_effect[nCnt].buse = true;
 			break;
 		}

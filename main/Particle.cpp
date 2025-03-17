@@ -9,7 +9,7 @@
 #include "effect.h"
 
 //マクロ定義
-#define MAX_PARTICLE (128)																//パーティクルの最大数
+#define MAX_PARTICLE (1024)																//パーティクルの最大数
 
 //グローバル変数
 Particle g_aParticle[MAX_PARTICLE];														//パーティクルの情報
@@ -58,17 +58,7 @@ void UpdateParticle(void)
 
 				D3DXVECTOR3 pos = g_aParticle[nCntParticle].pos;
 
-				float fAngleX = (float)(rand() % 628 - 314) * 0.01f;
-				float fAngleY = (float)(rand() % 628 - 314) * 0.01f;
-				float fAngleZ = (float)(rand() % 628 - 314) * 0.01f;
 
-				float fMoveX = (float)(rand() % 10 - 5);
-				float fMoveY = (float)(rand() % 10 - 5);
-				float fMoveZ = (float)(rand() % 10 - 5);
-
-				g_aParticle[nCntParticle].move.x += sinf(fAngleX) * fMoveX;
-				g_aParticle[nCntParticle].move.y += sinf(fAngleY) * fMoveY;
-				g_aParticle[nCntParticle].move.z += cosf(fAngleZ) * fMoveZ;
 
 				D3DXVECTOR3 move = g_aParticle[nCntParticle].move;
 

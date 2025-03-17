@@ -159,9 +159,9 @@ void InitGame(void)
 	//	アイテム説明
 	InitExplain();
 
-	//InitEffect();
+	InitEffect();
 
-	//InitParticle();
+	InitParticle();
 
 	//InitEtcUI();
 
@@ -397,7 +397,7 @@ void UninitGame(void)
 	//	アイテム説明
 	UninitExplain();
 
-	//UninitEffect();
+	UninitEffect();
 	//UninitEtcUI();
 }
 
@@ -516,9 +516,9 @@ void UpdateGame(void)
 				// 目的の表示
 				UpdateObjective();
 
-				//UpdateEffect();
+				UpdateEffect();
 
-				//UpdateParticle();
+				UpdateParticle();
 
 				// スロー
 				UpdateSlow();
@@ -683,7 +683,7 @@ void DrawGame(int nIdx)
 	// 目的の表示
 	DrawObjective();
 
-	//DrawEffect();
+	DrawEffect();
 	//DrawEtcUI();
 
 	if (pExplain[0].bLook == true || pExplain[1].bLook == true || pExplain[2].bLook == true)

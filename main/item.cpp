@@ -131,11 +131,24 @@ void Updateitem(void)
 		// アイテムが使用されていたら
 		if (g_item[nCnt].bUse == true)
 		{
+			//パーティクル角度
+			float fAngleX = (float)(rand() % 628 - 314) * 0.01f;
+			float fAngleY = (float)(rand() % 628 - 314) * 0.01f;
+			float fAngleZ = (float)(rand() % 628 - 314) * 0.01f;
+
+			//パーティクル距離
+			float fIDisX = (float)(rand() % 10 + 5);
+			float fIDisY = (float)(rand() % 10 + 5);
+			float fIDisZ = (float)(rand() % 10 + 5);
+
 			// プレイヤーの半径の算出用変数
 			float fPRadPos = 50.0f;
 
 			// アイテムの半径の算出用変数
 			float fIRadPos = 50.0f;
+
+			// アイテムの半径の算出用変数(パーティクル)
+			float fIRadPos1 = 150.0f;
 
 			// プレやーの位置を取得
 			D3DXVECTOR3 PlayerPos = GetPlayer()->pos;
@@ -150,6 +163,13 @@ void Updateitem(void)
 
 			// 二つの半径を求める
 			float fRadX = fPRadPos + fIRadPos;
+
+			//アイテムのパーティクルを出す範囲
+			float fRadX1 = fPRadPos + fIRadPos1;
+
+			float fParticleX = g_item[nCnt].pos.x + sinf(fAngleX) * fIDisX;
+			float fParticleY = g_item[nCnt].pos.y + sinf(fAngleY) * fIDisY;
+			float fParticleZ = g_item[nCnt].pos.z + cosf(fAngleZ) * fIDisZ;
 
 			// プレイヤーがアイテムの範囲に入ったら
 			if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX * fRadX))
@@ -192,8 +212,11 @@ void Updateitem(void)
 					}
 				}
 			}
+			if ((fDisX * fDisX) + (fDisY * fDisY) + (fDisZ * fDisZ) <= (fRadX1 * fRadX1))
+			{
+				SetParticle(D3DXVECTOR3(fParticleX, fParticleY, fParticleZ), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXCOLOR(0.5f, 0.5f, 0.0f, 1.0f), 30);
+			}
 		}
-		SetParticle(g_item[nCnt].pos, D3DXVECTOR3(0.0f, 1.0f, 0.0f), 180, D3DXCOLOR(1.0f, 1.0f, 1.0f,1.0f));
 	}
 
 	int nSelect = GetSelect();
