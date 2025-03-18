@@ -123,10 +123,26 @@ void Updateitem(void)
 	Player* pPlayer = GetPlayer();
 	Slow* pSlow = GetSlow();
 
+	static float fAngle = 0.0f; // 回転角度 (フレームごとに増加)
+
 	for (int nCnt = 0; nCnt < ITEMTYPE_MAX; nCnt++)
 	{
 		// 前回持っていたものを保存
 		g_item[nCnt].bOldHave = g_item[nCnt].bHave;
+
+		if (g_item[nCnt].nType == ITEMTYPE_THREE)
+		{
+
+			// Y軸回転処理の追加
+			g_item[nCnt].rot.y += D3DXToRadian(1.0f); // 毎フレーム1度回転
+
+			// 回転角度の更新 (回転速度の調整も可能)
+			fAngle += D3DXToRadian(10.0f);  // 毎フレーム1度ずつ回転
+			if (fAngle >= D3DXToRadian(360.0f))
+			{
+				fAngle -= D3DXToRadian(360.0f); // 360度を超えたらリセット
+			}
+		}
 		
 		// アイテムが使用されていたら
 		if (g_item[nCnt].bUse == true)
