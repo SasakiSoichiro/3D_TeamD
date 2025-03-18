@@ -27,8 +27,8 @@ void InitBloodSplatter(void)
 {
 	for (int nCnt = 0; nCnt < UITYPE_MAX; nCnt++)
 	{
-		g_ui[nCnt].ui = UI_IN;
-		g_ui[nCnt].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		g_ui[nCnt].ui = UI_NONE;
+		g_ui[nCnt].col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 0.1f);
 		g_ui[nCnt].count = 0;
 		g_ui[nCnt].bUse = false;
 	}
@@ -129,7 +129,7 @@ void UpdateBloodSplatter(void)
 			if (g_ui[nCnt].ui == UI_IN)
 			{
 				// フェードイン
-				g_ui[nCnt].col.a -= 0.01f;		// ポリゴンが透明になる速さ
+				g_ui[nCnt].col.a -= 0.05f;		// ポリゴンが透明になる速さ
 				if (g_ui[nCnt].col.a <= 0.0f)
 				{
 					g_ui[nCnt].col.a = 0.0f;
@@ -139,11 +139,11 @@ void UpdateBloodSplatter(void)
 			else if (g_ui[nCnt].ui == UI_OUT)
 			{
 				// フェードアウト
-				g_ui[nCnt].col.a += 0.02f;
+				g_ui[nCnt].col.a += 0.05f;
 
-				if (g_ui[nCnt].col.a >= 1.0f)
+				if (g_ui[nCnt].col.a >= 0.5f)
 				{
-					g_ui[nCnt].col.a = 1.0f;
+					g_ui[nCnt].col.a = 0.5f;
 					g_ui[nCnt].ui = UI_NONE;
 				}
 			}

@@ -50,4 +50,4 @@ void UpdateBloodSplatter(void);
 void DrawBloodSplatter(void);
 void SetBloodSplatter(int count, UITYPE nType);
 
-#endif // !_UI_H_
+#endif 
