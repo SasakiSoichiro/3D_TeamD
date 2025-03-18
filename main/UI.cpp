@@ -7,17 +7,12 @@
 
 #include "UI.h"
 #include "player.h"
-//++++++++++++++++++++++++++++++++++++++++++++++++++++
-// マクロ定義
-//++++++++++++++++++++++++++++++++++++++++++++++++++++
-#define MAX_TIMEWIDTH (150)
-#define MAX_TIMEHEIGHT (100)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 // グローバル変数
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 D3DXVECTOR3 pos;								// 時間の位置
-LPDIRECT3DTEXTURE9 g_UiTexture = NULL;			// テクスチャへのポインタ
+LPDIRECT3DTEXTURE9 g_UiTexture[MAX_TEX] = {};			// テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffUi = NULL;	// バッファへのポインタ
 
 //====================================================
@@ -31,12 +26,16 @@ void InitEyeUI()
 
 	pDevice = GetDevice();						// デバイスの取得
 
-	D3DXVECTOR3 pos = D3DXVECTOR3(650.0f, 350.0f, 0.0f);
+	D3DXVECTOR3 pos = D3DXVECTOR3(630.0f, 100.0f, 0.0f);
 
-		// テクスチャの読み込み
+	// テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
 		"data\\texture\\Eye.png",
-		&g_UiTexture);
+		&g_UiTexture[0]);
+
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\texture\\Eye1.png",
+		&g_UiTexture[1]);
 
 	// 頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
@@ -48,40 +47,40 @@ void InitEyeUI()
 	// 頂点バッファのロック、頂点データへのポインタ取得
 	g_pVtxBuffUi->Lock(0, 0, (void**)&pVtx, 0);
 
-		//頂点情報の設定
-		pVtx[0].pos.x = pos.x - MAX_TIMEWIDTH / 2.0f;
-		pVtx[0].pos.y = pos.y - MAX_TIMEHEIGHT / 2.0f;
-		pVtx[0].pos.z = pos.z;
+	//頂点情報の設定
+	pVtx[0].pos.x = pos.x - MAX_TIMEWIDTH / 2.0f;
+	pVtx[0].pos.y = pos.y - MAX_TIMEHEIGHT / 2.0f;
+	pVtx[0].pos.z = pos.z;
 
-		pVtx[1].pos.x = pos.x + MAX_TIMEWIDTH / 2.0f;
-		pVtx[1].pos.y = pos.y - MAX_TIMEHEIGHT / 2.0f;
-		pVtx[1].pos.z = pos.z;
+	pVtx[1].pos.x = pos.x + MAX_TIMEWIDTH / 2.0f;
+	pVtx[1].pos.y = pos.y - MAX_TIMEHEIGHT / 2.0f;
+	pVtx[1].pos.z = pos.z;
 
-		pVtx[2].pos.x = pos.x - MAX_TIMEWIDTH / 2.0f;
-		pVtx[2].pos.y = pos.y + MAX_TIMEHEIGHT / 2.0f;
-		pVtx[2].pos.z = pos.z;
+	pVtx[2].pos.x = pos.x - MAX_TIMEWIDTH / 2.0f;
+	pVtx[2].pos.y = pos.y + MAX_TIMEHEIGHT / 2.0f;
+	pVtx[2].pos.z = pos.z;
 
-		pVtx[3].pos.x = pos.x + MAX_TIMEWIDTH / 2.0f;
-		pVtx[3].pos.y = pos.y + MAX_TIMEHEIGHT / 2.0f;
-		pVtx[3].pos.z = pos.z;
+	pVtx[3].pos.x = pos.x + MAX_TIMEWIDTH / 2.0f;
+	pVtx[3].pos.y = pos.y + MAX_TIMEHEIGHT / 2.0f;
+	pVtx[3].pos.z = pos.z;
 
-		// rhwの設定
-		pVtx[0].rhw = 1.0f;
-		pVtx[1].rhw = 1.0f;
-		pVtx[2].rhw = 1.0f;
-		pVtx[3].rhw = 1.0f;
+	// rhwの設定
+	pVtx[0].rhw = 1.0f;
+	pVtx[1].rhw = 1.0f;
+	pVtx[2].rhw = 1.0f;
+	pVtx[3].rhw = 1.0f;
 
-		// 頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	// 頂点カラーの設定
+	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-		// テクスチャ座標の設定
-		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+	// テクスチャ座標の設定
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
 	// 頂点バッファをアンロック
 	g_pVtxBuffUi->Unlock();
@@ -93,10 +92,13 @@ void InitEyeUI()
 void UninitEyeUI()
 {
 	// テクスチャの破棄
-	if (g_UiTexture != NULL)
+	for (int nCnt = 0; nCnt < MAX_TEX; nCnt++)
 	{
-		g_UiTexture->Release();
-		g_UiTexture = NULL;
+		if (g_UiTexture[nCnt] != NULL)
+		{
+			g_UiTexture[nCnt]->Release();
+			g_UiTexture[nCnt] = NULL;
+		}
 	}
 
 	// 頂点バッファの破棄
@@ -145,6 +147,8 @@ void UpdateEyeUI()
 //====================================================
 void DrawEyeUI()
 {
+	Player* pPlayer = GetPlayer();
+
 	LPDIRECT3DDEVICE9 pDevice;					// デバイスへのポインタ
 
 	// デバイスの取得
@@ -156,8 +160,21 @@ void DrawEyeUI()
 	// 頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	// テクスチャの設定
-	pDevice->SetTexture(0, g_UiTexture);
+	for (int nCnt = 0; nCnt < MAX_TEX; nCnt++)
+	{
+		if (pPlayer->bEye == true)
+		{
+			// テクスチャの設定
+			pDevice->SetTexture(0, g_UiTexture[0]);
+
+		}
+		else if (pPlayer->bEye == false)
+		{
+			// テクスチャの設定
+			pDevice->SetTexture(0, g_UiTexture[1]);
+
+		}
+	}
 
 	// ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
