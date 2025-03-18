@@ -31,7 +31,7 @@ typedef struct
 static const char* X_TEX[TEX_MAX] =
 {
 	"data\\texture\\Cancellation.png",
-	"data\\texture\\Success.png",
+	"data\\texture\\kaijoB.png",
 };
 
 // プロトタイプ宣言
@@ -40,4 +40,4 @@ void UinitCancellation(void);
 void UpdateCancellation(void);
 void DrawCancellation(void);
 
-#endif // !_Cancellation_H_
+#endif

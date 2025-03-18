@@ -20,7 +20,7 @@ void InitPickUpUI(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\texture\\pickup01.png",
+		"data\\texture\\pickup00.png",
 		&g_pTexturePickUpUI);
 
 	for (int nCnt = 0; nCnt < MAX_BLB; nCnt++)

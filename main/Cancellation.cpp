@@ -38,7 +38,7 @@ void InitCancellation(void)
 	{
 		// テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,
-			"data\\texture\\Cancellation.png",
+			X_TEX[nCntLoad],
 			&g_CancellationTexture[nCntLoad]);
 	}
 
@@ -136,13 +136,14 @@ void UpdateCancellation(void)
 		{
 			if (pItem[0].bHold == true && pItem[1].bHold == true)
 			{
+				g_Cancellation.bUse = true;
 				if (GetKeyboardPress(DIK_F) || GetJoypadPress(JOYKEY_B) == true)
 				{// Fが押されていたら
-					g_Cancellation.bUse = true;
+					g_Cancellation.nType = TEX_0;
 				}
 				else
 				{
-					g_Cancellation.bUse = false;
+					g_Cancellation.nType = TEX_1;
 				}
 			}
 		}
@@ -175,9 +176,12 @@ void DrawCancellation(void)
 		{
 			// テクスチャの設定
 			pDevice->SetTexture(0, g_CancellationTexture[g_Cancellation.nType]);
+			// テクスチャの設定
+			pDevice->SetTexture(1, g_CancellationTexture[g_Cancellation.nType]);
 
 			// ポリゴンの描画
 			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+
 		}
 	}
 }
