@@ -5,10 +5,12 @@
 //
 //=============================================================================
 #include "viewportwaku.h"
+#include "enemy.h"
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureViewUI = {};			//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffViewUI = NULL;	//頂点バッファへのポインタ
+int g_nTimer;
 
 //====================================
 //敵視点のビューポートの枠の初期化処理
@@ -94,6 +96,48 @@ void UninitViewUI(void)
 //====================================
 void UpdateViewUI(void)
 {
+	bool pRange = IsRange(); // 敵の条件分処理
+
+	g_nTimer += 1; // タイマーのカウントアップ
+
+	// ローカル変数
+	VERTEX_2D* pVtx; // 頂点情報へのポインタ
+
+	// 頂点バッファをロックし、頂点情報へのポインタを取得
+	g_pVtxBuffViewUI->Lock(0, 0, (void**)&pVtx, 0);
+
+	// 敵の視界内
+	if (pRange == true)
+	{
+		// 明るさの変動（点滅効果）
+		float fGlow = 0.5f + 0.5f * sinf(D3DXToRadian(g_nTimer * 36));  // 0.5～1.0の範囲で点滅
+
+		// 頂点カラーの設定　　　　
+		pVtx[0].col = D3DXCOLOR(1.0f, 0.2f, 0.2f, fGlow);
+		pVtx[1].col = D3DXCOLOR(1.0f, 0.2f, 0.2f, fGlow);
+		pVtx[2].col = D3DXCOLOR(1.0f, 0.2f, 0.2f, fGlow);
+		pVtx[3].col = D3DXCOLOR(1.0f, 0.2f, 0.2f, fGlow);
+
+	}
+	// 敵の視界外
+	else
+	{
+		// 頂点カラーの設定
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	}
+
+	// 頂点バッファをアンロックする
+	g_pVtxBuffViewUI->Unlock();
+
+	// タイマーのリセット
+	if (g_nTimer >= 10) // 点滅速度の調整
+	{
+		g_nTimer = 0;
+	}
 
 }
 
