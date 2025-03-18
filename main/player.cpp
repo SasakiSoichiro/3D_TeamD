@@ -237,13 +237,13 @@ void UpdatePlayer(void)
 		//捕まってないとき
 		if (g_player[nCnt].bCaught == false)
 		{
-			g_player[nCnt].nCountA++;	// インクリメント
+			//g_player[nCnt].nCountA++;	// インクリメント
 
-			if (g_player[nCnt].nCountA > 180)	// 60より大きかったら
-			{
-				PlaySound(SOUND_LABEL_SE5);		// 足音を鳴らす
-				g_player[nCnt].nCountA = 0;		// 0に戻す
-			}
+			//if (g_player[nCnt].nCountA > 180)	// 60より大きかったら
+			//{
+			//	PlaySound(SOUND_LABEL_SE5);		// 足音を鳴らす
+			//	g_player[nCnt].nCountA = 0;		// 0に戻す
+			//}
 			//else if (GetKeyboardPress(DIK_W) == false)
 			//{
 			//	StopSound(SOUND_LABEL_SE5);
@@ -350,10 +350,10 @@ void UpdatePlayer(void)
 				g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
 				g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
 			}
-			else if (GetKeyboardPress(DIK_W) == false)
-			{
-				StopSound(SOUND_LABEL_SE5);
-			}
+			//else if (GetKeyboardPress(DIK_W) == false)
+			//{
+			//	StopSound(SOUND_LABEL_SE5);
+			//}
 			else
 			{
 				if (g_player[nCnt].motion.motionType == MOTIONTYPE_MOVE)
@@ -393,6 +393,14 @@ void UpdatePlayer(void)
 		//捕まってないとき
 		if (g_player[nCnt].bCaught == false)
 		{
+			g_player[nCnt].nCountA++;			// インクリメント
+
+			if (g_player[nCnt].nCountA > 180)	// 180より大きかったら
+			{
+				PlaySound(SOUND_LABEL_SE5);		// SE(足音)を鳴らす
+				g_player[nCnt].nCountA = 0;		// 0に戻す
+			}
+
 			// 左スティック移動
 			if (GetJoyStick(nCnt) == true)
 			{
@@ -552,6 +560,15 @@ void UpdatePlayer(void)
 						g_player[nCnt].pos.z -= cosf(pCamera->rot.y + D3DX_PI) * 2.0f;
 						g_player[nCnt].rotDest.y = pCamera->rot.y + D3DX_PI;
 					}
+				}
+			}
+			else if (pStick->Gamepad.sThumbLY < -10922 == false)
+			{
+				g_player[nCnt].nCountA--;
+				if (g_player[nCnt].nCountA < 180)	// 180より小さかったら
+				{
+					StopSound(SOUND_LABEL_SE5);		// SE(足音)を止める
+					g_player[nCnt].nCountA = 0;		// 0に戻す
 				}
 			}
 		}
