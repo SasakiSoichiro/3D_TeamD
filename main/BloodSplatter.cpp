@@ -13,19 +13,19 @@
 // グローバル変数
 
 // テクスチャへのポインタ
-LPDIRECT3DTEXTURE9 g_pTextureUI[UITYPE_MAX] = {};
+LPDIRECT3DTEXTURE9 g_pTextureUI[BLOODTYPE_MAX] = {};
 
 // 頂点バッファへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffUI = NULL;
 
-UI g_ui[UITYPE_MAX] = {};
+UI g_ui[BLOODTYPE_MAX] = {};
 
 //====================
 //	初期化処理
 //====================
 void InitBloodSplatter(void)
 {
-	for (int nCnt = 0; nCnt < UITYPE_MAX; nCnt++)
+	for (int nCnt = 0; nCnt < BLOODTYPE_MAX; nCnt++)
 	{
 		g_ui[nCnt].ui = UI_NONE;
 		g_ui[nCnt].col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 0.1f);
@@ -37,7 +37,7 @@ void InitBloodSplatter(void)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = GetDevice();
 
-	for (int nCnt = 0; nCnt < UITYPE_MAX; nCnt++)
+	for (int nCnt = 0; nCnt < BLOODTYPE_MAX; nCnt++)
 	{
 		D3DXCreateTextureFromFile(pDevice,
 			UI_TEXTURE[nCnt],
@@ -45,7 +45,7 @@ void InitBloodSplatter(void)
 	}
 
 	// 頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * UITYPE_MAX,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * BLOODTYPE_MAX,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
@@ -57,7 +57,7 @@ void InitBloodSplatter(void)
 	// ロック
 	g_pVtxBuffUI->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (int nCnt = 0; nCnt < UITYPE_MAX; nCnt++)
+	for (int nCnt = 0; nCnt < BLOODTYPE_MAX; nCnt++)
 	{
 		// 頂点座標の設定
 		pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -96,7 +96,7 @@ void InitBloodSplatter(void)
 void UinitBloodSplatter(void)
 {
 	// テクスチャの破棄
-	for (int nCnt = 0; nCnt < UITYPE_MAX; nCnt++)
+	for (int nCnt = 0; nCnt < BLOODTYPE_MAX; nCnt++)
 	{
 		if (g_pTextureUI[nCnt] != NULL)
 		{
@@ -120,50 +120,56 @@ void UpdateBloodSplatter(void)
 {
 	Player* pPlayer = GetPlayer();
 	ITEM* pItem = Getitem();
-	bool bNeed = IsNeed();
+	//bool bNeed = IsNeed();
+	VERTEX_2D* pVtx;
 
-	for (int nCnt = 0; nCnt < UITYPE_MAX; nCnt++)
+
+	// ロック
+	g_pVtxBuffUI->Lock(0, 0, (void**)&pVtx, 0);
+
+	for (int nCnt = 0; nCnt < BLOODTYPE_MAX; nCnt++)
 	{
 		if (g_ui[nCnt].ui != UI_NONE)
 		{
 			if (g_ui[nCnt].ui == UI_IN)
 			{
 				// フェードイン
-				g_ui[nCnt].col.a -= 0.05f;		// ポリゴンが透明になる速さ
+				g_ui[nCnt].col.a -= 0.01f;		// ポリゴンが透明になる速さ
 				if (g_ui[nCnt].col.a <= 0.0f)
 				{
 					g_ui[nCnt].col.a = 0.0f;
 					g_ui[nCnt].ui = UI_NONE;		// 何もしていない状態
+					g_ui[nCnt].bUse = false;
+					
 				}
 			}
+
 			else if (g_ui[nCnt].ui == UI_OUT)
 			{
 				// フェードアウト
 				g_ui[nCnt].col.a += 0.05f;
 
-				if (g_ui[nCnt].col.a >= 0.5f)
+				if (g_ui[nCnt].col.a >= 0.7f)
 				{
-					g_ui[nCnt].col.a = 0.5f;
+					g_ui[nCnt].col.a = 0.7f;
 					g_ui[nCnt].ui = UI_NONE;
 				}
 			}
 
-			VERTEX_2D* pVtx;
 
-			// ロック
-			g_pVtxBuffUI->Lock(0, 0, (void**)&pVtx, 0);
-
-			// 頂点カラー
-			pVtx[0].col = D3DXCOLOR(g_ui[nCnt].col);
-			pVtx[1].col = D3DXCOLOR(g_ui[nCnt].col);
-			pVtx[2].col = D3DXCOLOR(g_ui[nCnt].col);
-			pVtx[3].col = D3DXCOLOR(g_ui[nCnt].col);
-
-			pVtx += 4;
-
-			// アンロック
-			g_pVtxBuffUI->Unlock();
 		}
+
+
+
+		// 頂点カラー
+		pVtx[0].col = D3DXCOLOR(g_ui[nCnt].col);
+		pVtx[1].col = D3DXCOLOR(g_ui[nCnt].col);
+		pVtx[2].col = D3DXCOLOR(g_ui[nCnt].col);
+		pVtx[3].col = D3DXCOLOR(g_ui[nCnt].col);
+
+		pVtx += 4;
+
+
 
 		if (g_ui[nCnt].bUse == true)
 		{
@@ -187,6 +193,8 @@ void UpdateBloodSplatter(void)
 			g_ui[nCnt].count = 0;
 		}
 	}
+	// アンロック
+	g_pVtxBuffUI->Unlock();
 }
 
 //====================
@@ -206,36 +214,36 @@ void DrawBloodSplatter(void)
 	// 頂点フォーマット設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	for (int nCnt = 0; nCnt < UITYPE_MAX; nCnt++)
+	for (int nCnt = 0; nCnt < BLOODTYPE_MAX; nCnt++)
 	{
 		if (g_ui[nCnt].bUse == true)
 		{// テクスチャの設定
 
-			if (g_ui[nCnt].count <= 0 && pPlayer->nLife >= 2 && g_ui[nCnt].bUse == true)
-			{
-				pDevice->SetTexture(0, g_pTextureUI[1]);
-			}
-			else if (g_ui[nCnt].count <= 0 && pPlayer->nLife <= 1 && g_ui[nCnt].bUse == true)
-			{
-				pDevice->SetTexture(0, g_pTextureUI[0]);
-			}
+				pDevice->SetTexture(BLOODTYPE_RED, g_pTextureUI[g_ui[nCnt].nType]);
+				pDevice->SetTexture(BLOODTYPE_SMALL, g_pTextureUI[g_ui[nCnt].nType]);
+				pDevice->SetTexture(BLOODTYPE_BIG, g_pTextureUI[g_ui[nCnt].nType]);
+				// ポリゴンの描画
+				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4*nCnt, 2);
 		}
 	}
-	// ポリゴンの描画
-	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+
 
 }
 
 //====================
 //	配置処理
 //====================
-void SetBloodSplatter(int count, UITYPE nType)
+void SetBloodSplatter(int count, int nType,UI_MODE uiType)
 {
-	for (int nCnt = 0; nCnt < UITYPE_MAX; nCnt++)
+	for (int nCnt = 0; nCnt < BLOODTYPE_MAX; nCnt++)
 	{
 		if (g_ui[nCnt].bUse == false)
 		{
-			g_ui[nCnt].ui = UI_OUT;		// フェードアウト状態
+			g_ui[nCnt].ui = uiType;		// フェードアウト状態
+			if (uiType == UI_IN|| uiType == UI_NONE)
+			{
+				g_ui[nCnt].col.a = 0.5f;
+			}
 			g_ui[nCnt].count = count;
 			g_ui[nCnt].nType = nType;
 			g_ui[nCnt].bUse = true;		// 表示されているとき

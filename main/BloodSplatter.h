@@ -22,15 +22,17 @@ typedef enum
 
 typedef enum
 {
-	UITYPE_SMALL,
-	UITYPE_BIG,
-	UITYPE_MAX
-}UITYPE;
+	BLOODTYPE_RED=0,
+	BLOODTYPE_SMALL,
+	BLOODTYPE_BIG,
+	BLOODTYPE_MAX
+}BLOODTYPE;
 
-static const char* UI_TEXTURE[UITYPE_MAX] =
+static const char* UI_TEXTURE[BLOODTYPE_MAX] =
 {
-	"data\\texture\\BloodSplatter.png",		//åÆ(0/2)			0
-	"data\\texture\\BloodSplatter1.png",	//åÆ(1/2)			1
+	"data\\texture\\hold.jpg",
+	"data\\texture\\BloodSplatter.png",	
+	"data\\texture\\BloodSplatter1.png",
 };
 
 // ååÇµÇ‘Ç´ÇÃç\ë¢ëÃíËã`
@@ -38,7 +40,7 @@ typedef struct
 {
 	D3DXCOLOR col;
 	UI_MODE ui;
-	UITYPE nType;
+	int nType;
 	bool bUse;
 	int count;
 }UI;
@@ -48,6 +50,6 @@ void InitBloodSplatter(void);
 void UinitBloodSplatter(void);
 void UpdateBloodSplatter(void);
 void DrawBloodSplatter(void);
-void SetBloodSplatter(int count, UITYPE nType);
+void SetBloodSplatter(int count, int nType,UI_MODE uiType);
 
 #endif 
