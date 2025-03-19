@@ -82,8 +82,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstancePrev, _
 		WS_OVERLAPPEDWINDOW,				//	ウィンドウスタイル
 		CW_USEDEFAULT,						//	ウィンドウのｘ座標
 		CW_USEDEFAULT,						//	ウィンドウのｙ座標
-		(rect.right - rect.left),			//	ウィンドウの幅
-		(rect.bottom - rect.top),			//	ウィンドウの高さ
+		SCREEN_WIDTH,						//	ウィンドウの幅
+		SCREEN_HEIGHT,						//	ウィンドウの高さ
 		NULL,								//	親ウィンドウのハンドル
 		NULL,								//	メニューウィンドウのハンドル（子ウィンドウ）
 		hInstance,							//	インスタンスハンドル
@@ -107,7 +107,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstancePrev, _
 	//===================
 	//	ウィンドウ表示
 	//===================
-	ShowWindow(hWnd, nCmdShow);
+	ShowWindow(hWnd, SW_SHOWMAXIMIZED);
 	UpdateWindow(hWnd);
 
 	//==============

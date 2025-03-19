@@ -27,7 +27,7 @@ int g_nStamina;
 //====================================================
 void InitStamina()
 {
-	VERTEX_2D* pVtx{};
+	VERTEX_2D* pVtx=0;
 
 	LPDIRECT3DDEVICE9 pDevice;					//デバイスへのポインタ
 
@@ -90,10 +90,10 @@ void InitStamina()
 			break;
 		case STAMINA_FRAME:
 			//頂点カラーの設定
-			pVtx[0].col = D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.0f);
-			pVtx[1].col = D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.0f);
-			pVtx[2].col = D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.0f);
-			pVtx[3].col = D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.0f);
+			pVtx[0].col = D3DXCOLOR(0.8f, 0.0f, 0.0f, 1.0f);
+			pVtx[1].col = D3DXCOLOR(0.8f, 0.0f, 0.0f, 1.0f);
+			pVtx[2].col = D3DXCOLOR(0.8f, 0.0f, 0.0f, 1.0f);
+			pVtx[3].col = D3DXCOLOR(0.8f, 0.0f, 0.0f, 1.0f);
 			break;
 		}
 
@@ -143,7 +143,7 @@ void UpdateStamina()
 	int nDate = 2;
 	int aDate = 1;
 
-	VERTEX_2D* pVtx{};
+	VERTEX_2D* pVtx=0;
 
 	g_nStamina = pPlayer->nStamina;
 	if (pPlayer->pState == PLAYERSTATE_DASH)
@@ -209,10 +209,26 @@ void UpdateStamina()
 	//頂点バッファのロック、頂点データへのポインタ取得
 	g_pVtxBuffStamina->Lock(0, 0, (void**)&pVtx, 0);
 
-	pVtx[1].pos.x = StaminaPos.x + fStamina;
+	for (int nCnt = 0; nCnt < STAMINA_MAX; nCnt++)
+	{
+		switch (nCnt)
+		{
+		case STAMINA_GAUGE:
+			pVtx[0].pos.x = StaminaPos.x;
+			pVtx[1].pos.x = StaminaPos.x + fStamina;
+			pVtx[2].pos.x = StaminaPos.x;
+			pVtx[3].pos.x = StaminaPos.x + fStamina;
+			break;
+		case STAMINA_FRAME:
+			pVtx[0].pos.x = StaminaPos.x;
+			pVtx[1].pos.x = StaminaPos.x + MAX_TIMEWIDTH;
+			pVtx[2].pos.x = StaminaPos.x;
+			pVtx[3].pos.x = StaminaPos.x + MAX_TIMEWIDTH;
 
-	pVtx[3].pos.x = StaminaPos.x + fStamina;
-
+			break;
+		}
+		pVtx += 4;
+	}
 
 	//頂点バッファをアンロック
 	g_pVtxBuffStamina->Unlock();
@@ -248,14 +264,21 @@ void DrawStamina()
 	{
 		if (bScreen == true)
 		{
-			if (nCnt == STAMINA_FRAME)
+			switch (nCnt)
 			{
+			case STAMINA_GAUGE:
+
+				//ポリゴンの描画
+				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4 * nCnt, 2);
+				break;
+			case STAMINA_FRAME:
 				// テクスチャの設定
 				pDevice->SetTexture(0, g_StaminaTexture);
-			}
+				//ポリゴンの描画
+				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4 * nCnt, 2);
+				break;
 
-			//ポリゴンの描画
-			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4*nCnt, 2);
+			}
 
 		}
 

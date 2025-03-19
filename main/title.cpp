@@ -107,10 +107,10 @@ void InitTitle(void)
 		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
 		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
-		pVtx += 4;		// 大事いいいいいいいいいいいいいい
+		pVtx += 4;		// 大事
 	}
 
-	SetTitle(TITLE_ONE, D3DXVECTOR3(630.0f, 350.0f, 0.0f));		// タイトル1
+	SetTitle(TITLE_ONE, D3DXVECTOR3(630.0f, 200.0f, 0.0f));		// タイトル1
 	SetTitle(TITLE_TWO, D3DXVECTOR3(650.0f, 440.0f, 0.0f));		// タイトル2
 	SetTitle(TITLE_THREE, D3DXVECTOR3(650.0f, 540.0f, 0.0f));	// タイトル3
 
@@ -305,8 +305,8 @@ void SetTitle(int nType, D3DXVECTOR3 pos)
 			{
 			case TITLE_ONE:
 
-				g_aTitle[nCntTitle].fHeight = 900.0f;	// 高さ
-				g_aTitle[nCntTitle].fWidth = 1200.0f;	// 横幅
+				g_aTitle[nCntTitle].fHeight = 180.0f;	// 高さ
+				g_aTitle[nCntTitle].fWidth = 500.0f;	// 横幅
 				break;
 
 			case TITLE_TWO:
