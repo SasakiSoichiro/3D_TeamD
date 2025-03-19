@@ -22,17 +22,17 @@ typedef enum
 
 typedef enum
 {
-	BLOODTYPE_RED=0,
-	BLOODTYPE_SMALL,
-	BLOODTYPE_BIG,
+	BLOODTYPE_RED=0,	//画面全体に赤い表示
+	BLOODTYPE_SMALL,	// 第一段階血しぶき
+	BLOODTYPE_BIG,		// 第二段階血しぶき
 	BLOODTYPE_MAX
 }BLOODTYPE;
 
 static const char* UI_TEXTURE[BLOODTYPE_MAX] =
 {
-	"data\\texture\\hold.jpg",
-	"data\\texture\\BloodSplatter.png",	
-	"data\\texture\\BloodSplatter1.png",
+	"data\\texture\\hold.jpg",				//画面全体に赤い表示
+	"data\\texture\\BloodSplatter.png",		// 第一段階血しぶき
+	"data\\texture\\BloodSplatter1.png",	// 第二段階血しぶき
 };
 
 // 血しぶきの構造体定義
