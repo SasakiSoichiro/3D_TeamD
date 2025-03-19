@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="block.cpp" />
+    <ClCompile Include="bloodflash.cpp" />
     <ClCompile Include="BloodSplatter.cpp" />
     <ClCompile Include="buttonUI.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -197,6 +198,7 @@
   <ItemGroup>
     <ClInclude Include="billboard.h" />
     <ClInclude Include="block.h" />
+    <ClInclude Include="bloodflash.h" />
     <ClInclude Include="buttonUI.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="Cancellation.h" />

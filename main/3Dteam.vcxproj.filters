@@ -48,6 +48,7 @@
     <ClCompile Include="explain.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="effect.cpp" />
+    <ClCompile Include="bloodflash.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
@@ -97,6 +98,7 @@
     <ClInclude Include="explain.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="effect.h" />
+    <ClInclude Include="bloodflash.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="player.txt" />

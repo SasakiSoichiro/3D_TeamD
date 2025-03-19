@@ -45,6 +45,7 @@
 #include "explain.h"
 #include "Particle.h"
 #include "effect.h"
+#include "bloodflash.h"
 
 //#include "etcUI.h"
 
@@ -159,9 +160,14 @@ void InitGame(void)
 	//	アイテム説明
 	InitExplain();
 
+	// エフェクト
 	InitEffect();
 
+	// パーティクル
 	InitParticle();
+
+	// 画面点滅
+	InitBloodFlash();
 
 	//InitEtcUI();
 
@@ -398,6 +404,10 @@ void UninitGame(void)
 	UninitExplain();
 
 	UninitEffect();
+
+	// 画面点滅
+	UninitBloodFlash();
+
 	//UninitEtcUI();
 }
 
@@ -520,6 +530,9 @@ void UpdateGame(void)
 
 				UpdateParticle();
 
+				// 画面点滅
+				UpdateBloodFlash();
+
 				// スロー
 				UpdateSlow();
 			}
@@ -641,6 +654,9 @@ void DrawGame(int nIdx)
 
 	// スロー
 	DrawSlow();
+
+	// 画面点滅
+	DrawBloodFlash();
 
 	// 回復
 	DrawRecovery();
