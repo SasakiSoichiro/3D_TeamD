@@ -11,7 +11,7 @@
 
 //マクロ定義
 #define MAX_TIMEWIDTH (1000)
-#define MAX_TIMEHEIGHT (10)
+#define MAX_TIMEHEIGHT (12)
 
 //グローバル変数
 D3DXVECTOR3 StaminaPos;								// スタミナの位置
