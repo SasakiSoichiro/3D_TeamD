@@ -127,14 +127,16 @@ void UpdateItemUI()
 {
 
 	VERTEX_2D* pVtx = 0;		// 頂点情報へのポインタ
+
 	if (KeybordTrigger(DIK_1) == true||JoyPadTrigger(JOYKEY_Y)==true)
-	{
+	{// 1またはYボタンを押した場合
+
 		if (g_nSelect == MAX_ITEMUI-1)
-		{
+		{// 端までいったら
 			g_nSelect = 0;
 		}
 		else
-		{
+		{// 端以外
 			g_nSelect++;
 		}
 	}
@@ -191,6 +193,7 @@ void DrawItemUI(void)
 	// ループ処理
 	for (int nCntItemUI = 0; nCntItemUI < MAX_ITEMUI; nCntItemUI++)
 	{// ブロックの数分ループする
+
 		// テクスチャの設定
 		pDevice->SetTexture(ITEM_FLAME, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
 		pDevice->SetTexture(ITEM_NAGINATA, g_pTextureItemUI[g_aItemUI[nCntItemUI].nType]);
@@ -216,16 +219,16 @@ void SetItemUI(int nType)
 		{
 			switch (nType)
 			{
-			case ITEMTYPE_THREE:
+			case ITEMTYPE_THREE:	// 懐中時計
 				g_aItemUI[nCntUI].nType = ITEM_POCKETWATCH;
 				break;
-			case ITEMTYPE_FOUR:
+			case ITEMTYPE_FOUR:		// 薙刀
 				g_aItemUI[nCntUI].nType = ITEM_NAGINATA;
 				break;
-			case ITEMTYPE_FIVE:
+			case ITEMTYPE_FIVE:		// 回復
 				g_aItemUI[nCntUI].nType = ITEM_HEAL;
 				break;
-			case ITEMTYPE_SIX:
+			case ITEMTYPE_SIX:		// 懐中電灯
 				g_aItemUI[nCntUI].nType = ITEM_FLASHLIGHT;
 				break;
 			}
@@ -246,13 +249,13 @@ void SetUsedItemUI(int nType)
 	{
 		switch (nType)
 		{
-		case ITEMTYPE_THREE:
+		case ITEMTYPE_THREE:	// 懐中時計
 			if(g_aItemUI[nCntUI].nType == ITEM_POCKETWATCH)g_aItemUI[nCntUI].nType = ITEM_USEDPOCKETWATCH;
 			break;
-		case ITEMTYPE_FOUR:
+		case ITEMTYPE_FOUR:		// 薙刀
 			if (g_aItemUI[nCntUI].nType == ITEM_NAGINATA)g_aItemUI[nCntUI].nType = ITEM_USEDNAGINATA;
 			break;
-		case ITEMTYPE_FIVE:
+		case ITEMTYPE_FIVE:		// 回復
 			if (g_aItemUI[nCntUI].nType == ITEM_HEAL)g_aItemUI[nCntUI].nType = ITEM_USEDHEAL;
 			break;
 		}
