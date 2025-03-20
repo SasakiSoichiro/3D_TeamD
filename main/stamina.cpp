@@ -272,11 +272,11 @@ void DrawStamina()
 				break;
 			case STAMINA_FRAME:
 
-				// テクスチャの設定
-				pDevice->SetTexture(0, g_StaminaTexture);
+				//// テクスチャの設定
+				//pDevice->SetTexture(0, g_StaminaTexture);
 
-				//ポリゴンの描画
-				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4, 2);
+				////ポリゴンの描画
+				//pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4, 2);
 				break;
 
 			}
