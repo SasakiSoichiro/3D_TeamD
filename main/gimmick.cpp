@@ -413,7 +413,7 @@ void IsHold()
 		g_hold.HolTime = 0;
 	}
 
-	if (g_hold.HolTime >= 285)
+	if (g_hold.HolTime >= 300)
 	{
 		isGoal = true;
 	}
