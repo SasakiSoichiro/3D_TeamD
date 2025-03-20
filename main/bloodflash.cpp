@@ -101,7 +101,7 @@ void UpdateBloodFlash(void)
 		if (g_BloodFlash.bPlus == true)
 		{
 			g_BloodFlash.col.a += DELTA;
-			if (g_BloodFlash.col.a >= 0.3f)
+			if (g_BloodFlash.col.a >= MAX_BLOODALPHA)
 			{
 				g_BloodFlash.bPlus = false;
 			}
