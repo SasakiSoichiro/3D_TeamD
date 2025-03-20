@@ -359,6 +359,7 @@ void UpdateEnemy(void)
 					{
 						g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
 						SetMotionType(EMOTIONTYPE_NEUTRAL, true, 10, nCntEnemy);
+						bRange = false;
 						// BGMÇè¡Ç∑
 						StopSound(SOUND_LABEL_BGM3);
 					}

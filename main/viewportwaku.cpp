@@ -113,20 +113,20 @@ void UpdateViewUI(void)
 		float fGlow = 0.5f + 0.5f * sinf(D3DXToRadian(g_nTimer * 36));  // 0.5～1.0の範囲で点滅
 
 		// 頂点カラーの設定　　　　
-		pVtx[0].col = D3DXCOLOR(1.0f, 0.2f, 0.2f, fGlow);
-		pVtx[1].col = D3DXCOLOR(1.0f, 0.2f, 0.2f, fGlow);
-		pVtx[2].col = D3DXCOLOR(1.0f, 0.2f, 0.2f, fGlow);
-		pVtx[3].col = D3DXCOLOR(1.0f, 0.2f, 0.2f, fGlow);
+		pVtx[0].col = D3DXCOLOR(fGlow, 0.8f, fGlow, 1.0f);
+		pVtx[1].col = D3DXCOLOR(fGlow, 0.8f, fGlow, 1.0f);
+		pVtx[2].col = D3DXCOLOR(fGlow, 0.8f, fGlow, 1.0f);
+		pVtx[3].col = D3DXCOLOR(fGlow, 0.8f, fGlow, 1.0f);
 
 	}
 	// 敵の視界外
 	else
 	{
 		// 頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[0].col = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);
+		pVtx[1].col = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);
+		pVtx[2].col = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);
+		pVtx[3].col = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);
 
 	}
 

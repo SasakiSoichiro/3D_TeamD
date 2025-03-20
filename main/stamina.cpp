@@ -11,7 +11,7 @@
 
 //マクロ定義
 #define MAX_TIMEWIDTH (1000)
-#define MAX_TIMEHEIGHT (12)
+#define MAX_TIMEHEIGHT (10)
 
 //グローバル変数
 D3DXVECTOR3 StaminaPos;								// スタミナの位置
@@ -27,7 +27,7 @@ int g_nStamina;
 //====================================================
 void InitStamina()
 {
-	VERTEX_2D* pVtx=0;
+	VERTEX_2D* pVtx=NULL;
 
 	LPDIRECT3DDEVICE9 pDevice;					//デバイスへのポインタ
 
@@ -83,17 +83,17 @@ void InitStamina()
 		{
 		case STAMINA_GAUGE:
 			//頂点カラーの設定
-			pVtx[0].col = D3DXCOLOR(0.7f, 0.7f, 0.0f, 1.0f);
-			pVtx[1].col = D3DXCOLOR(0.7f, 0.7f, 0.0f, 1.0f);
-			pVtx[2].col = D3DXCOLOR(0.7f, 0.7f, 0.0f, 1.0f);
-			pVtx[3].col = D3DXCOLOR(0.7f, 0.7f, 0.0f, 1.0f);
+			pVtx[0].col = D3DXCOLOR(0.5f, 0.5f, 0.0f, 1.0f);
+			pVtx[1].col = D3DXCOLOR(0.5f, 0.5f, 0.0f, 1.0f);
+			pVtx[2].col = D3DXCOLOR(0.5f, 0.5f, 0.0f, 1.0f);
+			pVtx[3].col = D3DXCOLOR(0.5f, 0.5f, 0.0f, 1.0f);
 			break;
 		case STAMINA_FRAME:
 			//頂点カラーの設定
-			pVtx[0].col = D3DXCOLOR(0.8f, 0.0f, 0.0f, 1.0f);
-			pVtx[1].col = D3DXCOLOR(0.8f, 0.0f, 0.0f, 1.0f);
-			pVtx[2].col = D3DXCOLOR(0.8f, 0.0f, 0.0f, 1.0f);
-			pVtx[3].col = D3DXCOLOR(0.8f, 0.0f, 0.0f, 1.0f);
+			pVtx[0].col = D3DXCOLOR(0.6f, 0.6f, 0.6f, 1.0f);
+			pVtx[1].col = D3DXCOLOR(0.6f, 0.6f, 0.6f, 1.0f);
+			pVtx[2].col = D3DXCOLOR(0.6f, 0.6f, 0.6f, 1.0f);
+			pVtx[3].col = D3DXCOLOR(0.6f, 0.6f, 0.6f, 1.0f);
 			break;
 		}
 
@@ -267,15 +267,16 @@ void DrawStamina()
 			switch (nCnt)
 			{
 			case STAMINA_GAUGE:
-
 				//ポリゴンの描画
-				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4 * nCnt, 2);
+				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4*nCnt, 2);
 				break;
 			case STAMINA_FRAME:
+
 				// テクスチャの設定
 				pDevice->SetTexture(0, g_StaminaTexture);
+
 				//ポリゴンの描画
-				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4 * nCnt, 2);
+				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4, 2);
 				break;
 
 			}
