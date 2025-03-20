@@ -360,6 +360,7 @@ void UpdateEnemy(void)
 						g_Enemy[nCntEnemy].State = ENEMYSTATE_NORMAL;
 						SetMotionType(EMOTIONTYPE_NEUTRAL, true, 10, nCntEnemy);
 						bRange = false;
+						pPlayer->bCaught = false;
 						// BGMÇè¡Ç∑
 						StopSound(SOUND_LABEL_BGM3);
 					}
@@ -1138,12 +1139,14 @@ void LoiterEnemy(void)
 
 	Turn[0] = D3DXVECTOR3(800.0f, 0.0f, 250.0f);
 	Turn[1] = D3DXVECTOR3(700.0f, 0.0f, -500.0f);
-	Turn[2] = D3DXVECTOR3(-800.0f, 0.0f, -400.0f);
-	Turn[3] = D3DXVECTOR3(-850.0f, 0.0f, 950.0f);
-	Turn[4] = D3DXVECTOR3(500.0f, 0.0f, 600.0f);
-	Turn[5] = D3DXVECTOR3(500.0f, 0.0f, 400.0f);
-	Turn[6] = D3DXVECTOR3(300.0f, 0.0f, 300.0f);
-	Turn[7] = D3DXVECTOR3(300.0f, 0.0f, -300.0f);
+	Turn[2] = D3DXVECTOR3(20.0f, 0.0f, -150.0f);
+	Turn[3] = D3DXVECTOR3(-800.0f, 0.0f, -400.0f);
+	Turn[4] = D3DXVECTOR3(-850.0f, 0.0f, 950.0f);
+	Turn[5] = D3DXVECTOR3(20.0f, 0.0f, -150.0f);
+	Turn[6] = D3DXVECTOR3(500.0f, 0.0f, 600.0f);
+	Turn[7] = D3DXVECTOR3(500.0f, 0.0f, 400.0f);
+	Turn[8] = D3DXVECTOR3(300.0f, 0.0f, 300.0f);
+	Turn[9] = D3DXVECTOR3(300.0f, 0.0f, -300.0f);
 
 	float fDistance = (g_Enemy[0].pos.x - Turn[g_nCntPos].x) * (g_Enemy[0].pos.x - Turn[g_nCntPos].x) + (g_Enemy[0].pos.y - Turn[g_nCntPos].y) * (g_Enemy[0].pos.y - Turn[g_nCntPos].y) + (g_Enemy[0].pos.z - Turn[g_nCntPos].z) * (g_Enemy[0].pos.z - Turn[g_nCntPos].z);
 	D3DXVECTOR3 fRadP(100.0f, 0.0f, 100.0f);

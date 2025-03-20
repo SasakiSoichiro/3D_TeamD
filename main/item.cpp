@@ -130,7 +130,7 @@ void Updateitem(void)
 		// ‘O‰ñ‚Á‚Ä‚¢‚½‚à‚Ì‚ğ•Û‘¶
 		g_item[nCnt].bOldHave = g_item[nCnt].bHave;
 
-		if (g_item[nCnt].nType == ITEMTYPE_THREE)
+		if (g_item[nCnt].nType == ITEMTYPE_THREE|| g_item[nCnt].nType == ITEMTYPE_FIVE)
 		{
 
 			// Y²‰ñ“]ˆ—‚Ì’Ç‰Á

@@ -757,7 +757,7 @@ void DrawEnemyPos(void)
 	char aStr[256];
 	Enemy* pCamera = GetEnemy();
 	sprintf(&aStr[0], "カメラ注視点座標　X:%.2f　Y:%.2f  Z:%.2f\n", pCamera->pos.x, pCamera->pos.y, pCamera->pos.z);
-	g_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(0, 0, 0, 255));
+	g_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));
 }
 
 //================================
