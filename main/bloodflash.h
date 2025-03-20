@@ -9,7 +9,7 @@
 #define _BLOODSFLASH_H_
 
 #include "main.h"
-#define DELTA (0.005f) //•Ï‰»—Ê
+#define DELTA (0.0025f) //•Ï‰»—Ê
 
 // ‰æ–Ê“_–Å‚Ì\‘¢‘Ì’è‹`
 typedef struct
